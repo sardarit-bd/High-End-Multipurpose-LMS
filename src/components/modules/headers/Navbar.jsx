@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 
 const Navbar = () => {
@@ -221,11 +222,11 @@ const Navbar = () => {
             {/* Desktop Auth Buttons */}
             <div className="hidden lg:flex items-center gap-3">
               <button className="text-[var(--color-secondary)] hover:text-[var(--color-secondary-hover)] font-medium text-sm">
-                Sign in
+                <Link href='/login'>Login</Link>
               </button>
               <span className="text-[var(--color-accent)]">|</span>
               <button className="bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white px-4 py-2 rounded-md text-sm font-medium">
-                Register
+                <Link href="/register">Register</Link>
               </button>
             </div>
 
