@@ -1,13 +1,33 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* ====== Brand Colors ====== */
+  --color-primary: #059669;       /* Emerald Green - CTA buttons, progress bars, active menu items */
+  --color-secondary: #2563EB;     /* Blue - Headers, navigation links, icons */
+  --color-accent: #FBBF24;        /* Yellow - Badges, XP points, achievements */
+
+  /* ====== Base Colors ====== */
+  --color-background: #ECFDF5;    /* Light Mint - Page backgrounds, sections, soft containers */
+  --color-text: #064E3B;          /* Dark Green - Body text, descriptions, headings, forms */
+
+  /* ====== Hover & Transparency ====== */
+  --color-primary-hover: #047857; /* Darker Emerald for hover transitions */
+  --color-secondary-hover: #1E40AF; /* Deeper Blue for hover states */
+  --color-accent-hover: #F59E0B;  /* Richer Yellow for active highlights */
+
+  /* ====== Shadows & Depth ====== */
+  --shadow-soft: 0 2px 6px rgba(0, 0, 0, 0.08);
+  --shadow-medium: 0 4px 12px rgba(0, 0, 0, 0.1);
+  --container-opacity: 0.95; /* Slight transparency for depth */
+
+  /* ====== Border Radius & Spacing ====== */
+  --radius-default: 0.75rem;
+  --radius-card: 1rem;
+  --spacing-section: 2rem;
 }
 
+
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
