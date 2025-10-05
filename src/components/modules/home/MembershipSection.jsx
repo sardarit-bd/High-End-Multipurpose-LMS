@@ -9,7 +9,7 @@ const tiers = [
         priceYearly: 0,
         benefits: ["Access to limited courses", "Community support"],
         tooltip: "Free tier with basic access",
-        color: "bg-[var(--color-background)]",
+        color: "bg-gray-100",
     },
     {
         name: "Premium",

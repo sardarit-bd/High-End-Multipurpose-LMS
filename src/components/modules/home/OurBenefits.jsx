@@ -21,7 +21,7 @@ export default function OurBenefits() {
   ];
 
   return (
-    <section className="w-full bg-white py-16">
+    <section className="w-full bg-white z-100 py-16">
       <div className="container mx-auto text-center px-4">
         <h3 className="text-sm font-semibold text-[var(--color-secondary)] mb-2">
           Our Benefits
