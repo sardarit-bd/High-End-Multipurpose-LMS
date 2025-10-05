@@ -3,15 +3,15 @@ export default function StudentSuccess() {
     <section className="w-full bg-white py-16 px-4">
       <div className="container px-0 mx-auto relative">
         {/* Image Card */}
-        <div className="relative rounded-[var(--radius-card)] overflow-hidden shadow-[var(--shadow-medium)]">
+        <div className="relative rounded-[var(--radius-card)] shadow-[var(--shadow-medium)]">
           <img
             src="/images/students-group.jpg"
             alt="Happy Students"
-            className="w-full h-[300px] md:h-[400px] object-cover"
+            className="w-full h-[500px] md:h-[400px] object-cover rounded-[var(--radius-card)]"
           />
 
           {/* Stats Box */}
-          <div className="absolute left-0 right-0 -bottom-20 mx-auto w-[90%] md:w-[85%] bg-[var(--color-secondary)] text-white rounded-[var(--radius-card)] shadow-[var(--shadow-medium)] p-6 md:p-10">
+          <div className="absolute left-0 right-0 -bottom-10 mx-auto w-[90%] md:w-[85%] bg-[var(--color-secondary)] text-white rounded-[var(--radius-card)] shadow-[var(--shadow-medium)] p-6 md:p-10">
             <div className="grid md:grid-cols-3 gap-8 mb-6 text-left">
               <div>
                 <h3 className="font-bold text-lg md:text-xl">Trusted by 15,000+ Students</h3>

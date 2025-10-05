@@ -1,38 +1,62 @@
+import CourseCard from "../courses/CourseCard";
+
 export default function FeaturedCourses() {
-  const courses = [
-    {
-      title: "Information About UI/UX Design Degree",
-      category: "UI/UX",
-      price: "$500",
-      author: "Binodh Sation",
-      rating: "5.0",
-      image: "/courses/uiux.jpg",
-    },
-    {
-      title: "Learn & Create ReactJS Tech Fundamentals Apps",
-      category: "Productivity",
-      price: "$300",
-      author: "David Bentel",
-      rating: "5.0",
-      image: "/courses/react.jpg",
-    },
-    {
-      title: "The Complete Business and Management Course",
-      category: "Management",
-      price: "$350",
-      author: "Calvin Johnson",
-      rating: "5.0",
-      image: "/courses/business.jpg",
-    },
-    {
-      title: "Build Creative Arts & Media Course Completed",
-      category: "Art & Media",
-      price: "$500",
-      author: "David Bentel",
-      rating: "5.0",
-      image: "/courses/art.jpg",
-    },
-  ];
+const courses = [
+  {
+    title: "Information About UI/UX Design Degree",
+    category: "UI/UX",
+    lessons: 20,
+    duration: "1 hr 45 min",
+    price: "$500",
+    oldPrice: "$750",
+    isFree: false,
+    author: "Binodh Sation",
+    authorImg: "/courses/uiux.jpg",
+    rating: 5,
+    image: "/courses/uiux.jpg",
+  },
+  {
+    title: "Learn & Create ReactJS Tech Fundamentals Apps",
+    category: "Productivity",
+    lessons: 28,
+    duration: "2 hr 10 min",
+    price: "$300",
+    oldPrice: "$500",
+    isFree: true,
+    author: "David Bentel",
+    authorImg: "/courses/uiux.jpg",
+    rating: 5,
+    image: "/courses/react.jpg",
+  },
+  {
+    title: "The Complete Business and Management Course",
+    category: "Management",
+    lessons: 25,
+    duration: "2 hr 00 min",
+    price: "$350",
+    oldPrice: "$600",
+    isFree: false,
+    author: "Calvin Johnson",
+    authorImg: "/courses/uiux.jpg",
+    rating: 5,
+    image: "/courses/business.jpg",
+  },
+  {
+    title: "Build Creative Arts & Media Course Completed",
+    category: "Art & Media",
+    lessons: 22,
+    duration: "1 hr 30 min",
+    price: "$500",
+    oldPrice: "$800",
+    isFree: false,
+    author: "David Bentel",
+    authorImg: "/courses/uiux.jpg",
+    rating: 5,
+    image: "/courses/art.jpg",
+  },
+];
+
+
 
   return (
     <section className="w-full bg-white py-16 px-4">
@@ -48,40 +72,9 @@ export default function FeaturedCourses() {
         </p>
 
         {/* Course Cards */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 items-center">
           {courses.map((c, i) => (
-            <div
-              key={i}
-              className="bg-white rounded-[var(--radius-card)] shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden"
-            >
-              <div className="relative">
-                <img
-                  src={c.image}
-                  alt={c.title}
-                  className="h-40 w-full object-cover"
-                />
-                <span className="absolute top-3 left-3 bg-[var(--color-primary)] text-white text-xs px-3 py-1 rounded-full">
-                  {c.category}
-                </span>
-                <span className="absolute top-3 right-3 bg-[var(--color-accent)] text-[var(--color-text)] text-xs px-3 py-1 rounded-full">
-                  {c.price}
-                </span>
-              </div>
-
-              <div className="p-5 text-left">
-                <h3 className="font-semibold text-[var(--color-text)] mb-2 line-clamp-2">
-                  {c.title}
-                </h3>
-                <p className="text-sm text-gray-600 mb-2">👨‍🏫 {c.author}</p>
-
-                <div className="flex items-center justify-between text-sm text-gray-500">
-                  <span>⭐ {c.rating}</span>
-                  <button className="px-3 py-1 text-white bg-[var(--color-secondary)] rounded-full hover:bg-[var(--color-secondary-hover)] transition">
-                    Buy Course Now
-                  </button>
-                </div>
-              </div>
-            </div>
+           <CourseCard course={c} key={i} />
           ))}
         </div>
       </div>

@@ -10,7 +10,7 @@ export default function PartnerBrands() {
   ];
 
   return (
-    <section className="bg-[var(--secondary)] py-16 px-6 md:px-12 lg:px-20">
+    <section className="bg-black py-16 px-6 md:px-12 lg:px-20">
       <div className="container px-4 mx-auto flex flex-wrap justify-center items-center gap-10 md:gap-20">
         {brands.map((brand) => (
           <div

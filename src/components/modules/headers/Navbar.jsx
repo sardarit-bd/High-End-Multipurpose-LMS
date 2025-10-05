@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { FaBars, FaTimes } from "react-icons/fa";
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -55,7 +56,7 @@ const Navbar = () => {
               </button>
 
               {openDropdown === "courses" && (
-                <div className="absolute top-full left-0 mt-2 w-48 bg-[var(--color-background)] rounded-[var(--radius-card)] shadow-[var(--shadow-medium)] border border-[var(--color-primary)] z-50">
+                <div className="absolute left-0 mt-5 w-48 bg-[var(--color-background)] rounded-[var(--radius-card)] shadow-[var(--shadow-medium)] border border-[var(--color-primary)] z-50">
                   <div className="py-1">
                     <a
                       href="#"
@@ -110,7 +111,7 @@ const Navbar = () => {
               </button>
 
               {openDropdown === "pages" && (
-                <div className="absolute top-full left-0 mt-2 w-48 bg-[var(--color-background)] rounded-[var(--radius-card)] shadow-[var(--shadow-medium)] border border-[var(--color-primary)] z-50">
+                <div className="absolute left-0 mt-5 w-48 bg-[var(--color-background)] rounded-[var(--radius-card)] shadow-[var(--shadow-medium)] border border-[var(--color-primary)] z-50">
                   <div className="py-1">
                     <a
                       href="#"
@@ -235,9 +236,7 @@ const Navbar = () => {
               className="lg:hidden p-2 rounded-md text-[var(--color-secondary)] hover:text-[var(--color-secondary-hover)] hover:bg-[var(--color-background)]"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
-              </svg>
+              {!isMobileMenuOpen ? <FaBars /> : <FaTimes />}
             </button>
           </div>
         </div>
@@ -339,10 +338,10 @@ const Navbar = () => {
               <div className="border-t border-[var(--color-primary)] mt-2 pt-3">
                 <div className="flex flex-col space-y-2 px-4">
                   <button className="w-full text-center py-2 text-[var(--color-secondary)] hover:text-[var(--color-secondary-hover)] font-medium border border-[var(--color-primary)] rounded-md hover:bg-[var(--color-background)]">
-                    Sign in
+                   <Link href='/login'> Sign in</Link>
                   </button>
                   <button className="w-full text-center py-2 bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white font-medium rounded-md">
-                    Register
+                  <Link href='/register'>Register</Link>
                   </button>
                 </div>
               </div>

@@ -4,7 +4,7 @@ import Image from "next/image";
 
 export default function AdvancedLearning() {
   return (
-    <section className="text-white py-16 px-6 md:px-12 lg:px-24">
+    <section className="text-white bg-black py-16 px-6 md:px-12 lg:px-24">
       <div className="container px-4 mx-auto grid md:grid-cols-2 gap-12 items-center">
         {/* Left Text Section */}
         <div>
