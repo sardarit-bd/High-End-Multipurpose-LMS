@@ -27,10 +27,12 @@ const Navbar = () => {
         { name: "Contact", href: "/contact" },
         { name: "Terms and Condition", href: "/terms" },
         { name: "Privacy Policy", href: "/privacy" },
-        { name: "FAQ", href: "#" },
+        { name: "FAQ", href: "/faq" },
+        { name: "404 Page", href: "/404" },
+        { name: "Success History", href: "/success-history" },
       ],
     },
-    { name: "Blog", href: "#" },
+    { name: "Blog", href: "/blog" },
   ];
 
   return (
