@@ -8,7 +8,7 @@ export default function BlogSingle() {
           alt="Blog Featured"
           className="rounded-lg w-full object-cover mb-6"
         />
-        <div className="flex items-center gap-4 text-sm text-gray-500">
+        <div className="flex lg:flex-row flex-col lg:items-center gap-4 text-sm text-gray-500">
           <div className="flex items-center gap-2">
             <img
               src="/images/student-1.jpg"
@@ -24,7 +24,7 @@ export default function BlogSingle() {
             🔖 Programming, Web Design
           </span>
         </div>
-        <h1 className="text-3xl font-bold text-[var(--color-text)] mt-4">
+        <h1 className="lg:text-4xl text-2xl font-bold text-[var(--color-text)] mt-4">
           Learn Web App Development from Experts in 2024
         </h1>
       </div>
