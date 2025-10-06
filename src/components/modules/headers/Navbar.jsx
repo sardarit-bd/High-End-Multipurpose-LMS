@@ -17,13 +17,16 @@ const Navbar = () => {
   const menuLinks = [
     { name: "Home", href: "/" },
     { name: "Courses", href: "/courses" },
+   { name: "Pricing", href: "/pricing" },
     { name: "Dashboard", href: "/dashboard" },
     {
       name: "Pages",
       dropdown: [
         { name: "Checkout", href: "/checkout" },
-        { name: "About Us", href: "#" },
-        { name: "Contact", href: "#" },
+        { name: "About Us", href: "/about" },
+        { name: "Contact", href: "/contact" },
+        { name: "Terms and Condition", href: "/terms" },
+        { name: "Privacy Policy", href: "/privacy" },
         { name: "FAQ", href: "#" },
       ],
     },

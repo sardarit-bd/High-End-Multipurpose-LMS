@@ -7,6 +7,7 @@ import { FiPlus, FiMinus } from "react-icons/fi";
 import Image from "next/image";
 import AboutHero from '@/components/modules/about/AboutHero';
 
+
 export default function About() {
     const [openFaq, setOpenFaq] = useState(0);
 

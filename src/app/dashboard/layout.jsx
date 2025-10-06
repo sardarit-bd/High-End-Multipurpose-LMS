@@ -3,7 +3,7 @@ import Footer from "../../components/modules/footers/Footer";
 import Navbar from "../../components/modules/headers/Navbar";
 
 
-export default function PublicLayout({
+export default function DashboardLayout({
   children,
 }) {
   return (
