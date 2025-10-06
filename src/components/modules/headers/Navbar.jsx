@@ -21,6 +21,7 @@ const Navbar = () => {
     {
       name: "Pages",
       dropdown: [
+        { name: "Checkout", href: "/checkout" },
         { name: "About Us", href: "#" },
         { name: "Contact", href: "#" },
         { name: "FAQ", href: "#" },

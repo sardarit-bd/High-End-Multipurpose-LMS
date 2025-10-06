@@ -61,7 +61,6 @@ export default function CourseSinglePage() {
                     </div>
 
                     {/* ===== Right Sidebar ===== */}
-                    {/* ===== Right Sidebar ===== */}
                     <aside className="w-full lg:w-80 flex-shrink-0 lg:sticky lg:top-18 self-start">
                         <div className="bg-white rounded-[var(--radius-card)] shadow-md p-6 mb-6">
                             <h3 className="text-2xl font-bold text-[var(--color-primary)] mb-1">FREE</h3>
