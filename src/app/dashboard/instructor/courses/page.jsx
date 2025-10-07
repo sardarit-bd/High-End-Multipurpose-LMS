@@ -198,7 +198,7 @@ export default function InstructorCourses() {
                         <h1 className="text-2xl md:text-3xl font-bold">Your Courses</h1>
                     </div>
                     <Link
-                        href="/add-course"
+                        href="add-course"
                         className="bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white px-4 py-2 rounded-lg text-sm font-medium shadow-sm transition-all"
                     >
                         Add New Course

@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Edit, Trash2 } from "lucide-react";
+import Link from "next/link";
 
 const QuizPage = () => {
   const [showModal, setShowModal] = useState(false);
@@ -69,7 +70,7 @@ const QuizPage = () => {
 
             <div className="flex items-center gap-4 mt-3 sm:mt-0">
               <button className="text-blue-600 text-sm font-medium hover:underline">
-                View Results
+                <Link href="quize-results/slug" >View Results</Link>
               </button>
               <Edit size={18} className="cursor-pointer text-gray-600 hover:text-[var(--color-primary)]" />
               <Trash2 size={18} className="cursor-pointer text-gray-600 hover:text-red-500" />
