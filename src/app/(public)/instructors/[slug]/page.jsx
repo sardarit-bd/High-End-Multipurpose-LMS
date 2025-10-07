@@ -3,7 +3,7 @@ import { FiMail, FiPhone, FiMapPin } from "react-icons/fi";
 
 export default function InstructorProfile() {
   return (
-    <div className="w-full min-h-screen bg-white">
+    <div className="w-full min-h-screen text-[var(--color-text)] bg-white">
       <div className="container mx-auto px-4 py-6 flex flex-col lg:flex-row gap-6">
         
         {/* ===== Left/Main Content ===== */}
