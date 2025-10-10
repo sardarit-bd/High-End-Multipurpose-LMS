@@ -1,7 +1,8 @@
+import { LogOut } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-export default function SidebarNav({ items}) {
+export default function SidebarNav({ items }) {
     const pathname = usePathname();
 
     return (
@@ -25,6 +26,14 @@ export default function SidebarNav({ items}) {
                     </Link>
                 );
             })}
+            <Link
+                href='/'
+                className={`flex items-center gap-3 rounded-md px-4 py-2 text-sm font-medium transition-colors hover:bg-[var(--color-primary-hover)] border border-[var-(color-text)] hover:text-white`}
+            >
+
+                < LogOut />
+                <span>Logout</span>
+            </Link>
         </nav>
     );
 }
