@@ -56,7 +56,7 @@ export default function CourseCard({ course }) {
                 </div>
             </div>
             <button className="my-5 self-end mx-auto bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white px-4 py-2 rounded-md text-sm font-medium">
-                <Link href="/">View Course</Link>
+                <Link href="courses/daynamic_slug">View Course</Link>
             </button>
         </div>
     )

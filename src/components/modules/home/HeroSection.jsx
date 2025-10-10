@@ -36,7 +36,7 @@ export default function HeroSection() {
 
             <h1 className="text-4xl md:text-5xl font-bold leading-tight mb-6 text-[var(--color-text)]">
               Find the{" "}
-              <span className="text-[var(--color-primary)] relative">
+              <span className="text-[#F9D26E] relative">
                 Best Courses
                 <svg
                   className="absolute w-full left-0 bottom-[-16px]"
@@ -50,7 +50,7 @@ export default function HeroSection() {
                 </svg>
               </span>{" "}
               from the{" "}
-              <span className="text-[var(--color-primary)] relative">
+              <span className="text-[#F9D26E] relative">
                 Best Mentors
               </span>{" "}
               Around the World

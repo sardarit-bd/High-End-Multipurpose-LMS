@@ -112,12 +112,12 @@ export default function CourseListing() {
 
 
           {/* Sort dropdown */}
-          <select className="px-3 py-2 bg-[var(--color-text)]/10 border border-[var(--color-primary)] rounded-lg text-[var(--color-text)] placeholder-[var(--color-text)] focus:outline-none focus:border-[var(--color-primary)]">
+          {/* <select className="px-3 py-2 bg-[var(--color-text)]/10 border border-[var(--color-primary)] rounded-lg text-[var(--color-text)] placeholder-[var(--color-text)] focus:outline-none focus:border-[var(--color-primary)]">
             <option>Newly Published</option>
             <option>Popular</option>
             <option>Price: Low to High</option>
             <option>Price: High to Low</option>
-          </select>
+          </select> */}
 
           {/* Search input */}
           <input
@@ -132,7 +132,7 @@ export default function CourseListing() {
 
       <div className="flex container mx-auto">
         {/* ===== Sidebar (desktop) ===== */}
-        <aside className="w-64 h-screen sticky top-[120px] overflow-y-auto border-r border-gray-200 bg-white p-4 hidden lg:block">
+        <aside className="w-64 h-screen sticky top-[135px] overflow-y-auto border-r border-gray-200 bg-white p-4 hidden lg:block">
           {/* Categories */}
           <div className="mb-6">
             <h4 className="font-medium text-sm mb-2 text-gray-700">Categories</h4>
