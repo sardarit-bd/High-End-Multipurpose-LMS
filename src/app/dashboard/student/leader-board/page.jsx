@@ -12,7 +12,7 @@ const leaderboardData = [
 
 export default function Leaderboard() {
   return (
-    <div className="bg-white min-h-screen p-6">
+    <div className="bg-white min-h-screen">
       <h1 className="text-3xl font-bold text-[var(--color-text)] mb-6 flex items-center gap-2">
         <Trophy className="text-[var(--color-accent)]" /> Leaderboard
       </h1>

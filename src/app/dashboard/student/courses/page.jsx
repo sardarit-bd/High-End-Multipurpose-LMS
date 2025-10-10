@@ -45,7 +45,7 @@ export default function CoursesPage() {
   const filteredCourses = courses.filter((c) => c.status === activeTab);
 
   return (
-    <div className="min-h-screen bg-white p-6 md:p-12">
+    <div className="min-h-screen bg-white">
       <h1 className="text-2xl font-bold text-[var(--color-text)] mb-4">
         Enrolled Courses
       </h1>

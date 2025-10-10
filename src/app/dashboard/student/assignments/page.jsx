@@ -9,7 +9,7 @@ const quizData = [
 
 export default function QuizResults() {
   return (
-    <div className="bg-white shadow-md rounded-lg p-4 text-[var(--color-text)]">
+    <div className="bg-white shadow-md rounded-lg px-4 p-6 md:p-12 text-[var(--color-text)]">
       <h2 className="text-xl font-bold mb-4 text-[var(--color-text)]">Quiz Results</h2>
 
       {/* Desktop Table */}

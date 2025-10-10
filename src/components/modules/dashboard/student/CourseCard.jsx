@@ -50,7 +50,7 @@ export default function CourseCard({ course }) {
            <Link href='/dashboard/student/leader-board'>Leader Board</Link>
           </button>
           <button className="bg-black text-white px-4 py-1 rounded-full text-sm hover:bg-gray-800">
-            View Course
+            <Link href="/course/1">View Course</Link>
           </button>
         </div>
       </div>

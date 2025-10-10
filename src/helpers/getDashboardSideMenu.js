@@ -5,7 +5,7 @@ const studentMenu = [
     { title: "Courses", href: "/dashboard/student/courses", icon: BookOpen },
     { title: "Assignments", href: "/dashboard/student/assignments", icon: ShoppingBag },
     { title: "Certificates", href: "/dashboard/student/certificates", icon: Settings },
-    { title: "Leader Board", href: "/dashboard/student/leader-board", icon: Settings },
+    // { title: "Leader Board", href: "/dashboard/student/leader-board", icon: Settings },
     {title: "Purchase History", href: "/dashboard/student/purchase-history", icon: BarChart3},
     { title: "Profile", href: "/dashboard/student/profile", icon: Settings },
 ];

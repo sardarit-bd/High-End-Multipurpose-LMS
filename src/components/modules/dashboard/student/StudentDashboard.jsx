@@ -6,7 +6,7 @@ import CourseTable from "@/components/modules/dashboard/student/CourseTable";
 
 export default function Dashboard() {
   return (
-    <div className="min-h-screen container mx-auto bg-white p-6 md:p-12 text-[var(--color-text)]">
+    <div className="min-h-screen container mx-auto bg-white text-[var(--color-text)]">
       <h1 className="text-2xl font-bold text-[var(--color-text)] mb-6">My Status</h1>
 
       {/* Status Grid */}
