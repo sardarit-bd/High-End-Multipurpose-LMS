@@ -28,7 +28,7 @@ export default function CertificatesPage() {
   ];
 
   return (
-    <div className="p-6 space-y-6 text-[var(--color-text)]">
+    <div className="text-[var(--color-text)]">
       {/* Header */}
       <div className="flex flex-col md:flex-row justify-between md:items-center gap-4">
         <h1 className="text-2xl font-bold text-[--color-text] flex items-center gap-2">

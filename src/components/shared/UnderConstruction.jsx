@@ -30,13 +30,7 @@ export default function UnderConstruction() {
           improved experience!
         </p>
 
-        {/* CTA Button */}
-        <Link
-          href="/"
-          className="inline-block px-6 py-3 bg-[var(--color-primary)] text-white font-semibold rounded-full shadow-[var(--shadow-medium)] hover:bg-[var(--color-primary-hover)] transition"
-        >
-          ← Back to Home
-        </Link>
+        
       </div>
     </section>
   );

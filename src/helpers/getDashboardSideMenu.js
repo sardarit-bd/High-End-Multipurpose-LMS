@@ -1,10 +1,12 @@
-import { Home, BookOpen, Users, Settings, ShoppingBag, MessageSquare, ClipboardList, BarChart3, Award, User, HelpCircle } from "lucide-react";
+import { Home, BookOpen, Users, Settings, ShoppingBag, ClipboardList, BarChart3, Award, User, HelpCircle, HomeIcon, UserCheck, Shield, Trophy, CreditCard } from "lucide-react";
 // ===== Menu Configs with Icons ===== //
 const studentMenu = [
     { title: "Dashboard", href: "/dashboard", icon: Home },
     { title: "Courses", href: "/dashboard/student/courses", icon: BookOpen },
     { title: "Assignments", href: "/dashboard/student/assignments", icon: ShoppingBag },
-    { title: "Discussion", href: "/dashboard/student/discussion", icon: MessageSquare },
+    { title: "Certificates", href: "/dashboard/student/certificates", icon: Settings },
+    // { title: "Leader Board", href: "/dashboard/student/leader-board", icon: Settings },
+    {title: "Purchase History", href: "/dashboard/student/purchase-history", icon: BarChart3},
     { title: "Profile", href: "/dashboard/student/profile", icon: Settings },
 ];
 
@@ -19,15 +21,30 @@ const instructorMenu = [
 ];
 
 const adminMenu = [
-    { title: "Overview", href: "/dashboard", icon: Home },
-    { title: "Add Product", href: "/dashboard/admin/addProductForm/new", icon: ShoppingBag },
-    { title: "Products", href: "/dashboard/admin/products", icon: BookOpen },
-    { title: "Orders", href: "/dashboard/admin/orders", icon: ShoppingBag },
-    { title: "Reviews", href: "/dashboard/admin/reviews", icon: MessageSquare },
-    { title: "Users", href: "/dashboard/admin/users", icon: Users },
-    { title: "Reports", href: "/dashboard/admin/reports", icon: BookOpen },
-    { title: "Settings", href: "/dashboard/admin/settings", icon: Settings },
+  { title: "Dashboard", href: "/dashboard", icon: Home },
+  
+
+  { title: "Manage Students", href: "/dashboard/admin/students", icon: Users },
+  { title: "Manage Instructors", href: "/dashboard/admin/instructors", icon: UserCheck },
+  { title: "Manage Admins", href: "/dashboard/admin/admins", icon: Shield },
+
+
+  { title: "Courses", href: "/dashboard/admin/courses", icon: BookOpen },
+//   { title: "Assignments", href: "/dashboard/admin/assignments", icon: ClipboardList },
+//   { title: "Quizzes", href: "/dashboard/admin/quizzes", icon: HelpCircle },
+//   { title: "Certificates", href: "/dashboard/admin/certificates", icon: Award },
+
+
+  { title: "Reports", href: "/dashboard/admin/reports", icon: BarChart3 },
+
+
+  { title: "Transactions", href: "/dashboard/admin/transactions", icon: CreditCard },
+  { title: "Purchase History", href: "/dashboard/admin/purchase-history", icon: ShoppingBag },
+
+//   { title: "Site Settings", href: "/dashboard/admin/settings", icon: Settings },
+//   { title: "Support Tickets", href: "/dashboard/admin/support", icon: LifeBuoy },
 ];
+
 
 
 export function getDashboardSideMenu(role) {
@@ -37,5 +54,5 @@ export function getDashboardSideMenu(role) {
         return instructorMenu;
     } else {
         return studentMenu;
-    }       
+    }
 }

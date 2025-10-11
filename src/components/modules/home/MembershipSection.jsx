@@ -44,7 +44,7 @@ export default function MembershipSection() {
 
                 {/* Billing Toggle */}
                 <div className="flex justify-center mb-12">
-                    <div className="flex bg-[var(--color-background)] rounded-full p-1 text-sm font-medium">
+                    <div className="flex bg-[var(--color-background)] border-2 border-[var(--color-primary)] rounded-full p-1 text-sm font-medium">
                         <button
                             onClick={() => setBilling("monthly")}
                             className={`px-6 py-2 rounded-full transition-colors ${billing === "monthly" ? "bg-[var(--color-primary)] text-white" : "text-[var(--color-text)]"
