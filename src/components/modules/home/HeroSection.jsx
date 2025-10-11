@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { FaGraduationCap } from "react-icons/fa";
 import { MdVerified, MdPerson, MdSearch, MdKeyboardArrowDown } from "react-icons/md";
+import SearchBar from "@/components/modules/special/Searchbar";
 
 export default function HeroSection() {
   const [category, setCategory] = useState("");
@@ -17,7 +18,7 @@ export default function HeroSection() {
     <section className="relative">
       {/* 🎥 Background video */}
       <video
-        className="absolute inset-0 h-full w-full object-cover opacity-35"
+        className="absolute inset-0 h-full w-full object-cover opacity-20"
         src="/videos/background.mp4"
         autoPlay
         loop
@@ -49,7 +50,7 @@ export default function HeroSection() {
 
             <h1 className="mb-6 text-4xl font-bold leading-tight text-[var(--color-text)] md:text-5xl">
               Find the{" "}
-              <span className="relative text-[#F9D26E]">
+              <span className="relative text-[var(--color-accent-special)]">
                 Best Courses
                 <svg
                   className="absolute left-0 -bottom-4 w-full"
@@ -63,7 +64,7 @@ export default function HeroSection() {
                 </svg>
               </span>{" "}
               from the{" "}
-              <span className="text-[#F9D26E]">Best Mentors</span> Around the World
+              <span className="text-[var(--color-accent-special)]">Best Mentors</span> Around the World
             </h1>
 
             <p className="mb-6 max-w-xl text-[var(--color-text)]/85">
@@ -77,64 +78,7 @@ export default function HeroSection() {
             >
               <div className="flex flex-col gap-2 md:flex-row md:gap-3">
                 {/* Custom Select */}
-                <div className="relative md:w-[240px]">
-                  <select
-                    value={category}
-                    onChange={(e) => setCategory(e.target.value)}
-                    className="
-                      w-full appearance-none rounded-lg bg-white px-4 py-3 pr-10
-                      text-[var(--color-text)] outline-none transition
-                      focus:ring-2 focus:ring-[var(--color-primary)]
-                      placeholder-[var(--color-text)]/60
-                    "
-                    style={{ boxShadow: "var(--shadow-soft)" }}
-                  >
-                    <option value="">Select Category</option>
-                    <option value="tech">Technology</option>
-                    <option value="design">Design</option>
-                    <option value="business">Business</option>
-                  </select>
-                  <MdKeyboardArrowDown
-                    size={20}
-                    className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 opacity-70"
-                    color="currentColor"
-                  />
-                </div>
-
-                {/* Search Input */}
-                <input
-                  type="text"
-                  value={query}
-                  onChange={(e) => setQuery(e.target.value)}
-                  placeholder="Search for Courses, Instructors"
-                  className="
-                    flex-1 rounded-lg bg-white px-4 py-3
-                    text-[var(--color-text)] outline-none transition
-                    placeholder-[var(--color-text)]/60
-                    focus:ring-2 focus:ring-[var(--color-primary)]
-                  "
-                  style={{ boxShadow: "var(--shadow-soft)" }}
-                />
-
-                {/* Submit Button (icon, no arrow char) */}
-                <button
-                  type="submit"
-                  aria-label="Search"
-                  title="Search"
-                  className="
-                    inline-flex w-full items-center justify-center gap-2 rounded-lg px-6 py-3
-                    text-white transition md:w-[140px]
-                  "
-                  style={{
-                    background: "var(--color-primary)",
-                    boxShadow: "var(--shadow-medium)",
-                  }}
-                  onMouseEnter={(e) => ((e.currentTarget).style.background = "var(--color-primary-hover)")}
-                  onMouseLeave={(e) => ((e.currentTarget).style.background = "var(--color-primary)")}
-                >
-                  <MdSearch size={20} />
-                  <span className="hidden md:inline">Search</span>
-                </button>
+                <SearchBar />
               </div>
             </form>
 
