@@ -16,7 +16,7 @@ export default function NotFound() {
   };
 
   return (
-    <main className="relative min-h-[100vh] bg-[var(--color-accent-special)] overflow-hidden px-6 py-12 grid place-items-center">
+    <main className="relative min-h-[100vh] overflow-hidden px-6 py-12 grid place-items-center">
       {/* subtle background */}
       <div
         aria-hidden
@@ -44,7 +44,7 @@ export default function NotFound() {
           <span className="bg-clip-text text-transparent bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-secondary)]">
             Oops,
           </span>{" "}
-          we couldn’t find that page.
+          <span className="text-[var(--color-primary)]">we couldn’t find that page.</span>
         </h1>
 
         {/* Subtext */}
