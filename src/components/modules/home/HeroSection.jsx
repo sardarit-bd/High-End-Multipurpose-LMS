@@ -41,14 +41,14 @@ export default function HeroSection() {
               className="mb-4 inline-block rounded-full px-5 py-1 text-sm"
               style={{
                 background: "rgba(255,255,255,0.6)",
-                color: "var(--color-secondary)",
+                color: "var(--color-accent-special)",
                 boxShadow: "var(--shadow-soft)",
               }}
             >
               The Leader in Online Learning
             </span>
 
-            <h1 className="mb-6 text-4xl font-bold leading-tight text-[var(--color-text)] md:text-5xl">
+            <h1 className="mb-3 text-4xl font-bold leading-tight text-[var(--color-text)] md:text-5xl">
               Find the{" "}
               <span className="relative text-[var(--color-accent-special)]">
                 Best Courses
@@ -67,7 +67,7 @@ export default function HeroSection() {
               <span className="text-[var(--color-accent-special)]">Best Mentors</span> Around the World
             </h1>
 
-            <p className="mb-6 max-w-xl text-[var(--color-text)]/85">
+            <p className="mb-4 max-w-xl text-[var(--color-text)]/85">
               Our specialized online courses are designed to bring the classroom experience to you, no matter where you are.
             </p>
 
