@@ -3,7 +3,7 @@ import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { MdKeyboardArrowDown, MdCheck, MdSearch } from "react-icons/md";
 
-/** ---------- Portal (exposes containerRef) ---------- */
+/** ---------- Portal (avoids clipping) ---------- */
 function MenuPortal({ anchorRef, open, containerRef, children }) {
     const [box, setBox] = useState(null);
 
@@ -51,22 +51,23 @@ function CustomSelect({ value, onChange, placeholder = "Select Category" }) {
     const [hi, setHi] = useState(-1);
     const rootRef = useRef(null);
     const btnRef = useRef(null);
-    const menuRef = useRef(null); // NEW: portal container
+    const menuRef = useRef(null);
 
     const options = [
         { label: "Technology", value: "tech" },
         { label: "Design", value: "design" },
         { label: "Business", value: "business" },
     ];
+
     const selectedLabel =
         options.find((o) => o.value === value)?.label || placeholder;
 
-    // click-outside that ignores clicks inside menuRef
+    // click-outside (ignore clicks inside menu portal)
     useEffect(() => {
         function onDoc(e) {
             const t = e.target;
             if (rootRef.current?.contains(t)) return;
-            if (menuRef.current?.contains(t)) return; // allow option clicks
+            if (menuRef.current?.contains(t)) return;
             setOpen(false);
         }
         document.addEventListener("mousedown", onDoc);
@@ -137,12 +138,12 @@ function CustomSelect({ value, onChange, placeholder = "Select Category" }) {
                                 aria-selected={active}
                                 onMouseEnter={() => setHi(i)}
                                 onClick={() => {
-                                    onChange?.(opt.value);
+                                    onChange?.(opt.value); // updates parent or local (see below)
                                     setOpen(false);
                                     btnRef.current?.focus();
                                 }}
                                 className={`
-                  px-4 py-2 cursor-pointer flex items-center justify-between
+                  px-4 py-2 cursor-pointer flex items-center justify-between text-[var(--color-text)]
                   ${highlighted ? "bg-[var(--color-primary)]/10" : "hover:bg-[var(--color-primary)]/10"}
                   ${active ? "font-medium" : ""}
                 `}
@@ -160,14 +161,24 @@ function CustomSelect({ value, onChange, placeholder = "Select Category" }) {
 
 /** ---------- SearchBar (exported) ---------- */
 export default function SearchBar({
+    // Controlled (optional)
     category,
     query,
     onCategoryChange,
     onQueryChange,
+    // Submit
     onSubmit,
     submitLabel = "Search",
 }) {
-    const formRef = useRef(null);
+    // --- Uncontrolled fallbacks (if no props passed) ---
+    const [localCategory, setLocalCategory] = useState("");
+    const [localQuery, setLocalQuery] = useState("");
+
+    const cat = category !== undefined ? category : localCategory;
+    const setCat = onCategoryChange ?? setLocalCategory;
+
+    const q = query !== undefined ? query : localQuery;
+    const setQ = onQueryChange ?? setLocalQuery;
 
     const handleSubmit = (e) => {
         e?.preventDefault();
@@ -175,7 +186,8 @@ export default function SearchBar({
     };
 
     return (
-        <form ref={formRef} onSubmit={handleSubmit} aria-label="Course search" className="w-full">
+        <form onSubmit={handleSubmit} aria-label="Course search" className="w-full">
+            {/* Unified wrapper */}
             <div
                 className="
           flex flex-col md:flex-row w-full
@@ -185,18 +197,21 @@ export default function SearchBar({
           divide-y md:divide-y-0 md:divide-x divide-gray-200
         "
             >
+                {/* Category */}
                 <div className="md:w-[240px]">
-                    <CustomSelect value={category} onChange={onCategoryChange} />
+                    <CustomSelect value={cat} onChange={setCat} />
                 </div>
 
+                {/* Query */}
                 <input
                     type="text"
-                    value={query}
-                    onChange={(e) => onQueryChange?.(e.target.value)}
+                    value={q}
+                    onChange={(e) => setQ(e.target.value)}
                     placeholder="Search for Courses, Instructors"
                     className="flex-1 h-12 md:h-[48px] bg-white px-4 text-[var(--color-text)] placeholder-[var(--color-text)]/60 focus:outline-none"
                 />
 
+                {/* Submit */}
                 <button
                     type="submit"
                     aria-label="Search"
