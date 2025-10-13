@@ -128,7 +128,7 @@ export default function HeroSection() {
             <video
               className="w-full max-w-4xl rounded-xl shadow-lg"
               style={{ boxShadow: "var(--shadow-medium)" }}
-              src="/lms.mp4"
+              src="https://res.cloudinary.com/dg83pvgls/video/upload/v1760356802/lms_z6l6o6.mp4"
               autoPlay
               loop
               muted
