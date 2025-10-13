@@ -355,7 +355,7 @@ export default function FeaturedCourses() {
           <select
             value={selectedCategory}
             onChange={(e) => setSelectedCategory(e.target.value)}
-            className="px-4 w-full md:w-1/3 py-2 rounded-lg border border-gray-300 text-[var(--color-text)] bg-[var(--color-background)] focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]"
+            className="px-4 w-full md:w-1/5 py-2 rounded-lg border border-gray-300 text-[var(--color-text)] bg-[var(--color-background)] focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]"
           >
             {categories.map((cat) => (
               <option key={cat} value={cat}>
