@@ -20,7 +20,7 @@ export default function CourseSinglePage() {
                                 //   poster="/thumbnail.jpg"
                                 className="w-full rounded-[var(--radius-card)]"
                             >
-                                <source src="/lms.mp4" type="video/mp4" />
+                                <source src="https://res.cloudinary.com/dg83pvgls/video/upload/v1760356802/lms_z6l6o6.mp4" type="video/mp4" />
                                 Your browser does not support video playback.
                             </video>
                         </div>
