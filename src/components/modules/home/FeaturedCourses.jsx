@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import CourseCard from "../courses/CourseCard";
 import Link from "next/link";
+import { TbCategoryPlus } from "react-icons/tb";
 export const courses = [
   // ===== UI/UX =====
   {
@@ -347,9 +348,10 @@ export default function FeaturedCourses() {
         <p className="text-gray-600 mb-6">
           Discover our featured courses, specially curated to help you gain in-demand skills.
         </p>
-
         {/* Dropdown Filter */}
-        <div className="mb-10 flex justify-left">
+        <div className="mb-10 flex justify-between items-center gap-4 flex-col md:flex-row">
+          <h1 className="text-xl font-bold text-[var(--color-text)]">
+            <TbCategoryPlus className="inline"/> Filter By:</h1>
           <select
             value={selectedCategory}
             onChange={(e) => setSelectedCategory(e.target.value)}
