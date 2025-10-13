@@ -5,7 +5,7 @@ import { FaRegClock } from 'react-icons/fa';
 import { GiBlackBook } from "react-icons/gi";
 export default function CourseCard({ course }) {
     return (
-        <div className="bg-white shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden w-full flex flex-col">
+        <div className="relative bg-white shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden h-[420px] w-full flex flex-col">
             {/* Image + Category Badge */}
             <div className="relative">
                 <img
@@ -55,9 +55,9 @@ export default function CourseCard({ course }) {
                     </span>
                 </div>
             </div>
-            <button className="my-5 self-end mx-auto bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white px-4 py-2 rounded-md text-sm font-medium">
-                <Link href="courses/daynamic_slug">View Course</Link>
-            </button>
+            <div className='absolute bottom-0 w-full flex justify-center'>
+                <Link className='my-5 w-[90%] bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white px-4 py-2 rounded-md text-sm font-medium' href="courses/daynamic_slug">Explore Course</Link>
+            </div>
         </div>
     )
 }
