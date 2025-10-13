@@ -98,8 +98,8 @@ export default function NotFound() {
         <div className="mt-10 grid grid-cols-1 sm:grid-cols-3 gap-4">
           {[
             { title: "Explore Courses", href: "/courses", icon: BookOpen },
-            { title: "Discover", href: "/discover", icon: Compass },
-            { title: "Support", href: "/support", icon: LifeBuoy },
+            { title: "Discover", href: "/about", icon: Compass },
+            { title: "Support", href: "/faq", icon: LifeBuoy },
           ].map((item) => (
             <Link
               key={item.title}
