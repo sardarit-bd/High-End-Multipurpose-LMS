@@ -1,22 +1,23 @@
 "use client";
+
 import { useState } from "react";
 import { FaGraduationCap } from "react-icons/fa";
-import { MdVerified, MdPerson, MdSearch, MdKeyboardArrowDown } from "react-icons/md";
+import { MdVerified, MdPerson } from "react-icons/md";
 import SearchBar from "@/components/modules/special/Searchbar";
 
+// 🎯 Main Hero Section (Default Export)
 export default function HeroSection() {
   const [category, setCategory] = useState("");
   const [query, setQuery] = useState("");
 
   const handleSubmit = (e) => {
     e?.preventDefault();
-    // TODO: hook up your search action here (route, API, etc.)
-    // console.log({ category, query });
+    // Hook up search logic here (e.g., API call, router push)
   };
 
   return (
     <section className="relative">
-      {/* 🎥 Background video */}
+      {/* 🎥 Background Video */}
       <video
         className="absolute inset-0 h-full w-full object-cover opacity-20"
         src="/videos/background.mp4"
@@ -25,17 +26,13 @@ export default function HeroSection() {
         muted
         playsInline
       />
-
-      {/* 🔹 Light transparent white overlay */}
       <div className="absolute inset-0 bg-white/50" />
-
-      {/* 🔹 Color gradient overlay (for contrast balance) */}
       <div className="absolute inset-0 bg-gradient-to-b from-[var(--color-primary)]/20 via-[var(--color-secondary)]/20 to-[var(--color-accent)]/10 mix-blend-multiply" />
 
-      {/* 🌟 Main content */}
+      {/* 🌟 Main Content */}
       <section className="relative mx-auto flex min-h-[90vh] flex-col items-center justify-center overflow-hidden py-16">
         <div className="container mx-auto flex flex-col-reverse items-center justify-between gap-12 px-4 md:flex-row">
-          {/* Left Content */}
+          {/* Left Side */}
           <div className="flex-1">
             <span
               className="mb-4 inline-block rounded-full px-5 py-1 text-sm"
@@ -64,54 +61,69 @@ export default function HeroSection() {
                 </svg>
               </span>{" "}
               from the{" "}
-              <span className="text-[var(--color-accent-special)]">Best Mentors</span> Around the World
+              <span className="text-[var(--color-accent-special)]">
+                Best Mentors
+              </span>{" "}
+              Around the World
             </h1>
 
             <p className="mb-4 max-w-xl text-[var(--color-text)]/85">
-              Our specialized online courses are designed to bring the classroom experience to you, no matter where you are.
+              Our specialized online courses are designed to bring the
+              classroom experience to you, no matter where you are.
             </p>
 
-            {/* 🔍 Search Bar (card, custom select, white inputs) */}
-            <form
-              onSubmit={handleSubmit}
-              className="w-full rounded-xl p-1"
-            >
+            {/* 🔍 Search Bar */}
+            <div className="w-full rounded-xl p-1">
               <div className="flex flex-col gap-2 md:flex-row md:gap-3">
-                {/* Custom Select */}
                 <SearchBar />
               </div>
-            </form>
+            </div>
 
             {/* 📊 Stats */}
             <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-3">
-              <div className="flex items-center gap-3 rounded-xl bg-white/80 p-4" style={{ boxShadow: "var(--shadow-soft)" }}>
+              <div
+                className="flex items-center gap-3 rounded-xl bg-white/80 p-4"
+                style={{ boxShadow: "var(--shadow-soft)" }}
+              >
                 <FaGraduationCap className="text-2xl text-[var(--color-accent)]" />
                 <p>
                   <span className="font-bold text-[var(--color-text)]">10K</span>
                   <br />
-                  <span className="text-sm text-[var(--color-text)]/70">Online Courses</span>
+                  <span className="text-sm text-[var(--color-text)]/70">
+                    Online Courses
+                  </span>
                 </p>
               </div>
-              <div className="flex items-center gap-3 rounded-xl bg-white/80 p-4" style={{ boxShadow: "var(--shadow-soft)" }}>
+              <div
+                className="flex items-center gap-3 rounded-xl bg-white/80 p-4"
+                style={{ boxShadow: "var(--shadow-soft)" }}
+              >
                 <MdVerified className="text-2xl text-[var(--color-secondary)]" />
                 <p>
                   <span className="font-bold text-[var(--color-text)]">6K</span>
                   <br />
-                  <span className="text-sm text-[var(--color-text)]/70">Certified Courses</span>
+                  <span className="text-sm text-[var(--color-text)]/70">
+                    Certified Courses
+                  </span>
                 </p>
               </div>
-              <div className="flex items-center gap-3 rounded-xl bg-white/80 p-4" style={{ boxShadow: "var(--shadow-soft)" }}>
+              <div
+                className="flex items-center gap-3 rounded-xl bg-white/80 p-4"
+                style={{ boxShadow: "var(--shadow-soft)" }}
+              >
                 <MdPerson className="text-2xl text-[var(--color-primary)]" />
                 <p>
                   <span className="font-bold text-[var(--color-text)]">2K</span>
                   <br />
-                  <span className="text-sm text-[var(--color-text)]/70">Experienced Tutors</span>
+                  <span className="text-sm text-[var(--color-text)]/70">
+                    Experienced Tutors
+                  </span>
                 </p>
               </div>
             </div>
           </div>
 
-          {/* 🎓 Right Side - Course Preview */}
+          {/* Right Side - Video */}
           <div className="flex flex-1 justify-center md:justify-end">
             <video
               className="w-full max-w-4xl rounded-xl shadow-lg"
