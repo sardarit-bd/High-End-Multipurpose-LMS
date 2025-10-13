@@ -6,6 +6,7 @@ import { TbCategoryPlus } from "react-icons/tb";
 export const courses = [
   // ===== UI/UX =====
   {
+    id: 1,
     title: "Information About UI/UX Design Degree",
     category: "UI/UX",
     lessons: 20,
@@ -19,6 +20,7 @@ export const courses = [
     image: "/courses/uiux.jpg",
   },
   {
+    id: 2,
     title: "UI/UX Wireframing and Prototyping",
     category: "UI/UX",
     lessons: 18,
@@ -32,6 +34,7 @@ export const courses = [
     image: "/courses/uiux.jpg",
   },
   {
+    id: 3,
     title: "Mastering UX Research",
     category: "UI/UX",
     lessons: 22,
@@ -45,6 +48,7 @@ export const courses = [
     image: "/courses/uiux.jpg",
   },
   {
+    id: 4,
     title: "Figma for Beginners",
     category: "UI/UX",
     lessons: 15,
@@ -58,6 +62,7 @@ export const courses = [
     image: "/courses/uiux.jpg",
   },
   {
+    id: 5,
     title: "UX Writing Essentials",
     category: "UI/UX",
     lessons: 12,
@@ -71,6 +76,7 @@ export const courses = [
     image: "/courses/uiux.jpg",
   },
   {
+    id: 6,
     title: "Advanced UI Animations",
     category: "UI/UX",
     lessons: 26,
@@ -86,6 +92,7 @@ export const courses = [
 
   // ===== Productivity =====
   {
+    id: 7,
     title: "Learn & Create ReactJS Tech Fundamentals Apps",
     category: "Productivity",
     lessons: 28,
@@ -99,6 +106,7 @@ export const courses = [
     image: "/courses/react.jpg",
   },
   {
+    id: 8,
     title: "Boost Productivity with Notion",
     category: "Productivity",
     lessons: 12,
@@ -112,6 +120,7 @@ export const courses = [
     image: "/courses/react.jpg",
   },
   {
+    id: 9,
     title: "AI Tools for Work Efficiency",
     category: "Productivity",
     lessons: 18,
@@ -125,6 +134,7 @@ export const courses = [
     image: "/courses/react.jpg",
   },
   {
+    id: 10,
     title: "Time Management Strategies",
     category: "Productivity",
     lessons: 14,
@@ -138,6 +148,7 @@ export const courses = [
     image: "/courses/react.jpg",
   },
   {
+    id: 11,
     title: "Kanban for Teams",
     category: "Productivity",
     lessons: 10,
@@ -151,6 +162,7 @@ export const courses = [
     image: "/courses/react.jpg",
   },
   {
+    id: 12,
     title: "Deep Work Mastery",
     category: "Productivity",
     lessons: 16,
@@ -166,6 +178,7 @@ export const courses = [
 
   // ===== Management =====
   {
+    id: 13,
     title: "The Complete Business and Management Course",
     category: "Management",
     lessons: 25,
@@ -179,6 +192,7 @@ export const courses = [
     image: "/courses/business.jpg",
   },
   {
+    id: 14,
     title: "Project Management Essentials",
     category: "Management",
     lessons: 20,
@@ -192,6 +206,7 @@ export const courses = [
     image: "/courses/business.jpg",
   },
   {
+    id: 15,
     title: "Agile Leadership Training",
     category: "Management",
     lessons: 15,
@@ -205,6 +220,7 @@ export const courses = [
     image: "/courses/business.jpg",
   },
   {
+    id: 16,
     title: "Entrepreneurship 101",
     category: "Management",
     lessons: 18,
@@ -218,6 +234,7 @@ export const courses = [
     image: "/courses/business.jpg",
   },
   {
+    id: 17,
     title: "Financial Management Basics",
     category: "Management",
     lessons: 22,
@@ -231,6 +248,7 @@ export const courses = [
     image: "/courses/business.jpg",
   },
   {
+    id: 18,
     title: "Team Building Strategies",
     category: "Management",
     lessons: 12,
@@ -246,6 +264,7 @@ export const courses = [
 
   // ===== Art & Media =====
   {
+    id: 19,
     title: "Build Creative Arts & Media Course Completed",
     category: "Art & Media",
     lessons: 22,
@@ -259,6 +278,7 @@ export const courses = [
     image: "/courses/art.jpg",
   },
   {
+    id: 20,
     title: "Photography Masterclass",
     category: "Art & Media",
     lessons: 30,
@@ -272,6 +292,7 @@ export const courses = [
     image: "/courses/art.jpg",
   },
   {
+    id: 21,
     title: "Video Editing in Premiere Pro",
     category: "Art & Media",
     lessons: 18,
@@ -285,6 +306,7 @@ export const courses = [
     image: "/courses/art.jpg",
   },
   {
+    id: 22,
     title: "Digital Illustration in Procreate",
     category: "Art & Media",
     lessons: 20,
@@ -298,6 +320,7 @@ export const courses = [
     image: "/courses/art.jpg",
   },
   {
+    id: 23,
     title: "Storytelling for Filmmakers",
     category: "Art & Media",
     lessons: 15,
@@ -311,6 +334,7 @@ export const courses = [
     image: "/courses/art.jpg",
   },
   {
+    id: 24,
     title: "Sound Design Fundamentals",
     category: "Art & Media",
     lessons: 12,
@@ -324,6 +348,7 @@ export const courses = [
     image: "/courses/art.jpg",
   },
 ];
+
 export default function FeaturedCourses() {
 
 

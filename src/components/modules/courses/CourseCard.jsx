@@ -27,7 +27,9 @@ export default function CourseCard({ course }) {
                 </div>
 
                 {/* Title */}
+                <Link href={`courses/${course.id}`} className="hover:text-[var(--color-primary)]">
                 <h3 className="font-semibold mb-3 line-clamp-2">{course.title}</h3>
+                </Link>
 
                 {/* Pricing */}
                 <div className="mb-3">
