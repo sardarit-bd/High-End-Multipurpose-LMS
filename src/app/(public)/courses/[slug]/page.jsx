@@ -3,9 +3,22 @@ import AboutInstructor from "@/components/modules/courses/AboutInstructor";
 import CommentForm from "@/components/modules/courses/CommentForm";
 import CourseContent from "@/components/modules/courses/CourseContent";
 import { FiHeart, FiShare2 } from "react-icons/fi";
+import { useEffect, useState } from "react";
+import CourseSingleSkeleton from "@/components/modules/special/CourseSingleSkeleton";
 
 
 export default function CourseSinglePage() {
+
+    const [hydrated, setHydrated] = useState(false);
+    // Optional: keep the skeleton for a minimum time to avoid flash (e.g., 300ms)
+    const MIN_DELAY_MS = 200;
+
+    useEffect(() => {
+        const t = setTimeout(() => setHydrated(true), MIN_DELAY_MS);
+        return () => clearTimeout(t);
+    }, []);
+
+    if (!hydrated) return <CourseSingleSkeleton />;
 
     return (
         <div className="bg-white min-h-screen">
