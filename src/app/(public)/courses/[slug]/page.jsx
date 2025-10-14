@@ -57,7 +57,6 @@ export default function CourseSinglePage() {
                         <CourseContent />
                         <AboutInstructor />
                         <CommentForm />
-
                     </div>
 
                     {/* ===== Right Sidebar ===== */}

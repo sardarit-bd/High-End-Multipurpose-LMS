@@ -376,7 +376,7 @@ export default function FeaturedCourses() {
         {/* Dropdown Filter */}
         <div className="mb-10 flex justify-between items-center gap-4 flex-col md:flex-row">
           <h1 className="text-xl font-bold text-[var(--color-text)]">
-            <TbCategoryPlus className="inline"/> Filter By:</h1>
+            <TbCategoryPlus className="inline" /> Filter By:</h1>
           <select
             value={selectedCategory}
             onChange={(e) => setSelectedCategory(e.target.value)}
