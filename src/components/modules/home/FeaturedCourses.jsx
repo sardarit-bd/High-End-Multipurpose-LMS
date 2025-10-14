@@ -389,7 +389,6 @@ export default function FeaturedCourses() {
             ))}
           </select>
         </div>
-
         {/* Course Cards */}
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch">
           {filteredCourses.slice(0, 8).map((c, i) => (
