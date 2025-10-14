@@ -57,7 +57,7 @@ export default function CourseCard({ course }) {
                     </span>
                 </div>
             </div>
-            <div className='absolute bottom-0 w-full flex justify-center'>
+            <div className='absolute bottom-0 w-full flex justify-center items-center text-center'>
                 <Link className='my-5 w-[90%] bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white px-4 py-2 rounded-md text-sm font-medium' href="courses/daynamic_slug">Explore Course</Link>
             </div>
         </div>
