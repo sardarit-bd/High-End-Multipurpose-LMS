@@ -73,11 +73,10 @@ const Navbar = () => {
               <div key={link.name} className="relative">
                 <button
                   onClick={() => toggleDropdown(link.name)}
-                  className={`flex items-center gap-1 font-medium ${
-                    openDropdown === link.name
-                      ? "text-[var(--color-primary)]"
-                      : "text-[var(--color-text)] hover:text-[var(--color-secondary-hover)]"
-                  }`}
+                  className={`flex items-center gap-1 font-medium ${openDropdown === link.name
+                    ? "text-[var(--color-primary)]"
+                    : "text-[var(--color-text)] hover:text-[var(--color-secondary-hover)]"
+                    }`}
                 >
                   {link.name}
                   <svg
@@ -102,11 +101,10 @@ const Navbar = () => {
                         key={item.name}
                         href={item.href}
                         onClick={closeMenu}
-                        className={`block px-4 py-2 text-sm ${
-                          isActive(item.href)
-                            ? "bg-[var(--color-primary)] text-white"
-                            : "text-[var(--color-text)] hover:bg-[var(--color-primary)] hover:text-white"
-                        }`}
+                        className={`block px-4 py-2 text-sm ${isActive(item.href)
+                          ? "bg-[var(--color-primary)] text-white"
+                          : "text-[var(--color-text)] hover:bg-[var(--color-primary)] hover:text-white"
+                          }`}
                       >
                         {item.name}
                       </Link>
@@ -119,11 +117,10 @@ const Navbar = () => {
                 key={link.name}
                 href={link.href}
                 onClick={closeMenu}
-                className={`font-medium ${
-                  isActive(link.href)
-                    ? "text-[var(--color-primary)] border-b-2 border-[var(--color-primary)]"
-                    : "text-[var(--color-text)] hover:text-[var(--color-secondary-hover)]"
-                }`}
+                className={`font-medium ${isActive(link.href)
+                  ? "text-[var(--color-primary)] border-b-2 border-[var(--color-primary)]"
+                  : "text-[var(--color-text)] hover:text-[var(--color-secondary-hover)]"
+                  }`}
               >
                 {link.name}
               </Link>
@@ -134,27 +131,26 @@ const Navbar = () => {
         {/* Desktop Language Selector & Auth Buttons */}
         <div className="hidden lg:flex items-center gap-4">
           <div className="relative">
-            <button 
+            <button
               onClick={() => toggleDropdown('language')}
               className="flex items-center gap-2 text-[var(--color-secondary)] hover:text-[var(--color-secondary-hover)]"
             >
               <FaGlobe />
-              <span className="text-sm font-medium uppercase">
+              <span className="text-sm text-[var(--color-text)] font-medium uppercase">
                 {i18n.language}
               </span>
             </button>
-            
+
             {openDropdown === 'language' && (
               <div className="absolute right-0 bg-white border rounded shadow-md mt-2 z-50">
                 {languages.map((lng) => (
                   <button
                     key={lng.code}
                     onClick={() => changeLanguage(lng.code)}
-                    className={`block w-full text-left px-4 py-2 text-sm ${
-                      i18n.language === lng.code 
-                        ? "bg-[var(--color-primary)] text-white" 
-                        : "hover:bg-gray-100"
-                    }`}
+                    className={`block  text-[var(--color-primary-text)] w-full text-left px-4 py-2 text-sm ${i18n.language === lng.code
+                      ? "bg-[var(--color-primary)] text-[var(--color-primary-text)]"
+                      : "hover:bg-gray-100 text-[var(--color-secondary)]"
+                      }`}
                   >
                     {lng.label}
                   </button>
@@ -200,9 +196,8 @@ const Navbar = () => {
                     >
                       {link.name}
                       <svg
-                        className={`w-4 h-4 transition-transform ${
-                          openDropdown === `${link.name}-mobile` ? "rotate-180" : ""
-                        }`}
+                        className={`w-4 h-4 transition-transform ${openDropdown === `${link.name}-mobile` ? "rotate-180" : ""
+                          }`}
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
@@ -223,11 +218,10 @@ const Navbar = () => {
                             key={item.name}
                             href={item.href}
                             onClick={closeMenu}
-                            className={`block py-2 text-sm ${
-                              isActive(item.href)
-                                ? "text-[var(--color-primary)] font-medium"
-                                : "text-[var(--color-text)] hover:text-[var(--color-secondary-hover)]"
-                            }`}
+                            className={`block py-2 text-sm ${isActive(item.href)
+                              ? "text-[var(--color-primary)] font-medium"
+                              : "text-[var(--color-text)] hover:text-[var(--color-secondary-hover)]"
+                              }`}
                           >
                             {item.name}
                           </Link>
@@ -240,11 +234,10 @@ const Navbar = () => {
                     key={link.name}
                     href={link.href}
                     onClick={closeMenu}
-                    className={`block font-medium py-2 ${
-                      isActive(link.href)
-                        ? "text-[var(--color-primary)]"
-                        : "text-[var(--color-text)] hover:text-[var(--color-secondary-hover)]"
-                    }`}
+                    className={`block font-medium py-2 ${isActive(link.href)
+                      ? "text-[var(--color-primary)]"
+                      : "text-[var(--color-text)] hover:text-[var(--color-secondary-hover)]"
+                      }`}
                   >
                     {link.name}
                   </Link>
@@ -261,11 +254,10 @@ const Navbar = () => {
                     <button
                       key={lng.code}
                       onClick={() => changeLanguage(lng.code)}
-                      className={`px-3 py-2 text-sm rounded-lg border ${
-                        i18n.language === lng.code
-                          ? "bg-[var(--color-primary)] text-white border-[var(--color-primary)]"
-                          : "bg-gray-100 text-gray-700 border-gray-300 hover:bg-gray-200"
-                      }`}
+                      className={`px-3 py-2 text-sm rounded-lg border ${i18n.language === lng.code
+                        ? "bg-[var(--color-primary)] text-white border-[var(--color-primary)]"
+                        : "bg-gray-100 text-gray-700 border-gray-300 hover:bg-gray-200"
+                        }`}
                     >
                       {lng.label}
                     </button>
