@@ -122,7 +122,7 @@ export default function TopCategories() {
               <button
                 key={i}
                 data-card
-                className="snap-start bg-white rounded-[var(--radius-card)] shadow-sm hover:shadow-md p-6 flex flex-col items-center justify-center transition-all min-w-[200px] md:min-w-[220px]"
+                className="cursor-pointer snap-start bg-white rounded-[var(--radius-card)] shadow-sm hover:shadow-md p-6 flex flex-col items-center justify-center transition-all min-w-[200px] md:min-w-[220px]"
                 aria-label={item.name}
               >
                 <img src={item.logo} alt="" className="h-10 w-10 mb-4 object-contain" />
