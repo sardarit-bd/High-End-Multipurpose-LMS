@@ -1,20 +1,26 @@
+"use client";
+
+import { useTranslation } from "react-i18next";
+
 export default function OurBenefits() {
+  const { t } = useTranslation();
+
   const benefits = [
     {
-      title: "Flexible Learning",
-      desc: "We believe that high-quality education should be accessible to everyone. Our pricing form in models are designed.",
+      title: t("benefits.flexibleLearning.title") || "Flexible Learning",
+      desc: t("benefits.flexibleLearning.desc") || "We believe that high-quality education should be accessible to everyone. Our pricing form in models are designed.",
       icon: "📘",
       gradient: "from-indigo-100 via-purple-50 to-pink-50",
     },
     {
-      title: "Lifetime Access",
-      desc: "When you enroll in our courses, you’re not just signing up for a temporary learning to experience you’re making.",
+      title: t("benefits.lifetimeAccess.title") || "Lifetime Access",
+      desc: t("benefits.lifetimeAccess.desc") || "When you enroll in our courses, you're not just signing up for a temporary learning to experience you're making.",
       icon: "📕",
       gradient: "from-pink-100 via-rose-50 to-red-50",
     },
     {
-      title: "Expert Instruction",
-      desc: "Our instructors are seasoned professionals with years of experience in their respective fields & Experts advice.",
+      title: t("benefits.expertInstruction.title") || "Expert Instruction",
+      desc: t("benefits.expertInstruction.desc") || "Our instructors are seasoned professionals with years of experience in their respective fields & Experts advice.",
       icon: "🎓",
       gradient: "from-blue-100 via-cyan-50 to-teal-50",
     },
@@ -24,13 +30,13 @@ export default function OurBenefits() {
     <section className="w-full bg-white z-100 py-16">
       <div className="container mx-auto text-center px-4">
         <h3 className="text-sm font-semibold text-[var(--color-secondary)] mb-2">
-          Our Benefits
+          {t("benefits.subtitle") || "Our Benefits"}
         </h3>
         <h2 className="text-3xl md:text-4xl font-bold text-[var(--color-text)] mb-3">
-          Master the Skills to Drive your Career
+          {t("benefits.title") || "Master the Skills to Drive your Career"}
         </h2>
         <p className="text-gray-600 mb-10">
-          The right course, guided by an expert mentor, can provide invaluable insights, practical skills.
+          {t("benefits.description") || "The right course, guided by an expert mentor, can provide invaluable insights, practical skills."}
         </p>
 
         <div className="grid md:grid-cols-3 gap-6">
