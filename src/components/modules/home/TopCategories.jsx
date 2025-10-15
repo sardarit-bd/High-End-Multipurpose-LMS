@@ -5,6 +5,7 @@ export default function TopCategories() {
     { name: "Frontend Developer", logo: "/icons/frontend.svg" },
     { name: "Jira Management", logo: "/icons/jira.svg" },
     { name: "Figma Developer", logo: "/icons/figma.svg" },
+    { name: "Webflow Developer", logo: "/icons/shopify.svg" },
     { name: "Framer Developer", logo: "/icons/framer.svg" },
     { name: "Vue js Developer", logo: "/icons/vue.svg" },
     { name: "Shopify Developer", logo: "/icons/shopify.svg" },
@@ -49,20 +50,20 @@ export default function TopCategories() {
           {/* Scroll Buttons (only on desktop) */}
           <button
             className="hidden md:flex absolute left-0 top-1/2 -translate-y-1/2 bg-white shadow-md p-2 rounded-full hover:bg-[var(--color-primary)] hover:text-white transition"
-            // onClick={() => {
-            // //   const container = document.getElementById("scrollContainer");
-            // //   container.scrollBy({ left: -200, behavior: "smooth" });
-            // }}
+          // onClick={() => {
+          // //   const container = document.getElementById("scrollContainer");
+          // //   container.scrollBy({ left: -200, behavior: "smooth" });
+          // }}
           >
             <ArrowLeft size={18} />
           </button>
 
           <button
             className="hidden md:flex absolute right-0 top-1/2 -translate-y-1/2 bg-white shadow-md p-2 rounded-full hover:bg-[var(--color-primary)] hover:text-white transition"
-            // onClick={() => {
-            //   const container = document.getElementById("scrollContainer");
-            //   container.scrollBy({ left: 200, behavior: "smooth" });
-            // }}
+          // onClick={() => {
+          //   const container = document.getElementById("scrollContainer");
+          //   container.scrollBy({ left: 200, behavior: "smooth" });
+          // }}
           >
             <ArrowRight size={18} />
           </button>
