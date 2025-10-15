@@ -69,6 +69,17 @@ const resources = {
       "courses.categories.management": "Management",
       "courses.categories.artMedia": "Art & Media",
 
+      // Benefits Section Translations
+      "benefits.subtitle": "Our Benefits",
+      "benefits.title": "Master the Skills to Drive your Career",
+      "benefits.description": "The right course, guided by an expert mentor, can provide invaluable insights, practical skills.",
+      "benefits.flexibleLearning.title": "Flexible Learning",
+      "benefits.flexibleLearning.desc": "We believe that high-quality education should be accessible to everyone. Our pricing form in models are designed.",
+      "benefits.lifetimeAccess.title": "Lifetime Access",
+      "benefits.lifetimeAccess.desc": "When you enroll in our courses, you're not just signing up for a temporary learning to experience you're making.",
+      "benefits.expertInstruction.title": "Expert Instruction",
+      "benefits.expertInstruction.desc": "Our instructors are seasoned professionals with years of experience in their respective fields & Experts advice.",
+
        // Pricing Section Translations
       "pricing.title": "Choose Your Membership",
       "pricing.description": "Select the plan that fits you best. Monthly or yearly options available.",
@@ -159,6 +170,18 @@ const resources = {
       "courses.viewMore": "Lihat Lagi",
       
       // Course Categories Malay
+      "courses.categories.all": "Semua",
+      "courses.categories.uiux": "UI/UX",
+      "courses.categories.productivity": "Produktiviti",
+      "courses.categories.management": "Pengurusan",
+      "courses.categories.artMedia": "Seni & Media",
+
+      // Course Card Malay Translations
+      "courses.lessons": "Pelajaran",
+      "courses.free": "Percuma",
+      "courses.exploreCourse": "Terokai Kursus",
+      
+      // Course Categories Malay (already exists, just ensuring they're there)
       "courses.categories.all": "Semua",
       "courses.categories.uiux": "UI/UX",
       "courses.categories.productivity": "Produktiviti",
