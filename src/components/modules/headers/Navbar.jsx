@@ -3,201 +3,85 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { FaBars, FaTimes } from "react-icons/fa";
+import { FaBars, FaTimes, FaGlobe } from "react-icons/fa";
+import { useTranslation } from "react-i18next";
 
 const Navbar = () => {
+  const { t, i18n } = useTranslation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState(null);
   const pathname = usePathname();
 
-  const toggleDropdown = (dropdown) => {
+  const toggleDropdown = (dropdown) =>
     setOpenDropdown(openDropdown === dropdown ? null : dropdown);
-  };
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
-
   const closeMenu = () => {
     setIsMenuOpen(false);
     setOpenDropdown(null);
   };
 
-  const menuLinks = [
-    { name: "Home", href: "/" },
-    { name: "Courses", href: "/courses" },
-    { name: "Pricing", href: "/pricing" },
-    { name: "Dashboard", href: "/dashboard" },
-    { name: "Instructors", href: "/instructors" },
-    {
-      name: "Pages",
-      dropdown: [
-        { name: "Checkout", href: "/checkout" },
-        { name: "About Us", href: "/about" },
-        { name: "Contact", href: "/contact" },
-        { name: "Terms and Condition", href: "/terms" },
-        { name: "Privacy Policy", href: "/privacy" },
-        { name: "FAQ", href: "/faq" },
-        { name: "404 Page", href: "/404" },
-        { name: "Success History", href: "/success-history" },
-      ],
-    },
-    { name: "Blog", href: "/blog" },
+  const languages = [
+    { code: "en", label: "English" },
+    { code: "ms", label: "Malay" }
   ];
 
-  // helper to check active state
+  const changeLanguage = (lng) => {
+    i18n.changeLanguage(lng);
+    setOpenDropdown(null);
+  };
+
+  const menuLinks = [
+    { name: t("home"), href: "/" },
+    { name: t("courses"), href: "/courses" },
+    { name: t("pricing"), href: "/pricing" },
+    { name: t("dashboard"), href: "/dashboard" },
+    { name: t("instructors"), href: "/instructors" },
+    {
+      name: t("pages"),
+      dropdown: [
+        { name: t("checkout"), href: "/checkout" },
+        { name: t("about"), href: "/about" },
+        { name: t("contact"), href: "/contact" },
+        { name: t("terms"), href: "/terms" },
+        { name: t("privacy"), href: "/privacy" },
+        { name: t("faq"), href: "/faq" },
+        { name: "404", href: "/404" },
+        { name: t("success"), href: "/success-history" }
+      ]
+    },
+    { name: t("blog"), href: "/blog" }
+  ];
+
   const isActive = (href) => pathname === href;
 
   return (
-    <>
-      {/* Navbar */}
-      <nav className="bg-[var(--color-background)] border-b border-[var(--color-primary)] shadow-[var(--shadow-soft)] sticky top-0 z-50 backdrop-blur-lg">
-        <div className="container mx-auto px-4 flex justify-between items-center h-16">
-          {/* Logo */}
-          <Link
-            href="/"
-            onClick={closeMenu}
-            className="text-2xl font-extrabold text-[var(--color-secondary)] tracking-wide"
-          >
-            ASIA-LMS
-          </Link>
+    <nav className="bg-[var(--color-background)] border-b border-[var(--color-primary)] shadow sticky top-0 z-50 backdrop-blur-lg">
+      <div className="container mx-auto px-4 flex justify-between items-center h-16">
+        <Link
+          href="/"
+          onClick={closeMenu}
+          className="text-2xl font-extrabold text-[var(--color-secondary)]"
+        >
+          ASIA-LMS
+        </Link>
 
-          {/* Desktop Menu */}
-          <div className="hidden lg:flex items-center gap-8">
-            {menuLinks.map((link) =>
-              link.dropdown ? (
-                <div key={link.name} className="relative group">
-                  <button
-                    onClick={() => toggleDropdown(link.name)}
-                    className={`flex items-center gap-1 font-medium transition-colors ${
-                      openDropdown === link.name
-                        ? "text-[var(--color-primary)]"
-                        : "text-[var(--color-text)] hover:text-[var(--color-secondary-hover)]"
-                    }`}
-                  >
-                    {link.name}
-                    <svg
-                      className="w-4 h-4 transition-transform duration-300"
-                      style={{
-                        transform:
-                          openDropdown === link.name
-                            ? "rotate(180deg)"
-                            : "rotate(0deg)",
-                      }}
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M19 9l-7 7-7-7"
-                      />
-                    </svg>
-                  </button>
-
-                  {openDropdown === link.name && (
-                    <div className="absolute left-0 mt-3 w-52 bg-[var(--color-background)] shadow-[var(--shadow-medium)] border border-[var(--color-primary)] z-50 animate-fadeIn rounded-md">
-                      {link.dropdown.map((item) => (
-                        <Link
-                          key={item.name}
-                          href={item.href}
-                          onClick={closeMenu}
-                          className={`block px-4 py-2 text-sm rounded transition-colors ${
-                            isActive(item.href)
-                              ? "bg-[var(--color-primary)] text-white"
-                              : "text-[var(--color-text)] hover:bg-[var(--color-primary)] hover:text-white"
-                          }`}
-                        >
-                          {item.name}
-                        </Link>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              ) : (
-                <Link
-                  key={link.name}
-                  href={link.href}
-                  onClick={closeMenu}
-                  className={`font-medium transition-colors ${
-                    isActive(link.href)
-                      ? "text-[var(--color-primary)] border-b-2 border-[var(--color-primary)]"
+        {/* Desktop Menu */}
+        <div className="hidden lg:flex items-center gap-8">
+          {menuLinks.map((link) =>
+            link.dropdown ? (
+              <div key={link.name} className="relative">
+                <button
+                  onClick={() => toggleDropdown(link.name)}
+                  className={`flex items-center gap-1 font-medium ${
+                    openDropdown === link.name
+                      ? "text-[var(--color-primary)]"
                       : "text-[var(--color-text)] hover:text-[var(--color-secondary-hover)]"
                   }`}
                 >
                   {link.name}
-                </Link>
-              )
-            )}
-          </div>
-
-          {/* Auth Buttons */}
-          <div className="hidden lg:flex items-center gap-4">
-            <Link
-              href="/login"
-              onClick={closeMenu}
-              className="px-4 py-2 rounded-lg border border-[var(--color-primary)] text-[var(--color-primary)] hover:bg-[var(--color-primary)] hover:text-white font-medium text-sm transition-all"
-            >
-              Login
-            </Link>
-            <Link
-              href="/register"
-              onClick={closeMenu}
-              className="bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white px-4 py-2 rounded-lg text-sm font-medium shadow-sm transition-all"
-            >
-              Register
-            </Link>
-          </div>
-
-          {/* Mobile Menu Button */}
-          <button
-            onClick={toggleMenu}
-            className="lg:hidden p-2 rounded-md text-[var(--color-secondary)] hover:text-[var(--color-secondary-hover)] hover:bg-[var(--color-background)] transition-colors"
-          >
-            {isMenuOpen ? <FaTimes /> : <FaBars />}
-          </button>
-        </div>
-      </nav>
-
-      {/* Background Blur when sidebar open */}
-      {isMenuOpen && (
-        <div
-          onClick={closeMenu}
-          className="fixed inset-0 bg-black/40 backdrop-blur-sm z-40 transition-opacity duration-300"
-        ></div>
-      )}
-
-      {/* Mobile Sidebar */}
-      <div
-        className={`fixed top-0 right-0 h-full w-72 bg-[var(--color-background)] shadow-[var(--shadow-medium)] border-l border-[var(--color-primary)] z-50 transform transition-transform duration-500 ease-in-out ${
-          isMenuOpen ? "translate-x-0" : "translate-x-full"
-        }`}
-      >
-        <div className="flex justify-between items-center px-4 h-16 border-b border-[var(--color-primary)]">
-          <span className="text-xl font-bold text-[var(--color-secondary)]">
-            ASIA-LMS
-          </span>
-          <button
-            onClick={toggleMenu}
-            className="text-[var(--color-secondary)] hover:text-[var(--color-secondary-hover)] transition-colors"
-          >
-            <FaTimes />
-          </button>
-        </div>
-
-        <div className="flex flex-col p-4 space-y-2">
-          {menuLinks.map((link) =>
-            link.dropdown ? (
-              <div key={link.name}>
-                <button
-                  onClick={() => toggleDropdown(link.name)}
-                  className="flex justify-between w-full text-[var(--color-secondary)] hover:text-[var(--color-secondary-hover)] font-medium py-2 transition-colors"
-                >
-                  {link.name}
                   <svg
-                    className={`w-4 h-4 transition-transform duration-300 ${
-                      openDropdown === link.name ? "rotate-180" : "rotate-0"
-                    }`}
+                    className="w-4 h-4"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -210,14 +94,15 @@ const Navbar = () => {
                     />
                   </svg>
                 </button>
+
                 {openDropdown === link.name && (
-                  <div className="ml-4 space-y-1 animate-slideDown">
+                  <div className="absolute left-0 mt-3 w-52 bg-[var(--color-background)] border border-[var(--color-primary)] rounded-md shadow-md z-50">
                     {link.dropdown.map((item) => (
                       <Link
                         key={item.name}
                         href={item.href}
                         onClick={closeMenu}
-                        className={`block px-3 py-2 text-sm rounded transition-colors ${
+                        className={`block px-4 py-2 text-sm ${
                           isActive(item.href)
                             ? "bg-[var(--color-primary)] text-white"
                             : "text-[var(--color-text)] hover:bg-[var(--color-primary)] hover:text-white"
@@ -234,67 +119,182 @@ const Navbar = () => {
                 key={link.name}
                 href={link.href}
                 onClick={closeMenu}
-                className={`font-medium py-2 transition-colors ${
+                className={`font-medium ${
                   isActive(link.href)
                     ? "text-[var(--color-primary)] border-b-2 border-[var(--color-primary)]"
-                    : "text-[var(--color-secondary)] hover:text-[var(--color-secondary-hover)]"
+                    : "text-[var(--color-text)] hover:text-[var(--color-secondary-hover)]"
                 }`}
               >
                 {link.name}
               </Link>
             )
           )}
-
-          {/* Auth Buttons */}
-          <div className="mt-4 border-t border-[var(--color-primary)] pt-4">
-            <Link
-              href="/login"
-              onClick={closeMenu}
-              className="block text-center py-2 border border-[var(--color-primary)] rounded-md text-[var(--color-primary)] hover:bg-[var(--color-primary)] hover:text-white font-medium transition-colors"
-            >
-              Sign In
-            </Link>
-            <Link
-              href="/register"
-              onClick={closeMenu}
-              className="block text-center py-2 bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white font-medium rounded-md mt-2 shadow-sm transition-all"
-            >
-              Register
-            </Link>
-          </div>
         </div>
-      </div>
 
-      {/* Animations */}
-      <style jsx>{`
-        .animate-fadeIn {
-          animation: fadeIn 0.3s ease-in-out;
-        }
-        .animate-slideDown {
-          animation: slideDown 0.3s ease-in-out;
-        }
-        @keyframes fadeIn {
-          from {
-            opacity: 0;
-            transform: translateY(-5px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-        @keyframes slideDown {
-          from {
-            opacity: 0;
-            transform: translateY(-10px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-      `}</style>
-    </>
+        {/* Desktop Language Selector & Auth Buttons */}
+        <div className="hidden lg:flex items-center gap-4">
+          <div className="relative">
+            <button 
+              onClick={() => toggleDropdown('language')}
+              className="flex items-center gap-2 text-[var(--color-secondary)] hover:text-[var(--color-secondary-hover)]"
+            >
+              <FaGlobe />
+              <span className="text-sm font-medium uppercase">
+                {i18n.language}
+              </span>
+            </button>
+            
+            {openDropdown === 'language' && (
+              <div className="absolute right-0 bg-white border rounded shadow-md mt-2 z-50">
+                {languages.map((lng) => (
+                  <button
+                    key={lng.code}
+                    onClick={() => changeLanguage(lng.code)}
+                    className={`block w-full text-left px-4 py-2 text-sm ${
+                      i18n.language === lng.code 
+                        ? "bg-[var(--color-primary)] text-white" 
+                        : "hover:bg-gray-100"
+                    }`}
+                  >
+                    {lng.label}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+
+          <Link
+            href="/login"
+            onClick={closeMenu}
+            className="px-4 py-2 rounded-lg border border-[var(--color-primary)] text-[var(--color-primary)] hover:bg-[var(--color-primary)] hover:text-white font-medium text-sm transition-all"
+          >
+            {t("login")}
+          </Link>
+          <Link
+            href="/register"
+            onClick={closeMenu}
+            className="bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white px-4 py-2 rounded-lg text-sm font-medium shadow-sm transition-all"
+          >
+            {t("register")}
+          </Link>
+        </div>
+
+        {/* Mobile Menu Button */}
+        <button
+          onClick={toggleMenu}
+          className="lg:hidden text-[var(--color-secondary)] p-2"
+        >
+          {isMenuOpen ? <FaTimes /> : <FaBars />}
+        </button>
+
+        {/* Mobile Menu */}
+        {isMenuOpen && (
+          <div className="lg:hidden absolute top-16 left-0 right-0 bg-[var(--color-background)] border-b border-[var(--color-primary)] shadow-md">
+            <div className="container mx-auto px-4 py-4">
+              {menuLinks.map((link) =>
+                link.dropdown ? (
+                  <div key={link.name} className="mb-2">
+                    <button
+                      onClick={() => toggleDropdown(`${link.name}-mobile`)}
+                      className="flex items-center justify-between w-full text-left font-medium text-[var(--color-text)] hover:text-[var(--color-secondary-hover)] py-2"
+                    >
+                      {link.name}
+                      <svg
+                        className={`w-4 h-4 transition-transform ${
+                          openDropdown === `${link.name}-mobile` ? "rotate-180" : ""
+                        }`}
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="M19 9l-7 7-7-7"
+                        />
+                      </svg>
+                    </button>
+
+                    {openDropdown === `${link.name}-mobile` && (
+                      <div className="ml-4 mt-2 border-l-2 border-[var(--color-primary)] pl-4">
+                        {link.dropdown.map((item) => (
+                          <Link
+                            key={item.name}
+                            href={item.href}
+                            onClick={closeMenu}
+                            className={`block py-2 text-sm ${
+                              isActive(item.href)
+                                ? "text-[var(--color-primary)] font-medium"
+                                : "text-[var(--color-text)] hover:text-[var(--color-secondary-hover)]"
+                            }`}
+                          >
+                            {item.name}
+                          </Link>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                ) : (
+                  <Link
+                    key={link.name}
+                    href={link.href}
+                    onClick={closeMenu}
+                    className={`block font-medium py-2 ${
+                      isActive(link.href)
+                        ? "text-[var(--color-primary)]"
+                        : "text-[var(--color-text)] hover:text-[var(--color-secondary-hover)]"
+                    }`}
+                  >
+                    {link.name}
+                  </Link>
+                )
+              )}
+
+              {/* Mobile Language Selector */}
+              <div className="mt-6 pt-4 border-t border-gray-200">
+                <p className="text-sm font-medium text-[var(--color-text)] mb-3">
+                  {t("language") || "Select Language"}
+                </p>
+                <div className="flex gap-2">
+                  {languages.map((lng) => (
+                    <button
+                      key={lng.code}
+                      onClick={() => changeLanguage(lng.code)}
+                      className={`px-3 py-2 text-sm rounded-lg border ${
+                        i18n.language === lng.code
+                          ? "bg-[var(--color-primary)] text-white border-[var(--color-primary)]"
+                          : "bg-gray-100 text-gray-700 border-gray-300 hover:bg-gray-200"
+                      }`}
+                    >
+                      {lng.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Mobile Auth Buttons */}
+              <div className="mt-6 flex gap-3">
+                <Link
+                  href="/login"
+                  onClick={closeMenu}
+                  className="flex-1 text-center px-4 py-3 rounded-lg border border-[var(--color-primary)] text-[var(--color-primary)] hover:bg-[var(--color-primary)] hover:text-white font-medium text-sm"
+                >
+                  {t("login")}
+                </Link>
+                <Link
+                  href="/register"
+                  onClick={closeMenu}
+                  className="flex-1 text-center bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white px-4 py-3 rounded-lg text-sm font-medium"
+                >
+                  {t("register")}
+                </Link>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    </nav>
   );
 };
 
