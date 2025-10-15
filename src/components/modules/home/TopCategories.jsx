@@ -2,16 +2,19 @@
 
 import { useEffect, useRef, useState } from "react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 export default function TopCategories() {
+  const { t } = useTranslation();
+
   const categories = [
-    { name: "Frontend Developer", logo: "/icons/frontend.svg" },
-    { name: "Jira Management", logo: "/icons/jira.svg" },
-    { name: "Figma Developer", logo: "/icons/figma.svg" },
-    { name: "Webflow Developer", logo: "/icons/shopify.svg" },
-    { name: "Framer Developer", logo: "/icons/framer.svg" },
-    { name: "Vue js Developer", logo: "/icons/vue.svg" },
-    { name: "Shopify Developer", logo: "/icons/shopify.svg" },
+    { name: t("categories.frontend") || "Frontend Developer", logo: "/icons/frontend.svg" },
+    { name: t("categories.jira") || "Jira Management", logo: "/icons/jira.svg" },
+    { name: t("categories.figma") || "Figma Developer", logo: "/icons/figma.svg" },
+    { name: t("categories.webflow") || "Webflow Developer", logo: "/icons/shopify.svg" },
+    { name: t("categories.framer") || "Framer Developer", logo: "/icons/framer.svg" },
+    { name: t("categories.vue") || "Vue js Developer", logo: "/icons/vue.svg" },
+    { name: t("categories.shopify") || "Shopify Developer", logo: "/icons/shopify.svg" },
   ];
 
   const scrollerRef = useRef(null);
@@ -96,13 +99,13 @@ export default function TopCategories() {
     <section className="w-full bg-[var(--color-background)] py-16 relative overflow-hidden">
       <div className="container mx-auto px-4 text-center">
         <p className="text-[var(--color-secondary)] font-medium text-sm mb-2">
-          Our Categories
+          {t("categories.subtitle") || "Our Categories"}
         </p>
         <h2 className="text-3xl md:text-4xl font-bold text-[var(--color-text)] mb-3">
-          Top Courses & Categories
+          {t("categories.title") || "Top Courses & Categories"}
         </h2>
         <p className="text-gray-600 mb-10">
-          The right course, guided by an expert mentor, can provide invaluable insights, practical skills.
+          {t("categories.description") || "The right course, guided by an expert mentor, can provide invaluable insights, practical skills."}
         </p>
 
         {/* Carousel */}
@@ -115,7 +118,7 @@ export default function TopCategories() {
             ref={scrollerRef}
             id="scrollContainer"
             role="region"
-            aria-label="Top categories"
+            aria-label={t("categories.ariaLabel") || "Top categories"}
             className="flex gap-5 overflow-x-auto md:overflow-x-hidden scrollbar-hide snap-x snap-mandatory scroll-smooth pb-4"
           >
             {categories.map((item, i) => (
@@ -136,7 +139,7 @@ export default function TopCategories() {
           {/* Controls (desktop) */}
           <button
             type="button"
-            aria-label="Previous"
+            aria-label={t("categories.previous") || "Previous"}
             disabled={!canPrev}
             onClick={() => scrollStep("left")}
             className={`hidden md:flex absolute left-1 top-[45%] -translate-y-1/2 p-2 rounded-full shadow-md transition
@@ -147,7 +150,7 @@ export default function TopCategories() {
 
           <button
             type="button"
-            aria-label="Next"
+            aria-label={t("categories.next") || "Next"}
             disabled={!canNext}
             onClick={() => scrollStep("right")}
             className={`hidden md:flex absolute right-1 top-[45%] -translate-y-1/2 p-2 rounded-full shadow-md transition
@@ -160,7 +163,7 @@ export default function TopCategories() {
         {/* View All Button */}
         <div className="mt-10">
           <button className="px-6 py-2 rounded-full bg-[var(--color-secondary)] text-white font-semibold hover:bg-[var(--color-secondary-hover)] transition">
-            View All Categories
+            {t("categories.viewAll") || "View All Categories"}
           </button>
         </div>
       </div>

@@ -4,9 +4,11 @@ import { useState } from "react";
 import { FaGraduationCap } from "react-icons/fa";
 import { MdVerified, MdPerson } from "react-icons/md";
 import SearchBar from "@/components/modules/special/Searchbar";
+import { useTranslation } from "react-i18next";
 
 // 🎯 Main Hero Section (Default Export)
 export default function HeroSection() {
+  const { t } = useTranslation();
   const [category, setCategory] = useState("");
   const [query, setQuery] = useState("");
 
@@ -42,13 +44,13 @@ export default function HeroSection() {
                 boxShadow: "var(--shadow-soft)",
               }}
             >
-              The Leader in Online Learning
+              {t("hero.leader") || "The Leader in Online Learning"}
             </span>
 
             <h1 className="mb-3 text-4xl font-bold leading-tight text-[var(--color-text)] md:text-5xl">
-              Find the{" "}
+              {t("hero.title1") || "Find the"}{" "}
               <span className="relative text-[var(--color-accent-special)]">
-                Best Courses
+                {t("hero.bestCourses") || "Best Courses"}
                 <svg
                   className="absolute left-0 -bottom-4 w-full"
                   xmlns="http://www.w3.org/2000/svg"
@@ -60,16 +62,15 @@ export default function HeroSection() {
                   />
                 </svg>
               </span>{" "}
-              from the{" "}
+              {t("hero.title2") || "from the"}{" "}
               <span className="text-[var(--color-accent-special)]">
-                Best Mentors
+                {t("hero.bestMentors") || "Best Mentors"}
               </span>{" "}
-              Around the World
+              {t("hero.aroundWorld") || "Around the World"}
             </h1>
 
             <p className="mb-4 max-w-xl text-[var(--color-text)]/85">
-              Our specialized online courses are designed to bring the
-              classroom experience to you, no matter where you are.
+              {t("hero.description") || "Our specialized online courses are designed to bring the classroom experience to you, no matter where you are."}
             </p>
 
             {/* 🔍 Search Bar */}
@@ -90,7 +91,7 @@ export default function HeroSection() {
                   <span className="font-bold text-[var(--color-text)]">10K</span>
                   <br />
                   <span className="text-sm text-[var(--color-text)]/70">
-                    Online Courses
+                    {t("hero.stats.courses") || "Online Courses"}
                   </span>
                 </p>
               </div>
@@ -103,7 +104,7 @@ export default function HeroSection() {
                   <span className="font-bold text-[var(--color-text)]">6K</span>
                   <br />
                   <span className="text-sm text-[var(--color-text)]/70">
-                    Certified Courses
+                    {t("hero.stats.certified") || "Certified Courses"}
                   </span>
                 </p>
               </div>
@@ -116,7 +117,7 @@ export default function HeroSection() {
                   <span className="font-bold text-[var(--color-text)]">2K</span>
                   <br />
                   <span className="text-sm text-[var(--color-text)]/70">
-                    Experienced Tutors
+                    {t("hero.stats.tutors") || "Experienced Tutors"}
                   </span>
                 </p>
               </div>

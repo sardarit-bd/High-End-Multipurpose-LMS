@@ -37,6 +37,38 @@ const resources = {
       "hero.stats.certified": "Certified Courses",
       "hero.stats.tutors": "Experienced Tutors",
 
+      // Categories Section Translations
+      "categories.subtitle": "Our Categories",
+      "categories.title": "Top Courses & Categories",
+      "categories.description": "The right course, guided by an expert mentor, can provide invaluable insights, practical skills.",
+      "categories.viewAll": "View All Categories",
+      "categories.ariaLabel": "Top categories",
+      "categories.previous": "Previous",
+      "categories.next": "Next",
+      
+      // Individual Categories
+      "categories.frontend": "Frontend Developer",
+      "categories.jira": "Jira Management",
+      "categories.figma": "Figma Developer",
+      "categories.webflow": "Webflow Developer",
+      "categories.framer": "Framer Developer",
+      "categories.vue": "Vue js Developer",
+      "categories.shopify": "Shopify Developer",
+
+       // Courses Section Translations
+      "courses.featuredSubtitle": "Featured Courses",
+      "courses.title": "What's New in AsiaLMS",
+      "courses.description": "Discover our featured courses, specially curated to help you gain in-demand skills.",
+      "courses.filterBy": "Filter By:",
+      "courses.viewMore": "View More",
+      
+      // Course Categories
+      "courses.categories.all": "All",
+      "courses.categories.uiux": "UI/UX",
+      "courses.categories.productivity": "Productivity",
+      "courses.categories.management": "Management",
+      "courses.categories.artMedia": "Art & Media",
+
        // Pricing Section Translations
       "pricing.title": "Choose Your Membership",
       "pricing.description": "Select the plan that fits you best. Monthly or yearly options available.",
@@ -99,6 +131,39 @@ const resources = {
       "hero.stats.courses": "Kursus Dalam Talian",
       "hero.stats.certified": "Kursus Bertauliah",
       "hero.stats.tutors": "Tutor Berpengalaman",
+
+      // Categories Section Malay Translations
+      "categories.subtitle": "Kategori Kami",
+      "categories.title": "Kursus & Kategori Teratas",
+      "categories.description": "Kursus yang tepat, dibimbing oleh mentor pakar, dapat memberikan pandangan berharga, kemahiran praktikal.",
+      "categories.viewAll": "Lihat Semua Kategori",
+      "categories.ariaLabel": "Kategori teratas",
+      "categories.previous": "Sebelumnya",
+      "categories.next": "Seterusnya",
+      
+      // Individual Categories Malay
+      "categories.frontend": "Pembangun Frontend",
+      "categories.jira": "Pengurusan Jira",
+      "categories.figma": "Pembangun Figma",
+      "categories.webflow": "Pembangun Webflow",
+      "categories.framer": "Pembangun Framer",
+      "categories.vue": "Pembangun Vue js",
+      "categories.shopify": "Pembangun Shopify",
+
+
+      // Courses Section Malay Translations
+      "courses.featuredSubtitle": "Kursus Terpilih",
+      "courses.title": "Apa Yang Baru di AsiaLMS",
+      "courses.description": "Temui kursus pilihan kami, yang dikurasi khas untuk membantu anda memperoleh kemahiran yang diperlukan.",
+      "courses.filterBy": "Tapis Mengikut:",
+      "courses.viewMore": "Lihat Lagi",
+      
+      // Course Categories Malay
+      "courses.categories.all": "Semua",
+      "courses.categories.uiux": "UI/UX",
+      "courses.categories.productivity": "Produktiviti",
+      "courses.categories.management": "Pengurusan",
+      "courses.categories.artMedia": "Seni & Media",
 
       // Benefits Section Malay Translations
       "benefits.subtitle": "Manfaat Kami",

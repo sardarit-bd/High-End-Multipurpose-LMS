@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import CourseCard from "../courses/CourseCard";
 import Link from "next/link";
 import { TbCategoryPlus } from "react-icons/tb";
+import { useTranslation } from "react-i18next";
+
 export const courses = [
   // ===== UI/UX =====
   {
@@ -350,14 +352,19 @@ export const courses = [
 ];
 
 export default function FeaturedCourses() {
-
-
+  const { t } = useTranslation();
   const [selectedCategory, setSelectedCategory] = useState("All");
 
-  const categories = ["All", "UI/UX", "Productivity", "Management", "Art & Media"];
+  const categories = [
+    t("courses.categories.all") || "All", 
+    t("courses.categories.uiux") || "UI/UX", 
+    t("courses.categories.productivity") || "Productivity", 
+    t("courses.categories.management") || "Management", 
+    t("courses.categories.artMedia") || "Art & Media"
+  ];
 
   const filteredCourses =
-    selectedCategory === "All"
+    selectedCategory === (t("courses.categories.all") || "All")
       ? courses
       : courses.filter((c) => c.category === selectedCategory);
 
@@ -365,18 +372,20 @@ export default function FeaturedCourses() {
     <section className="w-full bg-white py-16 px-4">
       <div className="container px-4 mx-auto text-center">
         <p className="text-[var(--color-secondary)] font-medium text-sm mb-2">
-          Featured Courses
+          {t("courses.featuredSubtitle") || "Featured Courses"}
         </p>
         <h2 className="text-3xl md:text-4xl font-bold text-[var(--color-text)] mb-3">
-          What’s New in AsiaLMS
+          {t("courses.title") || "What's New in AsiaLMS"}
         </h2>
         <p className="text-gray-600 mb-6">
-          Discover our featured courses, specially curated to help you gain in-demand skills.
+          {t("courses.description") || "Discover our featured courses, specially curated to help you gain in-demand skills."}
         </p>
+        
         {/* Dropdown Filter */}
         <div className="mb-10 flex justify-between items-center gap-4 flex-col md:flex-row">
           <h1 className="text-xl font-bold text-[var(--color-text)]">
-            <TbCategoryPlus className="inline" /> Filter By:</h1>
+            <TbCategoryPlus className="inline" /> {t("courses.filterBy") || "Filter By:"}
+          </h1>
           <select
             value={selectedCategory}
             onChange={(e) => setSelectedCategory(e.target.value)}
@@ -389,14 +398,18 @@ export default function FeaturedCourses() {
             ))}
           </select>
         </div>
+        
         {/* Course Cards */}
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch">
           {filteredCourses.slice(0, 8).map((c, i) => (
             <CourseCard course={c} key={i} />
           ))}
         </div>
+        
         <button className="px-6 py-2 rounded-full bg-[var(--color-secondary)] text-white font-semibold hover:bg-[var(--color-secondary-hover)] transition mt-12">
-          <Link href="/courses">View More</Link>
+          <Link href="/courses">
+            {t("courses.viewMore") || "View More"}
+          </Link>
         </button>
       </div>
     </section>
