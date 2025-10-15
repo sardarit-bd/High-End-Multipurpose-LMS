@@ -3,10 +3,11 @@ import { Edit, Eye, Trash2 } from "lucide-react";
 
 export default function ManageAdmins() {
   const admins = [
-    { id: "#A-01", name: "John Doe", email: "john@academy.com", role: "Super Admin", status: "Active", joined: "2023-01-15" },
-    { id: "#A-02", name: "Emily Clark", email: "emily@academy.com", role: "Admin", status: "Active", joined: "2023-04-20" },
-    { id: "#A-03", name: "Michael Smith", email: "michael@academy.com", role: "Moderator", status: "Suspended", joined: "2022-11-02" },
-    { id: "#A-04", name: "Sarah Johnson", email: "sarah@academy.com", role: "Admin", status: "Active", joined: "2024-02-10" },
+    { id: "#A-01", name: "Ahsan Alam", email: "john@academy.com", role: "Super Admin", status: "Active", joined: "2023-01-15" },
+    { id: "#A-02", name: "John Doe", email: "john@academy.com", role: "Super Admin", status: "Active", joined: "2023-01-15" },
+    { id: "#A-03", name: "Emily Clark", email: "emily@academy.com", role: "Admin", status: "Active", joined: "2023-04-20" },
+    { id: "#A-04", name: "Michael Smith", email: "michael@academy.com", role: "Moderator", status: "Suspended", joined: "2022-11-02" },
+    { id: "#A-05", name: "Sarah Johnson", email: "sarah@academy.com", role: "Admin", status: "Active", joined: "2024-02-10" },
   ];
 
   return (

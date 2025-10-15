@@ -79,7 +79,7 @@ export default function CourseListing() {
   return (
     <div className="w-full min-h-screen bg-white">
       {/* ===== Sticky Top Bar ===== */}
-      <div className="sticky container mx-auto top-[65px] z-30 bg-white border-b border-gray-200 px-4 sm:px-6 py-4 flex flex-col md:flex-row flex-wrap items-center justify-between gap-3">
+      <div className="sticky container mx-auto top-[65px] z-30 bg-white sm:px-6 py-4 flex flex-col md:flex-row flex-wrap items-center justify-between gap-3">
         {/* Left side: Filters */}
         <div className="flex md:items-center justify-between w-full md:w-auto gap-2">
           <button

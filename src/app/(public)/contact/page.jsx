@@ -34,7 +34,7 @@ export default function ContactPage() {
             </div>
             <div>
               <h3 className="font-semibold text-[var(--color-text)]">Email</h3>
-              <p className="text-gray-600">contact@example.com</p>
+              <p className="text-gray-600">contact@sardarit.com</p>
             </div>
           </div>
         </div>
@@ -115,8 +115,9 @@ export default function ContactPage() {
       </div>
 
       {/* === Map === */}
-      <div className="overflow-hidden relative Z-10 shadow-[var(--shadow-medium)]">
+      <div className="overflow-hidden relative z-10 mb-12">
         <iframe
+          className="container mx-auto p-4 rounded-b-[var(--radius-card)] shadow-[var(--shadow-medium)]"
           src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3023.720148594872!2d-74.0060156845938!3d40.712775279330084!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c25a316a4e5b6f%3A0xa9f66f83f8f9d28b!2sNew%20York%2C%20NY!5e0!3m2!1sen!2sus!4v1678901234567"
           width="100%"
           height="450"

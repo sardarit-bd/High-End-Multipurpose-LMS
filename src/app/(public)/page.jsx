@@ -14,11 +14,11 @@ export default function HomePage() {
     return (
         <div>
             <HeroSection />
+            <TopCategories />
+            <FeaturedCourses />
             <OurBenefits />
             <MembershipSection />
             <TrustedPartners />
-            <TopCategories />
-            <FeaturedCourses />
             <AdvancedLearning />
             <LearningJourney />
             <PartnerBrands />

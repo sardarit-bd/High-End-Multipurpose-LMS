@@ -3,9 +3,22 @@ import AboutInstructor from "@/components/modules/courses/AboutInstructor";
 import CommentForm from "@/components/modules/courses/CommentForm";
 import CourseContent from "@/components/modules/courses/CourseContent";
 import { FiHeart, FiShare2 } from "react-icons/fi";
+import { useEffect, useState } from "react";
+import CourseSingleSkeleton from "@/components/modules/special/CourseSingleSkeleton";
 
 
 export default function CourseSinglePage() {
+
+    const [hydrated, setHydrated] = useState(false);
+    // Optional: keep the skeleton for a minimum time to avoid flash (e.g., 300ms)
+    const MIN_DELAY_MS = 200;
+
+    useEffect(() => {
+        const t = setTimeout(() => setHydrated(true), MIN_DELAY_MS);
+        return () => clearTimeout(t);
+    }, []);
+
+    if (!hydrated) return <CourseSingleSkeleton />;
 
     return (
         <div className="bg-white min-h-screen">
@@ -20,7 +33,7 @@ export default function CourseSinglePage() {
                                 //   poster="/thumbnail.jpg"
                                 className="w-full rounded-[var(--radius-card)]"
                             >
-                                <source src="/lms.mp4" type="video/mp4" />
+                                <source src="https://res.cloudinary.com/dg83pvgls/video/upload/v1760356802/lms_z6l6o6.mp4" type="video/mp4" />
                                 Your browser does not support video playback.
                             </video>
                         </div>
@@ -57,7 +70,6 @@ export default function CourseSinglePage() {
                         <CourseContent />
                         <AboutInstructor />
                         <CommentForm />
-
                     </div>
 
                     {/* ===== Right Sidebar ===== */}

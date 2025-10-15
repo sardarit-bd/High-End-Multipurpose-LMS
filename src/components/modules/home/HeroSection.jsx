@@ -1,56 +1,56 @@
 "use client";
+
 import { useState } from "react";
 import { FaGraduationCap } from "react-icons/fa";
-import { MdVerified, MdPerson, MdSearch, MdKeyboardArrowDown } from "react-icons/md";
+import { MdVerified, MdPerson } from "react-icons/md";
+import SearchBar from "@/components/modules/special/Searchbar";
+import { useTranslation } from "react-i18next";
 
+// 🎯 Main Hero Section (Default Export)
 export default function HeroSection() {
+  const { t } = useTranslation();
   const [category, setCategory] = useState("");
   const [query, setQuery] = useState("");
 
   const handleSubmit = (e) => {
     e?.preventDefault();
-    // TODO: hook up your search action here (route, API, etc.)
-    // console.log({ category, query });
+    // Hook up search logic here (e.g., API call, router push)
   };
 
   return (
     <section className="relative">
-      {/* 🎥 Background video */}
+      {/* 🎥 Background Video */}
       <video
-        className="absolute inset-0 h-full w-full object-cover opacity-35"
+        className="absolute inset-0 h-full w-full object-cover opacity-20"
         src="/videos/background.mp4"
         autoPlay
         loop
         muted
         playsInline
       />
-
-      {/* 🔹 Light transparent white overlay */}
       <div className="absolute inset-0 bg-white/50" />
-
-      {/* 🔹 Color gradient overlay (for contrast balance) */}
       <div className="absolute inset-0 bg-gradient-to-b from-[var(--color-primary)]/20 via-[var(--color-secondary)]/20 to-[var(--color-accent)]/10 mix-blend-multiply" />
 
-      {/* 🌟 Main content */}
+      {/* 🌟 Main Content */}
       <section className="relative mx-auto flex min-h-[90vh] flex-col items-center justify-center overflow-hidden py-16">
         <div className="container mx-auto flex flex-col-reverse items-center justify-between gap-12 px-4 md:flex-row">
-          {/* Left Content */}
+          {/* Left Side */}
           <div className="flex-1">
             <span
               className="mb-4 inline-block rounded-full px-5 py-1 text-sm"
               style={{
                 background: "rgba(255,255,255,0.6)",
-                color: "var(--color-secondary)",
+                color: "var(--color-accent-special)",
                 boxShadow: "var(--shadow-soft)",
               }}
             >
-              The Leader in Online Learning
+              {t("hero.leader") || "The Leader in Online Learning"}
             </span>
 
-            <h1 className="mb-6 text-4xl font-bold leading-tight text-[var(--color-text)] md:text-5xl">
-              Find the{" "}
-              <span className="relative text-[#F9D26E]">
-                Best Courses
+            <h1 className="mb-3 text-4xl font-bold leading-tight text-[var(--color-text)] md:text-5xl">
+              {t("hero.title1") || "Find the"}{" "}
+              <span className="relative text-[var(--color-accent-special)]">
+                {t("hero.bestCourses") || "Best Courses"}
                 <svg
                   className="absolute left-0 -bottom-4 w-full"
                   xmlns="http://www.w3.org/2000/svg"
@@ -62,117 +62,74 @@ export default function HeroSection() {
                   />
                 </svg>
               </span>{" "}
-              from the{" "}
-              <span className="text-[#F9D26E]">Best Mentors</span> Around the World
+              {t("hero.title2") || "from the"}{" "}
+              <span className="text-[var(--color-accent-special)]">
+                {t("hero.bestMentors") || "Best Mentors"}
+              </span>{" "}
+              {t("hero.aroundWorld") || "Around the World"}
             </h1>
 
-            <p className="mb-6 max-w-xl text-[var(--color-text)]/85">
-              Our specialized online courses are designed to bring the classroom experience to you, no matter where you are.
+            <p className="mb-4 max-w-xl text-[var(--color-text)]/85">
+              {t("hero.description") || "Our specialized online courses are designed to bring the classroom experience to you, no matter where you are."}
             </p>
 
-            {/* 🔍 Search Bar (card, custom select, white inputs) */}
-            <form
-              onSubmit={handleSubmit}
-              className="w-full rounded-xl p-1"
-            >
+            {/* 🔍 Search Bar */}
+            <div className="w-full rounded-xl p-1">
               <div className="flex flex-col gap-2 md:flex-row md:gap-3">
-                {/* Custom Select */}
-                <div className="relative md:w-[240px]">
-                  <select
-                    value={category}
-                    onChange={(e) => setCategory(e.target.value)}
-                    className="
-                      w-full appearance-none rounded-lg bg-white px-4 py-3 pr-10
-                      text-[var(--color-text)] outline-none transition
-                      focus:ring-2 focus:ring-[var(--color-primary)]
-                      placeholder-[var(--color-text)]/60
-                    "
-                    style={{ boxShadow: "var(--shadow-soft)" }}
-                  >
-                    <option value="">Select Category</option>
-                    <option value="tech">Technology</option>
-                    <option value="design">Design</option>
-                    <option value="business">Business</option>
-                  </select>
-                  <MdKeyboardArrowDown
-                    size={20}
-                    className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 opacity-70"
-                    color="currentColor"
-                  />
-                </div>
-
-                {/* Search Input */}
-                <input
-                  type="text"
-                  value={query}
-                  onChange={(e) => setQuery(e.target.value)}
-                  placeholder="Search for Courses, Instructors"
-                  className="
-                    flex-1 rounded-lg bg-white px-4 py-3
-                    text-[var(--color-text)] outline-none transition
-                    placeholder-[var(--color-text)]/60
-                    focus:ring-2 focus:ring-[var(--color-primary)]
-                  "
-                  style={{ boxShadow: "var(--shadow-soft)" }}
-                />
-
-                {/* Submit Button (icon, no arrow char) */}
-                <button
-                  type="submit"
-                  aria-label="Search"
-                  title="Search"
-                  className="
-                    inline-flex w-full items-center justify-center gap-2 rounded-lg px-6 py-3
-                    text-white transition md:w-[140px]
-                  "
-                  style={{
-                    background: "var(--color-primary)",
-                    boxShadow: "var(--shadow-medium)",
-                  }}
-                  onMouseEnter={(e) => ((e.currentTarget).style.background = "var(--color-primary-hover)")}
-                  onMouseLeave={(e) => ((e.currentTarget).style.background = "var(--color-primary)")}
-                >
-                  <MdSearch size={20} />
-                  <span className="hidden md:inline">Search</span>
-                </button>
+                <SearchBar />
               </div>
-            </form>
+            </div>
 
             {/* 📊 Stats */}
             <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-3">
-              <div className="flex items-center gap-3 rounded-xl bg-white/80 p-4" style={{ boxShadow: "var(--shadow-soft)" }}>
+              <div
+                className="flex items-center gap-3 rounded-xl bg-white/80 p-4"
+                style={{ boxShadow: "var(--shadow-soft)" }}
+              >
                 <FaGraduationCap className="text-2xl text-[var(--color-accent)]" />
                 <p>
                   <span className="font-bold text-[var(--color-text)]">10K</span>
                   <br />
-                  <span className="text-sm text-[var(--color-text)]/70">Online Courses</span>
+                  <span className="text-sm text-[var(--color-text)]/70">
+                    {t("hero.stats.courses") || "Online Courses"}
+                  </span>
                 </p>
               </div>
-              <div className="flex items-center gap-3 rounded-xl bg-white/80 p-4" style={{ boxShadow: "var(--shadow-soft)" }}>
+              <div
+                className="flex items-center gap-3 rounded-xl bg-white/80 p-4"
+                style={{ boxShadow: "var(--shadow-soft)" }}
+              >
                 <MdVerified className="text-2xl text-[var(--color-secondary)]" />
                 <p>
                   <span className="font-bold text-[var(--color-text)]">6K</span>
                   <br />
-                  <span className="text-sm text-[var(--color-text)]/70">Certified Courses</span>
+                  <span className="text-sm text-[var(--color-text)]/70">
+                    {t("hero.stats.certified") || "Certified Courses"}
+                  </span>
                 </p>
               </div>
-              <div className="flex items-center gap-3 rounded-xl bg-white/80 p-4" style={{ boxShadow: "var(--shadow-soft)" }}>
+              <div
+                className="flex items-center gap-3 rounded-xl bg-white/80 p-4"
+                style={{ boxShadow: "var(--shadow-soft)" }}
+              >
                 <MdPerson className="text-2xl text-[var(--color-primary)]" />
                 <p>
                   <span className="font-bold text-[var(--color-text)]">2K</span>
                   <br />
-                  <span className="text-sm text-[var(--color-text)]/70">Experienced Tutors</span>
+                  <span className="text-sm text-[var(--color-text)]/70">
+                    {t("hero.stats.tutors") || "Experienced Tutors"}
+                  </span>
                 </p>
               </div>
             </div>
           </div>
 
-          {/* 🎓 Right Side - Course Preview */}
+          {/* Right Side - Video */}
           <div className="flex flex-1 justify-center md:justify-end">
             <video
               className="w-full max-w-4xl rounded-xl shadow-lg"
               style={{ boxShadow: "var(--shadow-medium)" }}
-              src="/lms.mp4"
+              src="https://res.cloudinary.com/dg83pvgls/video/upload/v1760356802/lms_z6l6o6.mp4"
               autoPlay
               loop
               muted

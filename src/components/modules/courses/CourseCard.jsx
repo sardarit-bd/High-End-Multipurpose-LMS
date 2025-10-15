@@ -1,11 +1,14 @@
-
 import Link from 'next/link';
 import React from 'react'
 import { FaRegClock } from 'react-icons/fa';
 import { GiBlackBook } from "react-icons/gi";
+import { useTranslation } from 'react-i18next';
+
 export default function CourseCard({ course }) {
+    const { t } = useTranslation();
+
     return (
-        <div className="bg-white shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden w-full flex flex-col">
+        <div className="relative bg-white shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden h-[420px] w-full flex flex-col">
             {/* Image + Category Badge */}
             <div className="relative">
                 <img
@@ -14,7 +17,10 @@ export default function CourseCard({ course }) {
                     className="h-44 w-full object-cover"
                 />
                 <span className="absolute top-3 left-3 bg-[var(--color-secondary)] text-white text-xs font-semibold px-3 py-1 rounded-md">
-                    {course.category}
+                    {course.category === "UI/UX" && (t("courses.categories.uiux") || "UI/UX")}
+                    {course.category === "Productivity" && (t("courses.categories.productivity") || "Productivity")}
+                    {course.category === "Management" && (t("courses.categories.management") || "Management")}
+                    {course.category === "Art & Media" && (t("courses.categories.artMedia") || "Art & Media")}
                 </span>
             </div>
 
@@ -22,12 +28,20 @@ export default function CourseCard({ course }) {
             <div className="p-5 text-left text-[var(--color-text)]">
                 {/* Lessons + Duration */}
                 <div className="flex justify-between text-sm mb-2 text-[var(--color-text)]">
-                    <div className='flex gap-2 items-center'> <GiBlackBook /><span>{course.lessons} Lessons</span></div>
-                    <div className='flex gap-2 items-center'><FaRegClock /> <span>{course.duration}</span></div>
+                    <div className='flex gap-2 items-center'> 
+                        <GiBlackBook />
+                        <span>{course.lessons} {t("courses.lessons") || "Lessons"}</span>
+                    </div>
+                    <div className='flex gap-2 items-center'>
+                        <FaRegClock /> 
+                        <span>{course.duration}</span>
+                    </div>
                 </div>
 
                 {/* Title */}
-                <h3 className="font-semibold mb-3 line-clamp-2">{course.title}</h3>
+                <Link href={`courses/${course.title}`} className="hover:text-[var(--color-primary)]">
+                    <h3 className="font-semibold mb-3 line-clamp-2">{course.title}</h3>
+                </Link>
 
                 {/* Pricing */}
                 <div className="mb-3">
@@ -38,7 +52,9 @@ export default function CourseCard({ course }) {
                         </span>
                     )}
                     {course.isFree && (
-                        <span className="text-[var(--color-accent)] font-bold ml-3">Free</span>
+                        <span className="text-[var(--color-accent)] font-bold ml-3">
+                            {t("courses.free") || "Free"}
+                        </span>
                     )}
                 </div>
 
@@ -55,10 +71,11 @@ export default function CourseCard({ course }) {
                     </span>
                 </div>
             </div>
-            <button className="my-5 self-end mx-auto bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white px-4 py-2 rounded-md text-sm font-medium">
-                <Link href="courses/daynamic_slug">View Course</Link>
-            </button>
+            <div className='absolute bottom-0 w-full flex justify-center items-center text-center'>
+                <Link className='my-5 w-[90%] bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white px-4 py-2 rounded-md text-sm font-medium' href="courses/daynamic_slug">
+                    {t("courses.exploreCourse") || "Explore Course"}
+                </Link>
+            </div>
         </div>
     )
 }
-
