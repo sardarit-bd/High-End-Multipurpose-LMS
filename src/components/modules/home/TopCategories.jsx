@@ -1,3 +1,6 @@
+"use client";
+
+import { useEffect, useRef, useState } from "react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 
 export default function TopCategories() {
@@ -10,6 +13,84 @@ export default function TopCategories() {
     { name: "Vue js Developer", logo: "/icons/vue.svg" },
     { name: "Shopify Developer", logo: "/icons/shopify.svg" },
   ];
+
+  const scrollerRef = useRef(null);
+  const [canPrev, setCanPrev] = useState(false);
+  const [canNext, setCanNext] = useState(true);
+
+  // keep buttons state accurate on scroll/resize
+  useEffect(() => {
+    const el = scrollerRef.current;
+    if (!el) return;
+
+    const update = () => {
+      const { scrollLeft, scrollWidth, clientWidth } = el;
+      setCanPrev(scrollLeft > 4);
+      setCanNext(scrollLeft + clientWidth < scrollWidth - 4);
+    };
+
+    update();
+    el.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+    return () => {
+      el.removeEventListener("scroll", update);
+      window.removeEventListener("resize", update);
+    };
+  }, []);
+
+  // smooth step based on visible card width
+  const scrollStep = (dir) => {
+    const el = scrollerRef.current;
+    if (!el) return;
+    const card = el.querySelector("[data-card]");
+    const gap = 20; // matches Tailwind gap-5
+    const step = (card?.offsetWidth || 220) + gap;
+    el.scrollBy({ left: dir === "left" ? -step * 2 : step * 2, behavior: "smooth" });
+  };
+
+  // drag/swipe support
+  useEffect(() => {
+    const el = scrollerRef.current;
+    if (!el) return;
+    let isDown = false;
+    let startX = 0;
+    let startScroll = 0;
+
+    const onDown = (e) => {
+      isDown = true;
+      startX = "touches" in e ? e.touches[0].pageX : e.pageX;
+      startScroll = el.scrollLeft;
+    };
+    const onMove = (e) => {
+      if (!isDown) return;
+      const x = "touches" in e ? e.touches[0].pageX : e.pageX;
+      const delta = x - startX;
+      el.scrollLeft = startScroll - delta;
+    };
+    const onUp = () => {
+      isDown = false;
+    };
+
+    // mouse
+    el.addEventListener("mousedown", onDown);
+    window.addEventListener("mousemove", onMove, { passive: false });
+    window.addEventListener("mouseup", onUp);
+    // touch
+    el.addEventListener("touchstart", onDown, { passive: true });
+    el.addEventListener("touchmove", onMove, { passive: true });
+    el.addEventListener("touchend", onUp);
+    el.addEventListener("touchcancel", onUp);
+
+    return () => {
+      el.removeEventListener("mousedown", onDown);
+      window.removeEventListener("mousemove", onMove);
+      window.removeEventListener("mouseup", onUp);
+      el.removeEventListener("touchstart", onDown);
+      el.removeEventListener("touchmove", onMove);
+      el.removeEventListener("touchend", onUp);
+      el.removeEventListener("touchcancel", onUp);
+    };
+  }, []);
 
   return (
     <section className="w-full bg-[var(--color-background)] py-16 relative overflow-hidden">
@@ -24,46 +105,53 @@ export default function TopCategories() {
           The right course, guided by an expert mentor, can provide invaluable insights, practical skills.
         </p>
 
-        {/* Category Cards */}
+        {/* Carousel */}
         <div className="relative">
+          {/* gradient edges */}
+          <div className="pointer-events-none absolute left-0 top-0 h-full w-12 bg-gradient-to-r from-[var(--color-background)] to-transparent" />
+          <div className="pointer-events-none absolute right-0 top-0 h-full w-12 bg-gradient-to-l from-[var(--color-background)] to-transparent" />
+
           <div
+            ref={scrollerRef}
             id="scrollContainer"
-            className="flex md:grid md:grid-cols-3 lg:grid-cols-6 gap-5 overflow-x-auto scrollbar-hide snap-x snap-mandatory scroll-smooth pb-4"
+            role="region"
+            aria-label="Top categories"
+            className="flex gap-5 overflow-x-auto md:overflow-x-hidden scrollbar-hide snap-x snap-mandatory scroll-smooth pb-4"
           >
             {categories.map((item, i) => (
-              <div
+              <button
                 key={i}
-                className="snap-start bg-white rounded-[var(--radius-card)] shadow-sm hover:shadow-md p-6 flex flex-col items-center justify-center transition-all hover:-translate-y-1 duration-300 min-w-[200px] md:min-w-0"
+                data-card
+                className="snap-start bg-white rounded-[var(--radius-card)] shadow-sm hover:shadow-md p-6 flex flex-col items-center justify-center transition-all hover:-translate-y-1 duration-300 min-w-[200px] md:min-w-[220px] focus:outline-none focus:ring-2 focus:ring-[var(--color-secondary)]"
+                aria-label={item.name}
               >
-                <img
-                  src={item.logo}
-                  alt={item.name}
-                  className="h-10 w-10 mb-4 object-contain"
-                />
+                <img src={item.logo} alt="" className="h-10 w-10 mb-4 object-contain" />
                 <h3 className="text-[var(--color-text)] font-semibold text-sm md:text-base">
                   {item.name}
                 </h3>
-              </div>
+              </button>
             ))}
           </div>
 
-          {/* Scroll Buttons (only on desktop) */}
+          {/* Controls (desktop) */}
           <button
-            className="hidden md:flex absolute left-0 top-1/2 -translate-y-1/2 bg-white shadow-md p-2 rounded-full hover:bg-[var(--color-primary)] hover:text-white transition"
-          // onClick={() => {
-          // //   const container = document.getElementById("scrollContainer");
-          // //   container.scrollBy({ left: -200, behavior: "smooth" });
-          // }}
+            type="button"
+            aria-label="Previous"
+            disabled={!canPrev}
+            onClick={() => scrollStep("left")}
+            className={`hidden md:flex absolute left-1 top-[45%] -translate-y-1/2 p-2 rounded-full shadow-md transition
+              ${canPrev ? "bg-white hover:bg-[var(--color-primary)] hover:text-white" : "bg-gray-100 text-gray-300 cursor-not-allowed"}`}
           >
             <ArrowLeft size={18} />
           </button>
 
           <button
-            className="hidden md:flex absolute right-0 top-1/2 -translate-y-1/2 bg-white shadow-md p-2 rounded-full hover:bg-[var(--color-primary)] hover:text-white transition"
-          // onClick={() => {
-          //   const container = document.getElementById("scrollContainer");
-          //   container.scrollBy({ left: 200, behavior: "smooth" });
-          // }}
+            type="button"
+            aria-label="Next"
+            disabled={!canNext}
+            onClick={() => scrollStep("right")}
+            className={`hidden md:flex absolute right-1 top-[45%] -translate-y-1/2 p-2 rounded-full shadow-md transition
+              ${canNext ? "bg-white hover:bg-[var(--color-primary)] hover:text-white" : "bg-gray-100 text-gray-300 cursor-not-allowed"}`}
           >
             <ArrowRight size={18} />
           </button>
