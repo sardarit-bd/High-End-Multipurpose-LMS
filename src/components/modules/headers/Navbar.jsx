@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { FaBars, FaTimes, FaGlobe } from "react-icons/fa";
+import { FaBars, FaTimes, FaGlobe, FaChevronDown } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
 
 const Navbar = () => {
@@ -22,9 +22,11 @@ const Navbar = () => {
   };
 
   const languages = [
-    { code: "en", label: "English" },
-    { code: "ms", label: "Malay" }
+    { code: "en", label: "English", flag: "🇺🇸" },
+    { code: "ms", label: "Malay", flag: "🇲🇾" }
   ];
+
+  const currentLanguage = languages.find(lang => lang.code === i18n.language);
 
   const changeLanguage = (lng) => {
     i18n.changeLanguage(lng);
@@ -133,30 +135,38 @@ const Navbar = () => {
 
         {/* Desktop Language Selector & Auth Buttons */}
         <div className="hidden lg:flex items-center gap-4">
+          {/* Enhanced Language Selector */}
           <div className="relative">
             <button 
               onClick={() => toggleDropdown('language')}
-              className="flex items-center gap-2 text-[var(--color-secondary)] hover:text-[var(--color-secondary-hover)]"
+              className="flex items-center gap-2 px-2 py-2 rounded-lg border border-[var(--color-primary)] text-[var(--color-text)] hover:bg-[var(--color-primary)] hover:text-white transition-all duration-200 group"
             >
-              <FaGlobe />
-              <span className="text-sm font-medium uppercase">
-                {i18n.language}
-              </span>
+              <div className="flex items-center gap-2">
+                <FaGlobe className="text-[var(--color-primary)] group-hover:text-white transition-colors" />
+                <span className="text-sm font-medium flex items-center gap-1">
+                  <span className="text-base">{currentLanguage?.flag}</span>
+                  <span className="hidden sm:block">{currentLanguage?.label}</span>
+                </span>
+              </div>
+              <FaChevronDown className={`w-3 h-3 transition-transform duration-200 ${
+                openDropdown === 'language' ? 'rotate-180' : ''
+              }`} />
             </button>
             
             {openDropdown === 'language' && (
-              <div className="absolute right-0 bg-white border rounded shadow-md mt-2 z-50">
+              <div className="absolute right-0 mt-2 bg-white border border-[var(--color-primary)] rounded-lg shadow-lg z-50 min-w-[140px] overflow-hidden">
                 {languages.map((lng) => (
                   <button
                     key={lng.code}
                     onClick={() => changeLanguage(lng.code)}
-                    className={`block w-full text-left px-4 py-2 text-sm ${
+                    className={`flex items-center gap-3 w-full text-left px-4 py-3 text-sm transition-all duration-200 ${
                       i18n.language === lng.code 
                         ? "bg-[var(--color-primary)] text-white" 
-                        : "hover:bg-gray-100"
+                        : "hover:bg-[var(--color-background)] text-[var(--color-text)]"
                     }`}
                   >
-                    {lng.label}
+                    <span className="text-base">{lng.flag}</span>
+                    <span className="font-medium">{lng.label}</span>
                   </button>
                 ))}
               </div>
@@ -251,23 +261,24 @@ const Navbar = () => {
                 )
               )}
 
-              {/* Mobile Language Selector */}
+              {/* Enhanced Mobile Language Selector */}
               <div className="mt-6 pt-4 border-t border-gray-200">
                 <p className="text-sm font-medium text-[var(--color-text)] mb-3">
                   {t("language") || "Select Language"}
                 </p>
-                <div className="flex gap-2">
+                <div className="grid grid-cols-2 gap-2">
                   {languages.map((lng) => (
                     <button
                       key={lng.code}
                       onClick={() => changeLanguage(lng.code)}
-                      className={`px-3 py-2 text-sm rounded-lg border ${
+                      className={`flex items-center justify-center gap-2 px-3 py-3 text-sm rounded-lg border transition-all ${
                         i18n.language === lng.code
-                          ? "bg-[var(--color-primary)] text-white border-[var(--color-primary)]"
-                          : "bg-gray-100 text-gray-700 border-gray-300 hover:bg-gray-200"
+                          ? "bg-[var(--color-primary)] text-white border-[var(--color-primary)] shadow-md"
+                          : "bg-white text-gray-700 border-gray-300 hover:bg-[var(--color-background)] hover:border-[var(--color-primary)]"
                       }`}
                     >
-                      {lng.label}
+                      <span className="text-base">{lng.flag}</span>
+                      <span className="font-medium">{lng.label}</span>
                     </button>
                   ))}
                 </div>
@@ -278,14 +289,14 @@ const Navbar = () => {
                 <Link
                   href="/login"
                   onClick={closeMenu}
-                  className="flex-1 text-center px-4 py-3 rounded-lg border border-[var(--color-primary)] text-[var(--color-primary)] hover:bg-[var(--color-primary)] hover:text-white font-medium text-sm"
+                  className="flex-1 text-center px-4 py-3 rounded-lg border border-[var(--color-primary)] text-[var(--color-primary)] hover:bg-[var(--color-primary)] hover:text-white font-medium text-sm transition-all"
                 >
                   {t("login")}
                 </Link>
                 <Link
                   href="/register"
                   onClick={closeMenu}
-                  className="flex-1 text-center bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white px-4 py-3 rounded-lg text-sm font-medium"
+                  className="flex-1 text-center bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white px-4 py-3 rounded-lg text-sm font-medium transition-all"
                 >
                   {t("register")}
                 </Link>

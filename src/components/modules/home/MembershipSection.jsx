@@ -1,11 +1,12 @@
 "use client";
 import { useState } from "react";
-import { FaCheck } from "react-icons/fa";
+import { FaCheck, FaInfoCircle } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
 
 export default function MembershipSection() {
     const { t } = useTranslation();
     const [billing, setBilling] = useState("monthly");
+    const [activeTooltip, setActiveTooltip] = useState(null);
 
     const tiers = [
         {
@@ -45,6 +46,10 @@ export default function MembershipSection() {
         },
     ];
 
+    const handleTooltipToggle = (index) => {
+        setActiveTooltip(activeTooltip === index ? null : index);
+    };
+
     return (
         <section className="py-16 bg-[var(--color-background)] text-[var(--color-text)]">
             <div className="container mx-auto px-4">
@@ -79,19 +84,35 @@ export default function MembershipSection() {
 
                 {/* Membership Cards */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    {tiers.map((tier) => (
+                    {tiers.map((tier, index) => (
                         <div
                             key={tier.name}
                             className={`relative rounded-2xl shadow-lg p-8 flex flex-col ${tier.color} transition-transform hover:scale-105`}
                         >
-                            {/* Tooltip */}
-                            <div className="absolute top-4 right-4 group">
-                                <span className={`cursor-pointer font-bold ${tier.name === t("pricing.tiers.institutional.name") ? "text-white" : "text-[var(--color-primary)]"}`}>
-                                    i
-                                </span>
-                                <div className="absolute right-0 mt-2 w-48 bg-[var(--color-background)] border border-[var(--color-primary)] text-[var(--color-text)] text-sm p-3 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity shadow-md z-50">
-                                    {tier.tooltip}
-                                </div>
+                            {/* Tooltip with better icon */}
+                            <div className="absolute top-4 right-4">
+                                <button
+                                    onClick={() => handleTooltipToggle(index)}
+                                    onMouseEnter={() => setActiveTooltip(index)}
+                                    onMouseLeave={() => setActiveTooltip(null)}
+                                    className={`p-1 rounded-full transition-colors ${
+                                        tier.name === t("pricing.tiers.institutional.name") 
+                                            ? "text-white hover:bg-white/20" 
+                                            : "text-[var(--color-primary)] hover:bg-[var(--color-primary)]/10"
+                                    }`}
+                                >
+                                    <FaInfoCircle size={16} />
+                                </button>
+                                
+                                {/* Tooltip Content */}
+                                {activeTooltip === index && (
+                                    <div className="absolute right-0 top-8 w-48 bg-white border border-[var(--color-primary)] text-[var(--color-text)] text-sm p-3 rounded-lg shadow-lg z-50">
+                                        <div className="font-medium mb-1">Plan Details</div>
+                                        <div className="text-gray-600">{tier.tooltip}</div>
+                                        {/* Tooltip arrow */}
+                                        <div className="absolute -top-1 right-3 w-2 h-2 bg-white border-l border-t border-[var(--color-primary)] transform rotate-45"></div>
+                                    </div>
+                                )}
                             </div>
 
                             <h3 className={`text-2xl font-bold mb-4 ${tier.name === t("pricing.tiers.institutional.name") ? "text-white" : "text-[var(--color-secondary)]"}`}>
@@ -106,9 +127,9 @@ export default function MembershipSection() {
                             </p>
 
                             <ul className={`flex-1 mb-6 space-y-2 ${tier.name === t("pricing.tiers.institutional.name") ? "text-white/90" : "text-[var(--color-text)]/80"}`}>
-                                {tier.benefits.map((benefit, index) => (
-                                    <li key={index} className="flex items-center gap-2">
-                                        <FaCheck className={`text-[var(--color-accent)]`} />
+                                {tier.benefits.map((benefit, benefitIndex) => (
+                                    <li key={benefitIndex} className="flex items-center gap-2">
+                                        <FaCheck className={`${tier.name === t("pricing.tiers.institutional.name") ? "text-white" : "text-[var(--color-accent)]"}`} />
                                         {benefit}
                                     </li>
                                 ))}

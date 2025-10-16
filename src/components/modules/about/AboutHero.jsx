@@ -1,8 +1,11 @@
 "use client";
 import { FaGlobe, FaChalkboardTeacher } from "react-icons/fa";
 import Image from "next/image";
+import { useTranslation } from "react-i18next";
 
 export default function AboutHero() {
+  const { t } = useTranslation();
+
   return (
     <section className="py-[var(--spacing-section)] bg-[var(--color-background)] min-h-[600px] flex items-center">
      <div className="container mx-auto px-4 grid lg:grid-cols-2 gap-10 items-center">
@@ -14,7 +17,7 @@ export default function AboutHero() {
 
         <Image
           src="/images/students-group.jpg"
-          alt="About us"
+          alt={t("aboutHero.imageAlt") || "About us"}
           width={600}
           height={400}
           className="relative rounded-[var(--radius-card)] shadow-md"
@@ -23,13 +26,14 @@ export default function AboutHero() {
 
       {/* === Content Right === */}
       <div>
-        <p className="text-sm font-semibold text-[var(--color-accent)] mb-2">About</p>
+        <p className="text-sm font-semibold text-[var(--color-accent)] mb-2">
+          {t("aboutHero.subtitle") || "About"}
+        </p>
         <h2 className="text-3xl font-bold text-[var(--color-text)] leading-snug mb-4">
-          Empowering Learning, Inspiring Growth
+          {t("aboutHero.title") || "Empowering Learning, Inspiring Growth"}
         </h2>
         <p className="text-gray-600 text-sm mb-6">
-          At DreamLMS, we make education accessible to all with interactive courses and expert-led content. 
-          Learn anytime, anywhere, and achieve your goals seamlessly.
+          {t("aboutHero.description") || "At DreamLMS, we make education accessible to all with interactive courses and expert-led content. Learn anytime, anywhere, and achieve your goals seamlessly."}
         </p>
 
         {/* Features */}
@@ -39,9 +43,11 @@ export default function AboutHero() {
               <FaGlobe size={20} />
             </div>
             <div>
-              <h3 className="font-semibold text-[var(--color-text)]">Learn from anywhere</h3>
+              <h3 className="font-semibold text-[var(--color-text)]">
+                {t("aboutHero.features.learnAnywhere.title") || "Learn from anywhere"}
+              </h3>
               <p className="text-sm text-gray-600">
-                Learning from anywhere has become a transform aspect of modern education, allowing individuals.
+                {t("aboutHero.features.learnAnywhere.description") || "Learning from anywhere has become a transform aspect of modern education, allowing individuals."}
               </p>
             </div>
           </div>
@@ -51,9 +57,11 @@ export default function AboutHero() {
               <FaChalkboardTeacher size={20} />
             </div>
             <div>
-              <h3 className="font-semibold text-[var(--color-text)]">Expert Mentors</h3>
+              <h3 className="font-semibold text-[var(--color-text)]">
+                {t("aboutHero.features.expertMentors.title") || "Expert Mentors"}
+              </h3>
               <p className="text-sm text-gray-600">
-                Expert mentors are invaluable assets in any field, providing seasoned guidance and knowledge.
+                {t("aboutHero.features.expertMentors.description") || "Expert mentors are invaluable assets in any field, providing seasoned guidance and knowledge."}
               </p>
             </div>
           </div>

@@ -2,114 +2,114 @@
 import InstructorCard from "@/components/modules/instructor/InstructorCard";
 import { useState } from "react";
 import { FiFilter } from "react-icons/fi";
-
-// ===== Dummy Instructor Data =====
-const instructors = [
-  {
-    name: "Rolands Granger",
-    role: "Developer",
-    lessons: 12,
-    time: "169hr 20min",
-    rating: 4.9,
-    reviews: 200,
-    image: "/images/ins1.jpg",
-    category: "Technology",
-  },
-  {
-    name: "Lisa Lopez",
-    role: "Finance",
-    lessons: 22,
-    time: "15hr 06min",
-    rating: 4.4,
-    reviews: 130,
-    image: "/images/ins2.jpg",
-    category: "Management",
-  },
-  {
-    name: "Charles Ruiz",
-    role: "Cloud Engineer",
-    lessons: 16,
-    time: "2hr 25min",
-    rating: 4.5,
-    reviews: 120,
-    image: "/images/ins3.jpg",
-    category: "Programming",
-  },
-  {
-    name: "Ivana Tow",
-    role: "Corporate Trainer",
-    lessons: 25,
-    time: "4hr 20min",
-    rating: 4.2,
-    reviews: 210,
-    image: "/images/ins4.jpg",
-    category: "Productivity",
-  },
-  {
-    name: "Kevin Leonard",
-    role: "Developer",
-    lessons: 11,
-    time: "7hr 10min",
-    rating: 4.5,
-    reviews: 140,
-    image: "/images/ins5.jpg",
-    category: "Technology",
-  },
-  {
-    name: "Rogerina Grogan",
-    role: "Vocational",
-    lessons: 6,
-    time: "19hr 30min",
-    rating: 4.6,
-    reviews: 180,
-    image: "/images/ins6.jpg",
-    category: "Art & Media",
-  },
-  {
-    name: "David Roccoz",
-    role: "Sports Coach",
-    lessons: 4,
-    time: "1hr 30min",
-    rating: 4.3,
-    reviews: 190,
-    image: "/images/ins7.jpg",
-    category: "Productivity",
-  },
-  {
-    name: "Jeanette Dulaney",
-    role: "Technical Trainer",
-    lessons: 8,
-    time: "4hr 35min",
-    rating: 4.3,
-    reviews: 150,
-    image: "/images/ins8.jpg",
-    category: "Programming",
-  },
-  {
-    name: "Debran Andrew",
-    role: "Health & Wellness",
-    lessons: 8,
-    time: "4hr 35min",
-    rating: 4.3,
-    reviews: 190,
-    image: "/images/ins3.jpg",
-    category: "General",
-  }
-];
-
-
+import { useTranslation } from "react-i18next";
 
 export default function InstructorListing() {
+  const { t } = useTranslation();
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
+  // ===== Instructor Data with Translation =====
+  const instructors = [
+    {
+      name: "Rolands Granger",
+      role: t("instructors.roles.developer") || "Developer",
+      lessons: 12,
+      time: "169hr 20min",
+      rating: 4.9,
+      reviews: 200,
+      image: "/images/ins1.jpg",
+      category: t("instructorListing.categories.technology") || "Technology",
+    },
+    {
+      name: "Lisa Lopez",
+      role: t("instructors.roles.finance") || "Finance",
+      lessons: 22,
+      time: "15hr 06min",
+      rating: 4.4,
+      reviews: 130,
+      image: "/images/ins2.jpg",
+      category: t("instructorListing.categories.management") || "Management",
+    },
+    {
+      name: "Charles Ruiz",
+      role: t("instructors.roles.cloudEngineer") || "Cloud Engineer",
+      lessons: 16,
+      time: "2hr 25min",
+      rating: 4.5,
+      reviews: 120,
+      image: "/images/ins3.jpg",
+      category: t("instructorListing.categories.programming") || "Programming",
+    },
+    {
+      name: "Ivana Tow",
+      role: t("instructors.roles.corporateTrainer") || "Corporate Trainer",
+      lessons: 25,
+      time: "4hr 20min",
+      rating: 4.2,
+      reviews: 210,
+      image: "/images/ins4.jpg",
+      category: t("instructorListing.categories.productivity") || "Productivity",
+    },
+    {
+      name: "Kevin Leonard",
+      role: t("instructors.roles.developer") || "Developer",
+      lessons: 11,
+      time: "7hr 10min",
+      rating: 4.5,
+      reviews: 140,
+      image: "/images/ins5.jpg",
+      category: t("instructorListing.categories.technology") || "Technology",
+    },
+    {
+      name: "Rogerina Grogan",
+      role: t("instructors.roles.vocational") || "Vocational",
+      lessons: 6,
+      time: "19hr 30min",
+      rating: 4.6,
+      reviews: 180,
+      image: "/images/ins6.jpg",
+      category: t("courses.categories.artMedia") || "Art & Media",
+    },
+    {
+      name: "David Roccoz",
+      role: t("instructors.roles.sportsCoach") || "Sports Coach",
+      lessons: 4,
+      time: "1hr 30min",
+      rating: 4.3,
+      reviews: 190,
+      image: "/images/ins7.jpg",
+      category: t("instructorListing.categories.productivity") || "Productivity",
+    },
+    {
+      name: "Jeanette Dulaney",
+      role: t("instructors.roles.technicalTrainer") || "Technical Trainer",
+      lessons: 8,
+      time: "4hr 35min",
+      rating: 4.3,
+      reviews: 150,
+      image: "/images/ins8.jpg",
+      category: t("instructorListing.categories.programming") || "Programming",
+    },
+    {
+      name: "Debran Andrew",
+      role: t("instructors.roles.healthWellness") || "Health & Wellness",
+      lessons: 8,
+      time: "4hr 35min",
+      rating: 4.3,
+      reviews: 190,
+      image: "/images/ins3.jpg",
+      category: t("instructors.categories.general") || "General",
+    }
+  ];
+
   const categories = [
-    "Technology",
-    "Programming",
-    "Management",
-    "Productivity",
-    "Finance",
+    t("instructorListing.categories.technology") || "Technology",
+    t("instructorListing.categories.programming") || "Programming",
+    t("instructorListing.categories.management") || "Management",
+    t("instructorListing.categories.productivity") || "Productivity",
+    t("instructorListing.categories.finance") || "Finance",
   ];
 
   // ===== Filtering Logic =====
@@ -147,30 +147,34 @@ export default function InstructorListing() {
             onClick={() => setIsFilterOpen(true)}
           >
             <FiFilter size={18} />
-            <span className="text-sm font-semibold">Filters</span>
+            <span className="text-sm font-semibold">
+              {t("instructorListing.filters") || "Filters"}
+            </span>
           </button>
           <button className="hidden lg:flex items-center gap-1 text-[var(--color-primary)]">
             <FiFilter size={18} />
-            <span className="text-sm font-semibold">Filters</span>
+            <span className="text-sm font-semibold">
+              {t("instructorListing.filters") || "Filters"}
+            </span>
           </button>
           <button
             onClick={clearFilters}
             className="text-xs px-3 py-2 bg-[var(--color-text)]/10 border border-[var(--color-primary)] rounded-lg text-[var(--color-text)]"
           >
-            Clear
+            {t("instructorListing.clear") || "Clear"}
           </button>
         </div>
 
         {/* Right side: Results + Controls */}
         <div className="flex items-center gap-3 flex-wrap w-full md:w-auto justify-between">
           <span className="md:inline-block hidden text-xs sm:text-sm text-gray-600">
-            Showing {filteredInstructors.length} results
+            {t("instructorListing.showingResults", { count: filteredInstructors.length }) || `Showing ${filteredInstructors.length} results`}
           </span>
 
           {/* Search input */}
           <input
             type="text"
-            placeholder="Search instructor"
+            placeholder={t("instructorListing.searchPlaceholder") || "Search instructor"}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="px-3 py-2 bg-[var(--color-text)]/10 border border-[var(--color-primary)] rounded-lg text-[var(--color-text)] placeholder-[var(--color-text)] focus:outline-none focus:border-[var(--color-primary)]"
@@ -183,7 +187,9 @@ export default function InstructorListing() {
         <aside className="w-64 h-screen sticky top-[135px] overflow-y-auto border-r border-gray-200 bg-white p-4 hidden lg:block">
           {/* Categories */}
           <div className="mb-6">
-            <h4 className="font-medium text-sm mb-2 text-gray-700">Categories</h4>
+            <h4 className="font-medium text-sm mb-2 text-gray-700">
+              {t("instructorListing.categories") || "Categories"}
+            </h4>
             <ul className="space-y-2 text-sm">
               {categories.map((cat) => (
                 <li key={cat}>
@@ -222,18 +228,22 @@ export default function InstructorListing() {
             }`}
           >
             <div className="flex justify-between items-center mb-4">
-              <h3 className="font-semibold text-[var(--color-text)]">Filters</h3>
+              <h3 className="font-semibold text-[var(--color-text)]">
+                {t("instructorListing.filters") || "Filters"}
+              </h3>
               <button
                 onClick={() => setIsFilterOpen(false)}
                 className="text-sm text-[var(--color-primary)] hover:text-[var(--color-primary-hover)]"
               >
-                Close
+                {t("instructorListing.close") || "Close"}
               </button>
             </div>
 
             {/* Categories */}
             <div className="mb-6">
-              <h4 className="font-medium text-sm mb-2 text-gray-700">Categories</h4>
+              <h4 className="font-medium text-sm mb-2 text-gray-700">
+                {t("instructorListing.categories") || "Categories"}
+              </h4>
               <ul className="space-y-2 text-sm">
                 {categories.map((cat) => (
                   <li key={cat}>
