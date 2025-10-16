@@ -63,7 +63,7 @@ export default function AssignmentsPage() {
   const [query, setQuery] = useState("");
   const [status, setStatus] = useState("All");
   const [course, setCourse] = useState("All");
-  const [sortBy, setSortBy] = useState("dueAsc"); // dueAsc | dueDesc | titleAsc | titleDesc
+  const [sortBy, setSortBy] = useState("dueAsc");
 
   const courses = useMemo(
     () => ["All", ...Array.from(new Set(ASSIGNMENTS.map((a) => a.course)))],
@@ -96,7 +96,7 @@ export default function AssignmentsPage() {
       if (sortBy === "titleAsc") return a.title.localeCompare(b.title);
       if (sortBy === "titleDesc") return b.title.localeCompare(a.title);
       if (sortBy === "dueDesc") return new Date(b.due) - new Date(a.due);
-      return new Date(a.due) - new Date(b.due); // dueAsc default
+      return new Date(a.due) - new Date(b.due);
     });
 
     return sorted;
