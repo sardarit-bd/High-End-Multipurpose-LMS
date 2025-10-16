@@ -30,6 +30,9 @@ export default function CourseSinglePage() {
                         <div className="rounded-[var(--radius-card)] overflow-hidden shadow-lg mb-6">
                             <video
                                 controls
+                                autoPlay={true}
+                                muted ={true}
+                                loop={true}
                                 //   poster="/thumbnail.jpg"
                                 className="w-full rounded-[var(--radius-card)]"
                             >
