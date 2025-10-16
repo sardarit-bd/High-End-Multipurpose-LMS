@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { FaBars, FaTimes, FaGlobe, FaChevronDown } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
+import Image from "next/image";
 
 const Navbar = () => {
   const { t, i18n } = useTranslation();
@@ -67,7 +68,9 @@ const Navbar = () => {
           onClick={closeMenu}
           className="text-2xl font-extrabold text-[var(--color-secondary)]"
         >
-          ASIA-LMS
+         <Image src="/logo.png" alt="ASIA-LMS" width={100} height={40}
+         className="h-[35px] w-auto object-contain"
+         />
         </Link>
 
         {/* Desktop Menu */}
