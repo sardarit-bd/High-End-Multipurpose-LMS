@@ -6,43 +6,44 @@ import { FaUserGraduate, FaChalkboardTeacher, FaCertificate, FaUsers } from "rea
 import { FiPlus, FiMinus } from "react-icons/fi";
 import Image from "next/image";
 import AboutHero from '@/components/modules/about/AboutHero';
-
+import { useTranslation } from "react-i18next";
 
 export default function About() {
+    const { t } = useTranslation();
     const [openFaq, setOpenFaq] = useState(0);
 
     const faqs = [
         {
-            q: "What’s DreamLMS want to give you?",
-            a: "DreamLMS aims to provide you with a comprehensive and intuitive learning platform that enhances your educational experience.",
+            q: t("about.faqs.q1") || "What's DreamLMS want to give you?",
+            a: t("about.faqs.a1") || "DreamLMS aims to provide you with a comprehensive and intuitive learning platform that enhances your educational experience.",
         },
         {
-            q: "Why choose us for your education?",
-            a: "We offer certified tutors, high-quality courses, and lifetime access with global recognition.",
+            q: t("about.faqs.q2") || "Why choose us for your education?",
+            a: t("about.faqs.a2") || "We offer certified tutors, high-quality courses, and lifetime access with global recognition.",
         },
         {
-            q: "How we provide service for you?",
-            a: "We provide 24/7 support, flexible learning paths, and personalized mentoring for all learners.",
+            q: t("about.faqs.q3") || "How we provide service for you?",
+            a: t("about.faqs.a3") || "We provide 24/7 support, flexible learning paths, and personalized mentoring for all learners.",
         },
     ];
 
     const instructors = [
         {
             name: "Brenda Slaton",
-            role: "Designer",
-            text: "This mentor helped me understand concepts that I...",
+            role: t("about.instructors.roles.designer") || "Designer",
+            text: t("about.instructors.testimonials.brenda") || "This mentor helped me understand concepts that I...",
             img: "/images/student-1.jpg",
         },
         {
             name: "Adrian Dennis",
-            role: "Developer",
-            text: "I’ve learned so much from my mentor’s personal e...",
+            role: t("about.instructors.roles.developer") || "Developer",
+            text: t("about.instructors.testimonials.adrian") || "I've learned so much from my mentor's personal e...",
             img: "/images/student-2.jpg",
         },
         {
             name: "Adrian Coztanza",
-            role: "Architect",
-            text: "The advice was useful, but I wish my mentor had...",
+            role: t("about.instructors.roles.architect") || "Architect",
+            text: t("about.instructors.testimonials.coztanza") || "The advice was useful, but I wish my mentor had...",
             img: "/images/student-1.jpg",
         },
     ]
@@ -52,27 +53,28 @@ export default function About() {
            <AboutHero />
             <OurBenefits />
 
+            {/* Stats Section */}
             <div className="py-[var(--spacing-section)] bg-black mx-auto px-4">
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 container mx-auto px-4">
                     <div className="flex flex-col items-center text-white">
                         <FaUserGraduate size={32} />
                         <h3 className="font-bold text-lg mt-2">10K</h3>
-                        <p className="text-sm">Online Courses</p>
+                        <p className="text-sm">{t("about.stats.onlineCourses") || "Online Courses"}</p>
                     </div>
                     <div className="flex flex-col items-center text-white">
                         <FaChalkboardTeacher size={32} />
                         <h3 className="font-bold text-lg mt-2">200+</h3>
-                        <p className="text-sm">Expert Tutors</p>
+                        <p className="text-sm">{t("about.stats.expertTutors") || "Expert Tutors"}</p>
                     </div>
                     <div className="flex flex-col items-center text-white">
                         <FaCertificate size={32} />
                         <h3 className="font-bold text-lg mt-2">6K+</h3>
-                        <p className="text-sm">Certified Courses</p>
+                        <p className="text-sm">{t("about.stats.certifiedCourses") || "Certified Courses"}</p>
                     </div>
                     <div className="flex flex-col items-center text-white">
                         <FaUsers size={32} />
                         <h3 className="font-bold text-lg mt-2">60K+</h3>
-                        <p className="text-sm">Online Students</p>
+                        <p className="text-sm">{t("about.stats.onlineStudents") || "Online Students"}</p>
                     </div>
                 </div>
             </div>
@@ -81,10 +83,10 @@ export default function About() {
             <section className="py-[var(--spacing-section)] bg-[var(--color-background)]">
                <div className='container mx-auto px-4'>
                  <h2 className="text-center text-2xl font-bold text-[var(--color-text)] mb-2">
-                    Top Class & Professional Instructors
+                    {t("about.instructors.title") || "Top Class & Professional Instructors"}
                 </h2>
                 <p className="text-center text-sm text-gray-600 mb-8">
-                    Words from those who’ve experienced real growth.
+                    {t("about.instructors.subtitle") || "Words from those who've experienced real growth."}
                 </p>
 
                 <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -113,12 +115,12 @@ export default function About() {
             </section>
 
             {/* === FAQ Section === */}
-            <section className="py-[var(--spacing-section)]  container mx-auto px-4 grid lg:grid-cols-2 gap-8 items-center">
+            <section className="py-[var(--spacing-section)] container mx-auto px-4 grid lg:grid-cols-2 gap-8 items-center">
                 {/* Image Left */}
                 <div>
                     <Image
                         src="/images/learning-journey.jpg"
-                        alt="FAQ"
+                        alt={t("about.faqs.imageAlt") || "FAQ"}
                         width={500}
                         height={400}
                         className="rounded-[var(--radius-card)] shadow-md"
@@ -127,12 +129,14 @@ export default function About() {
 
                 {/* Accordion Right */}
                 <div>
-                    <h3 className="text-sm font-semibold text-[var(--color-accent)] mb-2">FAQs</h3>
+                    <h3 className="text-sm font-semibold text-[var(--color-accent)] mb-2">
+                        {t("about.faqs.subtitle") || "FAQs"}
+                    </h3>
                     <h2 className="text-2xl font-bold text-[var(--color-text)] mb-4">
-                        Frequently Asked Questions
+                        {t("about.faqs.title") || "Frequently Asked Questions"}
                     </h2>
                     <p className="text-sm text-gray-600 mb-6">
-                        Explore detailed answers to the most common questions about our platform.
+                        {t("about.faqs.description") || "Explore detailed answers to the most common questions about our platform."}
                     </p>
 
                     <div className="space-y-3">
@@ -160,9 +164,6 @@ export default function About() {
                     </div>
                 </div>
             </section>
-
-
-
         </div>
     )
 }

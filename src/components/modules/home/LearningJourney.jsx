@@ -1,28 +1,31 @@
 "use client";
 
 import Image from "next/image";
+import { useTranslation } from "react-i18next";
 
 export default function LearningJourney() {
+  const { t } = useTranslation();
+
   const steps = [
     {
       id: "01",
-      title: "Sign-Up or Register",
-      desc: "Once you're on the website's homepage, look for the Sign-Up, Register, or Create Account button.",
+      title: t("learningJourney.steps.step1.title") || "Sign-Up or Register",
+      desc: t("learningJourney.steps.step1.description") || "Once you're on the website's homepage, look for the Sign-Up, Register, or Create Account button.",
     },
     {
       id: "02",
-      title: "Complete Your Profile",
-      desc: "After verifying your email, you may be asked to complete additional profile information.",
+      title: t("learningJourney.steps.step2.title") || "Complete Your Profile",
+      desc: t("learningJourney.steps.step2.description") || "After verifying your email, you may be asked to complete additional profile information.",
     },
     {
       id: "03",
-      title: "Choose Courses or Programs",
-      desc: "Depending on the website, after registration, you might be able to browse and choose courses or programs to enroll in.",
+      title: t("learningJourney.steps.step3.title") || "Choose Courses or Programs",
+      desc: t("learningJourney.steps.step3.description") || "Depending on the website, after registration, you might be able to browse and choose courses or programs to enroll in.",
     },
     {
       id: "04",
-      title: "Access Your Account",
-      desc: "Should have access to the website's features, such as enrolling in courses, materials, or tracking progress.",
+      title: t("learningJourney.steps.step4.title") || "Access Your Account",
+      desc: t("learningJourney.steps.step4.description") || "Should have access to the website's features, such as enrolling in courses, materials, or tracking progress.",
     },
   ];
 
@@ -34,7 +37,7 @@ export default function LearningJourney() {
           <div className="rounded-[var(--radius-card)] overflow-hidden shadow-[var(--shadow-medium)]">
             <Image
               src="/images/learning-journey.jpg"
-              alt="Learning Journey"
+              alt={t("learningJourney.imageAlt") || "Learning Journey"}
               width={500}
               height={400}
               className="object-cover w-full h-auto"
@@ -45,13 +48,13 @@ export default function LearningJourney() {
         {/* Right Text Content */}
         <div>
           <p className="text-[var(--color-accent)] font-semibold mb-2">
-            How it Works
+            {t("learningJourney.subtitle") || "How it Works"}
           </p>
           <h2 className="text-2xl md:text-3xl font-bold text-[var(--color-text)] mb-4">
-            Start your Learning Journey Today!
+            {t("learningJourney.title") || "Start your Learning Journey Today!"}
           </h2>
           <p className="text-[var(--color-text)] mb-6 opacity-90">
-            Unlock Your Potential and Achieve Your Dreams with Our Comprehensive Learning Resources!
+            {t("learningJourney.description") || "Unlock Your Potential and Achieve Your Dreams with Our Comprehensive Learning Resources!"}
           </p>
 
           <div className="space-y-6">

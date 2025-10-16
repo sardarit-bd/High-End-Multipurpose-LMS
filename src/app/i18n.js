@@ -80,6 +80,36 @@ const resources = {
       "courses.categories.productivity": "Productivity",
       "courses.categories.management": "Management",
       "courses.categories.artMedia": "Art & Media",
+
+      // Courses Titles - English
+      "courses.uiux.course1.title": "Information About UI/UX Design Degree",
+      "courses.uiux.course2.title": "UI/UX Wireframing and Prototyping",
+      "courses.uiux.course3.title": "Mastering UX Research",
+      "courses.uiux.course4.title": "Figma for Beginners",
+      "courses.uiux.course5.title": "UX Writing Essentials",
+      "courses.uiux.course6.title": "Advanced UI Animations",
+
+      "courses.productivity.course1.title": "Learn & Create ReactJS Tech Fundamentals Apps",
+      "courses.productivity.course2.title": "Boost Productivity with Notion",
+      "courses.productivity.course3.title": "AI Tools for Work Efficiency",
+      "courses.productivity.course4.title": "Time Management Strategies",
+      "courses.productivity.course5.title": "Kanban for Teams",
+      "courses.productivity.course6.title": "Deep Work Mastery",
+
+      "courses.management.course1.title": "The Complete Business and Management Course",
+      "courses.management.course2.title": "Project Management Essentials",
+      "courses.management.course3.title": "Agile Leadership Training",
+      "courses.management.course4.title": "Entrepreneurship 101",
+      "courses.management.course5.title": "Financial Management Basics",
+      "courses.management.course6.title": "Team Building Strategies",
+
+      "courses.artMedia.course1.title": "Build Creative Arts & Media Course Completed",
+      "courses.artMedia.course2.title": "Photography Masterclass",
+      "courses.artMedia.course3.title": "Video Editing in Premiere Pro",
+      "courses.artMedia.course4.title": "Digital Illustration in Procreate",
+      "courses.artMedia.course5.title": "Storytelling for Filmmakers",
+      "courses.artMedia.course6.title": "Sound Design Fundamentals",
+
       // Benefits Section Translations
       "benefits.subtitle": "Our Benefits",
       "benefits.title": "Master the Skills to Drive your Career",
@@ -119,7 +149,254 @@ const resources = {
       "pricing.tiers.institutional.benefits.2": "Dedicated support",
 
       // Partners Section Translations
-      "partners.title": "Trusted by 20+ Institutions Around the World"
+      "partners.title": "Trusted by 20+ Institutions Around the World",
+
+
+      // Advanced Learning Section Translations
+      "advancedLearning.subtitle": "Advanced Learning",
+      "advancedLearning.title": "Creating a community of learners.",
+      "advancedLearning.description": "We're dedicated to transforming education by providing a diverse range of high-quality courses that cater to learners of all levels.",
+      "advancedLearning.imageAlt": "Smiling student with notebook",
+      "advancedLearning.enrollButton": "Enroll as Student",
+      "advancedLearning.applyTutorButton": "Apply as Tutor",
+      
+      // Features
+      "advancedLearning.features.learnAnywhere.title": "Learn from Anywhere",
+      "advancedLearning.features.learnAnywhere.description": "Study from anywhere in the world, anytime that suits you best.",
+      "advancedLearning.features.expertMentors.title": "Expert Mentors",
+      "advancedLearning.features.expertMentors.description": "Learn directly from industry experts and educators.",
+      "advancedLearning.features.inDemandSkills.title": "Learn In-Demand Skills",
+      "advancedLearning.features.inDemandSkills.description": "Master the latest skills and tools required in modern careers.",
+
+       // Learning Journey Section Translations
+      "learningJourney.subtitle": "How it Works",
+      "learningJourney.title": "Start your Learning Journey Today!",
+      "learningJourney.description": "Unlock Your Potential and Achieve Your Dreams with Our Comprehensive Learning Resources!",
+      "learningJourney.imageAlt": "Learning Journey",
+      
+      // Steps
+      "learningJourney.steps.step1.title": "Sign-Up or Register",
+      "learningJourney.steps.step1.description": "Once you're on the website's homepage, look for the Sign-Up, Register, or Create Account button.",
+      
+      "learningJourney.steps.step2.title": "Complete Your Profile",
+      "learningJourney.steps.step2.description": "After verifying your email, you may be asked to complete additional profile information.",
+      
+      "learningJourney.steps.step3.title": "Choose Courses or Programs",
+      "learningJourney.steps.step3.description": "Depending on the website, after registration, you might be able to browse and choose courses or programs to enroll in.",
+      
+      "learningJourney.steps.step4.title": "Access Your Account",
+      "learningJourney.steps.step4.description": "Should have access to the website's features, such as enrolling in courses, materials, or tracking progress.",
+
+      // Student Success Section Translations
+      "studentSuccess.imageAlt": "Happy Students",
+      "studentSuccess.enrollButton": "Enroll as Student",
+      "studentSuccess.applyTutorButton": "Apply as Tutor",
+      "studentSuccess.quote": "“All courses are incredibly helpful to achieve your goals.”",
+      
+      // Stats
+      "studentSuccess.stats.trusted.title": "Trusted by 15,000+ Students",
+      "studentSuccess.stats.trusted.subtitle": "Since 2000",
+      "studentSuccess.stats.approval.title": "9.8/10 Course Approval",
+      "studentSuccess.stats.approval.description": "Achieving a complete course approval score is significant.",
+      "studentSuccess.stats.learners.title": "13k+ Satisfied Learners",
+      "studentSuccess.stats.learners.description": "Students worldwide share a common thread of happiness.",
+
+      // Footer Translations
+      "footer.companyDescription": "Platform designed to help organizations, educators, and learners manage, deliver, and track learning and training activities.",
+      "footer.copyright": "Copyright 2023 © DreamsLife. All rights reserved.",
+      "footer.terms": "Terms & Conditions",
+      "footer.privacy": "Privacy Policy",
+      
+      // Support Section
+      "footer.support.title": "Support",
+      "footer.support.education": "Education",
+      "footer.support.enrollCourse": "Enroll Course",
+      "footer.support.orders": "Orders",
+      "footer.support.payments": "Payments",
+      "footer.support.blogs": "Blogs",
+      
+      // About Section
+      "footer.about.title": "About",
+      "footer.about.categories": "Categories",
+      "footer.about.courses": "Courses",
+      "footer.about.aboutUs": "About Us",
+      "footer.about.fax": "Fax",
+      "footer.about.contacts": "Contacts",
+      
+      // Useful Links Section
+      "footer.usefulLinks.title": "Useful Links",
+      "footer.usefulLinks.ourValues": "Our values",
+      "footer.usefulLinks.advisoryBoard": "Our advisory board",
+      "footer.usefulLinks.partners": "Our partners",
+      "footer.usefulLinks.becomePartner": "Become a partner",
+      "footer.usefulLinks.workWithUs": "Work at Future Learn",
+      
+      // Newsletter Section
+      "footer.newsletter.title": "Subscribe Newsletter",
+      "footer.newsletter.description": "Sign up to get updates & news.",
+      "footer.newsletter.placeholder": "Email Address",
+      "footer.newsletter.button": "Subscribe",
+
+       // Course Listing Translations
+      "courseListing.filters": "Filters",
+      "courseListing.clear": "Clear",
+      "courseListing.close": "Close",
+      "courseListing.categories": "Categories",
+      "courseListing.instructors": "Instructors",
+      "courseListing.price": "Price",
+      "courseListing.searchPlaceholder": "Search",
+      "courseListing.showingResults": "Showing {{showing}} of {{total}} results",
+      
+      // Additional Categories
+      "courseListing.categories.programming": "Programming",
+      "courseListing.categories.technology": "Technology",
+      
+      // Price Options
+      "courseListing.priceOptions.all": "All",
+      "courseListing.priceOptions.free": "Free",
+      "courseListing.priceOptions.paid": "Paid",
+
+      // Pricing Comparison Translations
+      "pricingComparison.title": "Compare Our Plans",
+      "pricingComparison.description": "Find the plan that suits your needs. Compare features across Basic, Team, and Pro tiers.",
+      "pricingComparison.featuresHeader": "Features",
+      
+      // Plans
+      "pricingComparison.plans.free": "Free",
+      "pricingComparison.plans.premium": "Premium",
+      "pricingComparison.plans.institutional": "Institutional",
+      
+      // Features
+      "pricingComparison.features.separateBusiness": "Separate business/personal",
+      "pricingComparison.features.trackMileage": "Track deductible mileage",
+      "pricingComparison.features.downloadBanking": "Download online banking",
+      "pricingComparison.features.multiDevice": "Multi-device",
+      "pricingComparison.features.createInvoices": "Create invoices & estimates",
+      "pricingComparison.features.manageVAT": "Manage VAT",
+      "pricingComparison.features.manageBills": "Manage bills & payments",
+      "pricingComparison.features.multipleCurrencies": "Multiple currencies",
+      "pricingComparison.features.createBudgets": "Create budgets",
+      "pricingComparison.features.trackTime": "Track time",
+
+       // Instructor Listing Translations
+      "instructorListing.filters": "Filters",
+      "instructorListing.clear": "Clear",
+      "instructorListing.close": "Close",
+      "instructorListing.categories": "Categories",
+      "instructorListing.searchPlaceholder": "Search instructor",
+      "instructorListing.showingResults": "Showing {{count}} results",
+      
+      // Categories
+      "instructorListing.categories.technology": "Technology",
+      "instructorListing.categories.programming": "Programming",
+      "instructorListing.categories.management": "Management",
+      "instructorListing.categories.productivity": "Productivity",
+      "instructorListing.categories.finance": "Finance",
+
+       // Instructor Listing Translations
+      "instructorListing.filters": "Filters",
+      "instructorListing.clear": "Clear",
+      "instructorListing.close": "Close",
+      "instructorListing.categories": "Categories",
+      "instructorListing.searchPlaceholder": "Search instructor",
+      "instructorListing.showingResults": "Showing {{count}} results",
+      
+      // Categories
+      "instructorListing.categories.technology": "Technology",
+      "instructorListing.categories.programming": "Programming",
+      "instructorListing.categories.management": "Management",
+      "instructorListing.categories.productivity": "Productivity",
+      "instructorListing.categories.finance": "Finance",
+      
+      // Instructor Roles
+      "instructors.roles.developer": "Developer",
+      "instructors.roles.finance": "Finance",
+      "instructors.roles.cloudEngineer": "Cloud Engineer",
+      "instructors.roles.corporateTrainer": "Corporate Trainer",
+      "instructors.roles.vocational": "Vocational",
+      "instructors.roles.sportsCoach": "Sports Coach",
+      "instructors.roles.technicalTrainer": "Technical Trainer",
+      "instructors.roles.healthWellness": "Health & Wellness",
+      
+      // Additional Categories
+      "instructors.categories.general": "General",
+
+       // Checkout Translations
+      "checkout.billingAddress": "Billing Address",
+      "checkout.firstName": "First Name *",
+      "checkout.lastName": "Last Name *",
+      "checkout.phoneNumber": "Phone Number (Optional)",
+      "checkout.addressLine1": "Address Line 1 *",
+      "checkout.addressLine2": "Address Line 2 (Optional)",
+      "checkout.country": "Country *",
+      "checkout.state": "State *",
+      "checkout.city": "City *",
+      "checkout.saveInformation": "Save this information for next time",
+      
+      "checkout.paymentMethod": "Payment Method",
+      "checkout.paymentMethods.card": "Card",
+      "checkout.paymentMethods.paypal": "Paypal",
+      "checkout.paymentMethods.stripe": "Stripe",
+      
+      "checkout.cardNumber": "Card Number *",
+      "checkout.nameOnCard": "Name on Card *",
+      "checkout.expiryDate": "Expiry Date *",
+      "checkout.securityNumber": "Security Number *",
+      
+      "checkout.payButton": "Pay {{amount}}",
+      
+      "checkout.orderDetails": "Order Details",
+      "checkout.courses.uiux": "UI/UX Design Degree",
+      "checkout.courses.react": "React Fundamentals",
+      
+      "checkout.subTotal": "Sub Total",
+      "checkout.tax": "Tax (VAT)",
+      "checkout.total": "Total",
+
+       // About Page Translations
+      "about.stats.onlineCourses": "Online Courses",
+      "about.stats.expertTutors": "Expert Tutors",
+      "about.stats.certifiedCourses": "Certified Courses",
+      "about.stats.onlineStudents": "Online Students",
+      
+      // Instructors Section
+      "about.instructors.title": "Top Class & Professional Instructors",
+      "about.instructors.subtitle": "Words from those who've experienced real growth.",
+      "about.instructors.roles.designer": "Designer",
+      "about.instructors.roles.developer": "Developer",
+      "about.instructors.roles.architect": "Architect",
+      "about.instructors.testimonials.brenda": "This mentor helped me understand concepts that I...",
+      "about.instructors.testimonials.adrian": "I've learned so much from my mentor's personal e...",
+      "about.instructors.testimonials.coztanza": "The advice was useful, but I wish my mentor had...",
+      
+      // FAQ Section
+      "about.faqs.subtitle": "FAQs",
+      "about.faqs.title": "Frequently Asked Questions",
+      "about.faqs.description": "Explore detailed answers to the most common questions about our platform.",
+      "about.faqs.imageAlt": "FAQ",
+      "about.faqs.q1": "What's DreamLMS want to give you?",
+      "about.faqs.a1": "DreamLMS aims to provide you with a comprehensive and intuitive learning platform that enhances your educational experience.",
+      "about.faqs.q2": "Why choose us for your education?",
+      "about.faqs.a2": "We offer certified tutors, high-quality courses, and lifetime access with global recognition.",
+      "about.faqs.q3": "How we provide service for you?",
+      "about.faqs.a3": "We provide 24/7 support, flexible learning paths, and personalized mentoring for all learners.",
+
+       // About Hero Translations
+      "aboutHero.subtitle": "About",
+      "aboutHero.title": "Empowering Learning, Inspiring Growth",
+      "aboutHero.description": "At DreamLMS, we make education accessible to all with interactive courses and expert-led content. Learn anytime, anywhere, and achieve your goals seamlessly.",
+      "aboutHero.imageAlt": "About us",
+      
+      // Features
+      "aboutHero.features.learnAnywhere.title": "Learn from anywhere",
+      "aboutHero.features.learnAnywhere.description": "Learning from anywhere has become a transform aspect of modern education, allowing individuals.",
+      
+      "aboutHero.features.expertMentors.title": "Expert Mentors",
+      "aboutHero.features.expertMentors.description": "Expert mentors are invaluable assets in any field, providing seasoned guidance and knowledge."
+
+
+
+
     }
   },
   ms: {
@@ -199,6 +476,35 @@ const resources = {
       "courses.categories.management": "Pengurusan",
       "courses.categories.artMedia": "Seni & Media",
 
+       // Courses Titles - Malay
+      "courses.uiux.course1.title": "Maklumat Tentang Ijazah Reka Bentuk UI/UX",
+      "courses.uiux.course2.title": "Pembuatan Rangka dan Prototaip UI/UX",
+      "courses.uiux.course3.title": "Menguasai Penyelidikan UX",
+      "courses.uiux.course4.title": "Figma untuk Pemula",
+      "courses.uiux.course5.title": "Asas Penulisan UX",
+      "courses.uiux.course6.title": "Animasi UI Lanjutan",
+
+      "courses.productivity.course1.title": "Belajar & Cipta Aplikasi Asas Teknologi ReactJS",
+      "courses.productivity.course2.title": "Tingkatkan Produktiviti dengan Notion",
+      "courses.productivity.course3.title": "Alat AI untuk Kecekapan Kerja",
+      "courses.productivity.course4.title": "Strategi Pengurusan Masa",
+      "courses.productivity.course5.title": "Kanban untuk Pasukan",
+      "courses.productivity.course6.title": "Penguasaan Kerja Mendalam",
+
+      "courses.management.course1.title": "Kursus Perniagaan dan Pengurusan Lengkap",
+      "courses.management.course2.title": "Asas Pengurusan Projek",
+      "courses.management.course3.title": "Latihan Kepimpinan Agile",
+      "courses.management.course4.title": "Keusahawanan 101",
+      "courses.management.course5.title": "Asas Pengurusan Kewangan",
+      "courses.management.course6.title": "Strategi Pembinaan Pasukan",
+
+      "courses.artMedia.course1.title": "Bina Kursus Seni & Media Kreatif Selesai",
+      "courses.artMedia.course2.title": "Kelas Master Fotografi",
+      "courses.artMedia.course3.title": "Suntingan Video dalam Premiere Pro",
+      "courses.artMedia.course4.title": "Ilustrasi Digital dalam Procreate",
+      "courses.artMedia.course5.title": "Penceritaan untuk Pembuat Filem",
+      "courses.artMedia.course6.title": "Asas Reka Bentuk Bunyi",
+
       // Benefits Section Malay Translations
       "benefits.subtitle": "Manfaat Kami",
       "benefits.title": "Kuasa Kemahiran untuk Memacu Kerjaya Anda",
@@ -238,7 +544,236 @@ const resources = {
       "pricing.tiers.institutional.benefits.2": "Sokongan berdedikasi",
 
       // Partners Section Malay Translations
-      "partners.title": "Dipercayai oleh 20+ Institusi di Seluruh Dunia"
+      "partners.title": "Dipercayai oleh 20+ Institusi di Seluruh Dunia",
+
+      // Advanced Learning Section Malay Translations
+      "advancedLearning.subtitle": "Pembelajaran Lanjutan",
+      "advancedLearning.title": "Mewujudkan komuniti pelajar.",
+      "advancedLearning.description": "Kami komited untuk mengubah pendidikan dengan menyediakan pelbagai kursus berkualiti tinggi yang memenuhi keperluan pelajar semua peringkat.",
+      "advancedLearning.imageAlt": "Pelajar tersenyum dengan buku nota",
+      "advancedLearning.enrollButton": "Daftar sebagai Pelajar",
+      "advancedLearning.applyTutorButton": "Mohon sebagai Tutor",
+      
+      // Features Malay
+      "advancedLearning.features.learnAnywhere.title": "Belajar dari Mana Saja",
+      "advancedLearning.features.learnAnywhere.description": "Belajar dari mana sahaja di dunia, pada bila-bila masa yang sesuai dengan anda.",
+      "advancedLearning.features.expertMentors.title": "Mentor Pakar",
+      "advancedLearning.features.expertMentors.description": "Belajar terus daripada pakar industri dan pendidik.",
+      "advancedLearning.features.inDemandSkills.title": "Pelajari Kemahiran Permintaan Tinggi",
+      "advancedLearning.features.inDemandSkills.description": "Kuasaikan kemahiran dan alat terkini yang diperlukan dalam kerjaya moden.",
+
+      // Learning Journey Section Malay Translations
+      "learningJourney.subtitle": "Bagaimana Ia Berfungsi",
+      "learningJourney.title": "Mulakan Perjalanan Pembelajaran Anda Hari Ini!",
+      "learningJourney.description": "Buka Potensi Anda dan Capai Impian Anda dengan Sumber Pembelajaran Komprehensif Kami!",
+      "learningJourney.imageAlt": "Perjalanan Pembelajaran",
+      
+      // Steps Malay
+      "learningJourney.steps.step1.title": "Daftar atau Daftar Masuk",
+      "learningJourney.steps.step1.description": "Setelah anda berada di halaman utama laman web, cari butang Daftar, Daftar Masuk, atau Buat Akaun.",
+      
+      "learningJourney.steps.step2.title": "Lengkapkan Profil Anda",
+      "learningJourney.steps.step2.description": "Selepas mengesahkan e-mel anda, anda mungkin diminta untuk melengkapkan maklumat profil tambahan.",
+      
+      "learningJourney.steps.step3.title": "Pilih Kursus atau Program",
+      "learningJourney.steps.step3.description": "Bergantung pada laman web, selepas pendaftaran, anda mungkin boleh melayari dan memilih kursus atau program untuk mendaftar.",
+      
+      "learningJourney.steps.step4.title": "Akses Akaun Anda",
+      "learningJourney.steps.step4.description": "Seharusnya mempunyai akses kepada ciri-ciri laman web, seperti mendaftar dalam kursus, bahan, atau menjejaki kemajuan.",
+
+
+      // Student Success Section Malay Translations
+      "studentSuccess.imageAlt": "Pelajar Gembira",
+      "studentSuccess.enrollButton": "Daftar sebagai Pelajar",
+      "studentSuccess.applyTutorButton": "Mohon sebagai Tutor",
+      "studentSuccess.quote": "“Semua kursus sangat membantu untuk mencapai matlamat anda.”",
+      
+      // Stats Malay
+      "studentSuccess.stats.trusted.title": "Dipercayai oleh 15,000+ Pelajar",
+      "studentSuccess.stats.trusted.subtitle": "Sejak 2000",
+      "studentSuccess.stats.approval.title": "9.8/10 Kelulusan Kursus",
+      "studentSuccess.stats.approval.description": "Mencapai skor kelulusan kursus yang lengkap adalah signifikan.",
+      "studentSuccess.stats.learners.title": "13k+ Pembelajaran Berpuas Hati",
+      "studentSuccess.stats.learners.description": "Pelajar di seluruh dunia berkongsi benang kebahagiaan yang sama.",
+
+       // Footer Malay Translations
+      "footer.companyDescription": "Platform yang direka untuk membantu organisasi, pendidik, dan pelajar mengurus, menyampaikan, dan menjejaki aktiviti pembelajaran dan latihan.",
+      "footer.copyright": "Hak Cipta 2023 © DreamsLife. Hak cipta terpelihara.",
+      "footer.terms": "Terma & Syarat",
+      "footer.privacy": "Dasar Privasi",
+      
+      // Support Section Malay
+      "footer.support.title": "Sokongan",
+      "footer.support.education": "Pendidikan",
+      "footer.support.enrollCourse": "Daftar Kursus",
+      "footer.support.orders": "Pesanan",
+      "footer.support.payments": "Pembayaran",
+      "footer.support.blogs": "Blog",
+      
+      // About Section Malay
+      "footer.about.title": "Tentang",
+      "footer.about.categories": "Kategori",
+      "footer.about.courses": "Kursus",
+      "footer.about.aboutUs": "Tentang Kami",
+      "footer.about.fax": "Faks",
+      "footer.about.contacts": "Hubungan",
+      
+      // Useful Links Section Malay
+      "footer.usefulLinks.title": "Pautan Berguna",
+      "footer.usefulLinks.ourValues": "Nilai kami",
+      "footer.usefulLinks.advisoryBoard": "Lembaga penasihat kami",
+      "footer.usefulLinks.partners": "Rakan kongsi kami",
+      "footer.usefulLinks.becomePartner": "Menjadi rakan kongsi",
+      "footer.usefulLinks.workWithUs": "Bekerja dengan Kami",
+      
+      // Newsletter Section Malay
+      "footer.newsletter.title": "Langgan Buletin",
+      "footer.newsletter.description": "Daftar untuk mendapatkan kemas kini & berita.",
+      "footer.newsletter.placeholder": "Alamat E-mel",
+      "footer.newsletter.button": "Langgan",
+
+        // Course Listing Malay Translations
+      "courseListing.filters": "Penapis",
+      "courseListing.clear": "Kosongkan",
+      "courseListing.close": "Tutup",
+      "courseListing.categories": "Kategori",
+      "courseListing.instructors": "Pengajar",
+      "courseListing.price": "Harga",
+      "courseListing.searchPlaceholder": "Cari",
+      "courseListing.showingResults": "Menunjukkan {{showing}} daripada {{total}} hasil",
+      
+      // Additional Categories Malay
+      "courseListing.categories.programming": "Pengaturcaraan",
+      "courseListing.categories.technology": "Teknologi",
+      
+      // Price Options Malay
+      "courseListing.priceOptions.all": "Semua",
+      "courseListing.priceOptions.free": "Percuma",
+      "courseListing.priceOptions.paid": "Berbayar",
+
+      // Pricing Comparison Malay Translations
+      "pricingComparison.title": "Bandingkan Pelan Kami",
+      "pricingComparison.description": "Cari pelan yang sesuai dengan keperluan anda. Bandingkan ciri merentas tahap Asas, Pasukan, dan Pro.",
+      "pricingComparison.featuresHeader": "Ciri-ciri",
+      
+      // Plans Malay
+      "pricingComparison.plans.free": "Percuma",
+      "pricingComparison.plans.premium": "Premium",
+      "pricingComparison.plans.institutional": "Institusi",
+      
+      // Features Malay
+      "pricingComparison.features.separateBusiness": "Asingkan perniagaan/peribadi",
+      "pricingComparison.features.trackMileage": "Jejak jarak boleh ditolak",
+      "pricingComparison.features.downloadBanking": "Muat turun perbankan dalam talian",
+      "pricingComparison.features.multiDevice": "Berbilang peranti",
+      "pricingComparison.features.createInvoices": "Buat invois & anggaran",
+      "pricingComparison.features.manageVAT": "Urus VAT",
+      "pricingComparison.features.manageBills": "Urus bil & pembayaran",
+      "pricingComparison.features.multipleCurrencies": "Berbilang mata wang",
+      "pricingComparison.features.createBudgets": "Buat belanjawan",
+      "pricingComparison.features.trackTime": "Jejak masa",
+
+      // Instructor Listing Malay Translations
+      "instructorListing.filters": "Penapis",
+      "instructorListing.clear": "Kosongkan",
+      "instructorListing.close": "Tutup",
+      "instructorListing.categories": "Kategori",
+      "instructorListing.searchPlaceholder": "Cari pengajar",
+      "instructorListing.showingResults": "Menunjukkan {{count}} hasil",
+      
+      // Categories Malay
+      "instructorListing.categories.technology": "Teknologi",
+      "instructorListing.categories.programming": "Pengaturcaraan",
+      "instructorListing.categories.management": "Pengurusan",
+      "instructorListing.categories.productivity": "Produktiviti",
+      "instructorListing.categories.finance": "Kewangan",
+      
+      // Instructor Roles Malay
+      "instructors.roles.developer": "Pembangun",
+      "instructors.roles.finance": "Kewangan",
+      "instructors.roles.cloudEngineer": "Jurutera Awan",
+      "instructors.roles.corporateTrainer": "Jurulatih Korporat",
+      "instructors.roles.vocational": "Vokasional",
+      "instructors.roles.sportsCoach": "Jurulatih Sukan",
+      "instructors.roles.technicalTrainer": "Jurulatih Teknikal",
+      "instructors.roles.healthWellness": "Kesihatan & Kesejahteraan",
+      
+      // Additional Categories Malay
+      "instructors.categories.general": "Umum",
+
+      // Checkout Malay Translations
+      "checkout.billingAddress": "Alamat Bil",
+      "checkout.firstName": "Nama Pertama *",
+      "checkout.lastName": "Nama Akhir *",
+      "checkout.phoneNumber": "Nombor Telefon (Pilihan)",
+      "checkout.addressLine1": "Baris Alamat 1 *",
+      "checkout.addressLine2": "Baris Alamat 2 (Pilihan)",
+      "checkout.country": "Negara *",
+      "checkout.state": "Negeri *",
+      "checkout.city": "Bandar *",
+      "checkout.saveInformation": "Simpan maklumat ini untuk kali seterusnya",
+      
+      "checkout.paymentMethod": "Kaedah Pembayaran",
+      "checkout.paymentMethods.card": "Kad",
+      "checkout.paymentMethods.paypal": "Paypal",
+      "checkout.paymentMethods.stripe": "Stripe",
+      
+      "checkout.cardNumber": "Nombor Kad *",
+      "checkout.nameOnCard": "Nama pada Kad *",
+      "checkout.expiryDate": "Tarikh Luput *",
+      "checkout.securityNumber": "Nombor Keselamatan *",
+      
+      "checkout.payButton": "Bayar {{amount}}",
+      
+      "checkout.orderDetails": "Butiran Pesanan",
+      "checkout.courses.uiux": "Ijazah Reka Bentuk UI/UX",
+      "checkout.courses.react": "Asas React",
+      
+      "checkout.subTotal": "Jumlah kecil",
+      "checkout.tax": "Cukai (VAT)",
+      "checkout.total": "Jumlah",
+
+      // About Page Malay Translations
+      "about.stats.onlineCourses": "Kursus Dalam Talian",
+      "about.stats.expertTutors": "Tutor Pakar",
+      "about.stats.certifiedCourses": "Kursus Bertauliah",
+      "about.stats.onlineStudents": "Pelajar Dalam Talian",
+      
+      // Instructors Section Malay
+      "about.instructors.title": "Pengajar Kelas Atas & Profesional",
+      "about.instructors.subtitle": "Kata-kata daripada mereka yang mengalami pertumbuhan sebenar.",
+      "about.instructors.roles.designer": "Pereka",
+      "about.instructors.roles.developer": "Pembangun",
+      "about.instructors.roles.architect": "Arkitek",
+      "about.instructors.testimonials.brenda": "Mentor ini membantu saya memahami konsep yang saya...",
+      "about.instructors.testimonials.adrian": "Saya telah belajar banyak daripada pengalaman peribadi mentor saya...",
+      "about.instructors.testimonials.coztanza": "Nasihat itu berguna, tetapi saya harap mentor saya...",
+      
+      // FAQ Section Malay
+      "about.faqs.subtitle": "Soalan Lazim",
+      "about.faqs.title": "Soalan Lazim",
+      "about.faqs.description": "Terokai jawapan terperinci untuk soalan paling biasa mengenai platform kami.",
+      "about.faqs.imageAlt": "Soalan Lazim",
+      "about.faqs.q1": "Apa yang DreamLMS ingin berikan kepada anda?",
+      "about.faqs.a1": "DreamLMS bertujuan untuk menyediakan anda platform pembelajaran yang komprehensif dan intuitif yang meningkatkan pengalaman pendidikan anda.",
+      "about.faqs.q2": "Mengapa pilih kami untuk pendidikan anda?",
+      "about.faqs.a2": "Kami menawarkan tutor bertauliah, kursus berkualiti tinggi, dan akses sepanjang hayat dengan pengiktirafan global.",
+      "about.faqs.q3": "Bagaimana kami menyediakan perkhidmatan untuk anda?",
+      "about.faqs.a3": "Kami menyediakan sokongan 24/7, laluan pembelajaran fleksibel, dan bimbingan diperibadikan untuk semua pelajar.", 
+
+      // About Hero Malay Translations
+      "aboutHero.subtitle": "Tentang",
+      "aboutHero.title": "Memperkukuh Pembelajaran, Mendorong Pertumbuhan",
+      "aboutHero.description": "Di DreamLMS, kami menjadikan pendidikan boleh diakses oleh semua dengan kursus interaktif dan kandungan dipimpin pakar. Belajar bila-bila masa, di mana sahaja, dan capai matlamat anda dengan lancar.",
+      "aboutHero.imageAlt": "Tentang kami",
+      
+      // Features Malay
+      "aboutHero.features.learnAnywhere.title": "Belajar dari mana sahaja",
+      "aboutHero.features.learnAnywhere.description": "Pembelajaran dari mana sahaja telah menjadi aspek transformasi pendidikan moden, membolehkan individu.",
+      
+      "aboutHero.features.expertMentors.title": "Mentor Pakar",
+      "aboutHero.features.expertMentors.description": "Mentor pakar adalah aset yang tidak ternilai dalam mana-mana bidang, memberikan bimbingan dan pengetahuan berpengalaman."
+
     }
   }
 };

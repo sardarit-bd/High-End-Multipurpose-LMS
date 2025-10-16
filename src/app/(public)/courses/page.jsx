@@ -3,23 +3,23 @@ import CourseCard from "@/components/modules/courses/CourseCard";
 import { useState } from "react";
 import { FiFilter, FiGrid, FiList } from "react-icons/fi";
 import { courses } from "@/components/modules/home/FeaturedCourses";
+import { useTranslation } from "react-i18next";
 
 export default function CourseListing() {
+  const { t } = useTranslation();
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [selectedInstructors, setSelectedInstructors] = useState([]);
-  const [selectedPrice, setSelectedPrice] = useState(
-    "all"
-  );
+  const [selectedPrice, setSelectedPrice] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
   const categories = [
-    "UI/UX",
-    "Productivity",
-    "Management",
-    "Art & Media",
-    "Programming",
-    "Technology",
+    t("courses.categories.uiux") || "UI/UX",
+    t("courses.categories.productivity") || "Productivity",
+    t("courses.categories.management") || "Management",
+    t("courses.categories.artMedia") || "Art & Media",
+    t("courseListing.categories.programming") || "Programming",
+    t("courseListing.categories.technology") || "Technology",
   ];
 
   const instructors = [
@@ -29,7 +29,6 @@ export default function CourseListing() {
     "Maria Chen",
     "James Lee",
   ];
-
 
   // ===== Filtering Logic =====
   const filteredCourses = courses.filter((course) => {
@@ -87,42 +86,39 @@ export default function CourseListing() {
             onClick={() => setIsFilterOpen(true)}
           >
             <FiFilter size={18} />
-            <span className="text-sm font-semibold">Filters</span>
+            <span className="text-sm font-semibold">
+              {t("courseListing.filters") || "Filters"}
+            </span>
           </button>
           <button
             className="hidden lg:flex items-center gap-1 text-[var(--color-primary)]"
           >
             <FiFilter size={18} />
-            <span className="text-sm font-semibold">Filters</span>
+            <span className="text-sm font-semibold">
+              {t("courseListing.filters") || "Filters"}
+            </span>
           </button>
           <button
             onClick={clearFilters}
             className="text-xs px-3 py-2 bg-[var(--color-text)]/10 border border-[var(--color-primary)] rounded-lg text-[var(--color-text)]"
           >
-            Clear
+            {t("courseListing.clear") || "Clear"}
           </button>
         </div>
 
         {/* Right side: Results + Controls */}
-        <div className="flex  items-center gap-3 flex-wrap w-full md:w-auto justify-between">
+        <div className="flex items-center gap-3 flex-wrap w-full md:w-auto justify-between">
           <span className="md:inline-block hidden text-xs sm:text-sm text-gray-600">
-            Showing {Math.min(9, filteredCourses.length)} of{" "}
-            {filteredCourses.length} results
+            {t("courseListing.showingResults", {
+              showing: Math.min(9, filteredCourses.length),
+              total: filteredCourses.length
+            }) || `Showing ${Math.min(9, filteredCourses.length)} of ${filteredCourses.length} results`}
           </span>
-
-
-          {/* Sort dropdown */}
-          {/* <select className="px-3 py-2 bg-[var(--color-text)]/10 border border-[var(--color-primary)] rounded-lg text-[var(--color-text)] placeholder-[var(--color-text)] focus:outline-none focus:border-[var(--color-primary)]">
-            <option>Newly Published</option>
-            <option>Popular</option>
-            <option>Price: Low to High</option>
-            <option>Price: High to Low</option>
-          </select> */}
 
           {/* Search input */}
           <input
             type="text"
-            placeholder="Search"
+            placeholder={t("courseListing.searchPlaceholder") || "Search"}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="px-3 py-2 bg-[var(--color-text)]/10 border border-[var(--color-primary)] rounded-lg text-[var(--color-text)] placeholder-[var(--color-text)] focus:outline-none focus:border-[var(--color-primary)]"
@@ -135,7 +131,9 @@ export default function CourseListing() {
         <aside className="w-64 h-screen sticky top-[135px] overflow-y-auto border-r border-gray-200 bg-white p-4 hidden lg:block">
           {/* Categories */}
           <div className="mb-6">
-            <h4 className="font-medium text-sm mb-2 text-gray-700">Categories</h4>
+            <h4 className="font-medium text-sm mb-2 text-gray-700">
+              {t("courseListing.categories") || "Categories"}
+            </h4>
             <ul className="space-y-2 text-sm">
               {categories.map((cat) => (
                 <li key={cat}>
@@ -155,7 +153,9 @@ export default function CourseListing() {
 
           {/* Instructors */}
           <div className="mb-6">
-            <h4 className="font-medium text-sm mb-2 text-gray-700">Instructors</h4>
+            <h4 className="font-medium text-sm mb-2 text-gray-700">
+              {t("courseListing.instructors") || "Instructors"}
+            </h4>
             <ul className="space-y-2 text-sm">
               {instructors.map((inst) => (
                 <li key={inst}>
@@ -175,7 +175,9 @@ export default function CourseListing() {
 
           {/* Price */}
           <div>
-            <h4 className="font-medium text-sm mb-2 text-gray-700">Price</h4>
+            <h4 className="font-medium text-sm mb-2 text-gray-700">
+              {t("courseListing.price") || "Price"}
+            </h4>
             <ul className="space-y-2 text-sm">
               {["all", "free", "paid"].map((p) => (
                 <li key={p}>
@@ -188,7 +190,7 @@ export default function CourseListing() {
                       className="accent-[var(--color-accent)]"
                     />
                     <span className="text-[var(--color-text)] capitalize">
-                      {p}
+                      {t(`courseListing.priceOptions.${p}`) || p}
                     </span>
                   </label>
                 </li>
@@ -199,9 +201,7 @@ export default function CourseListing() {
 
         {/* ===== Course Grid/List ===== */}
         <main className="flex-1 p-4 sm:p-6 overflow-y-auto">
-          <div
-            className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"
-          >
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredCourses.map((course, i) => (
               <CourseCard key={i} course={course} />
             ))}
@@ -218,18 +218,22 @@ export default function CourseListing() {
               }`}
           >
             <div className="flex justify-between items-center mb-4">
-              <h3 className="font-semibold text-[var(--color-text)]">Filters</h3>
+              <h3 className="font-semibold text-[var(--color-text)]">
+                {t("courseListing.filters") || "Filters"}
+              </h3>
               <button
                 onClick={() => setIsFilterOpen(false)}
                 className="text-sm text-[var(--color-primary)] hover:text-[var(--color-primary-hover)]"
               >
-                Close
+                {t("courseListing.close") || "Close"}
               </button>
             </div>
 
             {/* Categories */}
             <div className="mb-6">
-              <h4 className="font-medium text-sm mb-2 text-gray-700">Categories</h4>
+              <h4 className="font-medium text-sm mb-2 text-gray-700">
+                {t("courseListing.categories") || "Categories"}
+              </h4>
               <ul className="space-y-2 text-sm">
                 {categories.map((cat) => (
                   <li key={cat}>
@@ -249,7 +253,9 @@ export default function CourseListing() {
 
             {/* Instructors */}
             <div className="mb-6">
-              <h4 className="font-medium text-sm mb-2 text-gray-700">Instructors</h4>
+              <h4 className="font-medium text-sm mb-2 text-gray-700">
+                {t("courseListing.instructors") || "Instructors"}
+              </h4>
               <ul className="space-y-2 text-sm">
                 {instructors.map((inst) => (
                   <li key={inst}>
@@ -269,7 +275,9 @@ export default function CourseListing() {
 
             {/* Price */}
             <div>
-              <h4 className="font-medium text-sm mb-2 text-gray-700">Price</h4>
+              <h4 className="font-medium text-sm mb-2 text-gray-700">
+                {t("courseListing.price") || "Price"}
+              </h4>
               <ul className="space-y-2 text-sm">
                 {["all", "free", "paid"].map((p) => (
                   <li key={p}>
@@ -281,7 +289,9 @@ export default function CourseListing() {
                         onChange={() => setSelectedPrice(p)}
                         className="accent-[var(--color-accent)]"
                       />
-                      <span className="text-[var(--color-text)] capitalize">{p}</span>
+                      <span className="text-[var(--color-text)] capitalize">
+                        {t(`courseListing.priceOptions.${p}`) || p}
+                      </span>
                     </label>
                   </li>
                 ))}
@@ -290,7 +300,6 @@ export default function CourseListing() {
           </div>
         </div>
       )}
-
     </div>
   );
 }
