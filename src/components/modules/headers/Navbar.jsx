@@ -49,6 +49,7 @@ const Navbar = () => {
         { name: t("terms"), href: "/terms" },
         { name: t("privacy"), href: "/privacy" },
         { name: t("faq"), href: "/faq" },
+        { name: t("sponsorship"), href: "/sponsorship" },
         { name: "404", href: "/404" },
         { name: t("success"), href: "/success-history" }
       ]
