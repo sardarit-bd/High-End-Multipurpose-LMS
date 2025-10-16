@@ -22,7 +22,7 @@ export default function Games() {
       description: "Test your knowledge about Sustainable Development Goals with this fun trivia game",
       thumbnail: "/images/game1-thumb.jpg",
       type: "embed",
-      gameUrl: "/games/trivia/index.html",
+      gameUrl: "games/one",
       downloadUrl: null
     },
     {
@@ -98,7 +98,7 @@ export default function Games() {
   const handlePlayGame = (game) => {
     if (game.type === 'embed') {
       // Modal e game show korbe
-      console.log('Embed game:', game.gameUrl);
+      window.location.href = game.gameUrl;
       // Ekhane game modal open korbe
     } else if (game.type === 'external') {
       window.open(game.gameUrl, '_blank');

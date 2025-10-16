@@ -139,7 +139,7 @@ function CustomSelect({ value, onChange, placeholder = "Select Category" }) {
                                 aria-selected={active}
                                 onMouseEnter={() => setHi(i)}
                                 onClick={() => {
-                                    onChange?.(opt.value); // updates parent or local (see below)
+                                    onChange?.(opt.value);
                                     setOpen(false);
                                     btnRef.current?.focus();
                                 }}
