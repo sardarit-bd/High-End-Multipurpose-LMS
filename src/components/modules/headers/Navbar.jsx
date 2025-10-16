@@ -39,6 +39,7 @@ const Navbar = () => {
     { name: t("pricing"), href: "/pricing" },
     { name: t("dashboard"), href: "/dashboard" },
     { name: t("instructors"), href: "/instructors" },
+    { name: t("games"), href: "/games" },
     {
       name: t("pages"),
       dropdown: [
@@ -52,7 +53,8 @@ const Navbar = () => {
         { name: t("success"), href: "/success-history" }
       ]
     },
-    { name: t("blog"), href: "/blog" }
+    { name: t("blog"), href: "/blog" },
+    { name: t("donation"), href: "/donation" }
   ];
 
   const isActive = (href) => pathname === href;
