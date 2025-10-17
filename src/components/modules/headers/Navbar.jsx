@@ -38,12 +38,12 @@ const Navbar = () => {
     { name: t("home"), href: "/" },
     { name: t("courses"), href: "/courses" },
     { name: t("pricing"), href: "/pricing" },
-    { name: t("dashboard"), href: "/dashboard" },
     { name: t("instructors"), href: "/instructors" },
     { name: t("games"), href: "/games" },
     {
       name: t("pages"),
       dropdown: [
+        { name: t("dashboard"), href: "/dashboard" },
         { name: t("checkout"), href: "/checkout" },
         { name: t("about"), href: "/about" },
         { name: t("contact"), href: "/contact" },

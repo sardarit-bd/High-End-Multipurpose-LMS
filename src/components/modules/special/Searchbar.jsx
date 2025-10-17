@@ -215,7 +215,7 @@ export default function SearchBar({
                     value={q}
                     onChange={(e) => setQ(e.target.value)}
                     placeholder="Search for Courses, Instructors"
-                    className="flex-1 h-12 md:h-[48px] bg-white px-4 text-[var(--color-text)] placeholder-[var(--color-text)]/60 focus:outline-none"
+                    className="flex-1 h-20 py-3 md:h-[48px] bg-white px-4 text-[var(--color-text)] placeholder-[var(--color-text)]/60 focus:outline-none"
                 />
 
                 {/* Submit */}
@@ -223,7 +223,7 @@ export default function SearchBar({
                     type="submit"
                     aria-label="Search"
                     title="Search"
-                    className="md:w-[140px] h-12 md:h-[48px] inline-flex items-center justify-center gap-2 text-white transition"
+                    className="md:w-[140px] h-10 md:h-[48px] inline-flex items-center justify-center gap-2 text-white transition"
                     style={{ background: "var(--color-primary)" }}
                     onMouseEnter={(e) => (e.currentTarget.style.background = "var(--color-primary-hover)")}
                     onMouseLeave={(e) => (e.currentTarget.style.background = "var(--color-primary)")}
