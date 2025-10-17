@@ -108,7 +108,7 @@ export default function SDGTrivia() {
 
     if (choice === currentQ.answer) {
       const timeBonus = Math.max(0, timer);
-      const gained = 10 + Math.round(timeBonus / 4); // up to +5
+      const gained = 10 + Math.round(timeBonus / 4);
       setScore((s) => s + gained);
     }
     setSelection(choice);
@@ -140,6 +140,8 @@ export default function SDGTrivia() {
     setShowHint(true);
   };
 
+
+  /* ------------------------------- Game Over ------------------------------- */
   /* ------------------------------ Leaderboard ------------------------------- */
   const LB_KEY = "sdg_lb";
   const getLB = () => {
