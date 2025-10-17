@@ -68,9 +68,9 @@ const Navbar = () => {
           onClick={closeMenu}
           className="text-2xl font-extrabold text-[var(--color-secondary)]"
         >
-         <Image src="/logo.png" alt="ASIA-LMS" width={100} height={40}
-         className="h-[35px] w-auto object-contain"
-         />
+          <Image src="/logo.png" alt="ASIA-LMS" width={100} height={40}
+            className="h-[35px] w-auto object-contain"
+          />
         </Link>
 
         {/* Desktop Menu */}
@@ -150,9 +150,8 @@ const Navbar = () => {
                   <span className="hidden sm:block">{currentLanguage?.label}</span>
                 </span>
               </div>
-              <FaChevronDown className={`w-3 h-3 transition-transform duration-200 ${
-                openDropdown === 'language' ? 'rotate-180' : ''
-              }`} />
+              <FaChevronDown className={`w-3 h-3 transition-transform duration-200 ${openDropdown === 'language' ? 'rotate-180' : ''
+                }`} />
             </button>
 
             {openDropdown === 'language' && (
@@ -161,11 +160,10 @@ const Navbar = () => {
                   <button
                     key={lng.code}
                     onClick={() => changeLanguage(lng.code)}
-                    className={`flex items-center gap-3 w-full text-left px-4 py-3 text-sm transition-all duration-200 ${
-                      i18n.language === lng.code 
-                        ? "bg-[var(--color-primary)] text-white" 
+                    className={`flex items-center gap-3 w-full text-left px-4 py-3 text-sm transition-all duration-200 ${i18n.language === lng.code
+                        ? "bg-[var(--color-primary)] text-white"
                         : "hover:bg-[var(--color-background)] text-[var(--color-text)]"
-                    }`}
+                      }`}
                   >
                     <span className="text-base">{lng.flag}</span>
                     <span className="font-medium">{lng.label}</span>
@@ -270,11 +268,10 @@ const Navbar = () => {
                     <button
                       key={lng.code}
                       onClick={() => changeLanguage(lng.code)}
-                      className={`flex items-center justify-center gap-2 px-3 py-3 text-sm rounded-lg border transition-all ${
-                        i18n.language === lng.code
+                      className={`flex items-center justify-center gap-2 px-3 py-3 text-sm rounded-lg border transition-all ${i18n.language === lng.code
                           ? "bg-[var(--color-primary)] text-white border-[var(--color-primary)] shadow-md"
                           : "bg-white text-gray-700 border-gray-300 hover:bg-[var(--color-background)] hover:border-[var(--color-primary)]"
-                      }`}
+                        }`}
                     >
                       <span className="text-base">{lng.flag}</span>
                       <span className="font-medium">{lng.label}</span>
