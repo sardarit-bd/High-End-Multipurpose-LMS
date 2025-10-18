@@ -69,7 +69,7 @@ const Navbar = () => {
           onClick={closeMenu}
           className="text-2xl font-extrabold text-[var(--color-secondary)]"
         >
-          ASIA-LMS
+          ASIA-LS
         </Link>
 
         {/* Desktop Menu */}

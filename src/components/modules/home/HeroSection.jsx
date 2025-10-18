@@ -33,7 +33,7 @@ export default function HeroSection() {
 
       {/* 🌟 Main Content */}
       <section className="relative mx-auto flex min-h-[90vh] flex-col items-center justify-center overflow-hidden py-16">
-        <div className="container mx-auto flex flex-col-reverse items-center justify-between gap-12 px-4 md:flex-row">
+        <div className="container mx-auto flex flex-col-reverse items-center justify-between gap-12 px-4 md:flex-col lg:flex-row">
           {/* Left Side */}
           <div className="flex-1">
             <span
@@ -47,7 +47,7 @@ export default function HeroSection() {
               {t("hero.leader") || "The Leader in Online Learning"}
             </span>
 
-            <h1 className="mb-3 text-4xl font-bold leading-tight text-[var(--color-text)] md:text-5xl">
+            <h1 className="mb-3 text-4xl font-bold leading-tight text-[var(--color-text)] md:text-4xl">
               {t("hero.title1") || "Find the"}{" "}
               <span className="relative text-[var(--color-accent-special)]">
                 {t("hero.bestCourses") || "Best Courses"}
@@ -81,7 +81,7 @@ export default function HeroSection() {
             </div>
 
             {/* 📊 Stats */}
-            <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-3">
+            <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-3 md:mt-5 lg:mt-10">
               <div
                 className="flex items-center gap-3 rounded-xl bg-white/80 p-4"
                 style={{ boxShadow: "var(--shadow-soft)" }}
@@ -125,7 +125,7 @@ export default function HeroSection() {
           </div>
 
           {/* Right Side - Video */}
-          <div className="flex flex-1 justify-center md:justify-end">
+          <div className="flex flex-1 justify-center md:justify-">
             <video
               className="w-full max-w-4xl rounded-xl shadow-lg"
               style={{ boxShadow: "var(--shadow-medium)" }}
