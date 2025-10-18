@@ -132,7 +132,7 @@ const Donation = () => {
         {/* Header Section */}
         <div className="relative bg-gradient-to-r from-slate-900 via-blue-900 to-emerald-900 text-white overflow-hidden">
           <div className="absolute inset-0 bg-black opacity-20"></div>
-          <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+          <div className="container mx-auto px-4 sm:px-6 py-20 relative">
             <div className="text-center">
               <div className="flex justify-center mb-6">
                 <div className="relative">
@@ -174,7 +174,7 @@ const Donation = () => {
         </div>
 
         {/* Main Content */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 -mt-10">
+        <div className="container mx-auto px-4 sm:px-6 py-16 -mt-10">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {/* Fund Selection Sidebar */}
             <div className="lg:col-span-1 space-y-6">
@@ -226,11 +226,10 @@ const Donation = () => {
               </div>
 
               {/* Trust Indicators */}
-              <div className="bg-gradient-to-r from-blue-500 to-purple-600 rounded-3xl p-6 text-white text-center">
-                {/* <FaShieldHeart className="w-8 h-8 mx-auto mb-3 text-white opacity-90" /> */}
+              {/* <div className="bg-gradient-to-r from-blue-500 to-purple-600 rounded-3xl p-6 text-white text-center">
                 <h3 className="font-bold text-lg mb-2">100% Secure</h3>
-                {/* <p className="text-sm text-blue-100 opacity-90">Bank-level encryption & transparent fund allocation</p> */}
-              </div>
+                <p className="text-sm text-blue-100 opacity-90">Bank-level encryption & transparent fund allocation</p>
+              </div> */}
             </div>
 
             {/* Donation Form */}
@@ -243,7 +242,7 @@ const Donation = () => {
                   
                   <div className="relative flex items-center space-x-4">
                     <div className="w-16 h-16 bg-white bg-opacity-20 rounded-2xl flex items-center justify-center backdrop-blur-sm">
-                      {selectedFundData && <selectedFundData.icon className="w-8 h-8" />}
+                      {selectedFundData && <selectedFundData.icon className="w-8 h-8 text-pink-500" />}
                     </div>
                     <div className="flex-1">
                       <h2 className="text-3xl font-bold mb-2">{selectedFundData?.title}</h2>
@@ -251,7 +250,7 @@ const Donation = () => {
                     </div>
                     <div className="hidden sm:block">
                       <div className="bg-white bg-opacity-20 backdrop-blur-sm px-4 py-2 rounded-full">
-                        <span className="font-semibold text-white">Recommended</span>
+                        <span className="font-semibold text-black">Recommended</span>
                       </div>
                     </div>
                   </div>
@@ -261,7 +260,7 @@ const Donation = () => {
                 <form onSubmit={handleDonation} className="p-8">
                   {/* Amount Selection */}
                   <div className="mb-8">
-                    <label className="block text-2xl font-bold text-gray-900 mb-6 items-center">
+                    <label className="text-2xl font-bold text-gray-900 mb-6 flex items-center">
                       <FaCrown className="w-6 h-6 text-yellow-500 mr-3" />
                       Select Donation Amount
                     </label>
@@ -375,7 +374,7 @@ const Donation = () => {
                         <span className="font-semibold text-xs sm:text-sm whitespace-nowrap">Tax Deductible</span>
                       </div>
                       
-                      {/* Verified Badge - Alternative Icon */}
+                      {/* Verified Badge */}
                       <div className="flex items-center space-x-2 bg-gray-100 px-3 py-2 sm:px-4 sm:py-2 rounded-full w-fit shadow-sm">
                         <FaHeart className="w-3 h-3 sm:w-4 sm:h-4 text-purple-500 flex-shrink-0" />
                         <span className="font-semibold text-xs sm:text-sm whitespace-nowrap">Verified</span>

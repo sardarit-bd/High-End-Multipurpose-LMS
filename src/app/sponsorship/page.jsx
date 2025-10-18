@@ -1,0 +1,220 @@
+"use client";
+
+import { useState } from 'react';
+import Head from 'next/head';
+import Navbar from '@/components/modules/headers/Navbar';
+import { FaAward, FaChartLine, FaCheck, FaCrown, FaGem, FaGlobe, FaHandshake, FaLightbulb, FaMedal, FaRocket, FaStar, FaTrophy, FaUsers } from 'react-icons/fa';
+import SponsorShipCard from '@/components/modules/sponsorship/sponsorShipCard';
+import PartnershipOpportunities from '@/components/modules/sponsorship/PartnershipOpportunities';
+
+const Sponsorship = () => {
+  const [activeTab, setActiveTab] = useState('corporate');
+  const [selectedPackage, setSelectedPackage] = useState('gold');
+  const [isHovered, setIsHovered] = useState(null);
+
+  const sponsorshipTypes = [
+    {
+      id: 'corporate',
+      title: 'Corporate Sponsorships',
+      description: 'Strategic partnerships with businesses and corporations',
+      icon: FaChartLine,
+      color: 'from-blue-500 to-cyan-500',
+      features: ['Brand visibility', 'Employee engagement', 'CSR initiatives', 'Networking opportunities']
+    },
+    {
+      id: 'institutional',
+      title: 'Institutional Partnerships',
+      description: 'Collaborations with educational and research institutions',
+      icon: FaUsers,
+      color: 'from-purple-500 to-pink-500',
+      features: ['Research collaboration', 'Student programs', 'Knowledge sharing', 'Academic partnerships']
+    },
+    {
+      id: 'community',
+      title: 'Community Partners',
+      description: 'Engagement with local communities and organizations',
+      icon: FaHandshake,
+      color: 'from-green-500 to-emerald-500',
+      features: ['Local impact', 'Community outreach', 'Grassroots initiatives', 'Social development']
+    }
+  ];
+
+  const packages = [
+    {
+      id: 'bronze',
+      name: 'Bronze',
+      price: '$1,000',
+      duration: '/year',
+      icon: 'FaMedal',
+      color: 'from-amber-600 to-amber-700',
+      badge: 'Starter',
+      popular: false,
+      features: [
+        'Logo on website',
+        'Social media mention',
+        'Event program listing',
+        'Quarterly newsletter feature'
+      ],
+      benefits: [
+        'Basic brand visibility',
+        'Digital recognition',
+        'Community engagement'
+      ]
+    },
+    {
+      id: 'silver',
+      name: 'Silver',
+      price: '$2,500',
+      duration: '/year',
+      icon: 'FaGem',
+      color: 'from-gray-400 to-gray-600',
+      badge: 'Growth',
+      popular: false,
+      features: [
+        'All Bronze benefits',
+        'Featured blog post',
+        'Event booth space',
+        'Press release inclusion',
+        'Newsletter dedicated section'
+      ],
+      benefits: [
+        'Enhanced visibility',
+        'Content marketing',
+        'Direct audience access'
+      ]
+    },
+    {
+      id: 'gold',
+      name: 'Gold',
+      price: '$5,000',
+      duration: '/year',
+      icon: 'FaStar',
+      color: 'from-yellow-500 to-amber-500',
+      badge: 'Popular',
+      popular: true,
+      features: [
+        'All Silver benefits',
+        'Keynote speaking opportunity',
+        'Premium logo placement',
+        'Dedicated social media campaign',
+        'VIP event invitations',
+        'Annual impact report'
+      ],
+      benefits: [
+        'Thought leadership',
+        'Premium positioning',
+        'Exclusive networking'
+      ]
+    },
+    {
+      id: 'platinum',
+      name: 'Platinum',
+      price: '$10,000',
+      duration: '/year',
+      icon: 'FaCrown',
+      color: 'from-purple-500 to-indigo-600',
+      badge: 'Elite',
+      popular: false,
+      features: [
+        'All Gold benefits',
+        'Title sponsorship rights',
+        'Exclusive workshop hosting',
+        'Customized partnership program',
+        'Executive advisory role',
+        'Media coverage guarantee',
+        'Dedicated account manager'
+      ],
+      benefits: [
+        'Industry leadership',
+        'Maximum exposure',
+        'Strategic influence'
+      ]
+    }
+  ];
+
+  const selectedPackageData = packages.find(pkg => pkg.id === selectedPackage);
+  const activeType = sponsorshipTypes.find(type => type.id === activeTab);
+
+  return (
+    <>
+      <Navbar />
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-purple-50">
+        <Head>
+          <title>Partnership Opportunities - Sponsor SDG Initiatives</title>
+          <meta name="description" content="Explore corporate sponsorship packages and partnership opportunities for Sustainable Development Goals" />
+        </Head>
+
+        {/* Hero Section */}
+        <div className="relative bg-gradient-to-r from-slate-900 via-blue-900 to-purple-900 text-white overflow-hidden">
+          <div className="absolute inset-0 bg-black opacity-20"></div>
+          <div className="absolute top-0 right-0 w-64 h-64 bg-white opacity-5 rounded-full -translate-y-32 translate-x-32"></div>
+          <div className="absolute bottom-0 left-0 w-48 h-48 bg-white opacity-5 rounded-full translate-y-24 -translate-x-24"></div>
+          
+          <div className="container mx-auto px-4 sm:px-6  py-24 relative">
+            <div className="text-center">
+              <div className="flex justify-center mb-6">
+                <div className="relative">
+                  <div className="w-24 h-24 bg-gradient-to-r from-blue-400 to-purple-500 rounded-3xl flex items-center justify-center transform rotate-12 shadow-2xl">
+                    <FaHandshake className="w-12 h-12 text-white" />
+                  </div>
+                  <div className="absolute -top-3 -right-3">
+                    <div className="w-12 h-12 bg-yellow-400 rounded-2xl flex items-center justify-center shadow-lg">
+                      <FaRocket className="w-6 h-6 text-white" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-white to-blue-100 bg-clip-text text-transparent">
+                Partner With Purpose
+              </h1>
+              <p className="text-xl md:text-2xl text-blue-100 max-w-3xl mx-auto leading-relaxed mb-8">
+                Join forces to create sustainable impact. Choose from tailored sponsorship packages designed for maximum value and social return.
+              </p>
+              
+              {/* Impact Stats */}
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-2xl mx-auto">
+                <div className="text-center p-4 bg-white bg-opacity-10 backdrop-blur-sm rounded-2xl border border-white border-opacity-20">
+                  <div className="text-2xl font-bold text-emerald-300">50+</div>
+                  <div className="text-sm text-blue-200">Partners</div>
+                </div>
+                <div className="text-center p-4 bg-white bg-opacity-10 backdrop-blur-sm rounded-2xl border border-white border-opacity-20">
+                  <div className="text-2xl font-bold text-blue-300">$2M+</div>
+                  <div className="text-sm text-blue-200">Impact Generated</div>
+                </div>
+                <div className="text-center p-4 bg-white bg-opacity-10 backdrop-blur-sm rounded-2xl border border-white border-opacity-20">
+                  <div className="text-2xl font-bold text-purple-300">17</div>
+                  <div className="text-sm text-blue-200">SDG Goals</div>
+                </div>
+                <div className="text-center p-4 bg-white bg-opacity-10 backdrop-blur-sm rounded-2xl border border-white border-opacity-20">
+                  <div className="text-2xl font-bold text-yellow-300">100+</div>
+                  <div className="text-sm text-blue-200">Projects</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Partnership Types */}
+        <PartnershipOpportunities
+          sponsorshipTypes={sponsorshipTypes}
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
+          isHovered={isHovered}
+          setIsHovered={setIsHovered}
+          activeType={activeType}
+        />
+
+        {/* Sponsorship Packages */}
+        <SponsorShipCard 
+          packages={packages}
+          selectedPackage={selectedPackage}
+          setSelectedPackage={setSelectedPackage}
+          selectedPackageData={selectedPackageData}
+        />
+      </div>
+    </>
+  );
+};
+
+export default Sponsorship;
