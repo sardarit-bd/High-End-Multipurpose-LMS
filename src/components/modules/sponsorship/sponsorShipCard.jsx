@@ -27,11 +27,11 @@ const SponsorShipCard = ({ packages, selectedPackage, setSelectedPackage, select
       'FaCheck': FaCheck,
       'FaAward': FaAward
     };
-    return iconMap[iconName] || FaStar; // Default icon
+    return iconMap[iconName] || FaStar;
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-16">
       <div className="text-center mb-16">
         <h2 className="text-4xl font-bold text-gray-900 mb-4 flex items-center justify-center">
           <FaTrophy className="w-8 h-8 text-yellow-500 mr-3" />
@@ -60,7 +60,7 @@ const SponsorShipCard = ({ packages, selectedPackage, setSelectedPackage, select
       </div>
 
       {/* Packages Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 mb-16">
+      <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-8 mb-16">
         {packages.map((pkg) => {
           // Properly get the icon component
           const IconComponent = getIconComponent(pkg.icon);

@@ -7,7 +7,6 @@ import { FaAward, FaChartLine, FaCheck, FaCrown, FaGem, FaGlobe, FaHandshake, Fa
 import SponsorShipCard from '@/components/modules/sponsorship/sponsorShipCard';
 import PartnershipOpportunities from '@/components/modules/sponsorship/PartnershipOpportunities';
 
-
 const Sponsorship = () => {
   const [activeTab, setActiveTab] = useState('corporate');
   const [selectedPackage, setSelectedPackage] = useState('gold');
@@ -46,7 +45,7 @@ const Sponsorship = () => {
       name: 'Bronze',
       price: '$1,000',
       duration: '/year',
-      icon: FaMedal,
+      icon: 'FaMedal',
       color: 'from-amber-600 to-amber-700',
       badge: 'Starter',
       popular: false,
@@ -67,7 +66,7 @@ const Sponsorship = () => {
       name: 'Silver',
       price: '$2,500',
       duration: '/year',
-      icon: FaGem,
+      icon: 'FaGem',
       color: 'from-gray-400 to-gray-600',
       badge: 'Growth',
       popular: false,
@@ -89,7 +88,7 @@ const Sponsorship = () => {
       name: 'Gold',
       price: '$5,000',
       duration: '/year',
-      icon: FaStar,
+      icon: 'FaStar',
       color: 'from-yellow-500 to-amber-500',
       badge: 'Popular',
       popular: true,
@@ -112,7 +111,7 @@ const Sponsorship = () => {
       name: 'Platinum',
       price: '$10,000',
       duration: '/year',
-      icon: FaCrown,
+      icon: 'FaCrown',
       color: 'from-purple-500 to-indigo-600',
       badge: 'Elite',
       popular: false,
@@ -151,7 +150,7 @@ const Sponsorship = () => {
           <div className="absolute top-0 right-0 w-64 h-64 bg-white opacity-5 rounded-full -translate-y-32 translate-x-32"></div>
           <div className="absolute bottom-0 left-0 w-48 h-48 bg-white opacity-5 rounded-full translate-y-24 -translate-x-24"></div>
           
-          <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+          <div className="container mx-auto px-4 sm:px-6  py-24 relative">
             <div className="text-center">
               <div className="flex justify-center mb-6">
                 <div className="relative">
@@ -206,11 +205,12 @@ const Sponsorship = () => {
           activeType={activeType}
         />
 
+        {/* Sponsorship Packages */}
         <SponsorShipCard 
-            packages={packages}
-            selectedPackage={selectedPackage}
-            setSelectedPackage={setSelectedPackage}
-            selectedPackageData={selectedPackageData}
+          packages={packages}
+          selectedPackage={selectedPackage}
+          setSelectedPackage={setSelectedPackage}
+          selectedPackageData={selectedPackageData}
         />
       </div>
     </>
