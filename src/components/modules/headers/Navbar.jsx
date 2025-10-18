@@ -36,25 +36,26 @@ const Navbar = () => {
   const menuLinks = [
     { name: t("home"), href: "/" },
     { name: t("courses"), href: "/courses" },
-    { name: t("pricing"), href: "/pricing" },
-    { name: t("dashboard"), href: "/dashboard" },
+    { name: t("leaderboard"), href: "/leaderboard" },
     { name: t("instructors"), href: "/instructors" },
     { name: t("games"), href: "/games" },
     {
       name: t("pages"),
       dropdown: [
+        { name: t("pricing"), href: "/pricing" },
+        { name: t("dashboard"), href: "/dashboard" },
         { name: t("checkout"), href: "/checkout" },
         { name: t("about"), href: "/about" },
         { name: t("contact"), href: "/contact" },
+        { name: t("blog"), href: "/blog" },
+        { name: t("sponsorship"), href: "/sponsorship" },
         { name: t("terms"), href: "/terms" },
         { name: t("privacy"), href: "/privacy" },
         { name: t("faq"), href: "/faq" },
-        { name: t("sponsorship"), href: "/sponsorship" },
         { name: "404", href: "/404" },
         { name: t("success"), href: "/success-history" }
       ]
     },
-    { name: t("blog"), href: "/blog" },
     { name: t("donation"), href: "/donation" }
   ];
 

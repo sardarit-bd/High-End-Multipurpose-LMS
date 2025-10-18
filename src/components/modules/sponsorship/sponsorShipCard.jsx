@@ -85,7 +85,7 @@ const SponsorShipCard = ({ packages, selectedPackage, setSelectedPackage, select
               <div className={`p-6 rounded-t-3xl text-white bg-gradient-to-r ${pkg.color}`}>
                 <div className="flex items-center justify-between mb-4">
                   <IconComponent className="w-8 h-8" />
-                  <span className="bg-white bg-opacity-20 px-3 py-1 rounded-full text-sm font-semibold">
+                  <span className="bg-white text-black bg-opacity-20 px-3 py-1 rounded-full text-sm font-semibold">
                     {pkg.badge}
                   </span>
                 </div>

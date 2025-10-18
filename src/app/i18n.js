@@ -11,6 +11,7 @@ const resources = {
       "courses": "Courses",
       "pricing": "Pricing",
       "dashboard": "Dashboard",
+      "leaderboard": "Leaderboard",
       "instructors": "Instructors",
       "games": "Games",
       "pages": "Pages",

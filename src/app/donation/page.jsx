@@ -250,7 +250,7 @@ const Donation = () => {
                     </div>
                     <div className="hidden sm:block">
                       <div className="bg-white bg-opacity-20 backdrop-blur-sm px-4 py-2 rounded-full">
-                        <span className="font-semibold text-white">Recommended</span>
+                        <span className="font-semibold text-black">Recommended</span>
                       </div>
                     </div>
                   </div>
