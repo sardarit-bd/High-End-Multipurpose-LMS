@@ -1,5 +1,5 @@
 "use client"
-
+import Image from "next/image";
 import { useTranslation } from "react-i18next";
 
 const Footer = () => {
@@ -12,7 +12,11 @@ const Footer = () => {
 
           {/* Company Info */}
           <div className="lg:col-span-1">
-            <h2 className="text-2xl font-bold mb-4 text-[var(--color-secondary)]"># ASIA-LMS</h2>
+            <h2 className="text-2xl font-bold mb-4 text-[var(--color-secondary)]">
+              <Image src="/logo.png" alt="ASIA-LMS" width={100} height={40}
+                className="h-[45px] w-auto object-contain"
+              />
+            </h2>
             <p className="text-[var(--color-text)] mb-6 leading-relaxed">
               {t("footer.companyDescription") || "Platform designed to help organizations, educators, and learners manage, deliver, and track learning and training activities."}
             </p>
@@ -69,9 +73,9 @@ const Footer = () => {
               {t("footer.newsletter.description") || "Sign up to get updates & news."}
             </p>
             <div className="flex flex-col">
-              <input 
-                type="email" 
-                placeholder={t("footer.newsletter.placeholder") || "Email Address"} 
+              <input
+                type="email"
+                placeholder={t("footer.newsletter.placeholder") || "Email Address"}
                 className="flex-1 px-4 py-2 bg-[var(--color-text)]/10 border border-[var(--color-primary)] rounded-lg text-[var(--color-text)] placeholder-[var(--color-text)] focus:outline-none focus:border-[var(--color-primary)]"
               />
               <button className="my-4 px-6 py-2 bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] rounded-lg font-medium transition-colors text-white">
@@ -85,7 +89,7 @@ const Footer = () => {
         <div className="border-t border-[var(--color-primary)] mt-8 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <div className="text-[var(--color-text)]/70 text-sm">
-              {t("footer.copyright") || "Copyright 2023 © DreamsLife. All rights reserved."}
+              {t("footer.copyright") || "Copyright 2023 © Sardar IT. All rights reserved."}
             </div>
             <div className="flex space-x-6 text-[var(--color-text)]/70 text-sm">
               <a href="#" className="hover:text-[var(--color-primary)] transition-colors">{t("footer.terms") || "Terms & Conditions"}</a>

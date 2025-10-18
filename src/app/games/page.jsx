@@ -24,12 +24,8 @@ export default function Games() {
       description: "Test your knowledge about Sustainable Development Goals with this fun trivia game. Answer questions and learn interesting facts about global development.",
       thumbnail: "/images/game1-thumb.jpg",
       type: "embed",
-      gameUrl: "/games/trivia/index.html",
-      downloadUrl: null,
-      players: "1-4 Players",
-      duration: "15-30 mins",
-      difficulty: "Easy",
-      rating: 4.5
+      gameUrl: "games/one",
+      downloadUrl: null
     },
     {
       id: 2,
@@ -174,7 +170,7 @@ export default function Games() {
   const handlePlayGame = (game) => {
     if (game.type === 'embed') {
       // Modal e game show korbe
-      console.log('Embed game:', game.gameUrl);
+      window.open(game.gameUrl, '_blank');
       // Ekhane game modal open korbe
     } else if (game.type === 'external') {
       window.open(game.gameUrl, '_blank');
