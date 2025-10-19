@@ -5,7 +5,6 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { FaBars, FaTimes, FaGlobe, FaChevronDown } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
-import Image from "next/image";
 
 const Navbar = () => {
   const { t, i18n } = useTranslation();
@@ -70,9 +69,7 @@ const Navbar = () => {
           onClick={closeMenu}
           className="text-2xl font-extrabold text-[var(--color-secondary)]"
         >
-          <Image src="/logo.png" alt="ASIA-LMS" width={100} height={40}
-            className="h-[35px] w-auto object-contain"
-          />
+          ASIA-LS
         </Link>
 
         {/* Desktop Menu */}
@@ -139,7 +136,7 @@ const Navbar = () => {
 
         {/* Desktop Language Selector & Auth Buttons */}
         <div className="hidden lg:flex items-center gap-4">
-          {/* Enhanced Language Selector */}
+          {/* Enhanced Language Selector - Icon Only for lg and xl */}
           <div className="relative">
             <button
               onClick={() => toggleDropdown('language')}
@@ -147,9 +144,10 @@ const Navbar = () => {
             >
               <div className="flex items-center gap-2">
                 <FaGlobe className="text-[var(--color-primary)] group-hover:text-white transition-colors" />
+                {/* Show only flag icon for lg and xl, full text for 2xl */}
                 <span className="text-sm font-medium flex items-center gap-1">
-                  <span className="text-base">{currentLanguage?.flag}</span>
-                  <span className="hidden sm:block">{currentLanguage?.label}</span>
+                  <span className="text-base hidden 2xl:block">{currentLanguage?.flag}</span>
+                  <span className="hidden 2xl:block">{currentLanguage?.label}</span>
                 </span>
               </div>
               <FaChevronDown className={`w-3 h-3 transition-transform duration-200 ${openDropdown === 'language' ? 'rotate-180' : ''
@@ -175,19 +173,34 @@ const Navbar = () => {
             )}
           </div>
 
+          {/* Login Button - Icon Only for lg and xl */}
           <Link
             href="/login"
             onClick={closeMenu}
-            className="px-4 py-2 rounded-lg border border-[var(--color-primary)] text-[var(--color-primary)] hover:bg-[var(--color-primary)] hover:text-white font-medium text-sm transition-all"
+            className="flex items-center justify-center px-3 py-2 rounded-lg border border-[var(--color-primary)] text-[var(--color-primary)] hover:bg-[var(--color-primary)] hover:text-white font-medium text-sm transition-all"
+            title={t("login")}
           >
-            {t("login")}
+            <span className="lg:hidden xl:hidden 2xl:inline">{t("login")}</span>
+            <span className="hidden lg:inline xl:inline 2xl:hidden">
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
+              </svg>
+            </span>
           </Link>
+
+          {/* Register Button - Icon Only for lg and xl */}
           <Link
             href="/register"
             onClick={closeMenu}
-            className="bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white px-4 py-2 rounded-lg text-sm font-medium shadow-sm transition-all"
+            className="flex items-center justify-center px-3 py-2 rounded-lg bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white text-sm font-medium shadow-sm transition-all"
+            title={t("register")}
           >
-            {t("register")}
+            <span className="lg:hidden xl:hidden 2xl:inline">{t("register")}</span>
+            <span className="hidden lg:inline xl:inline 2xl:hidden">
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
+              </svg>
+            </span>
           </Link>
         </div>
 
