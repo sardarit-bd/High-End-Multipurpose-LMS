@@ -1,0 +1,94 @@
+@import "tailwindcss";
+
+:root {
+  /* ====== Brand Colors ====== */
+  --color-primary: #059669;       /* Emerald Green - CTA buttons, progress bars, active menu items */
+  --color-secondary: #2563EB;     /* Blue - Headers, navigation links, icons */
+  --color-accent: #FBBF24;        /* Yellow - Badges, XP points, achievements */
+
+  /* ====== Base Colors ====== */
+  --color-background: #ECFDF5;    /* Light Mint - Page backgrounds, sections, soft containers */
+  --color-text: #064E3B;          /* Dark Green - Body text, descriptions, headings, forms */
+
+  /* ====== Hover & Transparency ====== */
+  --color-primary-hover: #047857; /* Darker Emerald for hover transitions */
+  --color-secondary-hover: #1E40AF; /* Deeper Blue for hover states */
+  --color-accent-hover: #F59E0B;  /* Richer Yellow for active highlights */
+  --color-accent-special: #0f9293;  /* Richer Yellow for active highlights */
+
+  /* ====== Shadows & Depth ====== */
+  --shadow-soft: 0 2px 6px rgba(0, 0, 0, 0.08);
+  --shadow-medium: 0 4px 12px rgba(0, 0, 0, 0.1);
+  --container-opacity: 0.95; /* Slight transparency for depth */
+
+  /* ====== Border Radius & Spacing ====== */
+  --radius-default: 0.75rem;
+  --radius-card: 1rem;
+  --spacing-section: 2rem;
+}
+
+
+@theme inline {
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  /* background: var(--background); */
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-slideDown {
+  animation: slideDown 0.25s ease-in-out forwards;
+}
+
+
+/* Custom Scrollbar Styles */
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-primary) transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--color-primary);
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: var(--color-primary-hover);
+}
+
+/* For dark mode support */
+@media (prefers-color-scheme: dark) {
+  .custom-scrollbar {
+    scrollbar-color: var(--color-primary) transparent;
+  }
+}
