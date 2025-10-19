@@ -13,7 +13,11 @@ import {
 } from "react-icons/fa";
 
 const SponsorShipCard = ({ packages, selectedPackage, setSelectedPackage, selectedPackageData }) => {
+<<<<<<< HEAD
   
+=======
+
+>>>>>>> master
   // Icon mapping function
   const getIconComponent = (iconName) => {
     const iconMap = {
@@ -48,11 +52,18 @@ const SponsorShipCard = ({ packages, selectedPackage, setSelectedPackage, select
           <button
             key={pkg.id}
             onClick={() => setSelectedPackage(pkg.id)}
+<<<<<<< HEAD
             className={`px-6 py-3 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 ${
               selectedPackage === pkg.id
                 ? `bg-gradient-to-r ${pkg.color} text-white shadow-lg`
                 : "bg-gray-100 text-gray-700 hover:bg-gray-200"
             }`}
+=======
+            className={`px-6 py-3 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 ${selectedPackage === pkg.id
+              ? `bg-gradient-to-r ${pkg.color} text-white shadow-lg`
+              : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+              }`}
+>>>>>>> master
           >
             {pkg.name}
           </button>
@@ -64,6 +75,7 @@ const SponsorShipCard = ({ packages, selectedPackage, setSelectedPackage, select
         {packages.map((pkg) => {
           // Properly get the icon component
           const IconComponent = getIconComponent(pkg.icon);
+<<<<<<< HEAD
           
           return (
             <div
@@ -73,6 +85,16 @@ const SponsorShipCard = ({ packages, selectedPackage, setSelectedPackage, select
                   ? `border-blue-500 shadow-2xl scale-105`
                   : "border-gray-200 shadow-lg hover:scale-105"
               } ${pkg.popular ? "ring-2 ring-yellow-400 ring-opacity-50" : ""}`}
+=======
+
+          return (
+            <div
+              key={pkg.id}
+              className={`relative bg-white rounded-3xl border-2 transition-all duration-300 ${selectedPackage === pkg.id
+                ? `border-blue-500 shadow-2xl scale-105`
+                : "border-gray-200 shadow-lg hover:scale-105"
+                } ${pkg.popular ? "ring-2 ring-yellow-400 ring-opacity-50" : ""}`}
+>>>>>>> master
             >
               {pkg.popular && (
                 <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
@@ -130,11 +152,18 @@ const SponsorShipCard = ({ packages, selectedPackage, setSelectedPackage, select
                 </div>
 
                 <button
+<<<<<<< HEAD
                   className={`w-full py-3 px-6 rounded-xl font-semibold transition-all duration-300 ${
                     selectedPackage === pkg.id
                       ? `bg-gradient-to-r ${pkg.color} text-white shadow-lg hover:shadow-xl`
                       : "bg-gray-100 text-gray-700 hover:bg-gray-200"
                   }`}
+=======
+                  className={`w-full py-3 px-6 rounded-xl font-semibold transition-all duration-300 ${selectedPackage === pkg.id
+                    ? `bg-gradient-to-r ${pkg.color} text-white shadow-lg hover:shadow-xl`
+                    : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                    }`}
+>>>>>>> master
                 >
                   Select Package
                 </button>
