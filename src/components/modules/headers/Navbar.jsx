@@ -189,7 +189,7 @@ const Navbar = () => {
           )}
         </div>
 
-        {/* Desktop Language Selector & Auth Buttons - Unchanged */}
+        {/* Desktop Language Selector & Auth Buttons */}
         <div className="hidden lg:flex items-center gap-4">
           <div className="relative" ref={languageDropdownRef}>
             <button
