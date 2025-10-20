@@ -5,7 +5,7 @@ const RankCard = ({userRank, formatPoints}) => {
   return (
     <>
         {userRank && (
-            <div className="my-8 bg-gradient-to-r from-green-500 to-blue-500 rounded-3xl p-6 text-white shadow-2xl">
+            <div className="my-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-3xl p-6 text-white shadow-2xl">
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-4">
                   <div className="w-16 h-16 bg-white bg-opacity-20 rounded-2xl flex items-center justify-center backdrop-blur-sm">

@@ -23,7 +23,8 @@ const Shop = () => {
     category: "all",
     priceRange: [0, 1000],
     rating: 0,
-    sortBy: "featured"
+    sortBy: "featured",
+    search: ""
   });
   const [loading, setLoading] = useState(true);
 
@@ -160,6 +161,18 @@ const Shop = () => {
       filtered = filtered.filter(product => product.rating >= filters.rating);
     }
 
+
+    // Search filter
+    if(filters.search.trim() ){
+      const q = filters.search.toLowerCase();
+      filtered = filtered.filter(p => 
+        p.name.toLowerCase().includes(q) ||
+        p.category.toLowerCase().includes(q)
+      )
+    }
+
+    
+
     // Sort products
     switch (filters.sortBy) {
       case "price-low":
@@ -239,6 +252,8 @@ const Shop = () => {
         <ShopHero 
           onShowFilters={() => setIsFilterOpen(true)}
           cartItemCount={getCartItemCount()}
+          search={filters.search}
+          onSearchChange={(val) => setFilters(prev => ({ ...prev, search: val }))}
         />
 
         {/* Main Content */}

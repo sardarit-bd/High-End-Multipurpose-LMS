@@ -6,6 +6,7 @@ import Navbar from "@/components/modules/headers/Navbar";
 import EventHerosection from "@/components/modules/event/EventHerosection";
 import EventDetailsSection from "@/components/modules/event/EventDetailsSection";
 import EventTestimonialsSection from "@/components/modules/event/EventTestimonialsSection";
+import Footer from "@/components/modules/footers/Footer";
 
 const Event = () => {
   const { t } = useTranslation();
@@ -104,6 +105,8 @@ const Event = () => {
         {/* Testimonials Section */}
         <EventTestimonialsSection/>
       </div>
+      {/* Footer */}
+      <Footer />
     </>
   );
 };
