@@ -2,25 +2,73 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { FaBars, FaTimes, FaGlobe, FaChevronDown } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
 import { RiArrowDropDownLine } from "react-icons/ri";
-import { useRef } from "react";
-
-
+import Image from "next/image";
 
 const Navbar = () => {
-  const languageDropdownRef = useRef(null);
   const { t, i18n } = useTranslation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState(null);
   const pathname = usePathname();
 
-  const toggleDropdown = (dropdown) =>
+  // Refs for dropdowns
+  const dropdownRef = useRef(null);
+  const languageDropdownRef = useRef(null);
+  const mobileDropdownRef = useRef(null);
+  const pagesDropdownRef = useRef(null);
+
+  // Close dropdowns when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      // Close desktop pages dropdown
+      if (
+        pagesDropdownRef.current &&
+        !pagesDropdownRef.current.contains(event.target)
+      ) {
+        if (openDropdown === "pages") {
+          setOpenDropdown(null);
+        }
+      }
+
+      // Close language dropdown
+      if (
+        languageDropdownRef.current &&
+        !languageDropdownRef.current.contains(event.target)
+      ) {
+        if (openDropdown === "language") {
+          setOpenDropdown(null);
+        }
+      }
+
+      // Close mobile menu when clicking outside
+      if (isMenuOpen && !event.target.closest("nav")) {
+        closeMenu();
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("touchstart", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("touchstart", handleClickOutside);
+    };
+  }, [isMenuOpen, openDropdown]);
+
+  // Close mobile menu when route changes
+  useEffect(() => {
+    closeMenu();
+  }, [pathname]);
+
+  const toggleDropdown = (dropdown) => {
     setOpenDropdown(openDropdown === dropdown ? null : dropdown);
+  };
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+
   const closeMenu = () => {
     setIsMenuOpen(false);
     setOpenDropdown(null);
@@ -28,14 +76,15 @@ const Navbar = () => {
 
   const languages = [
     { code: "en", label: "English", flag: "🇺🇸" },
-    { code: "ms", label: "Malay", flag: "🇲🇾" }
+    { code: "ms", label: "Malay", flag: "🇲🇾" },
   ];
 
-  const currentLanguage = languages.find(lang => lang.code === i18n.language);
+  const currentLanguage = languages.find((lang) => lang.code === i18n.language);
 
   const changeLanguage = (lng) => {
     i18n.changeLanguage(lng);
     setOpenDropdown(null);
+    closeMenu();
   };
 
   const menuLinks = [
@@ -46,24 +95,25 @@ const Navbar = () => {
     { name: t("games"), href: "/games" },
     {
       name: t("pages"),
+      key: "pages",
       dropdown: [
         { name: t("pricing"), href: "/pricing" },
         { name: t("dashboard"), href: "/dashboard" },
         { name: t("checkout"), href: "/checkout" },
+        { name: t("event"), href: "/event" },
+        { name: t("shop"), href: "/shop" },
         { name: t("about"), href: "/about" },
         { name: t("contact"), href: "/contact" },
         { name: t("blog"), href: "/blog" },
-        { name: t("shop"), href: "/shop" },
-        { name: t("event"), href: "/event" },
         { name: t("sponsorship"), href: "/sponsorship" },
         { name: t("terms"), href: "/terms" },
         { name: t("privacy"), href: "/privacy" },
         { name: t("faq"), href: "/faq" },
         { name: "404", href: "/404" },
-        { name: t("success"), href: "/success-history" }
-      ]
+        { name: t("success"), href: "/success-history" },
+      ],
     },
-    { name: t("donation"), href: "/donation" }
+    { name: t("donation"), href: "/donation" },
   ];
 
   const isActive = (href) => pathname === href;
@@ -76,54 +126,52 @@ const Navbar = () => {
           onClick={closeMenu}
           className="text-2xl font-extrabold text-[var(--color-secondary)]"
         >
-          ASIA-LS
+          <Image src="/logo.png" alt="Logo Image" width={120} height={90} />
         </Link>
 
-        {/* Desktop Menu */}
+        {/* Desktop Menu - Unchanged */}
         <div className="hidden lg:flex items-center gap-8">
           {menuLinks.map((link) =>
             link.dropdown ? (
-              <div key={link.name} className="relative">
+              <div key={link.name} className="relative" ref={pagesDropdownRef}>
                 <button
-                  onClick={() => toggleDropdown(link.name)}
-                  className={`flex items-center gap-1 font-medium ${openDropdown === link.name
-                    ? "text-[var(--color-primary)]"
-                    : "text-[var(--color-text)] hover:text-[var(--color-secondary-hover)]"
-                    }`}
+                  onClick={() => toggleDropdown(link.key)}
+                  className={`flex items-center gap-1 font-medium transition-all duration-200 ${
+                    openDropdown === link.key
+                      ? "text-[var(--color-primary)]"
+                      : "text-[var(--color-text)] hover:text-[var(--color-secondary-hover)]"
+                  }`}
                 >
                   {link.name}
-                  <svg
-                    className="w-4 h-4"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M19 9l-7 7-7-7"
-                    />
-                  </svg>
+                  <RiArrowDropDownLine
+                    className={`text-2xl transition-transform duration-200 ${
+                      openDropdown === link.key ? "rotate-180" : ""
+                    }`}
+                  />
                 </button>
 
-                {openDropdown === link.name && (
-                  <div className="absolute left-0 mt-3 w-52 bg-[var(--color-background)] border border-[var(--color-primary)] rounded-md shadow-md z-50">
-                    {link.dropdown.map((item) => (
-                      <Link
-                        key={item.name}
-                        href={item.href}
-                        onClick={closeMenu}
-                        className={`block px-4 py-2 text-sm ${isActive(item.href)
+                <div
+                  className={`absolute left-0 mt-3 w-52 bg-[var(--color-background)] border border-[var(--color-primary)] rounded-md shadow-lg z-50 transition-all duration-200 transform origin-top ${
+                    openDropdown === link.key
+                      ? "opacity-100 scale-100 translate-y-0"
+                      : "opacity-0 scale-95 -translate-y-2 pointer-events-none"
+                  }`}
+                >
+                  {link.dropdown.map((item) => (
+                    <Link
+                      key={item.name}
+                      href={item.href}
+                      onClick={closeMenu}
+                      className={`block px-4 py-2 text-sm transition-colors duration-200 ${
+                        isActive(item.href)
                           ? "bg-[var(--color-primary)] text-white"
                           : "text-[var(--color-text)] hover:bg-[var(--color-primary)] hover:text-white"
-                          }`}
-                      >
-                        {item.name}
-                      </Link>
-                    ))}
-                  </div>
-                )}
+                      }`}
+                    >
+                      {item.name}
+                    </Link>
+                  ))}
+                </div>
               </div>
             ) : (
               <Link
@@ -278,7 +326,13 @@ const Navbar = () => {
                 onClick={closeMenu}
                 className="text-2xl font-extrabold text-[var(--color-secondary)]"
               >
-                ASIA-LS
+                <Image
+                  src="/logo.png"
+                  alt="Logo Image"
+                  width={90}
+                  height={70}
+                  className="md:w-36"
+                />
               </Link>
               <button
                 onClick={closeMenu}
@@ -386,19 +440,20 @@ const Navbar = () => {
                     <FaGlobe className="text-[var(--color-primary)]" />
                     {t("language") || "Select Language"}
                   </p>
+
                   <div className="grid grid-cols-2 gap-2">
                     {languages.map((lng) => (
                       <button
-                        onClick={() => toggleDropdown("language")}
-                        className="flex items-center gap-2 px-3 py-2 rounded-lg border border-[var(--color-primary)] text-[var(--color-text)] hover:bg-[var(--color-primary)] hover:text-white transition-all duration-200 group"
+                        key={lng.code}
+                        onClick={() => changeLanguage(lng.code)}
+                        className={`flex items-center justify-center gap-2 px-3 py-3 text-sm rounded-lg border-2 transition-all duration-200 active:scale-95 ${
+                          i18n.language === lng.code
+                            ? "bg-[var(--color-primary)] text-white border-[var(--color-primary)] shadow-md"
+                            : "bg-white text-gray-700 border-gray-300 hover:bg-[var(--color-background)] hover:border-[var(--color-primary)]"
+                        }`}
                       >
-                        <FaGlobe className="text-[var(--color-primary)] group-hover:text-white transition-colors duration-200" />
-                        <span className="text-sm font-medium flex items-center gap-1 xl:hidden">
-                          <span className="text-base">
-                            {currentLanguage?.flag}
-                          </span>
-                          <span>{currentLanguage?.label}</span>
-                        </span>
+                        <span className="text-base">{lng.flag}</span>
+                        <span className="font-medium">{lng.label}</span>
                       </button>
                     ))}
                   </div>
