@@ -6,10 +6,9 @@ import Navbar from '@/components/modules/headers/Navbar';
 import { FaAward, FaChartLine, FaCheck, FaCrown, FaGem, FaGlobe, FaHandshake, FaLightbulb, FaMedal, FaRocket, FaStar, FaTrophy, FaUsers } from 'react-icons/fa';
 import SponsorShipCard from '@/components/modules/sponsorship/sponsorShipCard';
 import PartnershipOpportunities from '@/components/modules/sponsorship/PartnershipOpportunities';
-<<<<<<< HEAD
-=======
+
 import Footer from '@/components/modules/footers/Footer';
->>>>>>> master
+
 
 const Sponsorship = () => {
   const [activeTab, setActiveTab] = useState('corporate');
@@ -217,10 +216,8 @@ const Sponsorship = () => {
           selectedPackageData={selectedPackageData}
         />
       </div>
-<<<<<<< HEAD
-=======
+
       <Footer/>
->>>>>>> master
     </>
   );
 };
