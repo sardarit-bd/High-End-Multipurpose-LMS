@@ -9,6 +9,9 @@ First, install the dependencies:
 ```bash
 npm install
 ```
+
+=======
+
 Then, run the development server:
 
 ```bash

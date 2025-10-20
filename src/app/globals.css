@@ -60,3 +60,35 @@ body {
 .animate-slideDown {
   animation: slideDown 0.25s ease-in-out forwards;
 }
+
+
+/* Custom Scrollbar Styles */
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-primary) transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--color-primary);
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: var(--color-primary-hover);
+}
+
+/* For dark mode support */
+@media (prefers-color-scheme: dark) {
+  .custom-scrollbar {
+    scrollbar-color: var(--color-primary) transparent;
+  }
+}

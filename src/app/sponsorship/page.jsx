@@ -7,6 +7,9 @@ import { FaAward, FaChartLine, FaCheck, FaCrown, FaGem, FaGlobe, FaHandshake, Fa
 import SponsorShipCard from '@/components/modules/sponsorship/sponsorShipCard';
 import PartnershipOpportunities from '@/components/modules/sponsorship/PartnershipOpportunities';
 
+import Footer from '@/components/modules/footers/Footer';
+
+
 const Sponsorship = () => {
   const [activeTab, setActiveTab] = useState('corporate');
   const [selectedPackage, setSelectedPackage] = useState('gold');
@@ -213,6 +216,8 @@ const Sponsorship = () => {
           selectedPackageData={selectedPackageData}
         />
       </div>
+
+      <Footer/>
     </>
   );
 };
