@@ -1,6 +1,5 @@
 "use client";
 
-import { FaSlidersH, FaSort } from "react-icons/fa";
 import ProductCard from "./ProductCard";
 
 const ProductGrid = ({ products, loading, onAddToCart, filters, onFiltersChange }) => {

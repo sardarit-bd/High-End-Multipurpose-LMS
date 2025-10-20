@@ -50,13 +50,6 @@ const ShopHero = ({ onShowFilters, cartItemCount, search, onSearchChange }) => {
                 className="w-full rounded-2xl outline-none border-0 bg-white/20 px-6 py-4 pl-14 text-white placeholder-orange-200 backdrop-blur-sm focus:bg-white/30 focus:ring-2 focus:ring-white/50"
               />
               <FaSearch className="absolute left-5 top-1/2 -translate-y-1/2 text-white text-lg" />
-              <button
-                onClick={onShowFilters}
-                className="absolute right-3 top-1/2 -translate-y-1/2 rounded-xl bg-white/20 px-4 py-2 text-white backdrop-blur-sm transition-all hover:bg-white/30"
-              >
-                <FaFilter className="inline mr-2" />
-                Filters
-              </button>
             </div>
           </div>
 
