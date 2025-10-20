@@ -2,6 +2,9 @@
   "name": "asia-lms",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": ">=18.18 <=22"
+  },
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build --turbopack",
@@ -31,8 +34,5 @@
     "eslint": "^9",
     "eslint-config-next": "15.5.4",
     "tailwindcss": "^4"
-  },
-  "engines": {
-    "node": ">=18.18 <=22"
   }
 }
