@@ -6,6 +6,7 @@ import { useState, useEffect, useRef } from "react";
 import { FaBars, FaTimes, FaGlobe, FaChevronDown } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
 import { RiArrowDropDownLine } from "react-icons/ri";
+import Image from "next/image";
 
 const Navbar = () => {
   const { t, i18n } = useTranslation();
@@ -125,7 +126,7 @@ const Navbar = () => {
           onClick={closeMenu}
           className="text-2xl font-extrabold text-[var(--color-secondary)]"
         >
-          ASIA-LS
+          <Image src="/logo.png" alt="Logo Image" width={120} height={90} />
         </Link>
 
         {/* Desktop Menu - Unchanged */}
@@ -325,7 +326,13 @@ const Navbar = () => {
                 onClick={closeMenu}
                 className="text-2xl font-extrabold text-[var(--color-secondary)]"
               >
-                ASIA-LS
+                <Image
+                  src="/logo.png"
+                  alt="Logo Image"
+                  width={90}
+                  height={70}
+                  className="md:w-36"
+                />
               </Link>
               <button
                 onClick={closeMenu}
@@ -433,19 +440,20 @@ const Navbar = () => {
                     <FaGlobe className="text-[var(--color-primary)]" />
                     {t("language") || "Select Language"}
                   </p>
+
                   <div className="grid grid-cols-2 gap-2">
                     {languages.map((lng) => (
                       <button
-                        onClick={() => toggleDropdown("language")}
-                        className="flex items-center gap-2 px-3 py-2 rounded-lg border border-[var(--color-primary)] text-[var(--color-text)] hover:bg-[var(--color-primary)] hover:text-white transition-all duration-200 group"
+                        key={lng.code}
+                        onClick={() => changeLanguage(lng.code)}
+                        className={`flex items-center justify-center gap-2 px-3 py-3 text-sm rounded-lg border-2 transition-all duration-200 active:scale-95 ${
+                          i18n.language === lng.code
+                            ? "bg-[var(--color-primary)] text-white border-[var(--color-primary)] shadow-md"
+                            : "bg-white text-gray-700 border-gray-300 hover:bg-[var(--color-background)] hover:border-[var(--color-primary)]"
+                        }`}
                       >
-                        <FaGlobe className="text-[var(--color-primary)] group-hover:text-white transition-colors duration-200" />
-                        <span className="text-sm font-medium flex items-center gap-1 xl:hidden">
-                          <span className="text-base">
-                            {currentLanguage?.flag}
-                          </span>
-                          <span>{currentLanguage?.label}</span>
-                        </span>
+                        <span className="text-base">{lng.flag}</span>
+                        <span className="font-medium">{lng.label}</span>
                       </button>
                     ))}
                   </div>
