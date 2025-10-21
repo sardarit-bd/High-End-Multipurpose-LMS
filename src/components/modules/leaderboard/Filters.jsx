@@ -64,7 +64,7 @@ const Filters = ({ categories, activeCategory, setActiveCategory, timeframes, ac
                             key={timeframe.id}
                             onClick={() => setActiveTimeframe(timeframe.id)}
                             className={`flex items-center space-x-2 px-4 py-2 rounded-xl font-medium transition-all duration-200 ${isActive
-                                ? 'bg-gradient-to-r from-green-500 to-blue-500 text-white shadow-lg'
+                                ? 'bg-gradient-to-br from-blue-500 to-purple-600 text-white shadow-lg'
                                 : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                                 }`}
                         >

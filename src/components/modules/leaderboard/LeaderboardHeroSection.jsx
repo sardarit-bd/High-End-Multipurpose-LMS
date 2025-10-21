@@ -11,7 +11,27 @@ import {
 
 const LeaderboardHeroSection = () => {
   return (
-    <div className="relative bg-gradient-to-br from-emerald-400 via-cyan-500 to-blue-600 text-white overflow-hidden">
+    <div className="relative bg-gradient-to-br from-blue-500 to-purple-600 text-white overflow-hidden">
+        <div className="absolute inset-0">
+    {/* Gradient Background */}
+    <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-purple-500/10 to-pink-500/10" />
+    
+    {/* Animated Circles */}
+    <div className="absolute -top-20 -left-20 h-80 w-80 animate-pulse rounded-full bg-blue-300/20 blur-3xl" />
+    <div className="absolute -bottom-20 -right-20 h-80 w-80 animate-pulse rounded-full bg-purple-300/20 blur-3xl" />
+    <div className="absolute top-1/3 left-1/4 h-40 w-40 animate-pulse rounded-full bg-pink-300/15 blur-3xl" />
+    <div className="absolute bottom-1/3 right-1/4 h-32 w-32 animate-pulse rounded-full bg-indigo-300/15 blur-3xl" />
+    
+    {/* Grid Pattern */}
+    <div 
+        className="absolute inset-0 opacity-[0.03]"
+        style={{
+        backgroundImage: `linear-gradient(#000 1px, transparent 1px),
+                            linear-gradient(90deg, #000 1px, transparent 1px)`,
+        backgroundSize: '50px 50px'
+        }}
+    />
+    </div>
         {/* Animated Background Elements */}
         <div className="absolute inset-0">
         <div className="absolute top-10 left-10 w-72 h-72 bg-white opacity-5 rounded-full animate-pulse"></div>

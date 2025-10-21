@@ -6,6 +6,8 @@ import Navbar from "@/components/modules/headers/Navbar";
 import EventHerosection from "@/components/modules/event/EventHerosection";
 import EventDetailsSection from "@/components/modules/event/EventDetailsSection";
 import EventTestimonialsSection from "@/components/modules/event/EventTestimonialsSection";
+import Footer from "@/components/modules/footers/Footer";
+import EventsPage from "@/components/modules/event/EventsPage";
 
 const Event = () => {
   const { t } = useTranslation();
@@ -82,7 +84,7 @@ const Event = () => {
       <Navbar />
       <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
         {/* Hero Section with Gradient Background */}
-        <EventHerosection
+        {/* <EventHerosection
           eventData={eventData}
           countdown={countdown}
           isLiked={isLiked}
@@ -91,19 +93,23 @@ const Event = () => {
           setIsBookmarked={setIsBookmarked}
           handleRegister={handleRegister}
           shareEvent={shareEvent}
-        />
+        /> */}
+
+        <EventsPage/>
 
         {/* Event Details Section */}
-        <EventDetailsSection
+        {/* <EventDetailsSection
           activeTab={activeTab}
           setActiveTab={setActiveTab}
           eventData={eventData}
           handleRegister={handleRegister}
-        />
+        /> */}
 
         {/* Testimonials Section */}
         <EventTestimonialsSection/>
       </div>
+      {/* Footer */}
+      <Footer />
     </>
   );
 };

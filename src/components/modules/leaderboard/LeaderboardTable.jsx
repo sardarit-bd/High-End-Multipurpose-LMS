@@ -47,7 +47,7 @@ const LeaderboardTable = ({leaderboardData,activeCategory,getRankColor,getRankIc
                           }`}>
                           {item.rank <= 3 ? getRankIcon(item.rank) : item.rank}
                         </div>
-                        <div className="w-10 h-10 bg-gradient-to-r from-green-400 to-blue-500 rounded-full flex items-center justify-center gap-3 text-white font-semibold text-sm">
+                        <div className="w-10 h-10 bg-gradient-to-r from-green-300 to-blue-300 rounded-full flex items-center justify-center gap-3 text-white font-semibold text-sm">
                           {item.name.charAt(0)}
                         </div>
                       </div>
@@ -119,7 +119,7 @@ const LeaderboardTable = ({leaderboardData,activeCategory,getRankColor,getRankIc
                           <div className="text-center">
                             <div className="w-full bg-gray-200 rounded-full h-2 mb-1">
                               <div
-                                className="bg-gradient-to-r from-green-400 to-blue-500 h-2 rounded-full transition-all duration-500"
+                                className="bg-gradient-to-br from-blue-500 to-purple-600 h-2 rounded-full transition-all duration-500"
                                 style={{ width: `${item.progress}%` }}
                               ></div>
                             </div>
@@ -145,7 +145,7 @@ const LeaderboardTable = ({leaderboardData,activeCategory,getRankColor,getRankIc
                     {/* Name & Info */}
                     <div className="col-span-4">
                       <div className="flex items-center space-x-3">
-                        <div className="w-10 h-10 bg-gradient-to-r from-green-400 to-blue-500 rounded-full flex items-center justify-center text-white font-semibold">
+                        <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-semibold">
                           {item.name.charAt(0)}
                         </div>
                         <div>
@@ -208,7 +208,7 @@ const LeaderboardTable = ({leaderboardData,activeCategory,getRankColor,getRankIc
                         <div className="text-center">
                           <div className="w-full bg-gray-200 rounded-full h-2">
                             <div
-                              className="bg-gradient-to-r from-green-400 to-blue-500 h-2 rounded-full transition-all duration-500"
+                              className="bg-gradient-to-br from-blue-500 to-purple-600 h-2 rounded-full transition-all duration-500"
                               style={{ width: `${item.progress}%` }}
                             ></div>
                           </div>
