@@ -48,7 +48,7 @@ const EventFilters = ({ filters, onFiltersChange, eventCount }) => {
           <select
             value={filters.category}
             onChange={(e) => onFiltersChange({ ...filters, category: e.target.value })}
-            className="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full p-3 text-gray-700 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           >
             {categories.map(category => (
               <option key={category.value} value={category.value}>
@@ -107,7 +107,7 @@ const EventFilters = ({ filters, onFiltersChange, eventCount }) => {
           <select
             value={filters.level}
             onChange={(e) => onFiltersChange({ ...filters, level: e.target.value })}
-            className="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full p-3 text-gray-700 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           >
             {levels.map(level => (
               <option key={level.value} value={level.value}>
@@ -126,7 +126,7 @@ const EventFilters = ({ filters, onFiltersChange, eventCount }) => {
           <select
             value={filters.type}
             onChange={(e) => onFiltersChange({ ...filters, type: e.target.value })}
-            className="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full p-3 text-gray-700 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           >
             {types.map(type => (
               <option key={type.value} value={type.value}>
