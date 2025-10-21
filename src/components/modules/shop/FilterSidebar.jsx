@@ -1,15 +1,18 @@
 "use client";
 
 import { FaTimes, FaFilter } from "react-icons/fa";
+import { useTranslation } from "react-i18next";
 
 const FilterSidebar = ({ isOpen, onClose, filters, onFiltersChange, productCount }) => {
+  const { t } = useTranslation();
+
   const categories = [
-    { value: "all", label: "All Categories", count: 0 },
-    { value: "electronics", label: "Electronics", count: 5 },
-    { value: "clothing", label: "Clothing", count: 3 },
-    { value: "accessories", label: "Accessories", count: 2 },
-    { value: "sports", label: "Sports", count: 1 },
-    { value: "home", label: "Home & Garden", count: 0 },
+    { value: "all", label: t("shop.filters.allCategories"), count: 0 },
+    { value: "electronics", label: t("shop.filters.electronics"), count: 5 },
+    { value: "clothing", label: t("shop.filters.clothing"), count: 3 },
+    { value: "accessories", label: t("shop.filters.accessories"), count: 2 },
+    { value: "sports", label: t("shop.filters.sports"), count: 1 },
+    { value: "home", label: t("shop.filters.homeGarden"), count: 0 },
   ];
 
   const handleCategoryChange = (value) => {
@@ -36,7 +39,7 @@ const FilterSidebar = ({ isOpen, onClose, filters, onFiltersChange, productCount
     return null;
 
   return (
-    <>
+    <section>
       {/* Overlay for mobile/tablet */}
       {isOpen && (
         <div
@@ -59,7 +62,9 @@ const FilterSidebar = ({ isOpen, onClose, filters, onFiltersChange, productCount
         <div className="flex items-center justify-between border-b border-gray-200 p-5 sm:p-6 bg-white">
           <div className="flex items-center gap-2">
             <FaFilter className="text-blue-600" />
-            <h3 className="text-lg font-semibold text-gray-800">Filters</h3>
+            <h3 className="text-lg font-semibold text-gray-800">
+              {t("shop.filters.title")}
+            </h3>
           </div>
           <button
             onClick={onClose}
@@ -73,12 +78,14 @@ const FilterSidebar = ({ isOpen, onClose, filters, onFiltersChange, productCount
         <div className="h-[calc(100vh-64px)] overflow-y-scroll p-5 sm:p-6 no-scrollbar">
           {/* Results Count */}
           <div className="mb-6 rounded-lg bg-blue-50 p-4 text-sm text-blue-800">
-            Showing <span className="font-semibold">{productCount}</span> products
+            {t("shop.filters.showingResults", { count: productCount })}
           </div>
 
           {/* Categories */}
           <div className="mb-8">
-            <h4 className="mb-4 font-semibold text-gray-800">Categories</h4>
+            <h4 className="mb-4 font-semibold text-gray-800">
+              {t("shop.filters.categories")}
+            </h4>
             <div className="space-y-2">
               {categories.map((category) => (
                 <button
@@ -103,7 +110,9 @@ const FilterSidebar = ({ isOpen, onClose, filters, onFiltersChange, productCount
 
           {/* Price Range */}
           <div className="mb-8">
-            <h4 className="mb-4 font-semibold text-gray-800">Price Range</h4>
+            <h4 className="mb-4 font-semibold text-gray-800">
+              {t("shop.filters.priceRange")}
+            </h4>
             <div className="space-y-4">
               <div className="flex items-center justify-between text-sm text-gray-600">
                 <span>${filters.priceRange[0]}</span>
@@ -135,7 +144,7 @@ const FilterSidebar = ({ isOpen, onClose, filters, onFiltersChange, productCount
                   }}
                   className="flex-1 rounded-lg border border-gray-300 px-3 py-2 text-sm hover:border-blue-500 hover:bg-blue-50 transition-colors"
                 >
-                  Under $50
+                  {t("shop.filters.under50")}
                 </button>
                 <button
                   onClick={() => {
@@ -144,7 +153,7 @@ const FilterSidebar = ({ isOpen, onClose, filters, onFiltersChange, productCount
                   }}
                   className="flex-1 rounded-lg border border-gray-300 px-3 py-2 text-sm hover:border-blue-500 hover:bg-blue-50 transition-colors"
                 >
-                  $50-$200
+                  {t("shop.filters.fiftyTo200")}
                 </button>
               </div>
             </div>
@@ -152,7 +161,9 @@ const FilterSidebar = ({ isOpen, onClose, filters, onFiltersChange, productCount
 
           {/* Rating */}
           <div className="mb-8">
-            <h4 className="mb-4 font-semibold text-gray-800">Minimum Rating</h4>
+            <h4 className="mb-4 font-semibold text-gray-800">
+              {t("shop.filters.minimumRating")}
+            </h4>
             <div className="space-y-2">
               {[4, 3, 2, 1].map((rating) => (
                 <button
@@ -176,7 +187,7 @@ const FilterSidebar = ({ isOpen, onClose, filters, onFiltersChange, productCount
                       </span>
                     ))}
                   </div>
-                  <span>& Up</span>
+                  <span>{t("shop.filters.andUp")}</span>
                 </button>
               ))}
             </div>
@@ -196,7 +207,7 @@ const FilterSidebar = ({ isOpen, onClose, filters, onFiltersChange, productCount
             }}
             className="w-full rounded-xl border border-gray-300 py-3 font-semibold text-gray-700 transition-all hover:border-red-500 hover:text-red-600 hover:bg-red-50"
           >
-            Clear All Filters
+            {t("shop.filters.clearAll")}
           </button>
         </div>
       </div>
@@ -211,7 +222,7 @@ const FilterSidebar = ({ isOpen, onClose, filters, onFiltersChange, productCount
           scrollbar-width: none;
         }
       `}</style>
-    </>
+    </section>
   );
 };
 

@@ -13,7 +13,7 @@ export default function InstructorDashboard() {
   const user = useAuth();
 
   return (
-    <div className="p-4 md:p-6 bg-white min-h-screen text-[var(--color-text)]">
+    <section className="p-4 md:p-6 bg-white min-h-screen text-[var(--color-text)]">
       {/* Header */}
       <div className="mb-6">
         <h2 className="text-sm text-[var(--color-secondary)] font-semibold">Hi {user.name},</h2>
@@ -103,7 +103,7 @@ export default function InstructorDashboard() {
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 }
 

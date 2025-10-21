@@ -29,9 +29,7 @@ const EventListing = ({ events, onEventClick, onRegister, currentFeaturedId }) =
   }
 
   return (
-    <div>
-      {/* Events Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+      <section className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
         {events.map((event) => (
           <div
             key={event.id}
@@ -156,8 +154,7 @@ const EventListing = ({ events, onEventClick, onRegister, currentFeaturedId }) =
             </div>
           </div>
         ))}
-      </div>
-    </div>
+      </section>
   );
 };
 

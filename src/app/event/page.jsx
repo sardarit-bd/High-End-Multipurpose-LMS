@@ -83,27 +83,8 @@ const Event = () => {
     <>
       <Navbar />
       <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
-        {/* Hero Section with Gradient Background */}
-        {/* <EventHerosection
-          eventData={eventData}
-          countdown={countdown}
-          isLiked={isLiked}
-          setIsLiked={setIsLiked}
-          isBookmarked={isBookmarked}
-          setIsBookmarked={setIsBookmarked}
-          handleRegister={handleRegister}
-          shareEvent={shareEvent}
-        /> */}
 
         <EventsPage/>
-
-        {/* Event Details Section */}
-        {/* <EventDetailsSection
-          activeTab={activeTab}
-          setActiveTab={setActiveTab}
-          eventData={eventData}
-          handleRegister={handleRegister}
-        /> */}
 
         {/* Testimonials Section */}
         <EventTestimonialsSection/>

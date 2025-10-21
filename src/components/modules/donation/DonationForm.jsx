@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { FaCheck, FaCrown, FaHandHoldingUsd, FaHeart, FaLock, FaRocket } from "react-icons/fa";
 
@@ -9,10 +11,77 @@ const DonationForm = ({
     handleCustomAmount, 
     handleDonation, 
     isLoading,
-    selectedFundData
+    selectedFundData,
+    loading = false
 }) => {
+  
+  if (loading) {
+    return (
+      <div className="p-8 animate-pulse">
+        {/* Amount Selection Skeleton */}
+        <div className="mb-8">
+          <div className="flex items-center mb-6">
+            <div className="w-6 h-6 bg-gray-300 rounded mr-3"></div>
+            <div className="h-6 bg-gray-300 rounded w-48"></div>
+          </div>
+
+          {/* Quick Amount Options Skeleton */}
+          <div className="grid grid-cols-2 lg:grid-cols-5 gap-4 mb-6">
+            {[1, 2, 3, 4, 5].map((item) => (
+              <div key={item} className="p-4 rounded-2xl border-2 border-gray-200 bg-gray-50">
+                <div className="h-6 bg-gray-300 rounded w-12 mx-auto"></div>
+              </div>
+            ))}
+          </div>
+
+          {/* Custom Amount Skeleton */}
+          <div className="mt-6">
+            <div className="h-6 bg-gray-300 rounded w-48 mb-3"></div>
+            <div className="h-12 bg-gray-300 rounded-2xl w-full"></div>
+          </div>
+        </div>
+
+        {/* Impact Examples Skeleton */}
+        <div className="mb-8 p-6 bg-gray-100 rounded-2xl border border-gray-200">
+          <div className="flex items-center mb-4">
+            <div className="w-5 h-5 bg-gray-400 rounded mr-2"></div>
+            <div className="h-6 bg-gray-400 rounded w-40"></div>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {[1, 2, 3, 4].map((item) => (
+              <div key={item} className="flex items-center space-x-3 p-3 bg-white rounded-xl border border-gray-200">
+                <div className="w-3 h-3 bg-gray-400 rounded-full"></div>
+                <div className="h-4 bg-gray-400 rounded w-32"></div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Security Info Skeleton */}
+        <div className="mb-8 p-6 bg-gray-100 rounded-2xl border border-gray-200">
+          <div className="flex items-center space-x-3 mb-3">
+            <div className="w-6 h-6 bg-gray-400 rounded"></div>
+            <div className="h-6 bg-gray-400 rounded w-40"></div>
+          </div>
+          <div className="h-4 bg-gray-400 rounded w-full"></div>
+        </div>
+
+        {/* Donate Button Skeleton */}
+        <div className="h-16 bg-gray-300 rounded-2xl w-full mb-8"></div>
+
+        {/* Trust Badges Skeleton */}
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+          {[1, 2, 3].map((item) => (
+            <div key={item} className="h-8 bg-gray-300 rounded-full w-24"></div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
   return (
     <form onSubmit={handleDonation} className="p-8">
+      {/* Your existing DonationForm content */}
       {/* Amount Selection */}
       <div className="mb-8">
         <label className="text-2xl font-bold text-gray-900 mb-6 flex items-center">

@@ -3,7 +3,7 @@ import { FaCheck, FaGem } from "react-icons/fa";
 
 const FundSelectionSidebar = ({selectedFund,setSelectedFund,isHovered,setIsHovered,funds}) => {
   return (
-    <div className="lg:col-span-1 space-y-6">
+    <section className="lg:col-span-1 space-y-6">
       <div className="bg-white rounded-3xl shadow-2xl p-8 sticky top-6 border border-gray-100">
         <h2 className="text-3xl font-bold text-gray-900 mb-8 flex items-center">
           <FaGem className="w-8 h-8 text-purple-500 mr-3" />
@@ -58,13 +58,7 @@ const FundSelectionSidebar = ({selectedFund,setSelectedFund,isHovered,setIsHover
           })}
         </div>
       </div>
-
-      {/* Trust Indicators */}
-      {/* <div className="bg-gradient-to-r from-blue-500 to-purple-600 rounded-3xl p-6 text-white text-center">
-                    <h3 className="font-bold text-lg mb-2">100% Secure</h3>
-                    <p className="text-sm text-blue-100 opacity-90">Bank-level encryption & transparent fund allocation</p>
-                  </div> */}
-    </div>
+    </section>
   );
 };
 

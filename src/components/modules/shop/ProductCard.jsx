@@ -36,7 +36,7 @@ const ProductCard = ({ product, onAddToCart }) => {
   };
 
   return (
-    <>
+    <section>
       <div
         className="group relative overflow-hidden rounded-2xl bg-white shadow-lg transition-all duration-300 hover:shadow-2xl"
         onMouseEnter={() => setIsHovered(true)}
@@ -307,7 +307,7 @@ const ProductCard = ({ product, onAddToCart }) => {
           </div>
         </div>
       )}
-    </>
+    </section>
   );
 };
 

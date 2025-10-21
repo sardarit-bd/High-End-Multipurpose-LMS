@@ -7,6 +7,7 @@ import CheckoutModal from "@/components/modules/shop/CheckoutModal";
 import FilterSidebar from "@/components/modules/shop/FilterSidebar";
 import ProductGrid from "@/components/modules/shop/ProductGrid";
 import ShopHero from "@/components/modules/shop/ShopHero";
+import ShopSkeleton from "@/components/modules/shop/ShopSkeleton";
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { FaCartPlus, FaFilter } from "react-icons/fa";
@@ -41,7 +42,7 @@ const Shop = () => {
         price: 99.99,
         originalPrice: 129.99,
         image:
-          "https://res.cloudinary.com/dfq6dppjb/image/upload/v1760857947/1_rss07c.png", // main image
+          "https://res.cloudinary.com/dfq6dppjb/image/upload/v1760857947/1_rss07c.png",
         images: [
           "https://res.cloudinary.com/dfq6dppjb/image/upload/v1760857947/1_rss07c.png",
           "https://res.cloudinary.com/dfq6dppjb/image/upload/v1760857948/1b_alt.png",
@@ -154,12 +155,15 @@ const Shop = () => {
       },
     ];
 
-    setProducts(sampleProducts);
-    setFilteredProducts(sampleProducts);
-    setLoading(false);
+    // Simulate loading delay
+    setTimeout(() => {
+      setProducts(sampleProducts);
+      setFilteredProducts(sampleProducts);
+      setLoading(false);
+    }, 1500);
   }, []);
 
-   // Filter products
+  // Filter products
   useEffect(() => {
     let filtered = [...products];
 
@@ -255,7 +259,11 @@ const Shop = () => {
     return cart.reduce((count, item) => count + item.quantity, 0);
   };
 
- return (
+  if (loading) {
+    return <ShopSkeleton />;
+  }
+
+  return (
     <>
       <Navbar />
 

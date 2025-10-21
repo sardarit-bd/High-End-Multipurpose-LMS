@@ -22,6 +22,7 @@ import Filters from '@/components/modules/leaderboard/Filters';
 import RankCard from '@/components/modules/leaderboard/RankCard';
 import LeaderboardTable from '@/components/modules/leaderboard/LeaderboardTable';
 import InfoCard from '@/components/modules/leaderboard/InfoCard';
+import LeaderboardSkeleton from '@/components/modules/leaderboard/LeaderboardSkeleton';
 
 const Leaderboard = () => {
   const [activeCategory, setActiveCategory] = useState('global');
@@ -29,6 +30,7 @@ const Leaderboard = () => {
   const [leaderboardData, setLeaderboardData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [userRank, setUserRank] = useState(null);
+  const [pageLoading, setPageLoading] = useState(true);
 
   // Mock data - Firebase theke replace korbe
   const mockLeaderboardData = {
@@ -84,12 +86,12 @@ const Leaderboard = () => {
   };
 
   useEffect(() => {
-    // Simulate API call
     setTimeout(() => {
       setLeaderboardData(mockLeaderboardData[activeCategory]);
       setUserRank({ rank: 15, name: "YourProfile", points: 6500, progress: 50 });
       setLoading(false);
-    }, 1500);
+      setPageLoading(false);
+    });
   }, [activeCategory]);
 
   const handleRefresh = () => {
@@ -121,24 +123,8 @@ const Leaderboard = () => {
     return points.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   };
 
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-green-50 flex items-center justify-center">
-        <div className="text-center">
-          <div className="relative">
-            <FaTrophy className="w-16 h-16 text-green-500 animate-bounce mx-auto mb-4" />
-            <div className="absolute -top-2 -right-2">
-              <div className="w-8 h-8 bg-blue-400 rounded-full flex items-center justify-center animate-pulse">
-                <FaChartLine className="w-4 h-4 text-white" />
-              </div>
-            </div>
-          </div>
-          <h3 className="text-2xl font-bold text-gray-700 mb-2">Loading Leaderboard</h3>
-          <p className="text-gray-500">Fetching latest rankings...</p>
-          <div className="mt-4 w-24 h-1 bg-gradient-to-r from-green-400 to-blue-400 rounded-full mx-auto animate-pulse"></div>
-        </div>
-      </div>
-    );
+  if (pageLoading) {
+    return <LeaderboardSkeleton />;
   }
 
   return (
@@ -175,6 +161,7 @@ const Leaderboard = () => {
             getRankIcon={getRankIcon}
             formatPoints={formatPoints}
             badges={badges}
+            loading={loading}
           />
           {/* Info Section */}
           <InfoCard/>

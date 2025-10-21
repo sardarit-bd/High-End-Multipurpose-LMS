@@ -3,7 +3,7 @@ import { FaGamepad, FaRocket } from "react-icons/fa";
 
 const GameHeroSection = ({gameStats}) => {
   return (
-    <div className="relative bg-gradient-to-br from-blue-500 to-purple-600 text-white overflow-hidden">
+    <section className="relative bg-gradient-to-br from-blue-500 to-purple-600 text-white overflow-hidden">
       <div className="absolute inset-0 bg-black opacity-10"></div>
       <div className="absolute top-0 right-0 w-72 h-72 bg-white opacity-5 rounded-full -translate-y-36 translate-x-36"></div>
       <div className="absolute bottom-0 left-0 w-56 h-56 bg-white opacity-5 rounded-full translate-y-28 -translate-x-28"></div>
@@ -60,7 +60,7 @@ const GameHeroSection = ({gameStats}) => {
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

@@ -15,7 +15,7 @@ export function DashboardSidebar() {
     const sidebarNavItems = getDashboardSideMenu(user?.role);
 
     return (
-        <>
+        <section>
             {/* Desktop Sidebar */}
             <aside className="hidden md:flex flex-col bg-[var(--color-background)] text-[var(--color-text)] border-r border-gray-200 min-h-screen w-[220px] shadow-sm">
                 <div className="flex items-center justify-center h-16 border-b border-gray-200 font-semibold text-lg">
@@ -60,6 +60,6 @@ export function DashboardSidebar() {
                     <Menu size={22} />
                 </button>
             </div>
-        </>
+        </section>
     );
 }

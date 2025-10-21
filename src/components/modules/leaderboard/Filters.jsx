@@ -4,7 +4,7 @@ import {FaSyncAlt,FaChartLine} from 'react-icons/fa';
 
 const Filters = ({ categories, activeCategory, setActiveCategory, timeframes, activeTimeframe, setActiveTimeframe, handleRefresh, loading }) => {
     return (
-        <div className="bg-white rounded-3xl shadow-2xl p-8 border border-gray-100 mb-8">
+        <section className="bg-white rounded-3xl shadow-2xl p-8 border border-gray-100 mb-8">
             <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 mb-6">
                 <div className="flex-1">
                     <h2 className="text-3xl font-bold text-gray-900 mb-2 flex items-center">
@@ -74,7 +74,7 @@ const Filters = ({ categories, activeCategory, setActiveCategory, timeframes, ac
                     );
                 })}
             </div>
-        </div>
+        </section>
     )
 }
 

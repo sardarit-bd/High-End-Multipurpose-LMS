@@ -3,7 +3,7 @@ import { FaHandshake, FaRocket } from "react-icons/fa";
 
 const SponsorHeroSection = () => {
   return (
-    <div className="relative bg-gradient-to-r from-slate-900 via-blue-900 to-purple-900 text-white overflow-hidden">
+    <section className="relative bg-gradient-to-r from-slate-900 via-blue-900 to-purple-900 text-white overflow-hidden">
       <div className="absolute inset-0 bg-black opacity-20"></div>
       <div className="absolute top-0 right-0 w-64 h-64 bg-white opacity-5 rounded-full -translate-y-32 translate-x-32"></div>
       <div className="absolute bottom-0 left-0 w-48 h-48 bg-white opacity-5 rounded-full translate-y-24 -translate-x-24"></div>
@@ -52,7 +52,7 @@ const SponsorHeroSection = () => {
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

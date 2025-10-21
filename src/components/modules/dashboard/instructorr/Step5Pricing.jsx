@@ -7,7 +7,7 @@ export default function Step5Pricing() {
   const updatePricing = useCourseStore((s) => s.updatePricing);
 
   return (
-    <div className="space-y-4">
+    <section className="space-y-4">
       <h3 className="text-lg font-semibold">Pricing</h3>
 
       <div>
@@ -61,6 +61,6 @@ export default function Step5Pricing() {
           </div>
         )}
       </div>
-    </div>
+    </section>
   );
 }

@@ -41,7 +41,7 @@ export default function GameCard({ game, onPlay }) {
   };
 
   return (
-    <div className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 border border-gray-200 hover:border-blue-300 group">
+    <section className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 border border-gray-200 hover:border-blue-300 group">
       {/* Game Thumbnail */}
       <div className="relative h-48 bg-gradient-to-br from-gray-100 to-gray-300 overflow-hidden">
         {!imageError ? (
@@ -104,6 +104,6 @@ export default function GameCard({ game, onPlay }) {
           <span>{buttonConfig.text}</span>
         </button>
       </div>
-    </div>
+    </section>
   );
 }

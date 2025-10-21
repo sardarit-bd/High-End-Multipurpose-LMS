@@ -10,6 +10,7 @@ import FundSelectionSidebar from '@/components/modules/donation/FundSelectionSid
 import SelectedFundHeader from '@/components/modules/donation/SelectedFundHeader';
 import DonationForm from '@/components/modules/donation/DonationForm';
 import DonationInfo from '@/components/modules/donation/DonationInfo';
+import DonationSkeleton from '@/components/modules/donation/DonationSkeleton';
 
 const Donation = () => {
   const [selectedFund, setSelectedFund] = useState('sdg-projects');
@@ -17,6 +18,7 @@ const Donation = () => {
   const [customAmount, setCustomAmount] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isHovered, setIsHovered] = useState(null);
+  const [pageLoading, setPageLoading] = useState(true);
 
   const donationOptions = [
     { value: '50', label: '$50', popular: false },
@@ -77,6 +79,15 @@ const Donation = () => {
     }
   ];
 
+  // Simulate page loading
+  React.useEffect(() => {
+    const timer = setTimeout(() => {
+      setPageLoading(false);
+    }, 2000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
   const selectedFundData = funds.find(fund => fund.id === selectedFund);
 
   const handleAmountSelect = (amount) => {
@@ -122,8 +133,12 @@ const Donation = () => {
     }
   };
 
-  const totalDonations = 287500; // Updated to USD
-  const donorsCount = 456; // Updated count
+  const totalDonations = 287500;
+  const donorsCount = 456;
+
+  if (pageLoading) {
+    return <DonationSkeleton />;
+  }
 
   return (
     <>

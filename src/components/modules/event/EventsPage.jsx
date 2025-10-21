@@ -4,11 +4,11 @@ import React, { useState, useEffect } from 'react';
 import EventFilters from './EventFilters';
 import EventListing from './EventListing';
 import EventHerosection from './EventHerosection';
-// import EventHerosection from '@/components/modules/events/EventHerosection';
-// import EventListing from '@/components/modules/events/EventListing';
-// import EventFilters from '@/components/modules/events/EventFilters';
+import EventSkeleton from './EventSkeleton';
+import { useTranslation } from 'react-i18next';
 
 const EventsPage = () => {
+  const { t } = useTranslation();
   const [currentEventIndex, setCurrentEventIndex] = useState(0);
   const [isLiked, setIsLiked] = useState(false);
   const [isBookmarked, setIsBookmarked] = useState(false);
@@ -20,6 +20,7 @@ const EventsPage = () => {
     level: 'all',
     type: 'all'
   });
+  const [loading, setLoading] = useState(true);
 
   // All events data
   const allEventsData = [
@@ -224,6 +225,15 @@ const EventsPage = () => {
     seconds: 30
   };
 
+  // Simulate loading
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 2000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
   // Filter events based on filters
   useEffect(() => {
     let filtered = [...allEventsData];
@@ -260,13 +270,11 @@ const EventsPage = () => {
 
   const handleRegister = (event) => {
     console.log("Registering for:", event.title);
-    // Your registration logic here
     alert(`Registering for: ${event.title}`);
   };
 
   const shareEvent = (event) => {
     console.log("Sharing event:", event.title);
-    // Your share logic here
     if (navigator.share) {
       navigator.share({
         title: event.title,
@@ -282,37 +290,25 @@ const EventsPage = () => {
     const index = allEventsData.findIndex(event => event.id === eventId);
     if (index !== -1) {
       setCurrentEventIndex(index);
-      // Scroll to top
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
 
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
-      {/* Hero Section with Featured Event */}
-      {/* <EventHerosection
-        eventsData={allEventsData}
-        currentEventIndex={currentEventIndex}
-        setCurrentEventIndex={setCurrentEventIndex}
-        countdown={countdown}
-        isLiked={isLiked}
-        setIsLiked={setIsLiked}
-        isBookmarked={isBookmarked}
-        setIsBookmarked={setIsBookmarked}
-        handleRegister={handleRegister}
-        shareEvent={shareEvent}
-      /> */}
+  if (loading) {
+    return <EventSkeleton />;
+  }
 
+  return (
+    <section className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
       {/* All Events Section */}
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-4xl font-bold text-gray-800 mb-4">
-              Explore All <span className="text-blue-600">Events</span>
+              {t("events.page.title")} <span className="text-blue-600">{t("events.page.highlighted")}</span>
             </h2>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Discover amazing events across various categories and levels. 
-              Find the perfect event to enhance your skills and network.
+              {t("events.page.description")}
             </p>
           </div>
 
@@ -343,17 +339,17 @@ const EventsPage = () => {
       <section className="py-16 bg-gradient-to-r from-blue-600 to-purple-600">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-4xl font-bold text-white mb-4">
-            Ready to Transform Your Skills?
+            {t("events.page.cta.title")}
           </h2>
           <p className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
-            Join thousands of professionals who have already transformed their careers through our events.
+            {t("events.page.cta.description")}
           </p>
           <button className="bg-white text-blue-600 px-8 py-4 rounded-full font-bold text-lg hover:bg-gray-100 transition-colors">
-            View All Upcoming Events
+            {t("events.page.cta.button")}
           </button>
         </div>
       </section>
-    </div>
+    </section>
   );
 };
 

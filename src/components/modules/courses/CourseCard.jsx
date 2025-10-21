@@ -8,7 +8,7 @@ export default function CourseCard({ course }) {
     const { t } = useTranslation();
 
     return (
-        <div className="relative bg-white shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden h-[420px] w-full flex flex-col">
+        <section className="relative bg-white shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden h-[420px] w-full flex flex-col">
             {/* Image + Category Badge */}
             <div className="relative">
                 <img
@@ -76,6 +76,6 @@ export default function CourseCard({ course }) {
                     {t("courses.exploreCourse") || "Explore Course"}
                 </Link>
             </div>
-        </div>
+        </section>
     )
 }

@@ -3,7 +3,7 @@ import { FaGem, FaHeart } from "react-icons/fa";
 
 const DonationInfo = () => {
   return (
-    <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+    <section className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
       <div className="bg-white p-8 rounded-3xl shadow-xl border border-gray-100">
         <h3 className="font-bold text-xl text-gray-900 mb-4 flex items-center">
           <FaHeart className="w-6 h-6 text-red-500 mr-3" />
@@ -53,7 +53,7 @@ const DonationInfo = () => {
           </li>
         </ul>
       </div>
-    </div>
+    </section>
   );
 };
 
