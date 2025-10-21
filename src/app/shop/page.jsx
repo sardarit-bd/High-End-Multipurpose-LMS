@@ -9,7 +9,7 @@ import ProductGrid from "@/components/modules/shop/ProductGrid";
 import ShopHero from "@/components/modules/shop/ShopHero";
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { FaCartPlus } from "react-icons/fa";
+import { FaCartPlus, FaFilter } from "react-icons/fa";
 
 const Shop = () => {
   const { t } = useTranslation();
@@ -159,7 +159,7 @@ const Shop = () => {
     setLoading(false);
   }, []);
 
-  // Filter products
+   // Filter products
   useEffect(() => {
     let filtered = [...products];
 
@@ -255,18 +255,9 @@ const Shop = () => {
     return cart.reduce((count, item) => count + item.quantity, 0);
   };
 
-  return (
+ return (
     <>
       <Navbar />
-
-      {/* Cart Icon */}
-      <button
-        onClick={() => setIsCartOpen(true)}
-        className="fixed top-24 right-6 z-50 flex items-center gap-2 rounded-full bg-blue-600 px-4 py-3 text-white shadow-lg transition-all hover:bg-blue-700 hover:shadow-xl"
-      >
-        <FaCartPlus />
-        <span className="font-semibold">{getCartItemCount()}</span>
-      </button>
 
       <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
         {/* Hero Section */}
@@ -300,6 +291,9 @@ const Shop = () => {
                   onAddToCart={addToCart}
                   filters={filters}
                   onFiltersChange={setFilters}
+                  onOpenFilters={() => setIsFilterOpen(true)}
+                  getCartItemCount={getCartItemCount}
+                  setIsCartOpen={setIsCartOpen}
                 />
               </div>
             </div>
@@ -326,7 +320,7 @@ const Shop = () => {
           onClose={() => setIsCheckoutOpen(false)}
           cart={cart}
           total={getCartTotal()}
-          clearCart
+          clearCart={clearCart}
         />
       </div>
       <Footer />

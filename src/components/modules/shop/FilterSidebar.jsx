@@ -12,22 +12,38 @@ const FilterSidebar = ({ isOpen, onClose, filters, onFiltersChange, productCount
     { value: "home", label: "Home & Garden", count: 0 },
   ];
 
-  const handlePriceChange = (min, max) => {
-    onFiltersChange({
-      ...filters,
-      priceRange: [min, max],
-    });
+  const handleCategoryChange = (value) => {
+    onFiltersChange({ ...filters, category: value });
+    autoCloseOnMobile();
   };
 
-  if (!isOpen) return null;
+  const handleRatingChange = (rating) => {
+    onFiltersChange({ ...filters, rating });
+    autoCloseOnMobile();
+  };
+
+  // only auto-close on mobile/tablet
+  const autoCloseOnMobile = () => {
+    if (typeof window !== "undefined" && window.innerWidth < 1024) {
+      setTimeout(() => {
+        onClose();
+      }, 200);
+    }
+  };
+
+  // show always on desktop
+  if (!isOpen && typeof window !== "undefined" && window.innerWidth < 1024)
+    return null;
 
   return (
     <>
-      {/* Overlay (below sidebar but above content) */}
-      <div
-        className="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm lg:hidden"
-        onClick={onClose}
-      />
+      {/* Overlay for mobile/tablet */}
+      {isOpen && (
+        <div
+          className="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm lg:hidden"
+          onClick={onClose}
+        />
+      )}
 
       {/* Sidebar */}
       <div
@@ -35,26 +51,26 @@ const FilterSidebar = ({ isOpen, onClose, filters, onFiltersChange, productCount
           fixed inset-y-0 left-0 z-50 h-screen w-72 sm:w-80 bg-white shadow-2xl
           transition-transform duration-300 ease-in-out
           ${isOpen ? "translate-x-0" : "-translate-x-full"}
-          lg:static lg:z-auto lg:w-64 lg:h-auto lg:translate-x-0 lg:shadow-lg
+          lg:static lg:z-auto lg:w-64 lg:h-[1050px] lg:translate-x-0 lg:shadow-lg
+          overflow-hidden
         `}
       >
         {/* Header */}
-        <div className="flex items-center justify-between border-b border-gray-200 p-5 sm:p-6 relative z-[60] bg-white">
+        <div className="flex items-center justify-between border-b border-gray-200 p-5 sm:p-6 bg-white">
           <div className="flex items-center gap-2">
             <FaFilter className="text-blue-600" />
             <h3 className="text-lg font-semibold text-gray-800">Filters</h3>
           </div>
           <button
-            type="button"
             onClick={onClose}
-            className="rounded-full p-2 text-gray-500 hover:bg-gray-100 lg:hidden focus:outline-none focus:ring-2 focus:ring-blue-500 z-[70]"
+            className="lg:hidden rounded-full p-2 text-gray-500 hover:bg-gray-100"
           >
             <FaTimes size={18} />
           </button>
         </div>
 
-        {/* Scrollable content */}
-        <div className="h-[calc(100vh-64px)] overflow-y-scroll lg:overflow-y-auto p-5 sm:p-6">
+        
+        <div className="h-[calc(100vh-64px)] overflow-y-scroll p-5 sm:p-6 no-scrollbar">
           {/* Results Count */}
           <div className="mb-6 rounded-lg bg-blue-50 p-4 text-sm text-blue-800">
             Showing <span className="font-semibold">{productCount}</span> products
@@ -67,9 +83,7 @@ const FilterSidebar = ({ isOpen, onClose, filters, onFiltersChange, productCount
               {categories.map((category) => (
                 <button
                   key={category.value}
-                  onClick={() =>
-                    onFiltersChange({ ...filters, category: category.value })
-                  }
+                  onClick={() => handleCategoryChange(category.value)}
                   className={`flex w-full items-center justify-between rounded-lg px-3 py-2 text-left transition-all ${
                     filters.category === category.value
                       ? "bg-blue-100 text-blue-600"
@@ -95,6 +109,7 @@ const FilterSidebar = ({ isOpen, onClose, filters, onFiltersChange, productCount
                 <span>${filters.priceRange[0]}</span>
                 <span>${filters.priceRange[1]}</span>
               </div>
+
               <input
                 type="range"
                 min="0"
@@ -102,20 +117,32 @@ const FilterSidebar = ({ isOpen, onClose, filters, onFiltersChange, productCount
                 step="10"
                 value={filters.priceRange[1]}
                 onChange={(e) =>
-                  handlePriceChange(filters.priceRange[0], parseInt(e.target.value))
+                  onFiltersChange({
+                    ...filters,
+                    priceRange: [filters.priceRange[0], parseInt(e.target.value)],
+                  })
                 }
-                className="w-full accent-blue-600"
+                onMouseUp={autoCloseOnMobile}
+                onTouchEnd={autoCloseOnMobile}
+                className="w-full h-2 bg-blue-100 rounded-lg appearance-none cursor-pointer accent-blue-600"
               />
+
               <div className="flex flex-wrap gap-2">
                 <button
-                  onClick={() => handlePriceChange(0, 50)}
-                  className="flex-1 rounded-lg border border-gray-300 px-3 py-2 text-sm hover:border-blue-500"
+                  onClick={() => {
+                    onFiltersChange({ ...filters, priceRange: [0, 50] });
+                    autoCloseOnMobile();
+                  }}
+                  className="flex-1 rounded-lg border border-gray-300 px-3 py-2 text-sm hover:border-blue-500 hover:bg-blue-50 transition-colors"
                 >
                   Under $50
                 </button>
                 <button
-                  onClick={() => handlePriceChange(50, 200)}
-                  className="flex-1 rounded-lg border border-gray-300 px-3 py-2 text-sm hover:border-blue-500"
+                  onClick={() => {
+                    onFiltersChange({ ...filters, priceRange: [50, 200] });
+                    autoCloseOnMobile();
+                  }}
+                  className="flex-1 rounded-lg border border-gray-300 px-3 py-2 text-sm hover:border-blue-500 hover:bg-blue-50 transition-colors"
                 >
                   $50-$200
                 </button>
@@ -130,7 +157,7 @@ const FilterSidebar = ({ isOpen, onClose, filters, onFiltersChange, productCount
               {[4, 3, 2, 1].map((rating) => (
                 <button
                   key={rating}
-                  onClick={() => onFiltersChange({ ...filters, rating })}
+                  onClick={() => handleRatingChange(rating)}
                   className={`flex w-full items-center gap-3 rounded-lg px-3 py-2 text-left transition-all ${
                     filters.rating === rating
                       ? "bg-blue-100 text-blue-600"
@@ -157,21 +184,33 @@ const FilterSidebar = ({ isOpen, onClose, filters, onFiltersChange, productCount
 
           {/* Clear Filters */}
           <button
-            onClick={() =>
+            onClick={() => {
               onFiltersChange({
                 category: "all",
                 priceRange: [0, 1000],
                 rating: 0,
                 sortBy: "featured",
                 search: "",
-              })
-            }
-            className="w-full rounded-xl border border-gray-300 py-3 font-semibold text-gray-700 transition-all hover:border-red-500 hover:text-red-600"
+              });
+              autoCloseOnMobile();
+            }}
+            className="w-full rounded-xl border border-gray-300 py-3 font-semibold text-gray-700 transition-all hover:border-red-500 hover:text-red-600 hover:bg-red-50"
           >
             Clear All Filters
           </button>
         </div>
       </div>
+
+      {/* Global CSS for hiding scrollbar */}
+      <style jsx global>{`
+        .no-scrollbar::-webkit-scrollbar {
+          display: none;
+        }
+        .no-scrollbar {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+      `}</style>
     </>
   );
 };
