@@ -36,7 +36,7 @@ const FilterSidebar = ({ isOpen, onClose, filters, onFiltersChange, productCount
     return null;
 
   return (
-    <>
+    <section>
       {/* Overlay for mobile/tablet */}
       {isOpen && (
         <div
@@ -211,7 +211,7 @@ const FilterSidebar = ({ isOpen, onClose, filters, onFiltersChange, productCount
           scrollbar-width: none;
         }
       `}</style>
-    </>
+    </section>
   );
 };
 

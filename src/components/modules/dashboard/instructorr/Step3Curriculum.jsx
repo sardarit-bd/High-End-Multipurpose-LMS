@@ -16,7 +16,7 @@ export default function Step3Curriculum() {
   const [currentTopicId, setCurrentTopicId] = useState(null);
 
   return (
-    <div className="space-y-4">
+    <section className="space-y-4">
       <div className="flex justify-between items-center">
         <h3 className="text-lg font-semibold">Curriculum</h3>
         <button onClick={() => setShowTopicModal(true)} className="bg-[var(--color-secondary)] text-white px-3 py-2 rounded text-sm flex items-center gap-2">
@@ -62,6 +62,6 @@ export default function Step3Curriculum() {
 
       {showTopicModal && <TopicModal onClose={() => setShowTopicModal(false)} />}
       {showLessonModal && <LessonModal onClose={() => setShowLessonModal(false)} topicId={currentTopicId} />}
-    </div>
+    </section>
   );
 }

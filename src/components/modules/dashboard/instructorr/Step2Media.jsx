@@ -15,7 +15,7 @@ export default function Step2Media() {
   }
 
   return (
-    <div className="space-y-4">
+    <section className="space-y-4">
       <h3 className="text-lg font-semibold mb-2">Course Media</h3>
       <p className="text-sm text-gray-500">Intro Course overview provider type. (mp4, YouTube, Vimeo etc.)</p>
 
@@ -66,6 +66,6 @@ export default function Step2Media() {
           )}
         </div>
       </div>
-    </div>
+    </section>
   );
 }

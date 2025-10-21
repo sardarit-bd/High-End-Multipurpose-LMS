@@ -2,6 +2,7 @@
 
 import { FaCartPlus, FaFilter } from "react-icons/fa";
 import ProductCard from "./ProductCard";
+import ProductCardSkeleton from "./ProductCardSkeleton";
 
 const ProductGrid = ({
   products,
@@ -15,15 +16,28 @@ const ProductGrid = ({
 }) => {
   if (loading) {
     return (
-      <div className="flex justify-center items-center py-20">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
-      </div>
+      <section>
+        <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex items-center gap-4">
+            <div className="h-8 bg-gray-300 rounded w-40 animate-pulse"></div>
+            <div className="h-10 bg-gray-300 rounded w-24 lg:hidden animate-pulse"></div>
+            <div className="h-12 bg-gray-300 rounded w-32 animate-pulse"></div>
+          </div>
+          <div className="h-10 bg-gray-300 rounded w-48 animate-pulse"></div>
+        </div>
+
+        {/* Products Grid Skeleton */}
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          {[1, 2, 3, 4, 5, 6, 7, 8].map((item) => (
+            <ProductCardSkeleton key={item} />
+          ))}
+        </div>
+      </section>
     );
   }
 
   return (
-    <div>
-      {/* Header with Sort and Results */}
+    <section>
       <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex items-center gap-4">
           <h2 className="text-2xl font-bold text-gray-800">
@@ -40,7 +54,7 @@ const ProductGrid = ({
           </button>
           <button
             onClick={() => setIsCartOpen(true)}
-            className=" flex items-center gap-2 rounded-md bg-blue-600 px-4 py-3 text-white shadow-lg transition-all hover:bg-blue-700 hover:shadow-xl"
+            className="flex items-center gap-2 rounded-md bg-blue-600 px-4 py-3 text-white shadow-lg transition-all hover:bg-blue-700 hover:shadow-xl"
           >
             <FaCartPlus />
             <span className="font-semibold">{getCartItemCount()}</span>
@@ -99,7 +113,7 @@ const ProductGrid = ({
           ))}
         </div>
       )}
-    </div>
+    </section>
   );
 };
 

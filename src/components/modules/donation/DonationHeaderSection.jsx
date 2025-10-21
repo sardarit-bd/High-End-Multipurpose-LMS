@@ -3,7 +3,7 @@ import { FaHeart, FaStar } from "react-icons/fa";
 
 const DonationHeaderSection = ({totalDonations,donorsCount}) => {
   return (
-    <div className="relative bg-gradient-to-r from-slate-900 via-blue-900 to-emerald-900 text-white overflow-hidden">
+    <section className="relative bg-gradient-to-r from-slate-900 via-blue-900 to-emerald-900 text-white overflow-hidden">
       <div className="absolute inset-0 bg-black opacity-20"></div>
       <div className="container mx-auto px-4 sm:px-6 py-20 relative">
         <div className="text-center">
@@ -49,7 +49,7 @@ const DonationHeaderSection = ({totalDonations,donorsCount}) => {
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

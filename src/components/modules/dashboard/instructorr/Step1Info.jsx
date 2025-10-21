@@ -11,7 +11,7 @@ export default function Step1Info() {
    console.log(useCourseStore());
 
   return (
-    <div className="space-y-4 text-[var(--color-text)]">
+    <section className="space-y-4 text-[var(--color-text)]">
       <h3 className="text-lg font-semibold mb-2">Basic Information</h3>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -105,6 +105,6 @@ export default function Step1Info() {
           </label>
         </div>
       </div>
-    </div>
+    </section>
   );
 }

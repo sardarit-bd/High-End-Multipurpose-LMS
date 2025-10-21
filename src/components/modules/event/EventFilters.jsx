@@ -29,7 +29,7 @@ const EventFilters = ({ filters, onFiltersChange, eventCount }) => {
   ];
 
   return (
-    <div className="bg-white rounded-2xl shadow-lg p-6 sticky top-24">
+    <section className="bg-white rounded-2xl shadow-lg p-6 sticky top-24">
       <div className="flex items-center gap-3 mb-6">
         <FaFilter className="text-blue-600 text-xl" />
         <h3 className="text-xl font-bold text-gray-800">Filters</h3>
@@ -150,7 +150,7 @@ const EventFilters = ({ filters, onFiltersChange, eventCount }) => {
           Clear All Filters
         </button>
       </div>
-    </div>
+    </section>
   );
 };
 

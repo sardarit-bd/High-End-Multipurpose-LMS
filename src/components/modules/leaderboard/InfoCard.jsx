@@ -3,7 +3,7 @@ import { FaAward, FaFire } from 'react-icons/fa'
 
 const InfoCard = () => {
     return (
-        <div className="mt-8 bg-white rounded-3xl p-8 border border-gray-100 shadow-xl">
+        <section className="mt-8 bg-white rounded-3xl p-8 border border-gray-100 shadow-xl">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div>
                     <h3 className="text-2xl font-bold text-gray-900 mb-4 flex items-center">
@@ -48,7 +48,7 @@ const InfoCard = () => {
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
     )
 }
 

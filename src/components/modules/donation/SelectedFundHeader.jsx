@@ -2,9 +2,7 @@ import React from "react";
 
 const SelectedFundHeader = ({selectedFundData}) => {
   return (
-    <div
-      className={`bg-gradient-to-r ${selectedFundData?.color} p-8 text-white relative overflow-hidden`}
-    >
+    <section className={`bg-gradient-to-r ${selectedFundData?.color} p-8 text-white relative overflow-hidden`}>
       <div className="absolute top-0 right-0 w-32 h-32 bg-white bg-opacity-10 rounded-full -translate-y-16 translate-x-16"></div>
       <div className="absolute bottom-0 left-0 w-24 h-24 bg-white bg-opacity-10 rounded-full translate-y-12 -translate-x-12"></div>
 
@@ -26,7 +24,7 @@ const SelectedFundHeader = ({selectedFundData}) => {
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

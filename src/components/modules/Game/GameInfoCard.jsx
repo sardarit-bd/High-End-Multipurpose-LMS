@@ -3,7 +3,7 @@ import { FaUsers } from "react-icons/fa";
 
 const GameInfoCard = () => {
   return (
-    <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-3xl p-10 border border-blue-200 shadow-xl">
+    <section className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-3xl p-10 border border-blue-200 shadow-xl">
       <div className="flex flex-col lg:flex-row items-start lg:items-center gap-8">
         <div className="flex-shrink-0">
           <div className="w-20 h-20 bg-gradient-to-r from-blue-500 to-purple-500 rounded-2xl flex items-center justify-center shadow-lg">
@@ -56,7 +56,7 @@ const GameInfoCard = () => {
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

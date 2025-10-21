@@ -14,7 +14,7 @@ const GameFilterSection = ({
     games
 }) => {
   return (
-    <div className="mb-12 bg-white rounded-3xl shadow-2xl p-8 border border-gray-100">
+    <section className="mb-12 bg-white rounded-3xl shadow-2xl p-8 border border-gray-100">
       <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 mb-6">
         <div className="flex-1">
           <h2 className="text-3xl font-bold text-gray-900 mb-4 flex items-center">
@@ -101,7 +101,7 @@ const GameFilterSection = ({
           </button>
         )}
       </div>
-    </div>
+    </section>
   );
 };
 

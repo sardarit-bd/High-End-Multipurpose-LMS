@@ -19,7 +19,7 @@ const chartData = [
 export default function HistoryChart() {
       const [activeTab, setActiveTab] = useState("Viewership");
     return (
-        <div className="bg-white rounded-[var(--radius-card)] shadow-sm p-4">
+        <section className="bg-white rounded-[var(--radius-card)] shadow-sm p-4">
             <div className="flex justify-between items-center mb-4">
                 <div className="flex space-x-4">
                     {["Viewership", "Subscribers", "Earning"].map((tab) => (
@@ -46,6 +46,6 @@ export default function HistoryChart() {
                     </BarChart>
                 </ResponsiveContainer>
             </div>
-        </div>
+        </section>
     )
 }

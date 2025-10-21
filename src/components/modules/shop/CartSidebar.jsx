@@ -6,7 +6,7 @@ const CartSidebar = ({ isOpen, onClose, cart, onUpdateQuantity, onRemoveFromCart
   if (!isOpen) return null;
 
   return (
-    <>
+    <section>
       {/* Overlay */}
       <div
         className="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm"
@@ -128,7 +128,7 @@ const CartSidebar = ({ isOpen, onClose, cart, onUpdateQuantity, onRemoveFromCart
           </div>
         )}
       </div>
-    </>
+    </section>
   );
 };
 

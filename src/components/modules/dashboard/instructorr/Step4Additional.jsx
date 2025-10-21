@@ -26,7 +26,7 @@ export default function Step4Additional() {
   }
 
   return (
-    <div className="space-y-4">
+    <section className="space-y-4">
       <h3 className="text-lg font-semibold">FAQ's</h3>
 
       <div className="space-y-3">
@@ -76,6 +76,6 @@ export default function Step4Additional() {
           <span className="text-sm"> Any images, sounds, or other assets that are not my own work, have been appropriately licensed...</span>
         </label>
       </div>
-    </div>
+    </section>
   );
 }

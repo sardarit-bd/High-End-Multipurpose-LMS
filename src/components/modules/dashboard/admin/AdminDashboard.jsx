@@ -20,7 +20,7 @@ export default function AdminDashboard() {
   ];
 
   return (
-    <div className="p-6 space-y-8 text-[var(--color-text)]">
+    <section className="p-6 space-y-8 text-[var(--color-text)]">
       {/* Header */}
       <h1 className="text-2xl font-bold text-[--color-text]">Admin Dashboard Overview</h1>
 
@@ -74,6 +74,6 @@ export default function AdminDashboard() {
           </ul>
         </div>
       </div>
-    </div>
+    </section>
   );
 }

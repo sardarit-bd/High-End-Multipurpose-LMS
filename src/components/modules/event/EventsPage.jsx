@@ -4,9 +4,8 @@ import React, { useState, useEffect } from 'react';
 import EventFilters from './EventFilters';
 import EventListing from './EventListing';
 import EventHerosection from './EventHerosection';
-// import EventHerosection from '@/components/modules/events/EventHerosection';
-// import EventListing from '@/components/modules/events/EventListing';
-// import EventFilters from '@/components/modules/events/EventFilters';
+import EventSkeleton from './EventSkeleton';
+// import EventSkeleton from './EventSkeleton';
 
 const EventsPage = () => {
   const [currentEventIndex, setCurrentEventIndex] = useState(0);
@@ -20,6 +19,7 @@ const EventsPage = () => {
     level: 'all',
     type: 'all'
   });
+  const [loading, setLoading] = useState(true);
 
   // All events data
   const allEventsData = [
@@ -224,6 +224,15 @@ const EventsPage = () => {
     seconds: 30
   };
 
+  // Simulate loading
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 2000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
   // Filter events based on filters
   useEffect(() => {
     let filtered = [...allEventsData];
@@ -260,13 +269,11 @@ const EventsPage = () => {
 
   const handleRegister = (event) => {
     console.log("Registering for:", event.title);
-    // Your registration logic here
     alert(`Registering for: ${event.title}`);
   };
 
   const shareEvent = (event) => {
     console.log("Sharing event:", event.title);
-    // Your share logic here
     if (navigator.share) {
       navigator.share({
         title: event.title,
@@ -282,13 +289,16 @@ const EventsPage = () => {
     const index = allEventsData.findIndex(event => event.id === eventId);
     if (index !== -1) {
       setCurrentEventIndex(index);
-      // Scroll to top
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
 
+  if (loading) {
+    return <EventSkeleton />;
+  }
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
+    <section className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
       {/* Hero Section with Featured Event */}
       {/* <EventHerosection
         eventsData={allEventsData}
@@ -353,7 +363,7 @@ const EventsPage = () => {
           </button>
         </div>
       </section>
-    </div>
+    </section>
   );
 };
 
