@@ -7,6 +7,7 @@ import EventHerosection from "@/components/modules/event/EventHerosection";
 import EventDetailsSection from "@/components/modules/event/EventDetailsSection";
 import EventTestimonialsSection from "@/components/modules/event/EventTestimonialsSection";
 import Footer from "@/components/modules/footers/Footer";
+import EventsPage from "@/components/modules/event/EventsPage";
 
 const Event = () => {
   const { t } = useTranslation();
@@ -94,13 +95,15 @@ const Event = () => {
           shareEvent={shareEvent}
         />
 
+        <EventsPage/>
+
         {/* Event Details Section */}
-        <EventDetailsSection
+        {/* <EventDetailsSection
           activeTab={activeTab}
           setActiveTab={setActiveTab}
           eventData={eventData}
           handleRegister={handleRegister}
-        />
+        /> */}
 
         {/* Testimonials Section */}
         <EventTestimonialsSection/>
