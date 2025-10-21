@@ -398,7 +398,157 @@ const resources = {
       "aboutHero.features.learnAnywhere.description": "Learning from anywhere has become a transform aspect of modern education, allowing individuals.",
       
       "aboutHero.features.expertMentors.title": "Expert Mentors",
-      "aboutHero.features.expertMentors.description": "Expert mentors are invaluable assets in any field, providing seasoned guidance and knowledge."
+      "aboutHero.features.expertMentors.description": "Expert mentors are invaluable assets in any field, providing seasoned guidance and knowledge.",
+      // Event Page Translations
+      "event.hero.title": "Digital Marketing Masterclass 2024",
+      "event.hero.location": "Online & In-person (Dhaka, Bangladesh)",
+      "event.hero.duration": "3 hours",
+      "event.hero.attendees": "1250",
+      "event.hero.price": "Free",
+      "event.hero.category": "Workshop",
+      "event.hero.organizer": "Tech Academy BD",
+      "event.hero.registerButton": "Register Now",
+      "event.hero.shareButton": "Share Event",
+      
+      // Events Page Translations
+      "events.page.title": "Explore All Events",
+      "events.page.highlighted": "Events",
+      "events.page.description": "Discover amazing events across various categories and levels. Find the perfect event to enhance your skills and network.",
+      "events.page.cta.title": "Ready to Transform Your Skills?",
+      "events.page.cta.description": "Join thousands of professionals who have already transformed their careers through our events.",
+      "events.page.cta.button": "View All Upcoming Events",
+      
+      // Event Categories
+      "events.categories.masterclass": "MASTERCLASS",
+      "events.categories.bootcamp": "BOOTCAMP",
+      "events.categories.conference": "CONFERENCE",
+      "events.categories.workshop": "WORKSHOP",
+      "events.categories.summit": "SUMMIT",
+      
+      // Event Status
+      "events.status.live": "LIVE",
+      "events.status.comingSoon": "COMING SOON",
+      "events.status.earlyBird": "EARLY BIRD",
+      
+      // Event Features
+      "events.features.practical": "Practical",
+      "events.features.interactive": "Interactive",
+      "events.features.networking": "Networking",
+      "events.features.resources": "Resources",
+      "events.features.handsOn": "Hands-on",
+      "events.features.projectBased": "Project-based",
+      "events.features.careerSupport": "Career Support",
+      "events.features.mobileFirst": "Mobile First",
+      "events.features.analytics": "Analytics",
+      "events.features.aiMl": "AI/ML",
+      "events.features.research": "Research",
+      "events.features.global": "Global",
+      "events.features.creative": "Creative",
+      "events.features.prototyping": "Prototyping",
+      "events.features.userResearch": "User Research",
+      "events.features.tools": "Tools",
+      "events.features.blockchain": "Blockchain",
+      "events.features.nft": "NFT",
+      "events.features.defi": "DeFi",
+      "events.features.web3": "Web3",
+      "events.features.writing": "Writing",
+      "events.features.seo": "SEO",
+      "events.features.video": "Video",
+      
+      // Event Types
+      "events.types.workshop": "Workshop",
+      "events.types.bootcamp": "Bootcamp",
+      "events.types.conference": "Conference",
+      "events.types.masterclass": "Masterclass",
+      
+      // Event Levels
+      "events.levels.beginner": "Beginner",
+      "events.levels.intermediate": "Intermediate",
+      "events.levels.advanced": "Advanced",
+      
+      // Testimonials
+      "events.testimonials.title": "What Attendees Say",
+      "events.testimonials.subtitle": "Join thousands of satisfied participants",
+      "events.testimonials.content": "This event transformed my approach to digital marketing. The speakers were incredible and the networking opportunities were absolutely priceless! I've already implemented strategies that boosted our ROI by 40%.",
+      
+      // Filter Labels
+      "events.filters.category": "Category",
+      "events.filters.priceRange": "Price Range",
+      "events.filters.date": "Date",
+      "events.filters.level": "Level",
+      "events.filters.type": "Type",
+      "events.filters.all": "All",
+      "events.filters.eventCount": "{{count}} events found",
+      
+      // Buttons and Actions
+      "events.actions.register": "Register",
+      "events.actions.share": "Share",
+      "events.actions.viewDetails": "View Details",
+      "events.actions.bookmark": "Bookmark",
+      "events.actions.like": "Like",
+
+      // Event Filters Translations
+      "events.filters.title": "Filters",
+      "events.filters.category": "Category",
+      "events.filters.priceRange": "Price Range",
+      "events.filters.date": "Date",
+      "events.filters.level": "Level",
+      "events.filters.type": "Type",
+      "events.filters.all": "All",
+      "events.filters.eventCount": "{{count}} events",
+      "events.filters.under50": "Under $50",
+      "events.filters.fiftyTo200": "$50-200",
+      "events.filters.clearAll": "Clear All Filters",
+
+      // Shop Hero Translations
+      "shop.hero.badge": "Knowledge Awaits",
+      "shop.hero.title": "Discover Your Next",
+      "shop.hero.highlighted": "Favorite Book",
+      "shop.hero.description": "Explore our vast collection of books across all genres. From bestsellers to hidden gems, find the perfect read for every taste and interest.",
+      "shop.hero.searchPlaceholder": "Search books, authors, or categories...",
+      "shop.hero.stats.books": "Books",
+      "shop.hero.stats.categories": "Categories",
+      "shop.hero.stats.free": "Free",
+      "shop.hero.stats.shipping": "Shipping",
+      "shop.hero.stats.support": "Support",
+      
+      // Filter Sidebar Translations
+      "shop.filters.title": "Filters",
+      "shop.filters.showingResults": "Showing {{count}} products",
+      "shop.filters.categories": "Categories",
+      "shop.filters.allCategories": "All Categories",
+      "shop.filters.electronics": "Electronics",
+      "shop.filters.clothing": "Clothing",
+      "shop.filters.accessories": "Accessories",
+      "shop.filters.sports": "Sports",
+      "shop.filters.homeGarden": "Home & Garden",
+      "shop.filters.priceRange": "Price Range",
+      "shop.filters.under50": "Under $50",
+      "shop.filters.fiftyTo200": "$50-$200",
+      "shop.filters.minimumRating": "Minimum Rating",
+      "shop.filters.andUp": "& Up",
+      "shop.filters.clearAll": "Clear All Filters",
+
+      "shop.productsTitle": "All Products",
+      "shop.noProducts.title": "No products found",
+      "shop.noProducts.subtitle": "Try adjusting your filters to find more products.",
+      "shop.sort.featured": "Featured",
+      "shop.sort.lowToHigh": "Price: Low to High",
+      "shop.sort.highToLow": "Price: High to Low",
+      "shop.sort.rating": "Highest Rated",
+      "shop.sort.nameAZ": "Name A-Z",
+      
+      "cart.title": "Shopping Cart",
+      "cart.emptyTitle": "Your cart is empty",
+      "cart.emptySubtitle": "Add some products to get started!",
+      "cart.continueShopping": "Continue Shopping",
+      "cart.remove": "Remove",
+      "cart.subtotal": "Subtotal",
+      "cart.shipping": "Shipping",
+      "cart.free": "Free",
+      "cart.total": "Total",
+      "cart.checkout": "Proceed to Checkout",
+
 
 
 
@@ -783,7 +933,159 @@ const resources = {
       "aboutHero.features.learnAnywhere.description": "Pembelajaran dari mana sahaja telah menjadi aspek transformasi pendidikan moden, membolehkan individu.",
       
       "aboutHero.features.expertMentors.title": "Mentor Pakar",
-      "aboutHero.features.expertMentors.description": "Mentor pakar adalah aset yang tidak ternilai dalam mana-mana bidang, memberikan bimbingan dan pengetahuan berpengalaman."
+      "aboutHero.features.expertMentors.description": "Mentor pakar adalah aset yang tidak ternilai dalam mana-mana bidang, memberikan bimbingan dan pengetahuan berpengalaman.",
+
+      // Event Page Malay Translations
+      "event.hero.title": "Kelas Induk Pemasaran Digital 2024",
+      "event.hero.location": "Dalam Talian & Bersemuka (Dhaka, Bangladesh)",
+      "event.hero.duration": "3 jam",
+      "event.hero.attendees": "1250",
+      "event.hero.price": "Percuma",
+      "event.hero.category": "Bengkel",
+      "event.hero.organizer": "Tech Academy BD",
+      "event.hero.registerButton": "Daftar Sekarang",
+      "event.hero.shareButton": "Kongsi Acara",
+      
+      // Events Page Malay Translations
+      "events.page.title": "Terokai Semua Acara",
+      "events.page.highlighted": "Acara",
+      "events.page.description": "Temui acara menakjubkan merentas pelbagai kategori dan peringkat. Cari acara yang sempurna untuk meningkatkan kemahiran dan rangkaian anda.",
+      "events.page.cta.title": "Bersedia untuk Mengubah Kemahiran Anda?",
+      "events.page.cta.description": "Sertai beribu-ribu profesional yang telah mengubah kerjaya mereka melalui acara kami.",
+      "events.page.cta.button": "Lihat Semua Acara Akan Datang",
+      
+      // Event Categories Malay
+      "events.categories.masterclass": "KELAS INDUK",
+      "events.categories.bootcamp": "BOOTCAMP",
+      "events.categories.conference": "KONFERENS",
+      "events.categories.workshop": "BENGKEL",
+      "events.categories.summit": "SUMMIT",
+      
+      // Event Status Malay
+      "events.status.live": "LIVE",
+      "events.status.comingSoon": "AKAN DATANG",
+      "events.status.earlyBird": "AWAL BIRD",
+      
+      // Event Features Malay
+      "events.features.practical": "Praktikal",
+      "events.features.interactive": "Interaktif",
+      "events.features.networking": "Rangkaian",
+      "events.features.resources": "Sumber",
+      "events.features.handsOn": "Hands-on",
+      "events.features.projectBased": "Berasaskan projek",
+      "events.features.careerSupport": "Sokongan Kerjaya",
+      "events.features.mobileFirst": "Mobile First",
+      "events.features.analytics": "Analitik",
+      "events.features.aiMl": "AI/ML",
+      "events.features.research": "Penyelidikan",
+      "events.features.global": "Global",
+      "events.features.creative": "Kreatif",
+      "events.features.prototyping": "Prototaip",
+      "events.features.userResearch": "Penyelidikan Pengguna",
+      "events.features.tools": "Alat",
+      "events.features.blockchain": "Blockchain",
+      "events.features.nft": "NFT",
+      "events.features.defi": "DeFi",
+      "events.features.web3": "Web3",
+      "events.features.writing": "Penulisan",
+      "events.features.seo": "SEO",
+      "events.features.video": "Video",
+      
+      // Event Types Malay
+      "events.types.workshop": "Bengkel",
+      "events.types.bootcamp": "Bootcamp",
+      "events.types.conference": "Konferens",
+      "events.types.masterclass": "Kelas Induk",
+      
+      // Event Levels Malay
+      "events.levels.beginner": "Pemula",
+      "events.levels.intermediate": "Pertengahan",
+      "events.levels.advanced": "Lanjutan",
+      
+      // Testimonials Malay
+      "events.testimonials.title": "Apa Kata Peserta",
+      "events.testimonials.subtitle": "Sertai beribu-ribu peserta yang berpuas hati",
+      "events.testimonials.content": "Acara ini mengubah pendekatan saya terhadap pemasaran digital. Pembicaranya luar biasa dan peluang rangkaian benar-benar tidak ternilai! Saya telah melaksanakan strategi yang meningkatkan ROI kami sebanyak 40%.",
+      
+      // Filter Labels Malay
+      "events.filters.category": "Kategori",
+      "events.filters.priceRange": "Julat Harga",
+      "events.filters.date": "Tarikh",
+      "events.filters.level": "Tahap",
+      "events.filters.type": "Jenis",
+      "events.filters.all": "Semua",
+      "events.filters.eventCount": "{{count}} acara ditemui",
+      
+      // Buttons and Actions Malay
+      "events.actions.register": "Daftar",
+      "events.actions.share": "Kongsi",
+      "events.actions.viewDetails": "Lihat Butiran",
+      "events.actions.bookmark": "Tanda Buku",
+      "events.actions.like": "Suka",
+
+       // Event Filters Malay Translations
+      "events.filters.title": "Penapis",
+      "events.filters.category": "Kategori",
+      "events.filters.priceRange": "Julat Harga",
+      "events.filters.date": "Tarikh",
+      "events.filters.level": "Tahap",
+      "events.filters.type": "Jenis",
+      "events.filters.all": "Semua",
+      "events.filters.eventCount": "{{count}} acara",
+      "events.filters.under50": "Bawah $50",
+      "events.filters.fiftyTo200": "$50-200",
+      "events.filters.clearAll": "Kosongkan Semua Penapis",
+
+      // Shop Hero Malay Translations
+      "shop.hero.badge": "Pengetahuan Menanti",
+      "shop.hero.title": "Temui Seterusnya Anda",
+      "shop.hero.highlighted": "Buku Kegemaran",
+      "shop.hero.description": "Terokai koleksi buku kami yang luas merentas semua genre. Dari buku terlaris kepada permata tersembunyi, cari bacaan yang sempurna untuk setiap citarasa dan minat.",
+      "shop.hero.searchPlaceholder": "Cari buku, pengarang, atau kategori...",
+      "shop.hero.stats.books": "Buku",
+      "shop.hero.stats.free": "Percuma",
+      "shop.hero.stats.categories": "Kategori",
+      "shop.hero.stats.shipping": "Penghantaran",
+      "shop.hero.stats.support": "Sokongan",
+      
+      // Filter Sidebar Malay Translations
+      "shop.filters.title": "Penapis",
+      "shop.filters.showingResults": "Menunjukkan {{count}} produk",
+      "shop.filters.categories": "Kategori",
+      "shop.filters.allCategories": "Semua Kategori",
+      "shop.filters.electronics": "Elektronik",
+      "shop.filters.clothing": "Pakaian",
+      "shop.filters.accessories": "Aksesori",
+      "shop.filters.sports": "Sukan",
+      "shop.filters.homeGarden": "Rumah & Taman",
+      "shop.filters.priceRange": "Julat Harga",
+      "shop.filters.under50": "Bawah $50",
+      "shop.filters.fiftyTo200": "$50-$200",
+      "shop.filters.minimumRating": "Rating Minimum",
+      "shop.filters.andUp": "& Ke Atas",
+      "shop.filters.clearAll": "Kosongkan Semua Penapis",
+
+      "shop.productsTitle": "Semua Produk",
+      "shop.noProducts.title": "Tiada produk ditemui",
+      "shop.noProducts.subtitle": "Cuba laraskan penapis anda untuk mencari lebih banyak produk.",
+      "shop.sort.featured": "Pilihan Teratas",
+      "shop.sort.lowToHigh": "Harga: Rendah ke Tinggi",
+      "shop.sort.highToLow": "Harga: Tinggi ke Rendah",
+      "shop.sort.rating": "Penilaian Tertinggi",
+      "shop.sort.nameAZ": "Nama A-Z",
+
+      "cart.title": "Troli Belian",
+      "cart.emptyTitle": "Troli anda kosong",
+      "cart.emptySubtitle": "Tambah beberapa produk untuk bermula!",
+      "cart.continueShopping": "Teruskan Membeli-belah",
+      "cart.remove": "Buang",
+      "cart.subtotal": "Jumlah Kecil",
+      "cart.shipping": "Penghantaran",
+      "cart.free": "Percuma",
+      "cart.total": "Jumlah",
+      "cart.checkout": "Teruskan ke Pembayaran",
+
+
 
     }
   }

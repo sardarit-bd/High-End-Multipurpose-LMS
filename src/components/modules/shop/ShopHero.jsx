@@ -2,8 +2,10 @@
 
 import { useState } from "react";
 import { FaSearch, FaFilter, FaBookOpen } from "react-icons/fa";
+import { useTranslation } from "react-i18next";
 
 const ShopHero = ({ onShowFilters, cartItemCount, search, onSearchChange }) => {
+  const { t } = useTranslation();
   const [searchQuery, setSearchQuery] = useState("");
 
   return (
@@ -21,22 +23,20 @@ const ShopHero = ({ onShowFilters, cartItemCount, search, onSearchChange }) => {
           <div className="mb-6 inline-flex items-center gap-2 rounded-full bg-white/20 px-4 py-2 backdrop-blur-sm">
             <FaBookOpen className="text-white text-sm" />
             <span className="text-sm font-medium text-white">
-              Knowledge Awaits
+              {t("shop.hero.badge")}
             </span>
           </div>
 
           {/* Main Heading */}
           <h1 className="mb-6 text-4xl font-bold text-white md:text-5xl lg:text-6xl">
-            Discover Your Next{" "}
+            {t("shop.hero.title")}{" "}
             <span className="bg-gradient-to-r from-amber-300 to-yellow-400 bg-clip-text text-transparent">
-              Favorite Book
+              {t("shop.hero.highlighted")}
             </span>
           </h1>
 
           <p className="mx-auto mb-8 max-w-2xl text-xl text-orange-100">
-            Explore our vast collection of books across all genres. From
-            bestsellers to hidden gems, find the perfect read for every taste
-            and interest.
+            {t("shop.hero.description")}
           </p>
 
           {/* Search Bar */}
@@ -44,7 +44,7 @@ const ShopHero = ({ onShowFilters, cartItemCount, search, onSearchChange }) => {
             <div className="relative">
               <input
                 type="text"
-                placeholder="Search books, authors, or categories..."
+                placeholder={t("shop.hero.searchPlaceholder")}
                 value={search}
                 onChange={(e) => onSearchChange(e.target.value)}
                 className="w-full rounded-2xl outline-none border-0 bg-white/20 px-6 py-4 pl-14 text-white placeholder-orange-200 backdrop-blur-sm focus:bg-white/30 focus:ring-2 focus:ring-white/50"
@@ -57,19 +57,19 @@ const ShopHero = ({ onShowFilters, cartItemCount, search, onSearchChange }) => {
           <div className="flex flex-wrap justify-center gap-8 text-white">
             <div className="text-center">
               <div className="text-2xl font-bold">10K+</div>
-              <div className="text-orange-200">Books</div>
+              <div className="text-orange-200">{t("shop.hero.stats.books")}</div>
             </div>
             <div className="text-center">
               <div className="text-2xl font-bold">50+</div>
-              <div className="text-orange-200">Categories</div>
+              <div className="text-orange-200">{t("shop.hero.stats.categories")}</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl font-bold">Free</div>
-              <div className="text-orange-200">Shipping</div>
+              <div className="text-2xl font-bold">{t("shop.hero.stats.free") || "Free"}</div>
+              <div className="text-orange-200">{t("shop.hero.stats.shipping")}</div>
             </div>
             <div className="text-center">
               <div className="text-2xl font-bold">24/7</div>
-              <div className="text-orange-200">Support</div>
+              <div className="text-orange-200">{t("shop.hero.stats.support")}</div>
             </div>
           </div>
         </div>

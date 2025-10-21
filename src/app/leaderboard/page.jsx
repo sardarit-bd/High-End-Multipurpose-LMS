@@ -86,13 +86,12 @@ const Leaderboard = () => {
   };
 
   useEffect(() => {
-    // Simulate API call
     setTimeout(() => {
       setLeaderboardData(mockLeaderboardData[activeCategory]);
       setUserRank({ rank: 15, name: "YourProfile", points: 6500, progress: 50 });
       setLoading(false);
       setPageLoading(false);
-    }, 2000);
+    });
   }, [activeCategory]);
 
   const handleRefresh = () => {
