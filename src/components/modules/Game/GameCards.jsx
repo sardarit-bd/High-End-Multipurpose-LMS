@@ -2,33 +2,35 @@
 
 import { useState } from 'react';
 import { FaDownload, FaExternalLinkAlt, FaPlay } from 'react-icons/fa';
+import { useTranslation } from "react-i18next"; // ✅ added
 
 export default function GameCard({ game, onPlay }) {
+  const { t } = useTranslation(); // ✅ translation hook
   const [imageError, setImageError] = useState(false);
 
   const getButtonConfig = () => {
     switch (game.type) {
       case 'embed': 
         return { 
-          text: 'Play Now', 
+          text: t("gameCard.playNow") || 'Play Now', 
           color: 'bg-green-600 hover:bg-green-700',
           icon: <FaPlay className="w-4 h-4" />
         };
       case 'external': 
         return { 
-          text: 'Play Online', 
+          text: t("gameCard.playOnline") || 'Play Online', 
           color: 'bg-blue-600 hover:bg-blue-700',
           icon: <FaExternalLinkAlt className="w-4 h-4" />
         };
       case 'download': 
         return { 
-          text: 'Download Game', 
+          text: t("gameCard.downloadGame") || 'Download Game', 
           color: 'bg-purple-600 hover:bg-purple-700',
           icon: <FaDownload className="w-4 h-4" />
         };
       default: 
         return { 
-          text: 'Play Now', 
+          text: t("gameCard.playNow") || 'Play Now', 
           color: 'bg-green-600 hover:bg-green-700',
           icon: <FaPlay className="w-4 h-4" />
         };
@@ -37,7 +39,7 @@ export default function GameCard({ game, onPlay }) {
 
   const buttonConfig = getButtonConfig();
   const getSDGTags = () => {
-    return game.sdg.map(goal => `Goal ${goal}`).join(', ');
+    return game.sdg.map(goal => `${t("gameCard.goal")} ${goal}`).join(', ');
   };
 
   return (
@@ -69,8 +71,11 @@ export default function GameCard({ game, onPlay }) {
           }`}>
             {buttonConfig.icon}
             <span className="ml-1">
-              {game.type === 'embed' ? 'Embedded' : 
-               game.type === 'external' ? 'Online' : 'Download'}
+              {game.type === 'embed' 
+                ? t("gameCard.type.embed") || 'Embedded' 
+                : game.type === 'external' 
+                ? t("gameCard.type.external") || 'Online' 
+                : t("gameCard.type.download") || 'Download'}
             </span>
           </span>
         </div>

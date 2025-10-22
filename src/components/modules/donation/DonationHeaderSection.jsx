@@ -1,10 +1,14 @@
 import React from "react";
 import { FaHeart, FaStar } from "react-icons/fa";
+import { useTranslation } from "react-i18next";
 
-const DonationHeaderSection = ({totalDonations,donorsCount}) => {
+const DonationHeaderSection = ({ totalDonations, donorsCount }) => {
+  const { t } = useTranslation();
+
   return (
     <section className="relative bg-gradient-to-r from-slate-900 via-blue-900 to-emerald-900 text-white overflow-hidden">
       <div className="absolute inset-0 bg-black opacity-20"></div>
+
       <div className="container mx-auto px-4 sm:px-6 py-20 relative">
         <div className="text-center">
           <div className="flex justify-center mb-6">
@@ -21,11 +25,11 @@ const DonationHeaderSection = ({totalDonations,donorsCount}) => {
           </div>
 
           <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-white to-emerald-100 bg-clip-text text-transparent">
-            Make an Impact
+            {t("donationHeader.title")}
           </h1>
+
           <p className="text-xl md:text-2xl text-blue-100 max-w-3xl mx-auto leading-relaxed">
-            Your generosity fuels sustainable change. Choose your cause and
-            create lasting impact today.
+            {t("donationHeader.subtitle")}
           </p>
 
           {/* Impact Stats */}
@@ -34,17 +38,23 @@ const DonationHeaderSection = ({totalDonations,donorsCount}) => {
               <div className="text-3xl font-bold text-emerald-300">
                 ${(totalDonations / 1000).toFixed(0)}K+
               </div>
-              <div className="text-sm text-blue-200">Total Impact</div>
-            </div>
-            <div className="text-center p-6 bg-white bg-opacity-10 backdrop-blur-sm rounded-2xl border border-white border-opacity-20">
-              <div className="text-3xl font-bold text-blue-300">
-                {donorsCount}+
+              <div className="text-sm text-blue-200">
+                {t("donationHeader.totalImpact")}
               </div>
-              <div className="text-sm text-blue-200">Changemakers</div>
             </div>
+
+            <div className="text-center p-6 bg-white bg-opacity-10 backdrop-blur-sm rounded-2xl border border-white border-opacity-20">
+              <div className="text-3xl font-bold text-blue-300">{donorsCount}+</div>
+              <div className="text-sm text-blue-200">
+                {t("donationHeader.changemakers")}
+              </div>
+            </div>
+
             <div className="text-center p-6 bg-white bg-opacity-10 backdrop-blur-sm rounded-2xl border border-white border-opacity-20">
               <div className="text-3xl font-bold text-purple-300">17</div>
-              <div className="text-sm text-blue-200">SDG Goals</div>
+              <div className="text-sm text-blue-200">
+                {t("donationHeader.sdgGoals")}
+              </div>
             </div>
           </div>
         </div>

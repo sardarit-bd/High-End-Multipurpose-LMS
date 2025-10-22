@@ -1,5 +1,6 @@
-import React from 'react'
+import React from 'react';
 import { FaCheck, FaGlobe } from 'react-icons/fa';
+import { useTranslation } from 'react-i18next';
 
 const PartnershipOpportunities = ({
   sponsorshipTypes,
@@ -9,6 +10,7 @@ const PartnershipOpportunities = ({
   setIsHovered,
   activeType,
 }) => {
+  const { t } = useTranslation();
 
   return (
     <section className="container mx-auto px-4 sm:px-6 lg:px-8 py-16 -mt-8">
@@ -16,10 +18,10 @@ const PartnershipOpportunities = ({
         <div className="text-center mb-12">
           <h2 className="text-4xl font-bold text-gray-900 mb-4 flex items-center justify-center">
             <FaGlobe className="w-8 h-8 text-blue-500 mr-3" />
-            Partnership Opportunities
+            {t("sponsor.partnershipTitle")}
           </h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Discover the perfect partnership model for your organization
+            {t("sponsor.partnershipSubtitle")}
           </p>
         </div>
 
@@ -41,22 +43,29 @@ const PartnershipOpportunities = ({
                 } ${isHovered === type.id && !isActive ? 'scale-102' : ''}`}
               >
                 <div className="text-center">
-                  <div className={`w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4 ${
-                    isActive 
-                      ? 'bg-white bg-opacity-20' 
-                      : `bg-gradient-to-r ${type.color}`
-                  }`}>
-                    <IconComponent className={`w-8 h-8 ${
-                      isActive ? 'text-green-500' : 'text-white'
-                    }`} />
+                  <div
+                    className={`w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4 ${
+                      isActive
+                        ? 'bg-white bg-opacity-20'
+                        : `bg-gradient-to-r ${type.color}`
+                    }`}
+                  >
+                    <IconComponent
+                      className={`w-8 h-8 ${
+                        isActive ? 'text-green-500' : 'text-white'
+                      }`}
+                    />
                   </div>
                   <h3 className="text-xl font-bold mb-2">{type.title}</h3>
                   <p className="text-sm opacity-90">{type.description}</p>
-                  
+
                   {isActive && (
                     <div className="mt-4 space-y-2">
                       {type.features.map((feature, index) => (
-                        <div key={index} className="flex items-center space-x-2 text-sm">
+                        <div
+                          key={index}
+                          className="flex items-center space-x-2 text-sm"
+                        >
                           <FaCheck className="w-3 h-3 text-white opacity-90 flex-shrink-0" />
                           <span className="text-left">{feature}</span>
                         </div>
@@ -77,15 +86,19 @@ const PartnershipOpportunities = ({
                 <activeType.icon className="w-6 h-6 text-white" />
               </div>
               <div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-2">{activeType.title}</h3>
-                <p className="text-gray-700 text-lg">{activeType.description}</p>
+                <h3 className="text-2xl font-bold text-gray-900 mb-2">
+                  {activeType.title}
+                </h3>
+                <p className="text-gray-700 text-lg">
+                  {activeType.description}
+                </p>
               </div>
             </div>
           </div>
         )}
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default PartnershipOpportunities
+export default PartnershipOpportunities;

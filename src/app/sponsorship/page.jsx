@@ -3,13 +3,19 @@
 import { useState } from 'react';
 import Head from 'next/head';
 import Navbar from '@/components/modules/headers/Navbar';
-import { FaAward, FaChartLine, FaCheck, FaCrown, FaGem, FaGlobe, FaHandshake, FaLightbulb, FaMedal, FaRocket, FaStar, FaTrophy, FaUsers } from 'react-icons/fa';
+import {
+  FaChartLine, FaUsers, FaHandshake,
+  FaMedal, FaGem, FaStar, FaCrown
+} from 'react-icons/fa';
 import SponsorShipCard from '@/components/modules/sponsorship/sponsorShipCard';
 import PartnershipOpportunities from '@/components/modules/sponsorship/PartnershipOpportunities';
 import Footer from '@/components/modules/footers/Footer';
 import SponsorHeroSection from '@/components/modules/sponsorship/SponsorHeroSection';
+import { useTranslation } from 'react-i18next'; // 🟢 Add i18n hook
 
 const Sponsorship = () => {
+  const { t } = useTranslation(); // 🟢 Initialize translator
+
   const [activeTab, setActiveTab] = useState('corporate');
   const [selectedPackage, setSelectedPackage] = useState('gold');
   const [isHovered, setIsHovered] = useState(null);
@@ -17,119 +23,134 @@ const Sponsorship = () => {
   const sponsorshipTypes = [
     {
       id: 'corporate',
-      title: 'Corporate Sponsorships',
-      description: 'Strategic partnerships with businesses and corporations',
+      title: t("sponsor.corporateTitle"),
+      description: t("sponsor.corporateDesc"),
       icon: FaChartLine,
       color: 'from-blue-500 to-cyan-500',
-      features: ['Brand visibility', 'Employee engagement', 'CSR initiatives', 'Networking opportunities']
+      features: [
+        t("sponsor.corporateFeature1"),
+        t("sponsor.corporateFeature2"),
+        t("sponsor.corporateFeature3"),
+        t("sponsor.corporateFeature4")
+      ]
     },
     {
       id: 'institutional',
-      title: 'Institutional Partnerships',
-      description: 'Collaborations with educational and research institutions',
+      title: t("sponsor.institutionalTitle"),
+      description: t("sponsor.institutionalDesc"),
       icon: FaUsers,
       color: 'from-purple-500 to-pink-500',
-      features: ['Research collaboration', 'Student programs', 'Knowledge sharing', 'Academic partnerships']
+      features: [
+        t("sponsor.institutionalFeature1"),
+        t("sponsor.institutionalFeature2"),
+        t("sponsor.institutionalFeature3"),
+        t("sponsor.institutionalFeature4")
+      ]
     },
     {
       id: 'community',
-      title: 'Community Partners',
-      description: 'Engagement with local communities and organizations',
+      title: t("sponsor.communityTitle"),
+      description: t("sponsor.communityDesc"),
       icon: FaHandshake,
       color: 'from-green-500 to-emerald-500',
-      features: ['Local impact', 'Community outreach', 'Grassroots initiatives', 'Social development']
+      features: [
+        t("sponsor.communityFeature1"),
+        t("sponsor.communityFeature2"),
+        t("sponsor.communityFeature3"),
+        t("sponsor.communityFeature4")
+      ]
     }
   ];
 
   const packages = [
     {
       id: 'bronze',
-      name: 'Bronze',
+      name: t("sponsor.bronzeName"),
       price: '$1,000',
       duration: '/year',
       icon: 'FaMedal',
       color: 'from-amber-600 to-amber-700',
-      badge: 'Starter',
+      badge: t("sponsor.bronzeBadge"),
       popular: false,
       features: [
-        'Logo on website',
-        'Social media mention',
-        'Event program listing',
-        'Quarterly newsletter feature'
+        t("sponsor.bronzeFeature1"),
+        t("sponsor.bronzeFeature2"),
+        t("sponsor.bronzeFeature3"),
+        t("sponsor.bronzeFeature4")
       ],
       benefits: [
-        'Basic brand visibility',
-        'Digital recognition',
-        'Community engagement'
+        t("sponsor.bronzeBenefit1"),
+        t("sponsor.bronzeBenefit2"),
+        t("sponsor.bronzeBenefit3")
       ]
     },
     {
       id: 'silver',
-      name: 'Silver',
+      name: t("sponsor.silverName"),
       price: '$2,500',
       duration: '/year',
       icon: 'FaGem',
       color: 'from-gray-400 to-gray-600',
-      badge: 'Growth',
+      badge: t("sponsor.silverBadge"),
       popular: false,
       features: [
-        'All Bronze benefits',
-        'Featured blog post',
-        'Event booth space',
-        'Press release inclusion',
-        'Newsletter dedicated section'
+        t("sponsor.silverFeature1"),
+        t("sponsor.silverFeature2"),
+        t("sponsor.silverFeature3"),
+        t("sponsor.silverFeature4"),
+        t("sponsor.silverFeature5")
       ],
       benefits: [
-        'Enhanced visibility',
-        'Content marketing',
-        'Direct audience access'
+        t("sponsor.silverBenefit1"),
+        t("sponsor.silverBenefit2"),
+        t("sponsor.silverBenefit3")
       ]
     },
     {
       id: 'gold',
-      name: 'Gold',
+      name: t("sponsor.goldName"),
       price: '$5,000',
       duration: '/year',
       icon: 'FaStar',
       color: 'from-yellow-500 to-amber-500',
-      badge: 'Popular',
+      badge: t("sponsor.goldBadge"),
       popular: true,
       features: [
-        'All Silver benefits',
-        'Keynote speaking opportunity',
-        'Premium logo placement',
-        'Dedicated social media campaign',
-        'VIP event invitations',
-        'Annual impact report'
+        t("sponsor.goldFeature1"),
+        t("sponsor.goldFeature2"),
+        t("sponsor.goldFeature3"),
+        t("sponsor.goldFeature4"),
+        t("sponsor.goldFeature5"),
+        t("sponsor.goldFeature6")
       ],
       benefits: [
-        'Thought leadership',
-        'Premium positioning',
-        'Exclusive networking'
+        t("sponsor.goldBenefit1"),
+        t("sponsor.goldBenefit2"),
+        t("sponsor.goldBenefit3")
       ]
     },
     {
       id: 'platinum',
-      name: 'Platinum',
+      name: t("sponsor.platinumName"),
       price: '$10,000',
       duration: '/year',
       icon: 'FaCrown',
       color: 'from-purple-500 to-indigo-600',
-      badge: 'Elite',
+      badge: t("sponsor.platinumBadge"),
       popular: false,
       features: [
-        'All Gold benefits',
-        'Title sponsorship rights',
-        'Exclusive workshop hosting',
-        'Customized partnership program',
-        'Executive advisory role',
-        'Media coverage guarantee',
-        'Dedicated account manager'
+        t("sponsor.platinumFeature1"),
+        t("sponsor.platinumFeature2"),
+        t("sponsor.platinumFeature3"),
+        t("sponsor.platinumFeature4"),
+        t("sponsor.platinumFeature5"),
+        t("sponsor.platinumFeature6"),
+        t("sponsor.platinumFeature7")
       ],
       benefits: [
-        'Industry leadership',
-        'Maximum exposure',
-        'Strategic influence'
+        t("sponsor.platinumBenefit1"),
+        t("sponsor.platinumBenefit2"),
+        t("sponsor.platinumBenefit3")
       ]
     }
   ];
@@ -142,12 +163,12 @@ const Sponsorship = () => {
       <Navbar />
       <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-purple-50">
         <Head>
-          <title>Partnership Opportunities - Sponsor SDG Initiatives</title>
-          <meta name="description" content="Explore corporate sponsorship packages and partnership opportunities for Sustainable Development Goals" />
+          <title>{t("sponsor.pageTitle")}</title>
+          <meta name="description" content={t("sponsor.pageDesc")} />
         </Head>
 
         {/* Hero Section */}
-        <SponsorHeroSection/>
+        <SponsorHeroSection />
 
         {/* Partnership Types */}
         <PartnershipOpportunities
@@ -167,7 +188,7 @@ const Sponsorship = () => {
           selectedPackageData={selectedPackageData}
         />
       </div>
-      <Footer/>
+      <Footer />
     </>
   );
 };

@@ -21,8 +21,11 @@ import GameFilterSection from "@/components/modules/Game/GameFilterSection";
 import GameListSection from "@/components/modules/Game/GameListSection";
 import GameInfoCard from "@/components/modules/Game/GameInfoCard";
 import Footer from "@/components/modules/footers/Footer";
+import { useTranslation } from "react-i18next"; 
 
 export default function Games() {
+  const { t } = useTranslation();
+
   const [games, setGames] = useState([]);
   const [filteredGames, setFilteredGames] = useState([]);
   const [selectedSDG, setSelectedSDG] = useState("all");
@@ -34,10 +37,9 @@ export default function Games() {
   const sampleGames = [
     {
       id: 1,
-      title: "SDG Trivia Challenge",
+      title: t("games.triviaTitle"),
       sdg: [1, 4],
-      description:
-        "Test your knowledge about Sustainable Development Goals with this fun trivia game. Answer questions and learn interesting facts about global development.",
+      description: t("games.triviaDesc"),
       thumbnail: "/images/game1-thumb.jpg",
       type: "embed",
       gameUrl: "games/one",
@@ -45,10 +47,9 @@ export default function Games() {
     },
     {
       id: 2,
-      title: "Climate Action Simulator",
+      title: t("games.climateTitle"),
       sdg: [13],
-      description:
-        "Make strategic decisions to reduce carbon footprint and save the planet. Manage resources and implement eco-friendly policies.",
+      description: t("games.climateDesc"),
       thumbnail: "/images/game2-thumb.jpg",
       type: "external",
       gameUrl: "https://external-game-site.com/climate-action",
@@ -60,10 +61,9 @@ export default function Games() {
     },
     {
       id: 3,
-      title: "Clean Water Puzzle",
+      title: t("games.waterTitle"),
       sdg: [6],
-      description:
-        "Solve challenging puzzles to provide clean water to communities. Build water filtration systems and manage distribution networks.",
+      description: t("games.waterDesc"),
       thumbnail: "/images/game3-thumb.jpg",
       type: "download",
       gameUrl: null,
@@ -75,10 +75,9 @@ export default function Games() {
     },
     {
       id: 4,
-      title: "Gender Equality Quiz",
+      title: t("games.genderTitle"),
       sdg: [5],
-      description:
-        "Learn about gender equality through interactive quizzes and scenarios. Understand challenges and solutions for gender parity.",
+      description: t("games.genderDesc"),
       thumbnail: "/images/game4-thumb.jpg",
       type: "embed",
       gameUrl: "/games/gender-quiz/index.html",
@@ -90,10 +89,9 @@ export default function Games() {
     },
     {
       id: 5,
-      title: "Sustainable Cities Game",
+      title: t("games.cityTitle"),
       sdg: [11],
-      description:
-        "Build sustainable cities while managing resources and infrastructure. Balance economic growth with environmental protection.",
+      description: t("games.cityDesc"),
       thumbnail: "/images/game5-thumb.jpg",
       type: "external",
       gameUrl: "https://external-game-site.com/sustainable-cities",
@@ -105,10 +103,9 @@ export default function Games() {
     },
     {
       id: 6,
-      title: "Life Below Water Adventure",
+      title: t("games.oceanTitle"),
       sdg: [14],
-      description:
-        "Explore marine life and protect ocean ecosystems. Complete missions to clean oceans and preserve marine biodiversity.",
+      description: t("games.oceanDesc"),
       thumbnail: "/images/game6-thumb.jpg",
       type: "download",
       gameUrl: null,
@@ -120,10 +117,9 @@ export default function Games() {
     },
     {
       id: 7,
-      title: "Zero Hunger Strategy",
+      title: t("games.hungerTitle"),
       sdg: [2],
-      description:
-        "Develop strategies to combat hunger and improve food security. Manage agricultural systems and distribution networks.",
+      description: t("games.hungerDesc"),
       thumbnail: "/images/game7-thumb.jpg",
       type: "embed",
       gameUrl: "/games/hunger-strategy/index.html",
@@ -135,10 +131,9 @@ export default function Games() {
     },
     {
       id: 8,
-      title: "Renewable Energy Tycoon",
+      title: t("games.energyTitle"),
       sdg: [7],
-      description:
-        "Build and manage renewable energy infrastructure. Invest in solar, wind, and hydro power to create sustainable energy grids.",
+      description: t("games.energyDesc"),
       thumbnail: "/images/game8-thumb.jpg",
       type: "external",
       gameUrl: "https://external-game-site.com/energy-tycoon",
@@ -225,11 +220,9 @@ export default function Games() {
             </div>
           </div>
           <h3 className="text-2xl font-bold text-gray-700 mb-2">
-            Loading Games
+            {t("games.loadingTitle")}
           </h3>
-          <p className="text-gray-500">
-            Preparing amazing learning experiences...
-          </p>
+          <p className="text-gray-500">{t("games.loadingText")}</p>
           <div className="mt-4 w-24 h-1 bg-gradient-to-r from-blue-500 to-green-500 rounded-full mx-auto animate-pulse"></div>
         </div>
       </div>
@@ -241,11 +234,8 @@ export default function Games() {
       <Navbar />
       <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-green-50">
         <Head>
-          <title>SDG Games - Interactive Learning Platform</title>
-          <meta
-            name="description"
-            content="Learn about Sustainable Development Goals through fun and interactive games"
-          />
+          <title>{t("games.pageTitle")}</title>
+          <meta name="description" content={t("games.pageDesc")} />
         </Head>
 
         {/* Enhanced Hero Section */}

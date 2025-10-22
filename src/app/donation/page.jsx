@@ -1,18 +1,24 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Head from 'next/head';
-import Navbar from '@/components/modules/headers/Navbar'
-import React from 'react'
-import { FaCheck, FaCrown, FaGem, FaGraduationCap, FaHandHoldingUsd, FaHeart, FaLock, FaRocket, FaStar } from 'react-icons/fa';
+import Navbar from '@/components/modules/headers/Navbar';
+import {
+  FaRocket,
+  FaGraduationCap,
+  FaHandHoldingUsd
+} from 'react-icons/fa';
 import DonationHeaderSection from '@/components/modules/donation/DonationHeaderSection';
 import FundSelectionSidebar from '@/components/modules/donation/FundSelectionSidebar';
 import SelectedFundHeader from '@/components/modules/donation/SelectedFundHeader';
 import DonationForm from '@/components/modules/donation/DonationForm';
 import DonationInfo from '@/components/modules/donation/DonationInfo';
 import DonationSkeleton from '@/components/modules/donation/DonationSkeleton';
+import { useTranslation } from 'react-i18next';
 
 const Donation = () => {
+  const { t } = useTranslation();
+
   const [selectedFund, setSelectedFund] = useState('sdg-projects');
   const [donationAmount, setDonationAmount] = useState('');
   const [customAmount, setCustomAmount] = useState('');
@@ -31,60 +37,58 @@ const Donation = () => {
   const funds = [
     {
       id: 'sdg-projects',
-      title: 'Support SDG Projects',
-      description: 'Fund innovative projects that address the 17 Sustainable Development Goals in our community',
+      title: t("donation.sdgTitle"),
+      description: t("donation.sdgDesc"),
       icon: FaRocket,
       color: 'from-emerald-500 to-teal-600',
       textColor: 'text-emerald-600',
-      badge: 'Most Popular',
+      badge: t("donation.sdgBadge"),
       examples: [
-        'Clean water initiatives',
-        'Renewable energy projects',
-        'Environmental conservation',
-        'Community development'
+        t("donation.sdgExample1"),
+        t("donation.sdgExample2"),
+        t("donation.sdgExample3"),
+        t("donation.sdgExample4")
       ],
-      impact: 'Supports 3-5 community projects'
+      impact: t("donation.sdgImpact")
     },
     {
       id: 'student-fund',
-      title: 'Student Fund',
-      description: 'Provide scholarships and financial aid to deserving students pursuing SDG-related studies',
+      title: t("donation.studentTitle"),
+      description: t("donation.studentDesc"),
       icon: FaGraduationCap,
       color: 'from-blue-500 to-indigo-600',
       textColor: 'text-blue-600',
-      badge: 'Education Focus',
+      badge: t("donation.studentBadge"),
       examples: [
-        'Tuition fee assistance',
-        'Research grants',
-        'Internship opportunities',
-        'Educational materials'
+        t("donation.studentExample1"),
+        t("donation.studentExample2"),
+        t("donation.studentExample3"),
+        t("donation.studentExample4")
       ],
-      impact: 'Supports 2-3 students annually'
+      impact: t("donation.studentImpact")
     },
     {
       id: 'edufest-impact',
-      title: 'Edufest Impact Fund',
-      description: 'Support our annual education festival that promotes SDG awareness and youth engagement',
+      title: t("donation.eduTitle"),
+      description: t("donation.eduDesc"),
       icon: FaHandHoldingUsd,
       color: 'from-purple-500 to-pink-600',
       textColor: 'text-purple-600',
-      badge: 'Event Support',
+      badge: t("donation.eduBadge"),
       examples: [
-        'Event organization',
-        'Speaker invitations',
-        'Workshop materials',
-        'Youth participation support'
+        t("donation.eduExample1"),
+        t("donation.eduExample2"),
+        t("donation.eduExample3"),
+        t("donation.eduExample4")
       ],
-      impact: 'Reaches 500+ participants'
+      impact: t("donation.eduImpact")
     }
   ];
 
-  // Simulate page loading
-  React.useEffect(() => {
+  useEffect(() => {
     const timer = setTimeout(() => {
       setPageLoading(false);
     }, 2000);
-
     return () => clearTimeout(timer);
   }, []);
 
@@ -98,36 +102,25 @@ const Donation = () => {
   const handleCustomAmount = (e) => {
     const value = e.target.value;
     setCustomAmount(value);
-    if (value) {
-      setDonationAmount(value);
-    }
+    if (value) setDonationAmount(value);
   };
 
   const handleDonation = async (e) => {
     e.preventDefault();
     if (!donationAmount || donationAmount === '0') {
-      alert('Please select or enter a donation amount');
+      alert(t("donation.alertSelectAmount"));
       return;
     }
 
     setIsLoading(true);
-
     try {
-      const paymentData = {
-        fund: selectedFund,
-        amount: donationAmount,
-        customAmount: customAmount
-      };
-
+      const paymentData = { fund: selectedFund, amount: donationAmount };
       console.log('Processing donation:', paymentData);
-      
       await new Promise(resolve => setTimeout(resolve, 2000));
-      
-      alert(`Redirecting to payment gateway with amount: $${donationAmount}`);
-      
+      alert(t("donation.redirectMessage", { amount: donationAmount }));
     } catch (error) {
       console.error('Donation error:', error);
-      alert('Error processing donation. Please try again.');
+      alert(t("donation.errorMessage"));
     } finally {
       setIsLoading(false);
     }
@@ -136,17 +129,15 @@ const Donation = () => {
   const totalDonations = 287500;
   const donorsCount = 456;
 
-  if (pageLoading) {
-    return <DonationSkeleton />;
-  }
+  if (pageLoading) return <DonationSkeleton />;
 
   return (
     <>
-      <Navbar/>
+      <Navbar />
       <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-emerald-50">
         <Head>
-          <title>Support SDG Initiatives - Make a Donation</title>
-          <meta name="description" content="Contribute to Sustainable Development Goals projects, student funds, and educational initiatives" />
+          <title>{t("donation.pageTitle")}</title>
+          <meta name="description" content={t("donation.pageDesc")} />
         </Head>
 
         {/* Header Section */}
@@ -171,9 +162,7 @@ const Donation = () => {
             <div className="lg:col-span-2">
               <div className="bg-white rounded-3xl shadow-2xl overflow-hidden border border-gray-100">
                 {/* Selected Fund Header */}
-                <SelectedFundHeader
-                  selectedFundData={selectedFundData}
-                />
+                <SelectedFundHeader selectedFundData={selectedFundData} />
 
                 {/* Donation Form */}
                 <DonationForm
@@ -188,14 +177,14 @@ const Donation = () => {
                 />
               </div>
 
-              {/* Additional Info */}
-              <DonationInfo/>
+              {/* Info */}
+              <DonationInfo />
             </div>
           </div>
         </div>
       </div>
     </>
-  )
-}
+  );
+};
 
-export default Donation
+export default Donation;

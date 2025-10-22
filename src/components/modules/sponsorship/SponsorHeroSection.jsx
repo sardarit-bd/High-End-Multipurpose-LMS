@@ -1,14 +1,17 @@
 import React from "react";
 import { FaHandshake, FaRocket } from "react-icons/fa";
+import { useTranslation } from "react-i18next"; // Import i18n hook
 
 const SponsorHeroSection = () => {
+  const { t } = useTranslation(); // Initialize translation hook
+
   return (
     <section className="relative bg-gradient-to-r from-slate-900 via-blue-900 to-purple-900 text-white overflow-hidden">
       <div className="absolute inset-0 bg-black opacity-20"></div>
       <div className="absolute top-0 right-0 w-64 h-64 bg-white opacity-5 rounded-full -translate-y-32 translate-x-32"></div>
       <div className="absolute bottom-0 left-0 w-48 h-48 bg-white opacity-5 rounded-full translate-y-24 -translate-x-24"></div>
 
-      <div className="container mx-auto px-4 sm:px-6  py-24 relative">
+      <div className="container mx-auto px-4 sm:px-6 py-24 relative">
         <div className="text-center">
           <div className="flex justify-center mb-6">
             <div className="relative">
@@ -23,31 +26,31 @@ const SponsorHeroSection = () => {
             </div>
           </div>
 
-          <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-white to-blue-100 bg-clip-text text-transparent">
-            Partner With Purpose
+          {/* Dynamic Translated Texts */}
+          <h1 className="text-4xl md:text-4xl font-bold mb-6 bg-gradient-to-r from-white to-blue-100 bg-clip-text text-transparent">
+            {t("sponsor.heroTitle")}
           </h1>
           <p className="text-xl md:text-2xl text-blue-100 max-w-3xl mx-auto leading-relaxed mb-8">
-            Join forces to create sustainable impact. Choose from tailored
-            sponsorship packages designed for maximum value and social return.
+            {t("sponsor.heroDesc")}
           </p>
 
           {/* Impact Stats */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-2xl mx-auto">
             <div className="text-center p-4 bg-white bg-opacity-10 backdrop-blur-sm rounded-2xl border border-white border-opacity-20">
               <div className="text-2xl font-bold text-emerald-300">50+</div>
-              <div className="text-sm text-blue-200">Partners</div>
+              <div className="text-sm text-blue-200">{t("sponsor.partners")}</div>
             </div>
             <div className="text-center p-4 bg-white bg-opacity-10 backdrop-blur-sm rounded-2xl border border-white border-opacity-20">
               <div className="text-2xl font-bold text-blue-300">$2M+</div>
-              <div className="text-sm text-blue-200">Impact Generated</div>
+              <div className="text-sm text-blue-200">{t("sponsor.impact")}</div>
             </div>
             <div className="text-center p-4 bg-white bg-opacity-10 backdrop-blur-sm rounded-2xl border border-white border-opacity-20">
               <div className="text-2xl font-bold text-purple-300">17</div>
-              <div className="text-sm text-blue-200">SDG Goals</div>
+              <div className="text-sm text-blue-200">{t("sponsor.goals")}</div>
             </div>
             <div className="text-center p-4 bg-white bg-opacity-10 backdrop-blur-sm rounded-2xl border border-white border-opacity-20">
               <div className="text-2xl font-bold text-yellow-300">100+</div>
-              <div className="text-sm text-blue-200">Projects</div>
+              <div className="text-sm text-blue-200">{t("sponsor.projects")}</div>
             </div>
           </div>
         </div>

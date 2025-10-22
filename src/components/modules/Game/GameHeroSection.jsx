@@ -1,7 +1,10 @@
 import React from "react";
 import { FaGamepad, FaRocket } from "react-icons/fa";
+import { useTranslation } from "react-i18next"; // ✅ i18n import
 
-const GameHeroSection = ({gameStats}) => {
+const GameHeroSection = ({ gameStats }) => {
+  const { t } = useTranslation(); // ✅ translation hook
+
   return (
     <section className="relative bg-gradient-to-br from-blue-500 to-purple-600 text-white overflow-hidden">
       <div className="absolute inset-0 bg-black opacity-10"></div>
@@ -23,12 +26,13 @@ const GameHeroSection = ({gameStats}) => {
             </div>
           </div>
 
+          {/* ✅ i18n support added for all static texts */}
           <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-white to-blue-100 bg-clip-text text-transparent">
-            Play & Learn SDGs
+            {t("gameHero.title") || "Play & Learn SDGs"}
           </h1>
           <p className="text-xl md:text-2xl text-blue-100 max-w-3xl mx-auto leading-relaxed mb-8">
-            Discover the 17 Sustainable Development Goals through engaging
-            games, interactive challenges, and immersive learning experiences
+            {t("gameHero.subtitle") ||
+              "Discover the 17 Sustainable Development Goals through engaging games, interactive challenges, and immersive learning experiences"}
           </p>
 
           {/* Enhanced Stats */}
@@ -37,25 +41,33 @@ const GameHeroSection = ({gameStats}) => {
               <div className="text-3xl font-bold text-emerald-300">
                 {gameStats.totalGames}
               </div>
-              <div className="text-sm text-blue-200">Interactive Games</div>
+              <div className="text-sm text-blue-200">
+                {t("gameHero.stats.games") || "Interactive Games"}
+              </div>
             </div>
             <div className="text-center p-6 bg-white bg-opacity-15 backdrop-blur-sm rounded-2xl border border-white border-opacity-20 hover:bg-opacity-25 transition-all duration-300">
               <div className="text-3xl font-bold text-blue-300">
                 {gameStats.totalPlayers}
               </div>
-              <div className="text-sm text-blue-200">Active Learners</div>
+              <div className="text-sm text-blue-200">
+                {t("gameHero.stats.players") || "Active Learners"}
+              </div>
             </div>
             <div className="text-center p-6 bg-white bg-opacity-15 backdrop-blur-sm rounded-2xl border border-white border-opacity-20 hover:bg-opacity-25 transition-all duration-300">
               <div className="text-3xl font-bold text-purple-300">
                 {gameStats.averageRating}/5
               </div>
-              <div className="text-sm text-blue-200">Average Rating</div>
+              <div className="text-sm text-blue-200">
+                {t("gameHero.stats.rating") || "Average Rating"}
+              </div>
             </div>
             <div className="text-center p-6 bg-white bg-opacity-15 backdrop-blur-sm rounded-2xl border border-white border-opacity-20 hover:bg-opacity-25 transition-all duration-300">
               <div className="text-3xl font-bold text-yellow-300">
                 {gameStats.learningHours}
               </div>
-              <div className="text-sm text-blue-200">Learning Hours</div>
+              <div className="text-sm text-blue-200">
+                {t("gameHero.stats.hours") || "Learning Hours"}
+              </div>
             </div>
           </div>
         </div>

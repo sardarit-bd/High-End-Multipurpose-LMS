@@ -1,13 +1,22 @@
 import React from "react";
 import { FaCheck, FaGem } from "react-icons/fa";
+import { useTranslation } from "react-i18next";
 
-const FundSelectionSidebar = ({selectedFund,setSelectedFund,isHovered,setIsHovered,funds}) => {
+const FundSelectionSidebar = ({
+  selectedFund,
+  setSelectedFund,
+  isHovered,
+  setIsHovered,
+  funds
+}) => {
+  const { t } = useTranslation();
+
   return (
     <section className="lg:col-span-1 space-y-6">
       <div className="bg-white rounded-3xl shadow-2xl p-8 sticky top-6 border border-gray-100">
         <h2 className="text-3xl font-bold text-gray-900 mb-8 flex items-center">
           <FaGem className="w-8 h-8 text-purple-500 mr-3" />
-          Choose Your Cause
+          {t("fundSidebar.title")}
         </h2>
 
         <div className="space-y-4">
