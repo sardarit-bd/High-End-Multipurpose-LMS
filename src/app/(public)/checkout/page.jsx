@@ -98,8 +98,8 @@ export default function CheckoutPage() {
                         onClick={() => setPaymentMethod(id)}
                         type="button"
                         className={`flex flex-col items-center justify-center gap-1 p-3 rounded-xl border text-sm font-medium transition-all duration-150 ${active
-                            ? "bg-[var(--color-primary,#0ea5e9)] text-white border-[var(--color-primary,#0ea5e9)] shadow-md scale-105"
-                            : "bg-gray-50 text-gray-800 border-gray-200 hover:bg-white hover:shadow-sm"
+                          ? "bg-[var(--color-primary,#0ea5e9)] text-white border-[var(--color-primary,#0ea5e9)] shadow-md scale-105"
+                          : "bg-gray-50 text-gray-800 border-gray-200 hover:bg-white hover:shadow-sm"
                           }`}
                       >
                         <Icon className="h-5 w-5" />
@@ -185,8 +185,8 @@ function Row({ label, value, highlight = false }) {
   return (
     <p
       className={`flex justify-between items-center ${highlight
-          ? "font-semibold text-[var(--color-secondary,#0f172a)] text-base"
-          : "text-sm"
+        ? "font-semibold text-[var(--color-secondary,#0f172a)] text-base"
+        : "text-sm"
         }`}
     >
       <span>{label}</span>
