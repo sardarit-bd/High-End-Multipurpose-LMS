@@ -1,9 +1,6 @@
-export const useAuth = () => {
-  const user = {
-    id: 1,
-    name: "Md Sohel",
-    role: "student  ", // Change to 'admin' or 'student' to test different roles
-  };   
+import { useAuthContext } from "@/providers/AuthProvider";
 
-  return user; 
-} 
+export const useAuth = () => {
+  const { user, loading, login, register, logout,googleLogin } = useAuthContext();
+  return { user, loading, login, register, logout, googleLogin };
+};

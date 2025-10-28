@@ -12,6 +12,9 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.90.5",
+    "@tanstack/react-query-devtools": "^5.90.2",
+    "axios": "^1.12.2",
     "framer-motion": "^12.23.22",
     "i18next": "^25.6.0",
     "i18next-browser-languagedetector": "^8.2.0",
@@ -20,8 +23,10 @@
     "next": "15.5.4",
     "react": "19.1.0",
     "react-dom": "19.1.0",
+    "react-hook-form": "^7.65.0",
     "react-i18next": "^16.0.1",
     "react-icons": "^5.5.0",
+    "react-toastify": "^11.0.5",
     "recharts": "^3.2.1",
     "sweetalert2": "^11.26.3",
     "zustand": "^5.0.8"

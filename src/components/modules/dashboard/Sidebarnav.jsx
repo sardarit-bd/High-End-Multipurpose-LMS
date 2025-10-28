@@ -32,7 +32,7 @@ export default function SidebarNav({ items }) {
             >
 
                 < LogOut />
-                <span>Logout</span>
+                <span>Home</span>
             </Link>
         </nav>
     );

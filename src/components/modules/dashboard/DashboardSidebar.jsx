@@ -9,7 +9,7 @@ import { getDashboardSideMenu } from "@/helpers/getDashboardSideMenu";
 
 // ===== Sidebar Layout Component ===== //
 export function DashboardSidebar() {
-    const user = useAuth();
+    const {user} = useAuth();
     const [isOpen, setIsOpen] = useState(false);
 
     const sidebarNavItems = getDashboardSideMenu(user?.role);
