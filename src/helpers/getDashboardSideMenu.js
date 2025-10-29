@@ -14,7 +14,7 @@ const instructorMenu = [
     { title: "Dashboard", href: "/dashboard", icon: Home },
     { title: "Courses", href: "/dashboard/instructor/courses", icon: BookOpen },
     { title: "Students", href: "/dashboard/instructor/students", icon: Users },
-    { title: "Assignments", href: "/dashboard/instructor/assignments", icon: ClipboardList },
+    { title: "Task", href: "/dashboard/instructor/assignments", icon: ClipboardList },
     { title: "Quizzes", href: "/dashboard/instructor/quize", icon: HelpCircle },
     { title: "Profile", href: "/dashboard/instructor/profile", icon: User },
     { title: "Certificate", href: "/dashboard/instructor/certificate", icon: Award },

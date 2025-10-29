@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { BookOpen, PlusCircle, Edit, Video, FileText } from "lucide-react";
 import { useLessons } from "@/hooks/useLessons";
 import LessonFormModal from "./LessonFormModal";
+import Link from "next/link";
 
 export default function LessonManager({ courseUnits }) {
   const [selectedUnit, setSelectedUnit] = useState(null);
@@ -23,6 +24,7 @@ export default function LessonManager({ courseUnits }) {
     if (lessons?.length && !selectedLesson) setSelectedLesson(lessons[0]);
   }, [lessons]);
 
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-6">
       {/* LEFT: Units and Lessons */}
@@ -40,8 +42,14 @@ export default function LessonManager({ courseUnits }) {
           >
             <PlusCircle size={16} /> Add Lesson
           </button>
+           {/* <Link
+          href={`/dashboard/instructor/courses/${id}/units/${unitId}/quizzes`}
+          className="text-[var(--color-primary)] hover:underline text-sm"
+        >
+          Manage Quizzes →
+        </Link> */}
         </div>
-
+          {console.log(courseUnits)}
         {courseUnits?.map((unit) => (
           <motion.div
             key={unit._id}
