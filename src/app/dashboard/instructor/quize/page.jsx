@@ -1,15 +1,27 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Plus, Trash2, CheckCircle2, Circle, X } from "lucide-react";
-import api from "@/lib/apiClient"; // your axios instance
+import {
+  Plus,
+  Trash2,
+  Edit3,
+  CheckCircle2,
+  Circle,
+  ChevronDown,
+  ChevronUp,
+  X,
+} from "lucide-react";
+import api from "@/lib/apiClient";
 import { toast } from "react-toastify";
+import { useAuth } from "@/hooks/useAuth";
 
 export default function InstructorQuizBuilder() {
+  const {user} = useAuth()
   const [courses, setCourses] = useState([]);
   const [units, setUnits] = useState([]);
   const [quizzes, setQuizzes] = useState([]);
-  const [questions, setQuestions] = useState([]);
+  const [expandedQuiz, setExpandedQuiz] = useState(null);
+  const [questions, setQuestions] = useState({});
 
   const [selectedCourse, setSelectedCourse] = useState("");
   const [selectedUnit, setSelectedUnit] = useState("");
@@ -18,6 +30,8 @@ export default function InstructorQuizBuilder() {
   const [loading, setLoading] = useState(false);
   const [showQuizModal, setShowQuizModal] = useState(false);
   const [showQuestionModal, setShowQuestionModal] = useState(false);
+  const [isEditingQuiz, setIsEditingQuiz] = useState(false);
+  const [isEditingQuestion, setIsEditingQuestion] = useState(false);
 
   const [quizForm, setQuizForm] = useState({
     courseId: "",
@@ -33,14 +47,14 @@ export default function InstructorQuizBuilder() {
     options: [{ text: "", isCorrect: false }],
   });
 
-  // ====== FETCH DATA ======
+  // ===== Fetch Data =====
   useEffect(() => {
     fetchCourses();
   }, []);
 
   const fetchCourses = async () => {
     try {
-      const res = await api.get("/courses");
+      const res = await api.get(`/courses?instructor=${user._id}`);
       setCourses(res.data?.data || []);
     } catch {
       toast.error("Failed to load courses");
@@ -72,35 +86,57 @@ export default function InstructorQuizBuilder() {
   const fetchQuestions = async (quizId) => {
     try {
       const res = await api.get(`/quizzes/${quizId}/questions`);
-      console.log(res.data?.data)
-      setQuestions(res.data?.data?.questions || []);
+      setQuestions((prev) => ({
+        ...prev,
+        [quizId]: res.data?.data?.questions || [],
+      }));
     } catch {
-      setQuestions([]);
+      setQuestions((prev) => ({ ...prev, [quizId]: [] }));
     }
   };
 
-  // ====== CREATE QUIZ ======
+  // ===== Quiz CRUD =====
   const handleQuizChange = (e) =>
     setQuizForm({ ...quizForm, [e.target.name]: e.target.value });
 
   const handleQuizSubmit = async (e) => {
     e.preventDefault();
     try {
-      await api.post("/quizzes/create", {
-        unitId: quizForm.unitId,
-        title: quizForm.title,
-        passMark: Number(quizForm.passMark),
-      });
-      toast.success("Quiz created successfully!");
+      if (isEditingQuiz) {
+        await api.put(`/quizzes/${selectedQuiz._id}`, {
+          title: quizForm.title,
+          passMark: Number(quizForm.passMark),
+        });
+        toast.success("Quiz updated!");
+      } else {
+        await api.post("/quizzes/create", {
+          unitId: quizForm.unitId,
+          title: quizForm.title,
+          passMark: Number(quizForm.passMark),
+        });
+        toast.success("Quiz created!");
+      }
       setShowQuizModal(false);
-      fetchQuizzes(quizForm.unitId);
+      fetchQuizzes(quizForm.unitId || selectedUnit);
       setQuizForm({ courseId: "", unitId: "", title: "", passMark: "" });
+      setIsEditingQuiz(false);
     } catch {
-      toast.error("Failed to create quiz");
+      toast.error("Failed to save quiz");
     }
   };
 
-  // ====== ADD QUESTION ======
+  const handleDeleteQuiz = async (quizId) => {
+    if (!confirm("Delete this quiz?")) return;
+    try {
+      await api.delete(`/quizzes/${quizId}`);
+      toast.success("Quiz deleted");
+      fetchQuizzes(selectedUnit);
+    } catch {
+      toast.error("Failed to delete quiz");
+    }
+  };
+
+  // ===== Question CRUD =====
   const handleQuestionChange = (e) =>
     setQuestionForm({ ...questionForm, [e.target.name]: e.target.value });
 
@@ -121,7 +157,7 @@ export default function InstructorQuizBuilder() {
     setQuestionForm({ ...questionForm, options: newOpts });
   };
 
-  const handleAddQuestion = async (e) => {
+  const handleAddOrUpdateQuestion = async (e) => {
     e.preventDefault();
     try {
       const payload = {
@@ -131,10 +167,18 @@ export default function InstructorQuizBuilder() {
         options: questionForm.type === "mcq" ? questionForm.options : [],
         perCorrectPoint: Number(questionForm.perCorrectPoint) || 0,
       };
-      await api.post("/quizzes/add-question", payload);
-      toast.success("Question added!");
+
+      if (isEditingQuestion) {
+        await api.put(`/quizzes/update-question/${questionForm._id}`, payload);
+        toast.success("Question updated!");
+      } else {
+        await api.post("/quizzes/add-question", payload);
+        toast.success("Question added!");
+      }
+
       fetchQuestions(selectedQuiz._id);
       setShowQuestionModal(false);
+      setIsEditingQuestion(false);
       setQuestionForm({
         type: "mcq",
         prompt: "",
@@ -142,11 +186,29 @@ export default function InstructorQuizBuilder() {
         options: [{ text: "", isCorrect: false }],
       });
     } catch {
-      toast.error("Failed to add question");
+      toast.error("Failed to save question");
     }
   };
 
-  // ====== UI ======
+  const handleEditQuestion = (quiz, q) => {
+    setSelectedQuiz(quiz);
+    setIsEditingQuestion(true);
+    setQuestionForm(q);
+    setShowQuestionModal(true);
+  };
+
+  const handleDeleteQuestion = async (quizId, qId) => {
+    if (!confirm("Delete this question?")) return;
+    try {
+      await api.delete(`/quizzes/delete-question/${qId}`);
+      toast.success("Question deleted!");
+      fetchQuestions(quizId);
+    } catch {
+      toast.error("Failed to delete question");
+    }
+  };
+
+  // ===== UI =====
   return (
     <div className="p-6 space-y-6 text-[var(--color-text)]">
       {/* Header */}
@@ -155,7 +217,10 @@ export default function InstructorQuizBuilder() {
           Instructor Quiz Builder
         </h1>
         <button
-          onClick={() => setShowQuizModal(true)}
+          onClick={() => {
+            setIsEditingQuiz(false);
+            setShowQuizModal(true);
+          }}
           className="bg-[var(--color-primary)] text-white px-5 py-2 rounded-md font-medium hover:opacity-90"
         >
           + Create Quiz
@@ -205,7 +270,7 @@ export default function InstructorQuizBuilder() {
         </div>
       </div>
 
-      {/* Quiz List */}
+      {/* Quizzes */}
       <div className="bg-white rounded-lg shadow p-5">
         <h2 className="font-semibold text-lg mb-4 text-[var(--color-secondary)]">
           Quizzes for Selected Unit
@@ -215,40 +280,157 @@ export default function InstructorQuizBuilder() {
           <p className="text-gray-500 italic">Loading...</p>
         ) : quizzes.length ? (
           <div className="space-y-3">
-            {quizzes.map((quiz) => (
-              <div
-                key={quiz._id}
-                className={`border rounded-md p-4 flex justify-between items-center cursor-pointer transition ${
-                  selectedQuiz?._id === quiz._id
-                    ? "border-[var(--color-primary)] bg-[var(--color-background)]"
-                    : "border-gray-200 hover:bg-gray-50"
-                }`}
-              >
-                <div>
-                  <div className="font-medium text-base">{quiz.title}</div>
-                  <div className="text-sm text-gray-500">
-                    Pass Mark: {quiz.passMark}
-                  </div>
-                </div>
-                <button
-                  onClick={() => {
-                    setSelectedQuiz(quiz);
-                    fetchQuestions(quiz._id);
-                    setShowQuestionModal(true);
-                  }}
-                  className="flex items-center gap-1 bg-[var(--color-primary)] text-white px-3 py-1.5 rounded-md text-sm"
+            {quizzes.map((quiz) => {
+              const quizQuestions = questions[quiz._id] || [];
+              const totalMarks = quizQuestions.reduce(
+                (acc, q) => acc + (q.perCorrectPoint || 0),
+                0
+              );
+
+              return (
+                <div
+                  key={quiz._id}
+                  className="border rounded-md p-4 bg-gray-50"
                 >
-                  <Plus size={14} /> Add Question
-                </button>
-              </div>
-            ))}
+                  {/* Quiz header */}
+                  <div
+                    onClick={() => {
+                      const isOpen = expandedQuiz === quiz._id;
+                      setExpandedQuiz(isOpen ? null : quiz._id);
+                      if (!isOpen) fetchQuestions(quiz._id);
+                    }}
+                    className="flex justify-between items-center cursor-pointer"
+                  >
+                    <div>
+                      <div className="font-medium text-base">{quiz.title}</div>
+                      <div className="text-sm text-gray-500">
+                        Pass Mark: {quiz.passMark} | Total Marks: {totalMarks}
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setIsEditingQuiz(true);
+                          setSelectedQuiz(quiz);
+                          setQuizForm({
+                            ...quiz,
+                            unitId: selectedUnit,
+                          });
+                          setShowQuizModal(true);
+                        }}
+                        className="p-1 text-gray-500 hover:text-blue-600"
+                      >
+                        <Edit3 size={18} />
+                      </button>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleDeleteQuiz(quiz._id);
+                        }}
+                        className="p-1 text-gray-500 hover:text-red-500"
+                      >
+                        <Trash2 size={18} />
+                      </button>
+                      {expandedQuiz === quiz._id ? (
+                        <ChevronUp size={20} />
+                      ) : (
+                        <ChevronDown size={20} />
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Accordion: Questions */}
+                  <AnimatePresence>
+                    {expandedQuiz === quiz._id && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.3 }}
+                        className="mt-4 pl-4 border-t pt-3"
+                      >
+                        <div className="flex justify-end mb-3">
+                          <button
+                            onClick={() => {
+                              setSelectedQuiz(quiz);
+                              setIsEditingQuestion(false);
+                              setShowQuestionModal(true);
+                            }}
+                            className="flex items-center gap-1 bg-[var(--color-primary)] text-white px-3 py-1.5 rounded-md text-sm"
+                          >
+                            <Plus size={14} /> Add Question
+                          </button>
+                        </div>
+
+                        {quizQuestions.length > 0 ? (
+                          <ul className="space-y-3 text-sm">
+                            {quizQuestions.map((q, idx) => (
+                              <li
+                                key={q._id}
+                                className="border rounded-md p-3 bg-white"
+                              >
+                                <div className="flex justify-between items-start">
+                                  <p className="font-medium mb-1">
+                                    {idx + 1}. {q.prompt}
+                                  </p>
+                                  <div className="flex gap-2">
+                                    <button
+                                      onClick={() => handleEditQuestion(quiz, q)}
+                                      className="text-gray-500 hover:text-blue-600"
+                                    >
+                                      <Edit3 size={16} />
+                                    </button>
+                                    <button
+                                      onClick={() =>
+                                        handleDeleteQuestion(quiz._id, q._id)
+                                      }
+                                      className="text-gray-500 hover:text-red-500"
+                                    >
+                                      <Trash2 size={16} />
+                                    </button>
+                                  </div>
+                                </div>
+                                <p className="text-xs text-gray-500 mb-2">
+                                  Marks: {q.perCorrectPoint}
+                                </p>
+                                {q.type === "mcq" && (
+                                  <ul className="ml-5 list-disc">
+                                    {q.options.map((o, i) => (
+                                      <li
+                                        key={i}
+                                        className={`${
+                                          o.isCorrect
+                                            ? "text-green-600 font-semibold"
+                                            : "text-gray-600"
+                                        }`}
+                                      >
+                                        {o.text}
+                                      </li>
+                                    ))}
+                                  </ul>
+                                )}
+                              </li>
+                            ))}
+                          </ul>
+                        ) : (
+                          <p className="text-gray-500 text-sm italic">
+                            No questions yet.
+                          </p>
+                        )}
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              );
+            })}
           </div>
         ) : (
           <p className="text-gray-400 italic">No quizzes found.</p>
         )}
       </div>
 
-      {/* Create Quiz Modal */}
+      {/* QUIZ MODAL */}
       <AnimatePresence>
         {showQuizModal && (
           <motion.div
@@ -268,7 +450,7 @@ export default function InstructorQuizBuilder() {
             >
               <div className="flex justify-between items-center mb-4">
                 <h3 className="text-lg font-semibold text-[var(--color-secondary)]">
-                  Create New Quiz
+                  {isEditingQuiz ? "Edit Quiz" : "Create New Quiz"}
                 </h3>
                 <X
                   onClick={() => setShowQuizModal(false)}
@@ -277,42 +459,46 @@ export default function InstructorQuizBuilder() {
               </div>
 
               <form onSubmit={handleQuizSubmit} className="space-y-4">
-                <div>
-                  <label className="text-sm font-medium">Course</label>
-                  <select
-                    name="courseId"
-                    value={quizForm.courseId}
-                    onChange={(e) => {
-                      handleQuizChange(e);
-                      fetchUnits(e.target.value);
-                    }}
-                    className="w-full border rounded-md px-3 py-2 mt-1 text-sm"
-                  >
-                    <option value="">Select Course</option>
-                    {courses.map((c) => (
-                      <option key={c._id} value={c._id}>
-                        {c.title}
-                      </option>
-                    ))}
-                  </select>
-                </div>
+                {!isEditingQuiz && (
+                  <>
+                    <div>
+                      <label className="text-sm font-medium">Course</label>
+                      <select
+                        name="courseId"
+                        value={quizForm.courseId}
+                        onChange={(e) => {
+                          handleQuizChange(e);
+                          fetchUnits(e.target.value);
+                        }}
+                        className="w-full border rounded-md px-3 py-2 mt-1 text-sm"
+                      >
+                        <option value="">Select Course</option>
+                        {courses.map((c) => (
+                          <option key={c._id} value={c._id}>
+                            {c.title}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
 
-                <div>
-                  <label className="text-sm font-medium">Unit</label>
-                  <select
-                    name="unitId"
-                    value={quizForm.unitId}
-                    onChange={handleQuizChange}
-                    className="w-full border rounded-md px-3 py-2 mt-1 text-sm"
-                  >
-                    <option value="">Select Unit</option>
-                    {units.map((u) => (
-                      <option key={u._id} value={u._id}>
-                        {u.title}
-                      </option>
-                    ))}
-                  </select>
-                </div>
+                    <div>
+                      <label className="text-sm font-medium">Unit</label>
+                      <select
+                        name="unitId"
+                        value={quizForm.unitId}
+                        onChange={handleQuizChange}
+                        className="w-full border rounded-md px-3 py-2 mt-1 text-sm"
+                      >
+                        <option value="">Select Unit</option>
+                        {units.map((u) => (
+                          <option key={u._id} value={u._id}>
+                            {u.title}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  </>
+                )}
 
                 <div>
                   <label className="text-sm font-medium">Quiz Title</label>
@@ -350,7 +536,7 @@ export default function InstructorQuizBuilder() {
                     type="submit"
                     className="px-4 py-2 text-sm rounded-md bg-[var(--color-primary)] text-white"
                   >
-                    Create
+                    {isEditingQuiz ? "Update" : "Create"}
                   </button>
                 </div>
               </form>
@@ -359,7 +545,7 @@ export default function InstructorQuizBuilder() {
         )}
       </AnimatePresence>
 
-      {/* Add Question Modal */}
+      {/* QUESTION MODAL */}
       <AnimatePresence>
         {showQuestionModal && (
           <motion.div
@@ -379,7 +565,9 @@ export default function InstructorQuizBuilder() {
             >
               <div className="flex justify-between items-center mb-4">
                 <h3 className="text-lg font-semibold text-[var(--color-secondary)]">
-                  Add Question to "{selectedQuiz?.title}"
+                  {isEditingQuestion
+                    ? "Edit Question"
+                    : `Add Question to "${selectedQuiz?.title}"`}
                 </h3>
                 <X
                   onClick={() => setShowQuestionModal(false)}
@@ -387,40 +575,7 @@ export default function InstructorQuizBuilder() {
                 />
               </div>
 
-              {questions.length > 0 && (
-                <div className="mb-6 border rounded-md p-3 bg-gray-50">
-                  <h4 className="font-medium mb-2 text-gray-700">
-                    Existing Questions
-                  </h4>
-                  <ul className="space-y-2 text-sm">
-                    {questions.map((q, idx) => (
-                      <li key={q._id} className="border-b pb-1">
-                        <span className="font-semibold">
-                          {idx + 1}. {q.prompt}
-                        </span>
-                        {q.type === "mcq" && (
-                          <ul className="ml-5 list-disc">
-                            {q.options.map((o, i) => (
-                              <li
-                                key={i}
-                                className={`${
-                                  o.isCorrect
-                                    ? "text-green-600 font-medium"
-                                    : "text-gray-600"
-                                }`}
-                              >
-                                {o.text}
-                              </li>
-                            ))}
-                          </ul>
-                        )}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-
-              <form onSubmit={handleAddQuestion} className="space-y-4">
+              <form onSubmit={handleAddOrUpdateQuestion} className="space-y-4">
                 <div>
                   <label className="text-sm font-medium">Question Type</label>
                   <select
@@ -441,7 +596,7 @@ export default function InstructorQuizBuilder() {
                     value={questionForm.prompt}
                     onChange={handleQuestionChange}
                     rows={3}
-                    placeholder="Enter the question"
+                    placeholder="Enter question"
                     className="w-full border rounded-md px-3 py-2 mt-1 text-sm"
                   />
                 </div>
@@ -519,7 +674,7 @@ export default function InstructorQuizBuilder() {
                     type="submit"
                     className="px-4 py-2 text-sm rounded-md bg-[var(--color-primary)] text-white"
                   >
-                    Add Question
+                    {isEditingQuestion ? "Update Question" : "Add Question"}
                   </button>
                 </div>
               </form>

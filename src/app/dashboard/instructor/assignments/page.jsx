@@ -5,8 +5,10 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Plus, Edit, Trash2, Upload, X } from "lucide-react";
 import api from "@/lib/apiClient";
 import { toast } from "react-toastify";
+import { useAuth } from "@/hooks/useAuth";
 
 export default function TaskManagerPage() {
+  const {user} = useAuth()
   const [courses, setCourses] = useState([]);
   const [units, setUnits] = useState([]);
   const [tasks, setTasks] = useState([]);
@@ -20,7 +22,7 @@ export default function TaskManagerPage() {
   useEffect(() => {
     (async () => {
       try {
-        const res = await api.get("/courses");
+        const res = await api.get(`/courses?instructor=${user._id}`);
         setCourses(res.data?.data || []);
       } catch {
         toast.error("Failed to load courses");

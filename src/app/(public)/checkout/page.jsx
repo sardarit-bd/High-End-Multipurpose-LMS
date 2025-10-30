@@ -12,16 +12,26 @@ import {
   Lock,
   BadgeCheck,
 } from "lucide-react";
+import { useSlugCourses } from "@/hooks/useCourse";
+import { useSearchParams } from "next/navigation";
+
 
 export default function CheckoutPage() {
+  const params = useSearchParams()
   const { t, i18n } = useTranslation();
   const [paymentMethod, setPaymentMethod] = useState("paypal");
+  const {data: course, isLoading} = useSlugCourses(params.get('slug'))
 
+  if(isLoading){
+    return <h2>Loading...</h2>
+  }
+
+  console.log(course)
   const getConvertedPrice = (usd) =>
     i18n?.language === "ms" ? `RM${(usd * 4.7).toFixed(2)}` : `$${usd.toFixed(2)}`;
 
-  const coursePrices = { uiux: 120, react: 160 };
-  const subTotal = coursePrices.uiux + coursePrices.react;
+ 
+  const subTotal = course.price
   const tax = 25;
   const total = subTotal + tax;
 
@@ -40,7 +50,7 @@ export default function CheckoutPage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100">
       {/* Header bar */}
-      <div className="brandBg text-white">
+      <div className="brandBg">
         <div className="container mx-auto px-4 py-3 flex items-center justify-center gap-2 text-sm font-medium tracking-wide">
           <ShieldCheck className="h-4 w-4" />
           <span>Secure Checkout — 256-bit SSL Encryption</span>
@@ -146,14 +156,9 @@ export default function CheckoutPage() {
 
                 <ul className="space-y-5">
                   <OrderItem
-                    title="UI/UX Design Degree"
-                    price={getConvertedPrice(coursePrices.uiux)}
-                    img="/courses/uiux.jpg"
-                  />
-                  <OrderItem
-                    title="React Fundamentals"
-                    price={getConvertedPrice(coursePrices.react)}
-                    img="/courses/react.jpg"
+                    title={course.title}
+                    price={getConvertedPrice(course.price)}
+                    img={course.thumbnail}
                   />
                 </ul>
 

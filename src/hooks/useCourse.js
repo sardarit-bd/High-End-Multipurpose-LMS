@@ -22,6 +22,8 @@ export const useInstructorCourses = (filters) => {
             const params = new URLSearchParams();
             if (filters?.status && filters.status !== "All") params.append("status", filters.status);
             if (filters?.search) params.append("q", filters.search);
+            if(filters.instructor) params.append("instructor", filters.instructor)
+
 
             const res = await api.get(`/courses?${params.toString()}`);
             return res.data?.data || [];
@@ -29,3 +31,67 @@ export const useInstructorCourses = (filters) => {
         refetchOnWindowFocus: false,
     });
 };
+
+export const useSlugCourses = (slug) => {
+    return useQuery({
+        queryKey: ["slugCourse", slug],
+        queryFn: async () => {
+            const res = await api.get(`/courses/${slug}`);
+            return res.data?.data || [];
+        },
+        refetchOnWindowFocus: false,
+    });
+};
+
+export const usePublicCourses = (filters) => {
+  return useQuery({
+    queryKey: ["publicCourses", filters],
+    queryFn: async () => {
+      const params = new URLSearchParams();
+      if (filters?.page) params.append("page", filters.page);
+      if (filters?.limit) params.append("limit", filters.limit);
+      if (filters?.search) params.append("q", filters.search);
+      if (filters?.categories?.length)
+        params.append("categories", filters.categories.join(","));
+      if (filters?.price && filters.price !== "all")
+        params.append("price", filters.price); // 'free' | 'paid'
+
+      const res = await api.get(`/courses?${params.toString()}`);
+      console.log(res.data)
+      const data = res.data;
+      return {
+        items: data?.data || [],
+        total: data?.meta?.total || 0,
+        page: data?.meta?.page || 1,
+        totalPages: data?.meta?.totalPages || 1,
+      };
+    },
+    refetchOnWindowFocus: false,
+    keepPreviousData: true,
+  });
+};
+
+
+// Get units by course ID
+export const useUnitsByCourse = (courseId) =>
+  useQuery({
+    queryKey: ["unitsByCourse", courseId],
+    queryFn: async () => {
+      const res = await api.get(`/units/${courseId}`);
+      return res.data?.data;
+    },
+    enabled: !!courseId,
+    refetchOnWindowFocus: false,
+  });
+
+// Fetch lessons by unit ID
+export const useLessonsByUnit = (unitId) =>
+  useQuery({
+    queryKey: ["lessonsByUnit", unitId],
+    queryFn: async () => {
+      const res = await api.get(`/lessons/${unitId}`);
+      return res.data?.data || [];
+    },
+    enabled: !!unitId,
+    refetchOnWindowFocus: false,
+  });

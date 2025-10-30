@@ -19,11 +19,14 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useInstructorCourses } from "@/hooks/useCourse";
 import { StatBadge } from "@/components/modules/dashboard/instructorr/StatBadge";
 import StatusPill from "@/components/modules/dashboard/instructorr/StatusPill";
+import { useAuth } from "@/hooks/useAuth";
 
 const PAGE_SIZE = 6;
 const STATUS_OPTIONS = ["All", "Published", "Pending", "Draft"];
 
 export default function InstructorCourses() {
+    const {user} = useAuth()
+   
     const [query, setQuery] = useState("");
     const [statusFilter, setStatusFilter] = useState("All");
     const [page, setPage] = useState(1);
@@ -32,6 +35,7 @@ export default function InstructorCourses() {
     const { data: courses = [], isLoading, isFetching } = useInstructorCourses({
         search: query,
         status: statusFilter,
+        instructor: user?._id
     });
 
     const totalPages = Math.max(1, Math.ceil(courses.length / PAGE_SIZE));

@@ -3,22 +3,21 @@ import AboutInstructor from "@/components/modules/courses/AboutInstructor";
 import CommentForm from "@/components/modules/courses/CommentForm";
 import CourseContent from "@/components/modules/courses/CourseContent";
 import { FiHeart, FiShare2 } from "react-icons/fi";
-import { useEffect, useState } from "react";
 import CourseSingleSkeleton from "@/components/modules/special/CourseSingleSkeleton";
+import { useParams } from "next/navigation";
+import { useSlugCourses, useUnitsByCourse } from "@/hooks/useCourse";
+import { useInstructorById } from "@/hooks/useAuth";
+import Link from "next/link";
 
 
 export default function CourseSinglePage() {
+    const { slug } = useParams()
 
-    const [hydrated, setHydrated] = useState(false);
-    // Optional: keep the skeleton for a minimum time to avoid flash (e.g., 300ms)
-    const MIN_DELAY_MS = 200;
+    const { data: course, isLoading: courseLoading } = useSlugCourses(slug);
+    const { data: instructor, isLoading: instructorLoading } = useInstructorById(course?.instructor);
+    const { data: units, isLoading: unitsLoading } = useUnitsByCourse(course?._id);
 
-    useEffect(() => {
-        const t = setTimeout(() => setHydrated(true), MIN_DELAY_MS);
-        return () => clearTimeout(t);
-    }, []);
-
-    if (!hydrated) return <CourseSingleSkeleton />;
+    if (courseLoading, instructorLoading, unitsLoading) return <CourseSingleSkeleton />;
 
     return (
         <div className="bg-white min-h-screen">
@@ -31,7 +30,7 @@ export default function CourseSinglePage() {
                             <video
                                 controls
                                 autoPlay={true}
-                                muted ={true}
+                                muted={true}
                                 loop={true}
                                 //   poster="/thumbnail.jpg"
                                 className="w-full rounded-[var(--radius-card)]"
@@ -44,13 +43,14 @@ export default function CourseSinglePage() {
                         {/* Overview */}
                         <section className="bg-white shadow-sm rounded-[var(--radius-card)] p-6 mb-6">
                             <h2 className="text-xl font-semibold text-[var(--color-secondary)] mb-3">Overview</h2>
+                            <p className="text-sm text-gray-700 leading-relaxed">
+                                {course?.description}
+                            </p>
 
-                            <div className="mb-4">
+                            {/* <div className="mb-4">
                                 <h3 className="font-semibold text-[var(--color-text)] mb-1">Course Description</h3>
                                 <p className="text-sm text-gray-700 leading-relaxed">
-                                    Embark on a transformative journey into AI. This course introduces you to
-                                    Generative AI and ChatGPT, helping you learn prompt engineering and develop your own
-                                    projects with confidence.
+                                    {course?.description}
                                 </p>
                             </div>
 
@@ -68,18 +68,19 @@ export default function CourseSinglePage() {
                                 <p className="text-sm text-gray-700">
                                     No prior experience needed. A free copy of Adobe XD can be downloaded from Adobe.
                                 </p>
-                            </div>
+                            </div> */}
                         </section>
-                        <CourseContent />
-                        <AboutInstructor />
+                        <CourseContent units={units} />
+                        <AboutInstructor instructor={instructor} />
                         <CommentForm />
                     </div>
 
                     {/* ===== Right Sidebar ===== */}
                     <aside className="w-full lg:w-80 flex-shrink-0 lg:sticky lg:top-18 self-start">
                         <div className="bg-white rounded-[var(--radius-card)] shadow-md p-6 mb-6">
-                            <h3 className="text-2xl font-bold text-[var(--color-primary)] mb-1">FREE</h3>
-                            <p className="line-through text-sm text-gray-400">$99.00</p>
+                            {course?.price ? <p className="text-2xl font-bold text-[var(--color-primary)] mb-1">${course?.price}</p> : <h3 className="text-2xl font-bold text-[var(--color-primary)] mb-1">FREE</h3>}
+
+
                             <p className="text-sm text-[var(--color-accent)] font-semibold mb-4">50% OFF</p>
 
                             <div className="flex gap-3 mb-4">
@@ -92,7 +93,7 @@ export default function CourseSinglePage() {
                             </div>
 
                             <button className="w-full py-3 rounded-lg text-white font-semibold bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] shadow-md">
-                                Enroll Now
+                               <Link href={`/checkout?slug=${slug}`}>Enroll Now</Link>
                             </button>
                         </div>
 

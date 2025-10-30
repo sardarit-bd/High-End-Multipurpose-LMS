@@ -146,7 +146,7 @@ export default function LessonFormModal({ open, onClose, unitId, units = [], les
                   >
                     <option value="video">Video</option>
                     <option value="pdf">PDF</option>
-                    <option value="doc">Document</option>
+                    <option value="audio">Audio</option>
                   </select>
                 </div>
               </div>
