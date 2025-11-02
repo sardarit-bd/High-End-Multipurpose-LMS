@@ -4,6 +4,7 @@ export const useCoursesApi = () => useApi("/courses", "courses");
 import { useMutation, useQuery } from "@tanstack/react-query";
 import api from "@/lib/apiClient";
 import { toast } from "react-toastify";
+
 export const useCreateCourse = () =>
     useMutation({
         mutationFn: async (data) => {
@@ -57,7 +58,6 @@ export const usePublicCourses = (filters) => {
         params.append("price", filters.price); // 'free' | 'paid'
 
       const res = await api.get(`/courses?${params.toString()}`);
-      console.log(res.data)
       const data = res.data;
       return {
         items: data?.data || [],

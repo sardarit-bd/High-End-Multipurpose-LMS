@@ -39,7 +39,6 @@ export function AuthProvider({ children }) {
   };
 
   const googleLogin = async () => {
-    console.log("ok")
    try {
       window.location.href = `${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/google`;
       const { data } = await api.get("/user/me");

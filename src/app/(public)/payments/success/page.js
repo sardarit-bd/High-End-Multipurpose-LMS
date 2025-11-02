@@ -2,18 +2,20 @@
 
 import Link from "next/link";
 import { CheckCircle, CreditCard, CalendarDays, Package } from "lucide-react";
+import { useSearchParams } from "next/navigation";
+import { useOrderBySession } from "@/hooks/useOrder";
+import { format } from "date-fns";
+
 
 export default function Page() {
-    const order = {
-        id: "ORD-20251023-8745",
-        date: "October 23, 2025",
-        items: [
-            { name: "Next.js Crash Course", qty: 1, price: "$599" }
-        ],
-        total: "$599",
-        paymentMethod: "Stripe (Credit Card)",
-    };
+    const searchParam = useSearchParams()
+    const sessionId = searchParam.get("session_id")
 
+    const {data, isLoading} = useOrderBySession(sessionId)
+
+    if(isLoading){
+        return <h2>Loading...</h2>
+    }
     return (
         <div className="min-h-screen flex flex-col items-center justify-center brandBg px-6 py-16">
             {/* ✅ Card container */}
@@ -35,29 +37,29 @@ export default function Page() {
                     <div className="flex justify-between items-center mb-3">
                         <h2 className="text-lg font-semibold text-gray-800">Order Summary</h2>
                         <span className="flex items-center gap-1 text-sm text-gray-500">
-                            <CalendarDays className="w-4 h-4" /> {order.date}
+                            <CalendarDays className="w-4 h-4" /> {format(new Date(data.createdAt), "MMMM d, yyyy")}
                         </span>
                     </div>
 
-                    <ul className="divide-y divide-gray-200 mb-3">
+                    {/* <ul className="divide-y divide-gray-200 mb-3">
                         {order.items.map((item, i) => (
                             <li key={i} className="flex justify-between py-2 text-sm text-gray-700">
                                 <span>{item.name} × {item.qty}</span>
                                 <span className="font-medium">{item.price}</span>
                             </li>
                         ))}
-                    </ul>
+                    </ul> */}
 
                     <div className="flex justify-between text-sm mb-2">
                         <span className="text-gray-600">Payment Method</span>
                         <span className="flex items-center gap-1 text-gray-800 font-medium">
-                            <CreditCard className="w-4 h-4" /> {order.paymentMethod}
+                            <CreditCard className="w-4 h-4" /> {data.provider}
                         </span>
                     </div>
 
                     <div className="flex justify-between items-center border-t border-gray-200 pt-3 mt-2">
                         <span className="font-semibold text-gray-800">Total</span>
-                        <span className="font-semibold text-[var(--color-primary)]">{order.total}</span>
+                        <span className="font-semibold text-[var(--color-primary)]">{data.price + " " + data.currency}</span>
                     </div>
                 </div>
 
