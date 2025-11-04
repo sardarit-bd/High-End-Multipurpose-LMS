@@ -19,7 +19,7 @@ export default function CourseLearningPage() {
   const { data: units, isLoading: unitsLoading } = useUnitsByCourse(course?._id);
 
   const [currentLesson, setCurrentLesson] = useState(null);
-  const [openModules, setOpenModules] = useState(null);
+  const [openModules, setOpenModules] = useState(0);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const nextBtnRef = useRef(null);
 
@@ -116,7 +116,7 @@ export default function CourseLearningPage() {
                 </h2>
               </div>
 
-              <div className="flex items-center gap-2">
+              {/* <div className="flex items-center gap-2">
                 <button
                   className="inline-flex items-center gap-2 rounded-[--radius-default] px-4 py-2 text-sm transition hover:bg-white/70"
                   style={{ background: "white", boxShadow: "var(--shadow-soft)" }}
@@ -136,7 +136,7 @@ export default function CourseLearningPage() {
                   Next
                   <ChevronRight size={16} />
                 </button>
-              </div>
+              </div> */}
             </div>
           </div>
         </main>
