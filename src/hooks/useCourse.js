@@ -6,42 +6,41 @@ import api from "@/lib/apiClient";
 import { toast } from "react-toastify";
 
 export const useCreateCourse = () =>
-    useMutation({
-        mutationFn: async (data) => {
-            const res = await api.post("/courses/create", data);
-            return res.data?.data;
-        },
-        onSuccess: (data) => toast.success("Course created successfully!"),
-        onError: (err) =>
-            toast.error(err.response?.data?.message || "Failed to create course"),
-    });
-
+  useMutation({
+    mutationFn: async (data) => {
+      const res = await api.post("/courses/create", data);
+      return res.data?.data;
+    },
+    onSuccess: (data) => toast.success("Course created successfully!"),
+    onError: (err) =>
+      toast.error(err.response?.data?.message || "Failed to create course"),
+  });
 export const useInstructorCourses = (filters) => {
-    return useQuery({
-        queryKey: ["instructorCourses", filters],
-        queryFn: async () => {
-            const params = new URLSearchParams();
-            if (filters?.status && filters.status !== "All") params.append("status", filters.status);
-            if (filters?.search) params.append("q", filters.search);
-            if(filters.instructor) params.append("instructor", filters.instructor)
+  return useQuery({
+    queryKey: ["instructorCourses", filters],
+    queryFn: async () => {
+      const params = new URLSearchParams();
+      if (filters?.status && filters.status !== "All") params.append("status", filters.status);
+      if (filters?.search) params.append("q", filters.search);
+      if (filters.instructor) params.append("instructor", filters.instructor)
 
 
-            const res = await api.get(`/courses?${params.toString()}`);
-            return res.data?.data || [];
-        },
-        refetchOnWindowFocus: false,
-    });
+      const res = await api.get(`/courses?${params.toString()}`);
+      return res.data?.data || [];
+    },
+    refetchOnWindowFocus: false,
+  });
 };
 
 export const useSlugCourses = (slug) => {
-    return useQuery({
-        queryKey: ["slugCourse", slug],
-        queryFn: async () => {
-            const res = await api.get(`/courses/${slug}`);
-            return res.data?.data || [];
-        },
-        refetchOnWindowFocus: false,
-    });
+  return useQuery({
+    queryKey: ["slugCourse", slug],
+    queryFn: async () => {
+      const res = await api.get(`/courses/${slug}`);
+      return res.data?.data || [];
+    },
+    refetchOnWindowFocus: false,
+  });
 };
 
 export const usePublicCourses = (filters) => {
@@ -95,3 +94,14 @@ export const useLessonsByUnit = (unitId) =>
     enabled: !!unitId,
     refetchOnWindowFocus: false,
   });
+
+  export const useEnrollmentCourses = (studentId) => {
+    return useQuery({
+        queryKey: ["enrollmentCourse", studentId],
+        queryFn: async () => {
+            const res = await api.get(`/enrollments/me`);
+            return res.data?.data || [];
+        },
+        refetchOnWindowFocus: false,
+    });
+};

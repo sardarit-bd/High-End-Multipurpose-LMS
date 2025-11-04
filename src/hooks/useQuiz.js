@@ -3,15 +3,15 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import api from "@/lib/apiClient";
 import { toast } from "react-toastify";
 
-export const useQuizzes = (unitId) =>
+export const useQuizzes = (taskId) =>
   useQuery({
-    queryKey: ["quizzes", unitId],
+    queryKey: ["quizzes", taskId],
     queryFn: async () => {
-      if (!unitId) return [];
-      const res = await api.get(`/units/${unitId}/quizzes`);
+      if (!taskId) return [];
+      const res = await api.get(`/quizzes/${taskId}`);
       return res.data?.data || [];
     },
-    enabled: !!unitId,
+    enabled: !!taskId,
   });
 
 export const useSaveQuiz = () => {

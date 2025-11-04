@@ -8,7 +8,7 @@ export const useTasks = (unitId) =>
     queryKey: ["tasks", unitId],
     queryFn: async () => {
       if (!unitId) return [];
-      const res = await api.get(`/units/${unitId}/tasks`);
+      const res = await api.get(`/tasks/${unitId}`);
       return res.data?.data || [];
     },
     enabled: !!unitId,
