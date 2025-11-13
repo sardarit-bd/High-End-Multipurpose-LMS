@@ -9,9 +9,11 @@ import {
 } from 'react-icons/fa';
 import SponsorShipCard from '@/components/modules/sponsorship/sponsorShipCard';
 import PartnershipOpportunities from '@/components/modules/sponsorship/PartnershipOpportunities';
+
 import Footer from '@/components/modules/footers/Footer';
 import SponsorHeroSection from '@/components/modules/sponsorship/SponsorHeroSection';
 import { useTranslation } from 'react-i18next'; // 🟢 Add i18n hook
+
 
 const Sponsorship = () => {
   const { t } = useTranslation(); // 🟢 Initialize translator
@@ -188,7 +190,8 @@ const Sponsorship = () => {
           selectedPackageData={selectedPackageData}
         />
       </div>
-      <Footer />
+
+      <Footer/>
     </>
   );
 };

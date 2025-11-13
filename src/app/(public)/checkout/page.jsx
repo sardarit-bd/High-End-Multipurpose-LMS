@@ -1,220 +1,222 @@
 "use client";
+
 import { useState } from "react";
 import Image from "next/image";
 import { useTranslation } from "react-i18next";
+import {
+  CreditCard,
+  Landmark,
+  Wallet,
+  DollarSign,
+  ShieldCheck,
+  Lock,
+  BadgeCheck,
+} from "lucide-react";
 
 export default function CheckoutPage() {
   const { t, i18n } = useTranslation();
-  const [paymentMethod, setPaymentMethod] = useState("card");
+  const [paymentMethod, setPaymentMethod] = useState("paypal");
 
-  // Price conversion based on language
-  const getConvertedPrice = (usdAmount) => {
-    if (i18n.language === 'ms') {
-      // Convert USD to Malaysian Ringgit (approximate rate: 1 USD = 4.7 MYR)
-      const myrAmount = usdAmount * 4.7;
-      return `RM${myrAmount.toFixed(2)}`;
-    }
-    return `$${usdAmount.toFixed(2)}`;
-  };
+  const getConvertedPrice = (usd) =>
+    i18n?.language === "ms" ? `RM${(usd * 4.7).toFixed(2)}` : `$${usd.toFixed(2)}`;
 
-  // Individual prices
-  const coursePrices = {
-    uiux: 120,
-    react: 160
-  };
-
-  // Calculate totals
+  const coursePrices = { uiux: 120, react: 160 };
   const subTotal = coursePrices.uiux + coursePrices.react;
   const tax = 25;
   const total = subTotal + tax;
 
+  const paymentOptions = [
+    { id: "paypal", label: "PayPal", icon: Wallet },
+    { id: "stripe", label: "Stripe", icon: Landmark },
+    { id: "tayyibpay", label: "TayyibPay", icon: DollarSign },
+    { id: "billplz", label: "Billplz", icon: DollarSign },
+  ];
+
+  const card =
+    "bg-white shadow-sm rounded-2xl border border-gray-100 backdrop-blur-sm";
+  const inputBase =
+    "w-full px-3.5 py-2.5 rounded-lg bg-gray-50 border border-gray-200 text-gray-800 placeholder-gray-400 outline-none focus:border-[var(--color-primary,#0ea5e9)] focus:ring-2 focus:ring-[var(--color-primary,#0ea5e9)]/20 transition";
+
   return (
-    <div className="bg-white min-h-[85vh] py-10">
-      <div className="container mx-auto px-4 lg:px-8 flex flex-col-reverse lg:flex-row gap-8">
-        {/* ===== Left Content (Forms) ===== */}
-        <div className="flex-1 space-y-6">
-          {/* Billing Address */}
-          <div className="bg-white shadow-md rounded-[var(--radius-card)] p-6">
-            <h2 className="text-xl font-semibold text-[var(--color-secondary)] mb-4">
-              {t("checkout.billingAddress") || "Billing Address"}
-            </h2>
-            <form className="space-y-4">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <input 
-                  type="text" 
-                  placeholder={t("checkout.firstName") || "First Name *"} 
-                  className="flex-1 px-4 py-2 bg-[var(--color-text)]/10 border border-[var(--color-primary)] rounded-lg text-[var(--color-text)] placeholder-[var(--color-text)] focus:outline-none focus:border-[var(--color-primary)]" 
-                  required 
-                />
-                <input 
-                  type="text" 
-                  placeholder={t("checkout.lastName") || "Last Name *"} 
-                  className="flex-1 px-4 py-2 bg-[var(--color-text)]/10 border border-[var(--color-primary)] rounded-lg text-[var(--color-text)] placeholder-[var(--color-text)] focus:outline-none focus:border-[var(--color-primary)]" 
-                  required 
-                />
-              </div>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                <input 
-                  type="text" 
-                  placeholder={t("checkout.phoneNumber") || "Phone Number (Optional)"} 
-                  className="flex-1 px-4 py-2 bg-[var(--color-text)]/10 border border-[var(--color-primary)] rounded-lg text-[var(--color-text)] placeholder-[var(--color-text)] focus:outline-none focus:border-[var(--color-primary)]" 
-                />
-                <input 
-                  type="text" 
-                  placeholder={t("checkout.addressLine1") || "Address Line 1 *"} 
-                  className="flex-1 px-4 py-2 bg-[var(--color-text)]/10 border border-[var(--color-primary)] rounded-lg text-[var(--color-text)] placeholder-[var(--color-text)] focus:outline-none focus:border-[var(--color-primary)]" 
-                  required 
-                />
-                <input 
-                  type="text" 
-                  placeholder={t("checkout.addressLine2") || "Address Line 2 (Optional)"} 
-                  className="flex-1 px-4 py-2 bg-[var(--color-text)]/10 border border-[var(--color-primary)] rounded-lg text-[var(--color-text)] placeholder-[var(--color-text)] focus:outline-none focus:border-[var(--color-primary)]" 
-                />
-              </div>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                <input 
-                  type="text" 
-                  placeholder={t("checkout.country") || "Country *"} 
-                  className="flex-1 px-4 py-2 bg-[var(--color-text)]/10 border border-[var(--color-primary)] rounded-lg text-[var(--color-text)] placeholder-[var(--color-text)] focus:outline-none focus:border-[var(--color-primary)]" 
-                  required 
-                />
-                <input 
-                  type="text" 
-                  placeholder={t("checkout.state") || "State *"} 
-                  className="flex-1 px-4 py-2 bg-[var(--color-text)]/10 border border-[var(--color-primary)] rounded-lg text-[var(--color-text)] placeholder-[var(--color-text)] focus:outline-none focus:border-[var(--color-primary)]" 
-                  required 
-                />
-                <input 
-                  type="text" 
-                  placeholder={t("checkout.city") || "City *"} 
-                  className="flex-1 px-4 py-2 bg-[var(--color-text)]/10 border border-[var(--color-primary)] rounded-lg text-[var(--color-text)] placeholder-[var(--color-text)] focus:outline-none focus:border-[var(--color-primary)]" 
-                  required 
-                />
-              </div>
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100">
+      {/* Header bar */}
+      <div className="brandBg text-white">
+        <div className="container mx-auto px-4 py-3 flex items-center justify-center gap-2 text-sm font-medium tracking-wide">
+          <ShieldCheck className="h-4 w-4" />
+          <span>Secure Checkout — 256-bit SSL Encryption</span>
+        </div>
+      </div>
 
-              <div className="flex flex-col gap-2 text-sm text-gray-600">
-                <label className="flex items-center gap-2">
-                  <input type="checkbox" /> 
-                  {t("checkout.saveInformation") || "Save this information for next time"}
-                </label>
-              </div>
-            </form>
-          </div>
+      <main className="container mx-auto px-4 sm:px-4 lg:px-4 py-2">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
+            {/* LEFT */}
+            <div className="lg:col-span-8 space-y-8">
+              {/* Billing */}
+              <section className={`${card} p-8`}>
+                <h2 className="text-lg font-semibold brandColor mb-5 text-gray-800">
+                  Billing Information
+                </h2>
 
-          {/* Payment Method */}
-          <div className="bg-white shadow-md rounded-[var(--radius-card)] p-6">
-            <h2 className="text-xl font-semibold text-[var(--color-secondary)] mb-4">
-              {t("checkout.paymentMethod") || "Payment Method"}
-            </h2>
+                <form className="space-y-5">
+                  <div className="grid sm:grid-cols-2 gap-4">
+                    <input placeholder="First Name *" className={inputBase} />
+                    <input placeholder="Last Name *" className={inputBase} />
+                  </div>
 
-            {/* Payment Tabs */}
-            <div className="flex gap-3 mb-4">
-              {["card", "paypal", "stripe"].map((method) => (
+                  <div className="grid sm:grid-cols-3 gap-4">
+                    <input placeholder="Phone (optional)" className={inputBase} />
+                    <input placeholder="Address Line 1 *" className={inputBase} />
+                    <input placeholder="Address Line 2" className={inputBase} />
+                  </div>
+
+                  <div className="grid sm:grid-cols-3 gap-4">
+                    <input placeholder="Country *" className={inputBase} />
+                    <input placeholder="State *" className={inputBase} />
+                    <input placeholder="City *" className={inputBase} />
+                  </div>
+
+                  <label className="flex items-center gap-2 text-sm text-gray-700 mt-2">
+                    <input type="checkbox" className="h-4 w-4 rounded border-gray-300" />
+                    Save this information for next time
+                  </label>
+                </form>
+              </section>
+
+              {/* Payment */}
+              <section className={`${card} p-8`}>
+                <h2 className="text-lg font-semibold brandColor mb-6 text-gray-800">
+                  Payment Method
+                </h2>
+
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
+                  {paymentOptions.map(({ id, label, icon: Icon }) => {
+                    const active = paymentMethod === id;
+                    return (
+                      <button
+                        key={id}
+                        onClick={() => setPaymentMethod(id)}
+                        type="button"
+                        className={`flex flex-col items-center justify-center gap-1 p-3 rounded-xl border text-sm font-medium transition-all duration-150 ${active
+                          ? "bg-[var(--color-primary,#0ea5e9)] text-white border-[var(--color-primary,#0ea5e9)] shadow-md scale-105"
+                          : "bg-gray-50 text-gray-800 border-gray-200 hover:bg-white hover:shadow-sm"
+                          }`}
+                      >
+                        <Icon className="h-5 w-5" />
+                        {label}
+                      </button>
+                    );
+                  })}
+                </div>
+
+                <div className="space-y-4">
+                  {paymentMethod === "paypal" && (
+                    <Notice title="PayPal" message="You will be redirected to PayPal to complete your payment securely." />
+                  )}
+                  {paymentMethod === "stripe" && (
+                    <Notice title="Stripe" message="Stripe secure checkout will open to confirm your card payment." />
+                  )}
+                  {paymentMethod === "tayyibpay" && (
+                    <Notice title="TayyibPay" message="You’ll be redirected to TayyibPay Malaysia gateway to complete your transaction." />
+                  )}
+                  {paymentMethod === "billplz" && (
+                    <Notice title="Billplz" message="You’ll be redirected to Billplz Malaysia gateway to complete your transaction." />
+                  )}
+                </div>
+
                 <button
-                  key={method}
-                  onClick={() => setPaymentMethod(method)}
-                  className={`flex-1 py-2 rounded-lg border text-sm font-medium ${
-                    paymentMethod === method
-                      ? "bg-[var(--color-primary)] text-white"
-                      : "bg-gray-50 text-gray-700"
-                  }`}
+                  className="mt-8 w-full py-3.5 rounded-lg font-semibold text-white bg-gradient-to-r from-[var(--color-primary,#0ea5e9)] to-[var(--color-primary-hover,#0284c7)] hover:opacity-95 transition-all shadow"
+                  type="button"
                 >
-                  {method === "card" && `💳 ${t("checkout.paymentMethods.card") || "Card"}`}
-                  {method === "paypal" && `💰 ${t("checkout.paymentMethods.paypal") || "Paypal"}`}
-                  {method === "stripe" && `🔵 ${t("checkout.paymentMethods.stripe") || "Stripe"}`}
+                  Pay {getConvertedPrice(total)}
                 </button>
-              ))}
+
+                <div className="mt-4 flex items-center justify-center gap-2 text-xs text-gray-500">
+                  <Lock className="h-4 w-4" /> Encrypted & Secure Payment
+                </div>
+              </section>
             </div>
 
-            {/* Card Form */}
-            {paymentMethod === "card" && (
-              <form className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <input 
-                  type="text" 
-                  placeholder={t("checkout.cardNumber") || "Card Number *"} 
-                  className="flex-1 px-4 py-2 bg-[var(--color-text)]/10 border border-[var(--color-primary)] rounded-lg text-[var(--color-text)] placeholder-[var(--color-text)] focus:outline-none focus:border-[var(--color-primary)]" 
-                  required 
-                />
-                <input 
-                  type="text" 
-                  placeholder={t("checkout.nameOnCard") || "Name on Card *"} 
-                  className="flex-1 px-4 py-2 bg-[var(--color-text)]/10 border border-[var(--color-primary)] rounded-lg text-[var(--color-text)] placeholder-[var(--color-text)] focus:outline-none focus:border-[var(--color-primary)]" 
-                  required 
-                />
-                <input 
-                  type="text" 
-                  placeholder={t("checkout.expiryDate") || "Expiry Date *"} 
-                  className="flex-1 px-4 py-2 bg-[var(--color-text)]/10 border border-[var(--color-primary)] rounded-lg text-[var(--color-text)] placeholder-[var(--color-text)] focus:outline-none focus:border-[var(--color-primary)]" 
-                  required 
-                />
-                <input 
-                  type="text" 
-                  placeholder={t("checkout.securityNumber") || "Security Number *"} 
-                  className="flex-1 px-4 py-2 bg-[var(--color-text)]/10 border border-[var(--color-primary)] rounded-lg text-[var(--color-text)] placeholder-[var(--color-text)] focus:outline-none focus:border-[var(--color-primary)]" 
-                  required 
-                />
-              </form>
-            )}
+            {/* RIGHT */}
+            <aside className="lg:col-span-4">
+              <div className={`${card} p-8 lg:sticky lg:top-10`}>
+                <h2 className="text-lg font-semibold brandColor mb-6 text-gray-800">
+                  Order Summary
+                </h2>
 
-            {/* Pay Button */}
-            <button className="mt-6 w-full py-3 rounded-lg text-white font-semibold bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] shadow-md">
-              {t("checkout.payButton", { amount: getConvertedPrice(total) }) || `Pay ${getConvertedPrice(total)}`}
-            </button>
+                <ul className="space-y-5">
+                  <OrderItem
+                    title="UI/UX Design Degree"
+                    price={getConvertedPrice(coursePrices.uiux)}
+                    img="/courses/uiux.jpg"
+                  />
+                  <OrderItem
+                    title="React Fundamentals"
+                    price={getConvertedPrice(coursePrices.react)}
+                    img="/courses/react.jpg"
+                  />
+                </ul>
+
+                <div className="my-6 border-t border-gray-200" />
+
+                <div className="text-sm text-gray-700 space-y-2">
+                  <Row label="Subtotal" value={getConvertedPrice(subTotal)} />
+                  <Row label="Tax (VAT)" value={getConvertedPrice(tax)} />
+                  <div className="border-t border-gray-100 my-2" />
+                  <Row label="Total" value={getConvertedPrice(total)} highlight />
+                </div>
+
+                <div className="mt-6 bg-gray-50 border border-gray-100 p-4 text-xs text-gray-700 rounded-lg flex items-start gap-2">
+                  <BadgeCheck className="h-4 w-4 text-[var(--color-primary,#0ea5e9)] mt-0.5" />
+                  <p>14-day money-back guarantee. No hidden charges.</p>
+                </div>
+              </div>
+            </aside>
           </div>
         </div>
+      </main>
+    </div>
+  );
+}
 
-        {/* ===== Right Sidebar (Order Summary) ===== */}
-        <aside className="w-full lg:w-80 flex-shrink-0 lg:sticky lg:top-18 self-start">
-          <div className="bg-white shadow-md rounded-[var(--radius-card)] p-6">
-            <h2 className="text-lg font-semibold text-[var(--color-secondary)] mb-4">
-              {t("checkout.orderDetails") || "Order Details"}
-            </h2>
+/* -------- Components -------- */
 
-            <div className="space-y-4 mb-4">
-              {/* Item 1 */}
-              <div className="flex items-center gap-3">
-                <Image src="/courses/uiux.jpg" alt="UI/UX" width={60} height={60} className="rounded-md" />
-                <div>
-                  <p className="text-sm font-medium text-[var(--color-text)]">
-                    {t("checkout.courses.uiux") || "UI/UX Design Degree"}
-                  </p>
-                  <p className="text-[var(--color-primary)] font-semibold">
-                    {getConvertedPrice(coursePrices.uiux)}
-                  </p>
-                </div>
-              </div>
-              {/* Item 2 */}
-              <div className="flex items-center gap-3">
-                <Image src="/courses/react.jpg" alt="React" width={60} height={60} className="rounded-md" />
-                <div>
-                  <p className="text-sm font-medium text-[var(--color-text)]">
-                    {t("checkout.courses.react") || "React Fundamentals"}
-                  </p>
-                  <p className="text-[var(--color-primary)] font-semibold">
-                    {getConvertedPrice(coursePrices.react)}
-                  </p>
-                </div>
-              </div>
-            </div>
+function Row({ label, value, highlight = false }) {
+  return (
+    <p
+      className={`flex justify-between items-center ${highlight
+        ? "font-semibold text-[var(--color-secondary,#0f172a)] text-base"
+        : "text-sm"
+        }`}
+    >
+      <span>{label}</span>
+      <span>{value}</span>
+    </p>
+  );
+}
 
-            {/* Totals */}
-            <div className="text-sm text-gray-700 space-y-1 border-t pt-4">
-              <p className="flex justify-between">
-                <span>{t("checkout.subTotal") || "Sub Total"}</span>
-                <span>{getConvertedPrice(subTotal)}</span>
-              </p>
-              <p className="flex justify-between">
-                <span>{t("checkout.tax") || "Tax (VAT)"}</span>
-                <span>{getConvertedPrice(tax)}</span>
-              </p>
-              <p className="flex justify-between font-semibold text-lg text-[var(--color-secondary)]">
-                <span>{t("checkout.total") || "Total"}</span>
-                <span>{getConvertedPrice(total)}</span>
-              </p>
-            </div>
-          </div>
-        </aside>
+function OrderItem({ title, price, img }) {
+  return (
+    <li className="flex items-center gap-4">
+      <Image
+        src={img}
+        alt={title}
+        width={60}
+        height={60}
+        className="rounded-md object-cover shadow-sm"
+      />
+      <div>
+        <p className="text-sm font-medium text-gray-800">{title}</p>
+        <p className="text-[var(--color-primary,#0ea5e9)] font-semibold">{price}</p>
       </div>
+    </li>
+  );
+}
+
+function Notice({ title, message }) {
+  return (
+    <div className="border border-dashed border-gray-300 rounded-lg p-4 bg-gray-50/70 text-gray-600 text-sm leading-relaxed">
+      <strong>{title}</strong> — {message}
     </div>
   );
 }
