@@ -1,7 +1,12 @@
+"use client";
+
 import React from "react";
+import { useTranslation } from "react-i18next";
 import { FaTrophy } from "react-icons/fa";
 
 const RankCard = ({ userRank, formatPoints }) => {
+  const { t } = useTranslation();
+
   return (
     <>
       {userRank && (
@@ -12,16 +17,16 @@ const RankCard = ({ userRank, formatPoints }) => {
                 <FaTrophy className="w-8 h-8 text-pink-400" />
               </div>
               <div>
-                <h3 className="text-xl font-bold">Your Ranking</h3>
-                <p className="text-green-100">
-                  Keep going! You're making great progress
-                </p>
+                <h3 className="text-xl font-bold">{t("rankCard.title")}</h3>
+                <p className="text-green-100">{t("rankCard.subtitle")}</p>
               </div>
             </div>
             <div className="text-right">
-              <div className="text-3xl font-bold">#{userRank.rank}</div>
+              <div className="text-3xl font-bold">
+                #{userRank.rank}
+              </div>
               <div className="text-green-100">
-                {formatPoints(userRank.points)} points
+                {formatPoints(userRank.points)} {t("rankCard.points")}
               </div>
             </div>
           </div>
