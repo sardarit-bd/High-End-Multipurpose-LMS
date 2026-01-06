@@ -1,9 +1,20 @@
-export const useAuth = () => {
-  const user = {
-    id: 1,
-    name: "Md Sohel",
-    role: "student  ", // Change to 'admin' or 'student' to test different roles
-  };   
+import api from "@/lib/apiClient";
+import { useAuthContext } from "@/providers/AuthProvider";
+import { useQuery } from "@tanstack/react-query";
 
-  return user; 
-} 
+export const useAuth = () => {
+  const { user, loading, login, register, logout,googleLogin } = useAuthContext();
+  // Get instructor by ID
+ 
+  return { user, loading, login, register, logout, googleLogin, useInstructorById };
+};
+export const useInstructorById = (instructorId) =>
+  useQuery({
+    queryKey: ["instructorById", instructorId],
+    queryFn: async () => {
+      const res = await api.get(`/user/instructor/${instructorId}`);
+      return res.data?.data;
+    },
+    enabled: !!instructorId,
+    refetchOnWindowFocus: false,
+  });
