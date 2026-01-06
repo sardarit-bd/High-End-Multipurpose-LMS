@@ -3,10 +3,10 @@ import { useAuthContext } from "@/providers/AuthProvider";
 import { useQuery } from "@tanstack/react-query";
 
 export const useAuth = () => {
-  const { user, loading, login, register, logout,googleLogin } = useAuthContext();
+  const { user, loading, login, register, logout,googleLogin, forgotPassword, resetPassword } = useAuthContext();
   // Get instructor by ID
- 
-  return { user, loading, login, register, logout, googleLogin, useInstructorById };
+
+  return { user, loading, login, register, logout, googleLogin, forgotPassword, resetPassword, useInstructorById };
 };
 export const useInstructorById = (instructorId) =>
   useQuery({

@@ -121,9 +121,6 @@ const Navbar = () => {
 
   const isActive = (href) => pathname === href;
 
- if (loading) {
-    return <div>Loading...</div>
-  }
   return (
     <nav className="bg-[var(--color-background)] border-b border-[var(--color-primary)] shadow sticky top-0 z-50 backdrop-blur-lg">
       <div className="container mx-auto px-4 flex justify-between items-center h-16">
