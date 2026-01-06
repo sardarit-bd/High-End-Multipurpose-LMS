@@ -6,6 +6,7 @@ import { FcGoogle } from "react-icons/fc";
 import Link from "next/link";
 import { toast } from "react-toastify";
 import { useAuth } from "@/hooks/useAuth";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 // export enum Role {
 //     SUPER_ADMIN = 'SUPER_ADMIN',
 //     ADMIN = 'ADMIN',
@@ -18,9 +19,10 @@ export default function RegisterPage() {
   const { register: registerUser, googleLogin } = useAuth();
   const [role, setRole] = useState("STUDENT");
   const [isLoading, setIsLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const illustrationSrc =
-    role === "student" ? "/images/student.png" : "/images/teacher.png";
+    role === "STUDENT" ? "/images/student.png" : "/images/teacher.png";
 
   const {
     register,
@@ -39,7 +41,7 @@ export default function RegisterPage() {
       reset();
     } catch (err) {
       console.error(err);
-      toast.error(err?.response?.data?.message || "Registration failed");
+      toast.error(err?.response?.data?.errorsSource?.[0]?.message || "Registration failed");
     } finally {
       setIsLoading(false);
     }
@@ -129,15 +131,27 @@ export default function RegisterPage() {
               <label className="block mb-1 text-sm font-medium text-[var(--color-text)]">
                 Password
               </label>
-              <input
-                type="password"
-                placeholder="Enter your password"
-                {...register("password", {
-                  required: "Password is required",
-                  minLength: { value: 6, message: "Min 6 characters" },
-                })}
-                className="w-full px-4 py-2 bg-[var(--color-text)]/10 border border-[var(--color-primary)] rounded-lg text-[var(--color-text)] placeholder-[var(--color-text)] focus:outline-none focus:border-[var(--color-primary)]"
-              />
+              <div className="relative">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  placeholder="Enter your password"
+                  {...register("password", {
+                    required: "Password is required",
+                    pattern: {
+                      value: /^(?=.*[A-Z])(?=.*[!@#$%^&*])(.{8,})$/,
+                      message: "Password must be at least 8 characters long, include 1 uppercase letter, and 1 special character (!@#$%^&*)",
+                    },
+                  })}
+                  className="w-full px-4 py-2 pr-10 bg-[var(--color-text)]/10 border border-[var(--color-primary)] rounded-lg text-[var(--color-text)] placeholder-[var(--color-text)] focus:outline-none focus:border-[var(--color-primary)]"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600"
+                >
+                  {showPassword ? <FaEyeSlash /> : <FaEye />}
+                </button>
+              </div>
               {errors.password && (
                 <p className="text-red-500 text-sm mt-1">
                   {errors.password.message}
@@ -158,7 +172,7 @@ export default function RegisterPage() {
                       ? "bg-[var(--color-primary)] text-white"
                       : "bg-[var(--color-background)] text-[var(--color-text)] border border-gray-300"
                   }`}
-                  onClick={() => setRole("student")}
+                  onClick={() => setRole("STUDENT")}
                 >
                   Student
                 </button>
@@ -188,7 +202,7 @@ export default function RegisterPage() {
           <p className="mt-4 text-center md:text-left text-gray-500 text-sm">
             Already have an account?{" "}
             <Link
-              href="/signin"
+              href="/login"
               className="text-[var(--color-primary)] font-semibold"
             >
               Login
