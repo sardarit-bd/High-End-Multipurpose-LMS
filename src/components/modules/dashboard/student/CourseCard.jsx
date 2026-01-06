@@ -9,28 +9,28 @@ export default function CourseCard({ course }) {
     <div className="bg-white shadow-md rounded-xl overflow-hidden hover:shadow-lg transition-shadow duration-300">
       <div className="relative">
         <img
-          src={course.image}
-          alt={course.title}
+          src={course?.course?.thumbnail}
+          alt={course?.course?.title}
           className="w-full h-40 object-cover"
         />
-        <button className="absolute top-2 right-2 bg-white rounded-full p-2 shadow hover:bg-gray-100">
+        {/* <button className="absolute top-2 right-2 bg-white rounded-full p-2 shadow hover:bg-gray-100">
           <Heart size={16} className="text-gray-600" />
-        </button>
+        </button> */}
       </div>
 
       <div className="p-4">
         <div className="flex items-center space-x-2">
           <span className="w-6 h-6 rounded-full bg-yellow-200 flex items-center justify-center text-xs font-bold text-yellow-800">
-            {course.instructor[0]}
+            {/* {course?.course?.instructor} */}
           </span>
-          <p className="text-sm text-gray-600">{course.instructor}</p>
-          <span className="text-xs bg-gray-100 px-2 py-1 rounded-md">
-            {course.category}
+          {/* <p className="text-sm text-gray-600">{course.instructor}</p> */}
+          <span className="text-xs bg-gray-600 px-2 py-1 rounded-md">
+            {course?.course?.category}
           </span>
         </div>
 
         <h3 className="mt-2 font-semibold text-[var(--color-text)]">
-          {course.title}
+          {course?.course?.title}
         </h3>
 
         <div className="flex items-center text-sm text-gray-600 mt-2">
@@ -50,7 +50,7 @@ export default function CourseCard({ course }) {
            <Link href='/dashboard/student/leader-board'>Leader Board</Link>
           </button>
           <button className="bg-black text-white px-4 py-1 rounded-full text-sm hover:bg-gray-800">
-            <Link href="/course/1">View Course</Link>
+            <Link href={`/course/${course?.course?.slug}`}>View Course</Link>
           </button>
         </div>
       </div>

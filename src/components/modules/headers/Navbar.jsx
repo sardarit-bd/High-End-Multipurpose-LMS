@@ -7,8 +7,11 @@ import { FaBars, FaTimes, FaGlobe, FaChevronDown } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import Image from "next/image";
+import { useAuth } from "@/hooks/useAuth";
+
 
 const Navbar = () => {
+  const { user, loading, logout } = useAuth();
   const { t, i18n } = useTranslation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState(null);
@@ -118,6 +121,9 @@ const Navbar = () => {
 
   const isActive = (href) => pathname === href;
 
+ if (loading) {
+    return <div>Loading...</div>
+  }
   return (
     <nav className="bg-[var(--color-background)] border-b border-[var(--color-primary)] shadow sticky top-0 z-50 backdrop-blur-lg">
       <div className="container mx-auto px-4 flex justify-between items-center h-16">
@@ -136,37 +142,33 @@ const Navbar = () => {
               <div key={link.name} className="relative" ref={pagesDropdownRef}>
                 <button
                   onClick={() => toggleDropdown(link.key)}
-                  className={`flex items-center gap-1 font-medium transition-all duration-200 ${
-                    openDropdown === link.key
+                  className={`flex items-center gap-1 font-medium transition-all duration-200 ${openDropdown === link.key
                       ? "text-[var(--color-primary)]"
                       : "text-[var(--color-text)] hover:text-[var(--color-secondary-hover)]"
-                  }`}
+                    }`}
                 >
                   {link.name}
                   <RiArrowDropDownLine
-                    className={`text-2xl transition-transform duration-200 ${
-                      openDropdown === link.key ? "rotate-180" : ""
-                    }`}
+                    className={`text-2xl transition-transform duration-200 ${openDropdown === link.key ? "rotate-180" : ""
+                      }`}
                   />
                 </button>
 
                 <div
-                  className={`absolute left-0 mt-3 w-52 bg-[var(--color-background)] border border-[var(--color-primary)] rounded-md shadow-lg z-50 transition-all duration-200 transform origin-top ${
-                    openDropdown === link.key
+                  className={`absolute left-0 mt-3 w-52 bg-[var(--color-background)] border border-[var(--color-primary)] rounded-md shadow-lg z-50 transition-all duration-200 transform origin-top ${openDropdown === link.key
                       ? "opacity-100 scale-100 translate-y-0"
                       : "opacity-0 scale-95 -translate-y-2 pointer-events-none"
-                  }`}
+                    }`}
                 >
                   {link.dropdown.map((item) => (
                     <Link
                       key={item.name}
                       href={item.href}
                       onClick={closeMenu}
-                      className={`block px-4 py-2 text-sm transition-colors duration-200 ${
-                        isActive(item.href)
+                      className={`block px-4 py-2 text-sm transition-colors duration-200 ${isActive(item.href)
                           ? "bg-[var(--color-primary)] text-white"
                           : "text-[var(--color-text)] hover:bg-[var(--color-primary)] hover:text-white"
-                      }`}
+                        }`}
                     >
                       {item.name}
                     </Link>
@@ -178,11 +180,10 @@ const Navbar = () => {
                 key={link.name}
                 href={link.href}
                 onClick={closeMenu}
-                className={`font-medium transition-colors duration-200 ${
-                  isActive(link.href)
+                className={`font-medium transition-colors duration-200 ${isActive(link.href)
                     ? "text-[var(--color-primary)] border-b-2 border-[var(--color-primary)]"
                     : "text-[var(--color-text)] hover:text-[var(--color-secondary-hover)]"
-                }`}
+                  }`}
               >
                 {link.name}
               </Link>
@@ -207,28 +208,25 @@ const Navbar = () => {
                 </span>
               </div>
               <FaChevronDown
-                className={`w-3 h-3 transition-transform duration-200 ${
-                  openDropdown === "language" ? "rotate-180" : ""
-                }`}
+                className={`w-3 h-3 transition-transform duration-200 ${openDropdown === "language" ? "rotate-180" : ""
+                  }`}
               />
             </button>
 
             <div
-              className={`absolute right-0 mt-2 bg-white border border-[var(--color-primary)] rounded-lg shadow-lg z-50 min-w-[140px] overflow-hidden transition-all duration-200 transform origin-top ${
-                openDropdown === "language"
+              className={`absolute right-0 mt-2 bg-white border border-[var(--color-primary)] rounded-lg shadow-lg z-50 min-w-[140px] overflow-hidden transition-all duration-200 transform origin-top ${openDropdown === "language"
                   ? "opacity-100 scale-100 translate-y-0"
                   : "opacity-0 scale-95 -translate-y-2 pointer-events-none"
-              }`}
+                }`}
             >
               {languages.map((lng) => (
                 <button
                   key={lng.code}
                   onClick={() => changeLanguage(lng.code)}
-                  className={`flex items-center gap-3 w-full text-left px-4 py-3 text-sm transition-all duration-200 ${
-                    i18n.language === lng.code
+                  className={`flex items-center gap-3 w-full text-left px-4 py-3 text-sm transition-all duration-200 ${i18n.language === lng.code
                       ? "bg-[var(--color-primary)] text-white"
                       : "hover:bg-[var(--color-background)] text-[var(--color-text)]"
-                  }`}
+                    }`}
                 >
                   <span className="text-base">{lng.flag}</span>
                   <span className="font-medium">{lng.label}</span>
@@ -236,8 +234,8 @@ const Navbar = () => {
               ))}
             </div>
           </div>
-
-          <Link
+          {!user ? (<>
+            <Link
             href="/login"
             onClick={closeMenu}
             className="flex items-center justify-center px-4 py-2 rounded-lg border border-[var(--color-primary)] text-[var(--color-primary)] hover:bg-[var(--color-primary)] hover:text-white font-medium text-sm transition-all duration-200"
@@ -284,6 +282,38 @@ const Navbar = () => {
               </svg>
             </span>
           </Link>
+          </>):(<>
+            <button
+            onClick={logout}
+            className="flex items-center justify-center px-4 py-2 rounded-lg border border-[var(--color-primary)] text-[var(--color-primary)] hover:bg-[var(--color-primary)] hover:text-white font-medium text-sm transition-all duration-200"
+          >
+            Logout
+          </button>
+
+          <Link
+            href="/dashboard"
+            onClick={closeMenu}
+            className="flex items-center justify-center px-4 py-2 rounded-lg bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white text-sm font-medium shadow-sm transition-all duration-200"
+            title={t("dashboard")}
+          >
+            <span className="hidden xl:inline">{t("dashboard")}</span>
+            <span className="xl:hidden">
+              <svg
+                className="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"
+                />
+              </svg>
+            </span>
+          </Link>
+          </>)}
         </div>
 
         {/* Enhanced Mobile Menu Button */}
@@ -301,23 +331,20 @@ const Navbar = () => {
 
         {/* Enhanced Mobile & Tablet Menu */}
         <div
-          className={`lg:hidden fixed inset-0 z-40 transition-all duration-500 ease-in-out ${
-            isMenuOpen ? "opacity-100 visible" : "opacity-0 invisible delay-300"
-          }`}
+          className={`lg:hidden fixed inset-0 z-40 transition-all duration-500 ease-in-out ${isMenuOpen ? "opacity-100 visible" : "opacity-0 invisible delay-300"
+            }`}
         >
           {/* Backdrop */}
           <div
-            className={`absolute inset-0 bg-black transition-opacity duration-500 ${
-              isMenuOpen ? "opacity-50" : "opacity-0"
-            }`}
+            className={`absolute inset-0 bg-black transition-opacity duration-500 ${isMenuOpen ? "opacity-50" : "opacity-0"
+              }`}
             onClick={closeMenu}
           />
 
           {/* Menu Panel */}
           <div
-            className={`absolute top-0 right-0 h-[1500px] w-[550px] max-w-[85vw] bg-[var(--color-background)] border-l border-[var(--color-primary)] shadow-2xl transform transition-transform duration-500 ease-in-out ${
-              isMenuOpen ? "translate-x-0" : "translate-x-full"
-            }`}
+            className={`absolute top-0 right-0 h-[1500px] w-[550px] max-w-[85vw] bg-[var(--color-background)] border-l border-[var(--color-primary)] shadow-2xl transform transition-transform duration-500 ease-in-out ${isMenuOpen ? "translate-x-0" : "translate-x-full"
+              }`}
           >
             {/* Header */}
             <div className="flex items-center justify-between p-4 border-b border-[var(--color-primary)] bg-[var(--color-background)]">
@@ -353,28 +380,25 @@ const Navbar = () => {
                       <div key={link.name} className="relative">
                         <button
                           onClick={() => toggleDropdown(`${link.key}-mobile`)}
-                          className={`flex items-center justify-between w-full text-left font-medium py-3 px-4 rounded-lg transition-all duration-200 ${
-                            openDropdown === `${link.key}-mobile`
+                          className={`flex items-center justify-between w-full text-left font-medium py-3 px-4 rounded-lg transition-all duration-200 ${openDropdown === `${link.key}-mobile`
                               ? "bg-[var(--color-primary)] text-white"
                               : "text-[var(--color-text)] hover:bg-[var(--color-primary)] hover:text-white"
-                          }`}
+                            }`}
                         >
                           <span>{link.name}</span>
                           <RiArrowDropDownLine
-                            className={`text-xl transition-transform duration-200 ${
-                              openDropdown === `${link.key}-mobile`
+                            className={`text-xl transition-transform duration-200 ${openDropdown === `${link.key}-mobile`
                                 ? "rotate-180"
                                 : ""
-                            }`}
+                              }`}
                           />
                         </button>
 
                         <div
-                          className={`ml-4 mt-1 space-y-1 transition-all duration-300 overflow-hidden ${
-                            openDropdown === `${link.key}-mobile`
+                          className={`ml-4 mt-1 space-y-1 transition-all duration-300 overflow-hidden ${openDropdown === `${link.key}-mobile`
                               ? "max-h-96 opacity-100"
                               : "max-h-0 opacity-0"
-                          }`}
+                            }`}
                         >
                           <div className="max-h-64 overflow-y-auto pr-2 custom-scrollbar">
                             {link.dropdown.map((item) => (
@@ -382,11 +406,10 @@ const Navbar = () => {
                                 key={item.name}
                                 href={item.href}
                                 onClick={closeMenu}
-                                className={`block py-2 px-4 text-sm rounded-lg transition-colors duration-200 ${
-                                  isActive(item.href)
+                                className={`block py-2 px-4 text-sm rounded-lg transition-colors duration-200 ${isActive(item.href)
                                     ? "bg-[var(--color-primary)] text-white font-medium"
                                     : "text-[var(--color-text)] hover:bg-[var(--color-primary)] hover:text-white"
-                                }`}
+                                  }`}
                               >
                                 {item.name}
                               </Link>
@@ -395,22 +418,20 @@ const Navbar = () => {
                         </div>
 
                         <div
-                          className={`ml-4 mt-1 space-y-1 transition-all duration-300 overflow-hidden ${
-                            openDropdown === `${link.key}-mobile`
+                          className={`ml-4 mt-1 space-y-1 transition-all duration-300 overflow-hidden ${openDropdown === `${link.key}-mobile`
                               ? "max-h-96 opacity-100"
                               : "max-h-0 opacity-0"
-                          }`}
+                            }`}
                         >
                           {link.dropdown.map((item) => (
                             <Link
                               key={item.name}
                               href={item.href}
                               onClick={closeMenu}
-                              className={`block py-2 px-4 text-sm rounded-lg transition-colors duration-200 ${
-                                isActive(item.href)
+                              className={`block py-2 px-4 text-sm rounded-lg transition-colors duration-200 ${isActive(item.href)
                                   ? "bg-[var(--color-primary)] text-white font-medium"
                                   : "text-[var(--color-text)] hover:bg-[var(--color-primary)] hover:text-white"
-                              }`}
+                                }`}
                             >
                               {item.name}
                             </Link>
@@ -422,11 +443,10 @@ const Navbar = () => {
                         key={link.name}
                         href={link.href}
                         onClick={closeMenu}
-                        className={`block font-medium py-3 px-4 rounded-lg transition-all duration-200 ${
-                          isActive(link.href)
+                        className={`block font-medium py-3 px-4 rounded-lg transition-all duration-200 ${isActive(link.href)
                             ? "bg-[var(--color-primary)] text-white shadow-md"
                             : "text-[var(--color-text)] hover:bg-[var(--color-primary)] hover:text-white"
-                        }`}
+                          }`}
                       >
                         {link.name}
                       </Link>
@@ -446,11 +466,10 @@ const Navbar = () => {
                       <button
                         key={lng.code}
                         onClick={() => changeLanguage(lng.code)}
-                        className={`flex items-center justify-center gap-2 px-3 py-3 text-sm rounded-lg border-2 transition-all duration-200 active:scale-95 ${
-                          i18n.language === lng.code
+                        className={`flex items-center justify-center gap-2 px-3 py-3 text-sm rounded-lg border-2 transition-all duration-200 active:scale-95 ${i18n.language === lng.code
                             ? "bg-[var(--color-primary)] text-white border-[var(--color-primary)] shadow-md"
                             : "bg-white text-gray-700 border-gray-300 hover:bg-[var(--color-background)] hover:border-[var(--color-primary)]"
-                        }`}
+                          }`}
                       >
                         <span className="text-base">{lng.flag}</span>
                         <span className="font-medium">{lng.label}</span>
@@ -461,20 +480,35 @@ const Navbar = () => {
 
                 {/* Auth Buttons */}
                 <div className="flex flex-col gap-3">
-                  <Link
+                  {!user ? (<><Link
                     href="/login"
                     onClick={closeMenu}
                     className="text-center px-4 py-3 rounded-lg border-2 border-[var(--color-primary)] text-[var(--color-primary)] hover:bg-[var(--color-primary)] hover:text-white font-medium text-sm transition-all duration-200 active:scale-95"
                   >
                     {t("login")}
                   </Link>
-                  <Link
-                    href="/register"
-                    onClick={closeMenu}
-                    className="text-center bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white px-4 py-3 rounded-lg text-sm font-medium shadow-md transition-all duration-200 active:scale-95"
-                  >
-                    {t("register")}
-                  </Link>
+                    <Link
+                      href="/register"
+                      onClick={closeMenu}
+                      className="text-center bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white px-4 py-3 rounded-lg text-sm font-medium shadow-md transition-all duration-200 active:scale-95"
+                    >
+                      {t("register")}
+                    </Link></>) : (<>
+                      <Link
+                        href="/logout"
+                        onClick={closeMenu}
+                        className="text-center px-4 py-3 rounded-lg border-2 border-[var(--color-primary)] text-[var(--color-primary)] hover:bg-[var(--color-primary)] hover:text-white font-medium text-sm transition-all duration-200 active:scale-95"
+                      >
+                        {t("logout")}
+                      </Link>
+                      <Link
+                        href="/dashboard"
+                        onClick={closeMenu}
+                        className="text-center bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white px-4 py-3 rounded-lg text-sm font-medium shadow-md transition-all duration-200 active:scale-95"
+                      >
+                        {t("dashboard")}
+                      </Link>
+                    </>)}
                 </div>
               </div>
             </div>

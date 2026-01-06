@@ -1,7 +1,10 @@
 "use client";
 
 import CourseCard from "@/components/modules/dashboard/student/CourseCard";
-import { useState } from "react";
+import { useAuth } from "@/hooks/useAuth";
+import { useEnrollmentCourses } from "@/hooks/useCourse";
+import { useParams } from "next/navigation";
+import { useEffect, useState } from "react";
 
 const courses = [
   {
@@ -42,8 +45,16 @@ const courses = [
 export default function CoursesPage() {
   const [activeTab, setActiveTab] = useState("enrolled");
 
-  const filteredCourses = courses.filter((c) => c.status === activeTab);
+  const { user, loading: authLoading } = useAuth();
+  const {data, loading: courseLoading} = useEnrollmentCourses(user?._id)
 
+  
+
+  if (authLoading || courseLoading) {
+    return <h2>Loading...</h2>
+  }
+
+  const filteredCourses = data?.filter((c) => c.status === activeTab);
   return (
     <div className="min-h-screen bg-white">
       <h1 className="text-2xl font-bold text-[var(--color-text)] mb-4">
@@ -54,33 +65,31 @@ export default function CoursesPage() {
       <div className="flex space-x-3 mb-6">
         <button
           onClick={() => setActiveTab("enrolled")}
-          className={`px-4 py-2 rounded-full text-sm font-medium ${
-            activeTab === "enrolled"
+          className={`px-4 py-2 rounded-full text-sm font-medium ${activeTab === "enrolled"
               ? "bg-[var(--color-primary)] text-white"
               : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-          }`}
+            }`}
         >
           Enrolled ({courses.filter((c) => c.status === "enrolled").length})
         </button>
         <button
           onClick={() => setActiveTab("completed")}
-          className={`px-4 py-2 rounded-full text-sm font-medium ${
-            activeTab === "completed"
+          className={`px-4 py-2 rounded-full text-sm font-medium ${activeTab === "completed"
               ? "bg-[var(--color-secondary)] text-white"
               : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-          }`}
+            }`}
         >
           Completed ({courses.filter((c) => c.status === "completed").length})
         </button>
       </div>
 
       {/* Courses */}
-      {filteredCourses.length === 0 ? (
+      {filteredCourses?.length === 0 ? (
         <p className="text-gray-500">No courses found.</p>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredCourses.map((course) => (
-            <CourseCard key={course.id} course={course} />
+          {filteredCourses?.map((course) => (
+            <CourseCard key={course?._id} course={course} />
           ))}
         </div>
       )}

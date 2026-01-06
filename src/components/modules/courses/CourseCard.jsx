@@ -6,21 +6,17 @@ import { useTranslation } from 'react-i18next';
 
 export default function CourseCard({ course }) {
     const { t } = useTranslation();
-
     return (
         <section className="relative bg-white shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden h-[420px] w-full flex flex-col">
             {/* Image + Category Badge */}
             <div className="relative">
                 <img
-                    src={course.image}
+                    src={course.thumbnail}
                     alt={course.title}
                     className="h-44 w-full object-cover"
                 />
                 <span className="absolute top-3 left-3 bg-[var(--color-secondary)] text-white text-xs font-semibold px-3 py-1 rounded-md">
-                    {course.category === "UI/UX" && (t("courses.categories.uiux") || "UI/UX")}
-                    {course.category === "Productivity" && (t("courses.categories.productivity") || "Productivity")}
-                    {course.category === "Management" && (t("courses.categories.management") || "Management")}
-                    {course.category === "Art & Media" && (t("courses.categories.artMedia") || "Art & Media")}
+                    {course.category}
                 </span>
             </div>
 
@@ -72,7 +68,7 @@ export default function CourseCard({ course }) {
                 </div>
             </div>
             <div className='absolute bottom-0 w-full flex justify-center items-center text-center'>
-                <Link className='my-5 w-[90%] bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white px-4 py-2 rounded-md text-sm font-medium' href="courses/daynamic_slug">
+                <Link className='my-5 w-[90%] bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white px-4 py-2 rounded-md text-sm font-medium' href={`courses/${course.slug}`}>
                     {t("courses.exploreCourse") || "Explore Course"}
                 </Link>
             </div>
