@@ -17,7 +17,7 @@ export function DashboardSidebar() {
     return (
         <section>
             {/* Desktop Sidebar */}
-            <aside className="hidden md:flex flex-col bg-[var(--color-background)] text-[var(--color-text)] border-r border-gray-200 min-h-screen w-[220px] shadow-sm">
+            <aside className="hidden md:flex flex-col bg-[var(--color-background)] text-[var(--color-text)] border-r border-gray-200 min-h-screen w-[220px] shadow-sm sticky top-0 h-screen">
                 <div className="flex items-center justify-center h-16 border-b border-gray-200 font-semibold text-lg">
                     Dashboard
                 </div>
