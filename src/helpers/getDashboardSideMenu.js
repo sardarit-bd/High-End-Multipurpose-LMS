@@ -48,7 +48,7 @@ const adminMenu = [
 
 
 export function getDashboardSideMenu(role) {
-    if (role === "ADMIN") {
+    if (role === "ADMIN" || role === "SUPER_ADMIN") {
         return adminMenu;
     } else if (role === "INSTRUCTOR") {
         return instructorMenu;

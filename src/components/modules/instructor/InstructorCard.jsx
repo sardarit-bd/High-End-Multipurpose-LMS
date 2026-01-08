@@ -20,14 +20,6 @@ export default function InstructorCard({ instructor }) {
 
       {/* Info */}
       <div className="p-4">
-        {/* Rating */}
-        <div className="flex items-center gap-1 text-sm text-yellow-500 mb-1">
-          <FaStar className="text-[var(--color-accent)]" />
-          <span className="font-medium">{instructor.rating}</span>
-          <span className="text-gray-500 text-xs">
-            ({instructor.reviews} Reviews)
-          </span>
-        </div>
 
         {/* Name + Role */}
         <h3 className="text-[var(--color-text)] font-semibold text-base">
@@ -39,11 +31,7 @@ export default function InstructorCard({ instructor }) {
         <div className="flex items-center justify-between text-xs text-gray-500">
           <div className="flex items-center gap-1">
             <FiBookOpen className="text-[var(--color-secondary)]" />
-            <span>{instructor.lessons}+ Lessons</span>
-          </div>
-          <div className="flex items-center gap-1">
-            <FiClock className="text-[var(--color-primary)]" />
-            <span>{instructor.time}</span>
+            <span>{instructor.lessons}+ Courses</span>
           </div>
         </div>
       </div>

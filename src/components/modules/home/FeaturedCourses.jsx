@@ -4,6 +4,7 @@ import CourseCard from "../courses/CourseCard";
 import Link from "next/link";
 import { TbCategoryPlus } from "react-icons/tb";
 import { useTranslation } from "react-i18next";
+import { usePublicCourses } from "@/hooks/useCourse";
 
 export const courses = [
   // ===== UI/UX =====
@@ -354,24 +355,29 @@ export const courses = [
 export default function FeaturedCourses() {
   const { t } = useTranslation();
   const [selectedCategory, setSelectedCategory] = useState("All");
+  const { data, isLoading, isFetching } = usePublicCourses({ page: 1, limit: 10 });
+  
+    const courses = data?.items || [];
+    const totalPages = data?.totalPages || 1;
 
   // Use original English categories for filtering logic
-  const originalCategories = ["All", "UI/UX", "Productivity", "Management", "Art & Media"];
+  // const originalCategories = ["All", "UI/UX", "Productivity", "Management", "Art & Media"];
   
   // Translated categories for display only
-  const translatedCategories = [
-    t("courses.categories.all") || "All", 
-    t("courses.categories.uiux") || "UI/UX", 
-    t("courses.categories.productivity") || "Productivity", 
-    t("courses.categories.management") || "Management", 
-    t("courses.categories.artMedia") || "Art & Media"
-  ];
+  // const translatedCategories = [
+  //   t("courses.categories.all") || "All", 
+  //   t("courses.categories.uiux") || "UI/UX", 
+  //   t("courses.categories.productivity") || "Productivity", 
+  //   t("courses.categories.management") || "Management", 
+  //   t("courses.categories.artMedia") || "Art & Media"
+  // ];
 
-  const filteredCourses =
-    selectedCategory === "All"
-      ? courses
-      : courses.filter((c) => c.category === selectedCategory);
+  // const filteredCourses =
+  //   selectedCategory === "All"
+  //     ? courses
+  //     : courses.filter((c) => c.category === selectedCategory);
 
+  console.log("Featured Courses:", courses);
   return (
     <section className="w-full bg-white py-16 px-4">
       <div className="container px-4 mx-auto text-center">
@@ -386,7 +392,7 @@ export default function FeaturedCourses() {
         </p>
         
         {/* Dropdown Filter */}
-        <div className="mb-10 flex justify-between items-center gap-4 flex-col md:flex-row">
+        {/* <div className="mb-10 flex justify-between items-center gap-4 flex-col md:flex-row">
           <h1 className="text-xl font-bold text-[var(--color-text)]">
             <TbCategoryPlus className="inline" /> {t("courses.filterBy") || "Filter By:"}
           </h1>
@@ -402,16 +408,16 @@ export default function FeaturedCourses() {
             ))}
           </select>
         </div>
-        
+         */}
         {/* Course Cards */}
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch">
-          {filteredCourses.slice(0, 8).map((c, i) => (
+          {courses.slice(0, 8).map((c, i) => (
             <CourseCard course={c} key={i} />
           ))}
         </div>
         
         {/* Show message if no courses found */}
-        {filteredCourses.length === 0 && (
+        {courses.length === 0 && (
           <div className="text-center py-8">
             <p className="text-gray-500 text-lg">
               {t("courses.noCoursesFound") || "No courses found for this category."}

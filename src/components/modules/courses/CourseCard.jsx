@@ -2,6 +2,7 @@ import Link from 'next/link';
 import React from 'react'
 import { FaRegClock } from 'react-icons/fa';
 import { GiBlackBook } from "react-icons/gi";
+import { FaUserCircle } from "react-icons/fa";
 import { useTranslation } from 'react-i18next';
 
 export default function CourseCard({ course }) {
@@ -26,49 +27,47 @@ export default function CourseCard({ course }) {
                 <div className="flex justify-between text-sm mb-2 text-[var(--color-text)]">
                     <div className='flex gap-2 items-center'> 
                         <GiBlackBook />
-                        <span>{course.lessons} {t("courses.lessons") || "Lessons"}</span>
+                        <span>{course.lessons || course.lessonCount || 0} {t("courses.lessons") || "Lessons"}</span>
                     </div>
-                    <div className='flex gap-2 items-center'>
+                    {/* <div className='flex gap-2 items-center'>
                         <FaRegClock /> 
-                        <span>{course.duration}</span>
-                    </div>
+                        <span>{course.duration || "0m"}</span>
+                    </div> */}
                 </div>
 
                 {/* Title */}
-                <Link href={`courses/${course.title}`} className="hover:text-[var(--color-primary)]">
+                <Link href={`/courses/${course.slug}`} className="hover:text-[var(--color-primary)]">
                     <h3 className="font-semibold mb-3 line-clamp-2">{course.title}</h3>
                 </Link>
 
                 {/* Pricing */}
                 <div className="mb-3">
-                    <span className="text-[var(--color-primary)] font-bold">{course.price}</span>
-                    {course.oldPrice && (
-                        <span className="line-through text-gray-400 text-sm ml-2">
-                            {course.oldPrice}
-                        </span>
-                    )}
-                    {course.isFree && (
-                        <span className="text-[var(--color-accent)] font-bold ml-3">
+                    {course.price === 0 || course.price === null || course.price === undefined ? (
+                        <span className="text-[var(--color-accent)] font-bold">
                             {t("courses.free") || "Free"}
                         </span>
+                    ) : (
+                        <>
+                            <span className="text-[var(--color-primary)] font-bold">
+                                ${course?.price || "0.00"}
+                            </span>
+                            {course.oldPrice && (
+                                <span className="line-through text-gray-400 text-sm ml-2">
+                                    ${course.oldPrice}
+                                </span>
+                            )}
+                        </>
                     )}
                 </div>
 
-                {/* Instructor + Rating */}
+                {/* Instructor */}
                 <div className="flex items-center">
-                    <img
-                        src={course.authorImg}
-                        alt={course.author}
-                        className="w-8 h-8 rounded-full mr-2"
-                    />
-                    <span className="text-sm">{course.author}</span>
-                    <span className="ml-auto text-[var(--color-accent)]">
-                        {"★".repeat(course.rating)}{"☆".repeat(5 - course.rating)}
-                    </span>
+                    <FaUserCircle className="w-8 h-8 text-gray-400 mr-2" />
+                    <span className="text-sm text-[var(--color-text)]">{course?.author || course?.instructor?.name || "Unknown Instructor"}</span>
                 </div>
             </div>
             <div className='absolute bottom-0 w-full flex justify-center items-center text-center'>
-                <Link className='my-5 w-[90%] bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white px-4 py-2 rounded-md text-sm font-medium' href={`courses/${course.slug}`}>
+                <Link className='my-5 w-[90%] bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white px-4 py-2 rounded-md text-sm font-medium' href={`/courses/${course.slug}`}>
                     {t("courses.exploreCourse") || "Explore Course"}
                 </Link>
             </div>

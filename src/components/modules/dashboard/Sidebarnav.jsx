@@ -10,7 +10,17 @@ export default function SidebarNav({ items }) {
             className={`flex flex-col space-y-2 px-4 py-6 text-[var(--color-text)]`}
         >
             {items.map((item) => {
-                const isActive = pathname === item.href;
+                // Check if current path is active
+                let isActive = pathname === item.href;
+                
+                // Special handling for course-related paths
+                if (item.href.includes('/courses')) {
+                    isActive = isActive || 
+                        pathname.includes('/courses/add') || 
+                        pathname.includes('/courses/edit/') || 
+                        (pathname.includes('/courses/') && pathname.split('/').length > 4); // for paths like /courses/[id]/units
+                }
+                
                 const Icon = item.icon;
                 return (
                     <Link

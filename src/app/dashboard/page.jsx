@@ -7,11 +7,11 @@ import { useAuth } from "@/hooks/useAuth";
 
 
 export default function DashboardHome() {
-  const user = useAuth();
+  const {user} = useAuth();
 
   if (!user) {
-    return <p>Access denied</p>;
+    return ''
   }
-
-  return user.role === "admin" ? <AdminDashboard /> : user.role === "instructor" ? <InstructorDashboard /> : <StudentDashboard />;
+ 
+  return user.role === "SUPER_ADMIN" ? <AdminDashboard /> : user.role === "INSTRUCTOR" ? <InstructorDashboard /> : <StudentDashboard />;
 }

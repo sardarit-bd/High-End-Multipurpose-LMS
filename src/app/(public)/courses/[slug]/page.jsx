@@ -6,12 +6,13 @@ import { FiHeart, FiShare2 } from "react-icons/fi";
 import CourseSingleSkeleton from "@/components/modules/special/CourseSingleSkeleton";
 import { useParams } from "next/navigation";
 import { useSlugCourses, useUnitsByCourse } from "@/hooks/useCourse";
-import { useInstructorById } from "@/hooks/useAuth";
+import { useAuth, useInstructorById } from "@/hooks/useAuth";
 import Link from "next/link";
 
 
 export default function CourseSinglePage() {
     const { slug } = useParams()
+    const {user} = useAuth()
 
     const { data: course, isLoading: courseLoading } = useSlugCourses(slug);
     const { data: instructor, isLoading: instructorLoading } = useInstructorById(course?.instructor);
@@ -19,6 +20,7 @@ export default function CourseSinglePage() {
 
     if (courseLoading, instructorLoading, unitsLoading) return <CourseSingleSkeleton />;
 
+    console.log(instructor);
     return (
         <div className="bg-white min-h-screen">
             <div className="container mx-auto px-4 sm:px-6 py-8">
@@ -72,7 +74,7 @@ export default function CourseSinglePage() {
                         </section>
                         <CourseContent units={units} />
                         <AboutInstructor instructor={instructor} />
-                        <CommentForm />
+                        {/* <CommentForm /> */}
                     </div>
 
                     {/* ===== Right Sidebar ===== */}
@@ -81,7 +83,7 @@ export default function CourseSinglePage() {
                             {course?.price ? <p className="text-2xl font-bold text-[var(--color-primary)] mb-1">${course?.price}</p> : <h3 className="text-2xl font-bold text-[var(--color-primary)] mb-1">FREE</h3>}
 
 
-                            <p className="text-sm text-[var(--color-accent)] font-semibold mb-4">50% OFF</p>
+                            {/* <p className="text-sm text-[var(--color-accent)] font-semibold mb-4">50% OFF</p> */}
 
                             <div className="flex gap-3 mb-4">
                                 <button className="flex-1 py-2 border text-[var(--color-text)] rounded-lg flex items-center justify-center gap-2 text-sm hover:bg-gray-50">
@@ -92,9 +94,20 @@ export default function CourseSinglePage() {
                                 </button>
                             </div>
 
-                            <button className="w-full py-3 rounded-lg text-white font-semibold bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] shadow-md">
-                               <Link href={`/checkout?slug=${slug}`}>Enroll Now</Link>
-                            </button>
+
+                            {!user ? (
+                                <Link href={`/login?redirect=${slug}`} className="w-full bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white px-4 py-2 rounded-md text-center text-sm font-medium inline-block">
+                                    Login to Enroll
+                                </Link>
+                            ) : user?.enrolledCourses?.includes(course?._id) ? (
+                                <Link href={`/courses/${course.slug}/learn`} className="w-full bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white px-4 py-2 rounded-md text-center text-sm font-medium inline-block">
+                                    Continue Learning
+                                </Link>
+                            ) : (
+                                <Link href={`/checkout?slug=${slug}`} className={`w-full bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white px-4 py-2 rounded-md text-center text-sm font-medium inline-block ${user?.role?.toLowerCase() === 'instructor' ? 'pointer-events-none opacity-50' : ''}`}>
+                                    Enroll Now
+                                </Link>
+                            )}
                         </div>
 
                         {/* Includes */}
