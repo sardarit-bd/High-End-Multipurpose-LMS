@@ -10,8 +10,8 @@ export default function DashboardHome() {
   const {user} = useAuth();
 
   if (!user) {
-    return <p>Access denied</p>;
+    return ''
   }
  
-  return user.role === "admin" ? <AdminDashboard /> : user.role === "INSTRUCTOR" ? <InstructorDashboard /> : <StudentDashboard />;
+  return user.role === "SUPER_ADMIN" ? <AdminDashboard /> : user.role === "INSTRUCTOR" ? <InstructorDashboard /> : <StudentDashboard />;
 }

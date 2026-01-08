@@ -17,20 +17,12 @@ export default function AboutInstructor({instructor}) {
                     <h3 className="font-semibold text-[var(--color-text)]">{instructor?.userId?.name}</h3>
                     <p className="text-sm text-gray-600">{instructor?.designation}</p>
                 </div>
-                <div className="ml-auto text-yellow-500 font-semibold flex items-center gap-1">
-                    ★★★★★ <span className="text-sm text-gray-600">{instructor?.ratting}</span>
-                </div>
+        
             </div>
 
             <div className="flex flex-wrap gap-4 text-sm text-gray-700 border-b pb-4 mb-4">
                 <span className="flex items-center gap-1">
                     <FiBookOpen className="text-[var(--color-primary)]" /> {instructor?.noOfCourse}
-                </span>
-                <span className="flex items-center gap-1">
-                    <FiPlayCircle className="text-[var(--color-secondary)]" /> 12+ Lessons
-                </span>
-                <span className="flex items-center gap-1">
-                    <FiClock className="text-[var(--color-accent)]" /> 9hr 30min
                 </span>
                 <span className="flex items-center gap-1">
                     <FiUsers className="text-[var(--color-primary)]" /> {instructor?.enrolledStudent + " students enrolled"}
@@ -42,9 +34,8 @@ export default function AboutInstructor({instructor}) {
             </p>
 
             <div className="mb-4">
-                <h4 className="font-semibold text-[var(--color-text)] mb-2">Skills:</h4>
                 <p className="text-sm text-gray-700 leading-relaxed">
-                    {instructor?.skills?.toString()}, and more.
+                    {instructor?.description}
                 </p>
             </div>
 

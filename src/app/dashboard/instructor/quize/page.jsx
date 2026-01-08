@@ -221,24 +221,6 @@ export default function QuizTasksManager() {
               </h1>
             </div>
           </div>
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => {
-              if (selectedQuiz) {
-                setIsEditingQuestion(false);
-                setShowQuestionModal(true);
-              }
-            }}
-            disabled={!selectedQuiz}
-            className={`group flex items-center gap-2 px-5 py-3 rounded-xl font-medium shadow-lg transition-all duration-300 ${selectedQuiz
-                ? "bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-accent-special)] hover:from-[var(--color-primary-hover)] hover:to-[var(--color-accent-special)] text-white hover:shadow-xl"
-                : "bg-gray-300 text-gray-500 cursor-not-allowed"
-              }`}
-          >
-            <Sparkles className="w-5 h-5" />
-            Add New Question
-          </motion.button>
         </div>
 
         {/* Stats Cards */}
