@@ -23,7 +23,7 @@ export default function InstructorCard({ instructor }) {
 
         {/* Name + Role */}
         <h3 className="text-[var(--color-text)] font-semibold text-base">
-          <Link href='/instructors/slug'>{instructor.name}</Link>
+          <Link href={`/instructors/${instructor.id}`}>{instructor.name}</Link>
         </h3>
         <p className="text-gray-600 text-sm mb-3">{instructor.role}</p>
 
