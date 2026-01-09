@@ -4,6 +4,7 @@ import { useState } from "react";
 import { FiFilter } from "react-icons/fi";
 import { Clock as ClockIcon,  Search, X, Users, Award, Star, Clock, BookOpen, Sparkles } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { useInstructors } from "@/hooks/useAuth";
 
 export default function InstructorListing() {
   const { t } = useTranslation();
@@ -11,100 +12,37 @@ export default function InstructorListing() {
   const [searchQuery, setSearchQuery] = useState("");
   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
-  // ===== Instructor Data with Translation =====
-  const instructors = [
-    {
-      name: "Rolands Granger",
-      role: t("instructors.roles.developer") || "Developer",
-      lessons: 12,
-      time: "169hr 20min",
-      rating: 4.9,
-      reviews: 200,
-      image: "/images/ins1.jpg",
-      category: t("instructorListing.categories.technology") || "Technology",
-    },
-    {
-      name: "Lisa Lopez",
-      role: t("instructors.roles.finance") || "Finance",
-      lessons: 22,
-      time: "15hr 06min",
-      rating: 4.4,
-      reviews: 130,
-      image: "/images/ins2.jpg",
-      category: t("instructorListing.categories.management") || "Management",
-    },
-    {
-      name: "Charles Ruiz",
-      role: t("instructors.roles.cloudEngineer") || "Cloud Engineer",
-      lessons: 16,
-      time: "2hr 25min",
-      rating: 4.5,
-      reviews: 120,
-      image: "/images/ins3.jpg",
-      category: t("instructorListing.categories.programming") || "Programming",
-    },
-    {
-      name: "Ivana Tow",
-      role: t("instructors.roles.corporateTrainer") || "Corporate Trainer",
-      lessons: 25,
-      time: "4hr 20min",
-      rating: 4.2,
-      reviews: 210,
-      image: "/images/ins4.jpg",
-      category: t("instructorListing.categories.productivity") || "Productivity",
-    },
-    {
-      name: "Kevin Leonard",
-      role: t("instructors.roles.developer") || "Developer",
-      lessons: 11,
-      time: "7hr 10min",
-      rating: 4.5,
-      reviews: 140,
-      image: "/images/ins5.jpg",
-      category: t("instructorListing.categories.technology") || "Technology",
-    },
-    {
-      name: "Rogerina Grogan",
-      role: t("instructors.roles.vocational") || "Vocational",
-      lessons: 6,
-      time: "19hr 30min",
-      rating: 4.6,
-      reviews: 180,
-      image: "/images/ins6.jpg",
-      category: t("courses.categories.artMedia") || "Art & Media",
-    },
-    {
-      name: "David Roccoz",
-      role: t("instructors.roles.sportsCoach") || "Sports Coach",
-      lessons: 4,
-      time: "1hr 30min",
-      rating: 4.3,
-      reviews: 190,
-      image: "/images/ins7.jpg",
-      category: t("instructorListing.categories.productivity") || "Productivity",
-    },
-    {
-      name: "Jeanette Dulaney",
-      role: t("instructors.roles.technicalTrainer") || "Technical Trainer",
-      lessons: 8,
-      time: "4hr 35min",
-      rating: 4.3,
-      reviews: 150,
-      image: "/images/ins8.jpg",
-      category: t("instructorListing.categories.programming") || "Programming",
-    },
-    {
-      name: "Debran Andrew",
-      role: t("instructors.roles.healthWellness") || "Health & Wellness",
-      lessons: 8,
-      time: "4hr 35min",
-      rating: 4.3,
-      reviews: 190,
-      image: "/images/ins3.jpg",
-      category: t("instructors.categories.general") || "General",
-    }
-  ];
+  // Fetch instructors from backend
+  const { data: instructorsData, isLoading: instructorsLoading, error: instructorsError } = useInstructors({
+    search: searchQuery || undefined,
+    categories: selectedCategories.length > 0 ? selectedCategories : undefined,
+  });
 
+  // Transform backend data to match frontend expectations
+  const instructors = instructorsData?.items?.map(instructor => {
+    const userData = instructor.userId || {};
+    const instructorInfo = instructor || {};
+
+    return {
+      id: userData._id || instructor._id,
+      name: userData.name || "Instructor",
+      role: instructorInfo.designation || "Instructor",
+      lessons: instructorInfo.totalLessons || 0,
+      time: instructorInfo.totalTime || "0hr 0min",
+      rating: instructorInfo.rating || 0,
+      reviews: instructorInfo.reviewCount || 0,
+      image: userData.picture || "/images/teacher.png",
+      category: instructorInfo.expertise?.[0] || "General",
+      email: userData.email,
+      phone: userData.phone,
+      socialLinks: userData.socialLinks || {},
+      certifications: instructorInfo.certificates || [],
+      expertise: instructorInfo.expertise || [],
+      joinedDate: userData.createdAt,
+    };
+  }) || [];
+
+  // Define categories (could be fetched from backend in future)
   const categories = [
     t("instructorListing.categories.technology") || "Technology",
     t("instructorListing.categories.programming") || "Programming",
@@ -113,12 +51,14 @@ export default function InstructorListing() {
     t("instructorListing.categories.finance") || "Finance",
   ];
 
-  // Calculate stats
+  // Calculate stats from fetched data
   const totalInstructors = instructors.length;
-  const totalLessons = instructors.reduce((sum, inst) => sum + inst.lessons, 0);
-  const avgRating = (instructors.reduce((sum, inst) => sum + inst.rating, 0) / instructors.length).toFixed(1);
+  const totalLessons = instructors.reduce((sum, inst) => sum + (inst.lessons || 0), 0);
+  const avgRating = instructors.length > 0
+    ? (instructors.reduce((sum, inst) => sum + (inst.rating || 0), 0) / instructors.length).toFixed(1)
+    : 0;
 
-  // ===== Filtering Logic =====
+  // For now, we use backend filtering, but keep client-side filtering for additional UX
   const filteredInstructors = instructors.filter((inst) => {
     const categoryMatch =
       selectedCategories.length === 0 ||
@@ -307,7 +247,30 @@ export default function InstructorListing() {
             </div>
 
             {/* Instructors Grid */}
-            {filteredInstructors.length === 0 ? (
+            {instructorsLoading ? (
+              <div className="bg-gradient-to-br from-white to-emerald-50/30 rounded-2xl border border-emerald-200 p-12 text-center">
+                <div className="w-12 h-12 border-4 border-[var(--color-primary)] border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+                <h3 className="text-xl font-bold text-[var(--color-text)] mb-3">Loading Instructors...</h3>
+                <p className="text-[var(--color-text)]/70">Please wait while we fetch the latest instructor data.</p>
+              </div>
+            ) : instructorsError ? (
+              <div className="bg-gradient-to-br from-red-50 to-red-100/30 rounded-2xl border border-red-200 p-12 text-center">
+                <div className="inline-block p-4 bg-red-100 rounded-full mb-4">
+                  <X className="w-12 h-12 text-red-500" />
+                </div>
+                <h3 className="text-2xl font-bold text-red-700 mb-3">Error Loading Instructors</h3>
+                <p className="text-red-600 max-w-md mx-auto mb-8">
+                  We encountered an error while loading the instructors. Please try again later.
+                </p>
+                <button
+                  onClick={() => window.location.reload()}
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-red-500 hover:bg-red-600 text-white rounded-xl font-medium shadow-lg hover:shadow-xl transition-all"
+                >
+                  <Sparkles className="w-5 h-5" />
+                  Retry
+                </button>
+              </div>
+            ) : filteredInstructors.length === 0 ? (
               <div className="bg-gradient-to-br from-white to-emerald-50/30 rounded-2xl border border-dashed border-emerald-200 p-12 text-center">
                 <div className="inline-block p-4 bg-emerald-100 rounded-full mb-4">
                   <Users className="w-12 h-12 text-emerald-500" />
@@ -326,8 +289,8 @@ export default function InstructorListing() {
               </div>
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {filteredInstructors.map((inst, i) => (
-                  <div key={i} className="transform transition-all duration-300 hover:scale-[1.02] hover:shadow-xl">
+                {filteredInstructors.map((inst) => (
+                  <div key={inst.id || inst.name} className="transform transition-all duration-300 hover:scale-[1.02] hover:shadow-xl">
                     <InstructorCard instructor={inst} />
                   </div>
                 ))}

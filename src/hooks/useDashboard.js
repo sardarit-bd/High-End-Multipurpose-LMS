@@ -46,3 +46,14 @@ export const useCourseStats = (instructorId) => {
     enabled: !!instructorId,
   });
 };
+
+export const useStudentDashboard = () => {
+  return useQuery({
+    queryKey: ["studentDashboard"],
+    queryFn: async () => {
+      const res = await api.get("/dashboard/student");
+      return res.data?.data || {};
+    },
+    refetchOnWindowFocus: false,
+  });
+};
