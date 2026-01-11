@@ -1,6 +1,8 @@
 // src/hooks/useDashboard.js
 import { useQuery } from "@tanstack/react-query";
+import { useMemo } from "react";
 import api from "@/lib/apiClient";
+import { useAuth } from "@/hooks/useAuth";
 
 export const useInstructorDashboard = () => {
   return useQuery({
@@ -56,4 +58,38 @@ export const useStudentDashboard = () => {
     },
     refetchOnWindowFocus: false,
   });
+};
+
+export const useMyPoints = () => {
+  return useQuery({
+    queryKey: ["myPoints"],
+    queryFn: async () => {
+      const res = await api.get("/gamification/me");
+      return res.data?.data || { wallet: { totalPoints: 0, byCourse: {} }, logs: [] };
+    },
+    refetchOnWindowFocus: false,
+  });
+};
+
+export const useLeaderboard = (limit = 20) => {
+  return useQuery({
+    queryKey: ["leaderboard", limit],
+    queryFn: async () => {
+      const res = await api.get(`/gamification/leaderboard?limit=${limit}`);
+      return res.data?.data || [];
+    },
+    refetchOnWindowFocus: false,
+  });
+};
+
+export const useMyRank = () => {
+  const { data: leaderboard = [] } = useLeaderboard(100); // Get top 100 for rank calculation
+  const { user } = useAuth();
+
+  return useMemo(() => {
+    if (!user || !leaderboard.length) return null;
+
+    const myEntryIndex = leaderboard.findIndex(entry => entry.userId === user._id);
+    return myEntryIndex !== -1 ? myEntryIndex + 1 : null;
+  }, [leaderboard, user]);
 };

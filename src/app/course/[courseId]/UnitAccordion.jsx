@@ -18,6 +18,8 @@ export default function UnitAccordion({
   toggleModule,
   currentLesson,
   setCurrentLesson,
+  completedLessons,
+  submissions = [],
 }) {
   const { data: lessons } = useLessonsByUnit(module._id);
   const { data: tasks } = useTasks(module._id);
@@ -27,10 +29,19 @@ export default function UnitAccordion({
   const [activeTask, setActiveTask] = useState(null);
   const [activeQuiz, setActiveQuiz] = useState(null);
 
-  // Calculate module progress
+  // Helper functions to check submission status
+  const isTaskSubmitted = (taskId) => {
+    return submissions.some(submission => submission.taskId === taskId && submission.status === 'approved');
+  };
+
+  const getQuizSubmission = (quizId) => {
+    return submissions.find(submission => submission.quizId === quizId);
+  };
+
+  // Calculate module progress using completed lessons from parent component
   const totalLessons = lessons?.length || 0;
-  const completedLessons = lessons?.filter(l => l.completed).length || 0;
-  const moduleProgress = totalLessons > 0 ? Math.round((completedLessons / totalLessons) * 100) : 0;
+  const completedLessonsInModule = lessons?.filter(lesson => completedLessons?.has(lesson._id)).length || 0;
+  const moduleProgress = totalLessons > 0 ? Math.round((completedLessonsInModule / totalLessons) * 100) : 0;
   
   // Count different task types
   const nonQuizTasks = tasks?.filter((t) => t.type !== "quiz") || [];
@@ -79,28 +90,7 @@ export default function UnitAccordion({
                   </div>
                   <span className="text-xs font-medium text-gray-600">{moduleProgress}%</span>
                 </div>
-
-                {/* Stats */}
-                <div className="flex items-center gap-3 text-xs text-gray-500">
-                  {totalLessons > 0 && (
-                    <span className="flex items-center gap-1">
-                      <PlayCircle className="w-3.5 h-3.5" />
-                      {completedLessons}/{totalLessons}
-                    </span>
-                  )}
-                  {hasTasks && (
-                    <span className="flex items-center gap-1">
-                      <FileText className="w-3.5 h-3.5" />
-                      {nonQuizTasks.length}
-                    </span>
-                  )}
-                  {hasQuizzes && (
-                    <span className="flex items-center gap-1">
-                      <HelpCircle className="w-3.5 h-3.5" />
-                      Quiz
-                    </span>
-                  )}
-                </div>
+                
               </div>
             </div>
           </div>
@@ -154,7 +144,7 @@ export default function UnitAccordion({
                   <div className="flex items-center justify-between mb-4">
                     <h4 className="text-sm font-semibold text-gray-900 flex items-center gap-2">
                       <PlayCircle className="w-4 h-4 text-blue-500" />
-                      Lessons ({completedLessons}/{totalLessons})
+                      Lessons 
                     </h4>
                     <span className="text-xs px-3 py-1 bg-gradient-to-r from-blue-100 to-cyan-100 text-blue-700 rounded-full font-medium">
                       {moduleProgress}% Complete
@@ -167,7 +157,7 @@ export default function UnitAccordion({
                         lesson={lesson}
                         currentLesson={currentLesson}
                         setCurrentLesson={setCurrentLesson}
-                        completed={lesson.completed}
+                        completed={completedLessons?.has(lesson._id) || false}
                       />
                     ))}
                   </div>
@@ -187,10 +177,11 @@ export default function UnitAccordion({
                   </div>
                   <div className="space-y-2">
                     {nonQuizTasks.map((task) => (
-                      <TaskItem 
-                        key={task._id} 
-                        task={task} 
-                        onOpen={() => setActiveTask(task)} 
+                      <TaskItem
+                        key={task._id}
+                        task={task}
+                        onOpen={() => setActiveTask(task)}
+                        completed={isTaskSubmitted(task._id)}
                       />
                     ))}
                   </div>
@@ -208,9 +199,10 @@ export default function UnitAccordion({
                       Knowledge Check
                     </h4>
                   </div>
-                  <QuizSection 
-                    quizzes={quizzes} 
-                    onOpen={() => setActiveQuiz(quizzes)} 
+                  <QuizSection
+                    quizzes={quizzes}
+                    onOpen={() => setActiveQuiz(quizzes)}
+                    submissions={submissions}
                   />
                 </div>
               )}

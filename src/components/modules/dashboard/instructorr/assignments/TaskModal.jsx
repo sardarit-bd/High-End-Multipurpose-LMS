@@ -187,7 +187,6 @@ export default function TaskModal({
                   <option value="quiz">Quiz/Test</option>
                   <option value="video">Video Assignment</option>
                   <option value="pdf">PDF/Reading</option>
-                  <option value="essay">Essay/Writing</option>
                 </select>
                 <FolderOpen className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
               </div>

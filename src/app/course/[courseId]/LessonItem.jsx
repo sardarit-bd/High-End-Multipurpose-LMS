@@ -1,10 +1,20 @@
 "use client";
 import { PlayCircle, CheckCircle, Clock, Lock, ExternalLink, Download, MoreVertical } from "lucide-react";
 
-export default function LessonItem({ lesson, currentLesson, setCurrentLesson, completed = false, duration = "5:30" }) {
+export default function LessonItem({ lesson, currentLesson, setCurrentLesson, completed = false }) {
   const isActive = currentLesson?._id === lesson._id;
   const isCompleted = completed;
   const isLocked = false; // You can add logic for locked lessons
+
+  // Calculate dynamic duration from lesson data
+  const formatDuration = (durationSec) => {
+    if (!durationSec) return "No timer";
+    const minutes = Math.floor(durationSec / 60);
+    const seconds = durationSec % 60;
+    return minutes > 0 ? `${minutes}:${seconds.toString().padStart(2, '0')}` : `${seconds}s`;
+  };
+
+  const duration = formatDuration(lesson.durationSec);
 
   return (
     <li className="px-2 py-1.5">
@@ -100,12 +110,20 @@ export default function LessonItem({ lesson, currentLesson, setCurrentLesson, co
                 <div className="h-full bg-gradient-to-r from-blue-400 to-cyan-400 rounded-full" style={{ width: '30%' }}></div>
               </div>
             )}
-            
+
+            {/* Lesson status indicator */}
+            {isActive && !isCompleted && !isLocked && (
+              <div className="flex items-center gap-1 px-2 py-1 bg-blue-100 text-blue-700 text-xs font-medium rounded-full">
+                <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
+                Now Playing
+              </div>
+            )}
+
             {/* Action buttons */}
             {!isLocked && (
               <div className="flex items-center gap-1">
                 {lesson?.contentUrl?.includes('youtube') && (
-                  <button 
+                  <button
                     className={`p-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity ${
                       isActive ? 'hover:bg-white/20' : 'hover:bg-gray-100'
                     }`}
@@ -117,9 +135,9 @@ export default function LessonItem({ lesson, currentLesson, setCurrentLesson, co
                     <ExternalLink className={`w-4 h-4 ${isActive ? 'text-white' : 'text-gray-500'}`} />
                   </button>
                 )}
-                
+
                 {lesson?.materials && lesson.materials.length > 0 && (
-                  <button 
+                  <button
                     className={`p-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity ${
                       isActive ? 'hover:bg-white/20' : 'hover:bg-gray-100'
                     }`}
@@ -131,8 +149,8 @@ export default function LessonItem({ lesson, currentLesson, setCurrentLesson, co
                     <Download className={`w-4 h-4 ${isActive ? 'text-white' : 'text-gray-500'}`} />
                   </button>
                 )}
-                
-                <button 
+
+                <button
                   className={`p-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity ${
                     isActive ? 'hover:bg-white/20' : 'hover:bg-gray-100'
                   }`}

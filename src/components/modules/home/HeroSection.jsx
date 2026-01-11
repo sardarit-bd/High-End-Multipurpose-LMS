@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { FaGraduationCap } from "react-icons/fa";
 import { MdVerified, MdPerson } from "react-icons/md";
 import SearchBar from "@/components/modules/special/Searchbar";
@@ -9,12 +10,35 @@ import { useTranslation } from "react-i18next";
 // 🎯 Main Hero Section (Default Export)
 export default function HeroSection() {
   const { t } = useTranslation();
+  const router = useRouter();
   const [category, setCategory] = useState("");
   const [query, setQuery] = useState("");
 
   const handleSubmit = (e) => {
     e?.preventDefault();
-    // Hook up search logic here (e.g., API call, router push)
+
+    // Construct search URL with parameters
+    const params = new URLSearchParams();
+
+    if (query.trim()) {
+      params.set('search', query.trim());
+    }
+
+    if (category) {
+      // Map categories to course page categories
+      const categoryMap = {
+        'tech': 'Technology',
+        'design': 'Design',
+        'business': 'Management'
+      };
+      const mappedCategory = categoryMap[category] || category;
+      // Since categories are expected as a comma-separated string for URL params
+      params.set('categories', mappedCategory);
+    }
+
+    // Redirect to courses page with search parameters
+    const searchUrl = `/courses${params.toString() ? `?${params.toString()}` : ''}`;
+    router.push(searchUrl);
   };
 
   return (
@@ -76,7 +100,13 @@ export default function HeroSection() {
             {/* 🔍 Search Bar */}
             <div className="w-full rounded-xl p-1">
               <div className="flex flex-col gap-2 md:flex-row md:gap-3">
-                <SearchBar />
+                <SearchBar
+                  category={category}
+                  query={query}
+                  onCategoryChange={setCategory}
+                  onQueryChange={setQuery}
+                  onSubmit={handleSubmit}
+                />
               </div>
             </div>
 

@@ -184,6 +184,18 @@ export const useUpdateTimeSpent = () => {
   });
 };
 
+export const useUserCoursePoints = (courseId) => {
+  return useQuery({
+    queryKey: ["userCoursePoints", courseId],
+    queryFn: async () => {
+      if (!courseId) return 0;
+      const res = await api.get(`/enrollments/courses/${courseId}/points/me`);
+      return res.data?.data?.points || 0;
+    },
+    enabled: !!courseId,
+  });
+};
+
 // Get course stats (enrollments, tasks count)
 export const useCourseStats = (courseId, unitIds = []) => {
   return useQuery({
