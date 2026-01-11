@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useMemo, useEffect, useCallback } from "react";
+import { useSearchParams } from "next/navigation";
 import { useTranslation } from "react-i18next";
 import Link from "next/link";
 import CourseCard from "@/components/modules/courses/CourseCard";
@@ -10,6 +11,7 @@ import { FiFilter } from "react-icons/fi";
 
 export default function PublicCourseListing() {
   const { t } = useTranslation();
+  const searchParams = useSearchParams();
 
   // ---------- State ----------
   const [selectedCategories, setSelectedCategories] = useState([]);
@@ -19,6 +21,26 @@ export default function PublicCourseListing() {
   const [searchQuery, setSearchQuery] = useState("");
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(9);
+
+  // ---------- Initialize from URL parameters ----------
+  useEffect(() => {
+    const urlSearch = searchParams.get('search');
+    const urlCategories = searchParams.get('categories');
+
+    if (urlSearch) {
+      setSearchDraft(urlSearch);
+      setSearchQuery(urlSearch);
+    }
+
+    if (urlCategories) {
+      // Split comma-separated categories and filter to only valid ones
+      const categoryList = urlCategories.split(',').map(cat => cat.trim());
+      const validCategories = categoryList.filter(cat =>
+        ["Programming", "Database", "Design", "Technology", "Management"].includes(cat)
+      );
+      setSelectedCategories(validCategories);
+    }
+  }, [searchParams]);
 
   // ---------- Debounce search ----------
   useEffect(() => {

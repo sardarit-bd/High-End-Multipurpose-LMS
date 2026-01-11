@@ -1,15 +1,17 @@
 "use client";
 
-import { Book, Users, CheckCircle, CreditCard, TrendingUp, Target, Clock, Award } from "lucide-react";
+import { Book, Users, CheckCircle, CreditCard, TrendingUp, Target, Clock, Award, Trophy, Star } from "lucide-react";
 import StatusCard from "@/components/modules/dashboard/student/StatsCard";
 import CourseTable from "@/components/modules/dashboard/student/CourseTable";
 import { useAuth } from "@/hooks/useAuth";
-import { useStudentDashboard } from "@/hooks/useDashboard";
+import { useStudentDashboard, useMyPoints, useMyRank } from "@/hooks/useDashboard";
 import { useMemo } from "react";
 
 export default function Dashboard() {
   const { user, loading: authLoading } = useAuth();
   const { data: dashboardData, loading: dashboardLoading } = useStudentDashboard();
+  const { data: pointsData } = useMyPoints();
+  const myRank = useMyRank();
 
   // Calculate display values from dashboard data
   const stats = useMemo(() => {
@@ -23,8 +25,10 @@ export default function Dashboard() {
       progress: dashboardData.quickStats?.progress || 0,
       activeCourses: dashboardData.quickStats?.activeCourses || 0,
       studyTime: dashboardData.quickStats?.studyTime || 0,
+      totalPoints: pointsData?.wallet?.totalPoints || 0,
+      rank: myRank || null,
     };
-  }, [dashboardData]);
+  }, [dashboardData, pointsData, myRank]);
 
   if (authLoading || dashboardLoading) {
     return (
@@ -48,7 +52,7 @@ export default function Dashboard() {
 
         {/* Quick Stats Bar */}
         {stats && (
-          <div className="flex items-center gap-4 mt-6 text-sm">
+          <div className="flex flex-wrap items-center gap-3 mt-6 text-sm">
             <div className="flex items-center gap-2 px-3 py-1.5 bg-emerald-50 text-emerald-700 rounded-full">
               <TrendingUp className="w-4 h-4" />
               <span>Progress: {stats.progress}%</span>
@@ -61,12 +65,22 @@ export default function Dashboard() {
               <Clock className="w-4 h-4" />
               <span>{stats.studyTime}h this week</span>
             </div>
+            <div className="flex items-center gap-2 px-3 py-1.5 bg-yellow-50 text-yellow-700 rounded-full">
+              <Award className="w-4 h-4" />
+              <span>{stats.totalPoints} points</span>
+            </div>
+            {stats.rank && (
+              <div className="flex items-center gap-2 px-3 py-1.5 bg-purple-50 text-purple-700 rounded-full">
+                <Trophy className="w-4 h-4" />
+                <span>Rank #{stats.rank}</span>
+              </div>
+            )}
           </div>
         )}
       </div>
 
       {/* Stats Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-6 mb-10">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6 mb-10">
         <StatusCard
           icon={<Book className="w-6 h-6" />}
           value={stats?.totalCourses || 0}
@@ -94,6 +108,20 @@ export default function Dashboard() {
           label="Total Fees Paid"
           color="from-amber-500 to-orange-500"
           trend="Learning investment"
+        />
+        <StatusCard
+          icon={<Award className="w-6 h-6" />}
+          value={stats?.totalPoints || 0}
+          label="Total Points Earned"
+          color="from-yellow-500 to-amber-500"
+          trend="Keep learning!"
+        />
+        <StatusCard
+          icon={<Trophy className="w-6 h-6" />}
+          value={stats?.rank ? `#${stats.rank}` : 'N/A'}
+          label="Leaderboard Rank"
+          color={stats?.rank && stats.rank <= 3 ? "from-yellow-500 to-orange-500" : "from-purple-500 to-pink-500"}
+          trend={stats?.rank && stats.rank <= 3 ? "🏆 Top performer!" : "Global ranking"}
         />
       </div>
 

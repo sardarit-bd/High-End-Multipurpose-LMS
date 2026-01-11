@@ -2,7 +2,6 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { MdKeyboardArrowDown, MdCheck, MdSearch } from "react-icons/md";
-import Swal from 'sweetalert2'
 
 /** ---------- Portal (avoids clipping) ---------- */
 function MenuPortal({ anchorRef, open, containerRef, children }) {
@@ -184,12 +183,6 @@ export default function SearchBar({
     const handleSubmit = (e) => {
         e?.preventDefault();
         onSubmit?.(e);
-        Swal.fire({
-            title: 'Alert!',
-            text: 'This is a demo search bar. No results will be returned.',
-            icon: 'info',
-            confirmButtonText: 'Okay'
-        })
     };
 
     return (
