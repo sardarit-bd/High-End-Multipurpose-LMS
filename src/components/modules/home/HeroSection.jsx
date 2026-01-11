@@ -27,9 +27,25 @@ export default function HeroSection() {
     if (category) {
       // Map categories to course page categories
       const categoryMap = {
-        'tech': 'Technology',
-        'design': 'Design',
-        'business': 'Management'
+        'climate-action': 'Climate Action (SDG 13)',
+        'clean-energy': 'Clean Energy (SDG 7)',
+        'gender-equality': 'Gender Equality (SDG 5)',
+        'zero-hunger': 'Zero Hunger (SDG 2)',
+        'clean-water': 'Clean Water & Sanitation (SDG 6)',
+        'sustainable-cities': 'Sustainable Cities (SDG 11)',
+        'circular-economy': 'Circular Economy (SDG 12)',
+        'marine-conservation': 'Marine Conservation (SDG 14)',
+        'biodiversity': 'Biodiversity (SDG 15)',
+        'healthcare': 'Healthcare & Well-being (SDG 3)',
+        'quality-education': 'Quality Education (SDG 4)',
+        'economic-growth': 'Economic Growth (SDG 8)',
+        'industry-innovation': 'Industry & Innovation (SDG 9)',
+        'social-equality': 'Social Equality (SDG 10)',
+        'peace-justice': 'Peace & Justice (SDG 16)',
+        'global-partnerships': 'Global Partnerships (SDG 17)',
+        'poverty-eradication': 'Poverty Eradication (SDG 1)',
+        'sdg-fundamentals': 'SDG Fundamentals',
+        'other': 'Other'
       };
       const mappedCategory = categoryMap[category] || category;
       // Since categories are expected as a comma-separated string for URL params

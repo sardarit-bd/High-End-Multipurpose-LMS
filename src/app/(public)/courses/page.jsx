@@ -36,7 +36,25 @@ export default function PublicCourseListing() {
       // Split comma-separated categories and filter to only valid ones
       const categoryList = urlCategories.split(',').map(cat => cat.trim());
       const validCategories = categoryList.filter(cat =>
-        ["Programming", "Database", "Design", "Technology", "Management"].includes(cat)
+        [
+          "Climate Action (SDG 13)",
+          "Clean Energy (SDG 7)",
+          "Gender Equality (SDG 5)",
+          "Zero Hunger (SDG 2)",
+          "Clean Water & Sanitation (SDG 6)",
+          "Sustainable Cities (SDG 11)",
+          "Circular Economy (SDG 12)",
+          "Marine Conservation (SDG 14)",
+          "Biodiversity (SDG 15)",
+          "Healthcare & Well-being (SDG 3)",
+          "Quality Education (SDG 4)",
+          "Economic Growth (SDG 8)",
+          "Industry & Innovation (SDG 9)",
+          "Social Equality (SDG 10)",
+          "Peace & Justice (SDG 16)",
+          "Global Partnerships (SDG 17)",
+          "Poverty Eradication (SDG 1)"
+        ].includes(cat)
       );
       setSelectedCategories(validCategories);
     }
@@ -53,7 +71,25 @@ export default function PublicCourseListing() {
 
   // ---------- Categories ----------
   const categories = useMemo(
-    () => ["Programming", "Database", "Design", "Technology", "Management"],
+    () => [
+      "Climate Action (SDG 13)",
+      "Clean Energy (SDG 7)",
+      "Gender Equality (SDG 5)",
+      "Zero Hunger (SDG 2)",
+      "Clean Water (SDG 6)",
+      "Sustainable Cities (SDG 11)",
+      "Circular Economy (SDG 12)",
+      "Marine Conservation (SDG 14)",
+      "Biodiversity (SDG 15)",
+      "Healthcare (SDG 3)",
+      "Quality Education (SDG 4)",
+      "Economic Growth (SDG 8)",
+      "Sustainable Industry (SDG 9)",
+      "Social Equality (SDG 10)",
+      "Peace & Justice (SDG 16)",
+      "Global Partnerships (SDG 17)",
+      "Poverty Eradication (SDG 1)"
+    ],
     []
   );
 
@@ -265,7 +301,7 @@ export default function PublicCourseListing() {
                       >
                         <ChevronLeft className="w-5 h-5" />
                       </button>
-                      
+
                       {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
                         let pageNum;
                         if (totalPages <= 5) {
@@ -277,25 +313,25 @@ export default function PublicCourseListing() {
                         } else {
                           pageNum = page - 2 + i;
                         }
-                        
+
                         return (
                           <button
                             key={pageNum}
                             onClick={() => setPage(pageNum)}
                             className={`w-10 h-10 rounded-lg font-medium transition-all ${page === pageNum
-                                ? "bg-gradient-to-r from-[var(--color-primary)] to-emerald-500 text-white shadow-md"
-                                : "text-[var(--color-text)] hover:bg-emerald-50 border border-emerald-200"
+                              ? "bg-gradient-to-r from-[var(--color-primary)] to-emerald-500 text-white shadow-md"
+                              : "text-[var(--color-text)] hover:bg-emerald-50 border border-emerald-200"
                               }`}
                           >
                             {pageNum}
                           </button>
                         );
                       })}
-                      
+
                       {totalPages > 5 && (
                         <span className="px-2 text-gray-400">...</span>
                       )}
-                      
+
                       <button
                         onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
                         disabled={page === totalPages}
@@ -432,14 +468,14 @@ function SidebarFilters({
               key={cat}
               onClick={() => toggleCategory(cat)}
               className={`w-full flex items-center justify-between p-3 rounded-xl border transition-all ${selectedCategories.includes(cat)
-                  ? "bg-blue-50 border-blue-200 text-blue-700"
-                  : "bg-gray-50/50 border-gray-200 text-gray-700 hover:bg-gray-100"
+                ? "bg-blue-50 border-blue-200 text-blue-700"
+                : "bg-gray-50/50 border-gray-200 text-gray-700 hover:bg-gray-100"
                 }`}
             >
               <span className="font-medium">{cat}</span>
               <div className={`w-5 h-5 rounded border flex items-center justify-center ${selectedCategories.includes(cat)
-                  ? "bg-blue-500 border-blue-500"
-                  : "bg-white border-gray-300"
+                ? "bg-blue-500 border-blue-500"
+                : "bg-white border-gray-300"
                 }`}>
                 {selectedCategories.includes(cat) && (
                   <div className="w-2 h-2 bg-white rounded-full" />
@@ -464,8 +500,8 @@ function SidebarFilters({
               key={p}
               onClick={() => setSelectedPrice(p)}
               className={`py-3 px-4 rounded-xl border transition-all ${selectedPrice === p
-                  ? "bg-amber-50 border-amber-200 text-amber-700 font-medium"
-                  : "bg-gray-50/50 border-gray-200 text-gray-700 hover:bg-gray-100"
+                ? "bg-amber-50 border-amber-200 text-amber-700 font-medium"
+                : "bg-gray-50/50 border-gray-200 text-gray-700 hover:bg-gray-100"
                 }`}
             >
               <span className="capitalize">{p}</span>
@@ -473,11 +509,11 @@ function SidebarFilters({
           ))}
         </div>
         <p className="text-xs text-gray-500 mt-3">
-          {selectedPrice === "free" 
-            ? "Showing only free courses" 
-            : selectedPrice === "paid" 
-            ? "Showing only paid courses" 
-            : "Showing all courses"}
+          {selectedPrice === "free"
+            ? "Showing only free courses"
+            : selectedPrice === "paid"
+              ? "Showing only paid courses"
+              : "Showing all courses"}
         </p>
       </section>
     </div>

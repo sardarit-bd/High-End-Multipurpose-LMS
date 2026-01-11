@@ -7,16 +7,16 @@ import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { 
-  Upload, 
-  XCircle, 
-  Sparkles, 
-  BookOpen, 
-  Tag, 
-  TrendingUp, 
-  DollarSign, 
-  Globe, 
-  FileText, 
+import {
+  Upload,
+  XCircle,
+  Sparkles,
+  BookOpen,
+  Tag,
+  TrendingUp,
+  DollarSign,
+  Globe,
+  FileText,
   Plus,
   PlayCircle,
   Video,
@@ -95,7 +95,7 @@ export default function AddCoursePage() {
     //   const duration = Math.round(video.duration);
     //   setVideoDuration(duration);
     //   setValue("introVideoDuration", duration);
-      
+
     //   // Format duration for display
     //   const minutes = Math.floor(duration / 60);
     //   const seconds = duration % 60;
@@ -109,7 +109,7 @@ export default function AddCoursePage() {
 
     setIsUploadingVideo(true);
     try {
-       const res = await api.post("/upload", formData, {
+      const res = await api.post("/upload", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
       const url = res.data?.data?.url;
@@ -127,8 +127,8 @@ export default function AddCoursePage() {
   const onSubmit = async (data) => {
     try {
       const price = isPaid ? parseInt(data.price, 10) : 0;
-      const payload = { 
-        ...data, 
+      const payload = {
+        ...data,
         price,
         introVideo: introVideo || "",
       };
@@ -178,7 +178,7 @@ export default function AddCoursePage() {
                     Upload a compelling image that represents your course
                   </p>
                 </div>
-                
+
                 <div className="p-6">
                   {thumbnail ? (
                     <div className="group relative aspect-video rounded-[var(--radius-default)] overflow-hidden border-2 border-emerald-100">
@@ -204,14 +204,14 @@ export default function AddCoursePage() {
                     <label
                       htmlFor="thumbnailInput"
                       className={`flex flex-col items-center justify-center aspect-video rounded-[var(--radius-default)] border-3 border-dashed transition-all duration-300 cursor-pointer group
-                        ${isUploadingThumbnail 
-                          ? 'border-emerald-300 bg-emerald-50' 
+                        ${isUploadingThumbnail
+                          ? 'border-emerald-300 bg-emerald-50'
                           : 'border-emerald-200 hover:border-[var(--color-primary)] hover:bg-emerald-50/50'
                         }`}
                     >
                       <div className={`p-4 rounded-full mb-4 transition-all duration-300
-                        ${isUploadingThumbnail 
-                          ? 'animate-pulse bg-emerald-100' 
+                        ${isUploadingThumbnail
+                          ? 'animate-pulse bg-emerald-100'
                           : 'bg-emerald-100 group-hover:bg-emerald-200 group-hover:scale-110'
                         }`}
                       >
@@ -259,7 +259,7 @@ export default function AddCoursePage() {
                   Add a welcome video to introduce your course
                 </p>
               </div>
-              
+
               <div className="p-6">
                 {introVideo ? (
                   <div className="space-y-4">
@@ -284,7 +284,7 @@ export default function AddCoursePage() {
                         <XCircle size={20} />
                       </button>
                     </div>
-                    
+
                     <div className="space-y-2">
                       <div className="flex items-center justify-between text-sm">
                         <div className="flex items-center gap-2 text-[var(--color-text)]">
@@ -307,14 +307,14 @@ export default function AddCoursePage() {
                   <label
                     htmlFor="videoInput"
                     className={`flex flex-col items-center justify-center aspect-video rounded-[var(--radius-default)] border-3 border-dashed transition-all duration-300 cursor-pointer group
-                      ${isUploadingVideo 
-                        ? 'border-blue-300 bg-blue-50' 
+                      ${isUploadingVideo
+                        ? 'border-blue-300 bg-blue-50'
                         : 'border-blue-200 hover:border-[var(--color-secondary)] hover:bg-blue-50/50'
                       }`}
                   >
                     <div className={`p-4 rounded-full mb-4 transition-all duration-300
-                      ${isUploadingVideo 
-                        ? 'animate-pulse bg-blue-100' 
+                      ${isUploadingVideo
+                        ? 'animate-pulse bg-blue-100'
                         : 'bg-blue-100 group-hover:bg-blue-200 group-hover:scale-110'
                       }`}
                     >
@@ -345,7 +345,7 @@ export default function AddCoursePage() {
                     />
                   </label>
                 )}
-                
+
                 {/* Video Requirements Info */}
                 {!introVideo && !isUploadingVideo && (
                   <div className="mt-6 p-4 bg-blue-50/50 rounded-[var(--radius-default)] border border-blue-100">
@@ -421,19 +421,24 @@ export default function AddCoursePage() {
                         className="w-full p-4 border border-blue-200 rounded-[var(--radius-default)] focus:outline-none focus:ring-2 focus:ring-[var(--color-secondary)] focus:border-transparent transition-all bg-blue-50/30 hover:bg-blue-50/50 text-[var(--color-text)]"
                       >
                         <option value="">Select a category</option>
-                        <option value="web-development">Web Development</option>
-                        <option value="data-science">Data Science</option>
-                        <option value="design">Design</option>
-                        <option value="business">Business</option>
-                        <option value="marketing">Marketing</option>
-                        <option value="programming">Programming</option>
-                        <option value="mobile-development">Mobile Development</option>
-                        <option value="artificial-intelligence">Artificial Intelligence</option>
-                        <option value="cybersecurity">Cybersecurity</option>
-                        <option value="cloud-computing">Cloud Computing</option>
-                        <option value="devops">DevOps</option>
-                        <option value="blockchain">Blockchain</option>
-                        <option value="game-development">Game Development</option>
+                        <option value="sdg-fundamentals">SDG Fundamentals</option>
+                        <option value="climate-action">Climate Action (SDG 13)</option>
+                        <option value="clean-energy">Clean Energy (SDG 7)</option>
+                        <option value="gender-equality">Gender Equality (SDG 5)</option>
+                        <option value="zero-hunger">Zero Hunger (SDG 2)</option>
+                        <option value="clean-water">Clean Water & Sanitation (SDG 6)</option>
+                        <option value="sustainable-cities">Sustainable Cities (SDG 11)</option>
+                        <option value="circular-economy">Circular Economy (SDG 12)</option>
+                        <option value="marine-conservation">Marine Conservation (SDG 14)</option>
+                        <option value="biodiversity">Biodiversity (SDG 15)</option>
+                        <option value="healthcare">Healthcare & Well-being (SDG 3)</option>
+                        <option value="quality-education">Quality Education (SDG 4)</option>
+                        <option value="economic-growth">Economic Growth (SDG 8)</option>
+                        <option value="industry-innovation">Industry & Innovation (SDG 9)</option>
+                        <option value="social-equality">Social Equality (SDG 10)</option>
+                        <option value="peace-justice">Peace & Justice (SDG 16)</option>
+                        <option value="global-partnerships">Global Partnerships (SDG 17)</option>
+                        <option value="poverty-eradication">Poverty Eradication (SDG 1)</option>
                         <option value="other">Other</option>
                       </select>
                     </div>
