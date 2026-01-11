@@ -8,7 +8,7 @@ import TaskItem from "./TaskItem";
 import { useAuth } from "@/hooks/useAuth";
 import EarningsChart from "./EarningsChart";
 import { useInstructorStats, useInstructorDashboard } from "@/hooks/useDashboard";
-import { Sparkles, TrendingUp, Users, BookOpen, DollarSign, Award, Activity, AlertCircle, ChevronRight } from "lucide-react";
+import { Sparkles, TrendingUp, Users, BookOpen, DollarSign, Award, Activity, AlertCircle, ChevronRight, Clock } from "lucide-react";
 
 export default function InstructorDashboard() {
   const { user } = useAuth();
