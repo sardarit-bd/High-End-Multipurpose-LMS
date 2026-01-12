@@ -1,6 +1,6 @@
-import { FileText, CheckCircle, Clock, AlertCircle, Edit2, ExternalLink, MoreVertical, TrendingUp, Target } from "lucide-react";
+import { FileText, CheckCircle, Clock, AlertCircle, Edit2, ExternalLink, MoreVertical, TrendingUp, Target, Eye, Award } from "lucide-react";
 
-export default function TaskItem({ task, onOpen, completed = false, dueDate, priority = "medium" }) {
+export default function TaskItem({ task, onOpen, completed = false, dueDate, priority = "medium", submission = null }) {
   const getTaskIcon = (type) => {
     switch (type?.toLowerCase()) {
       case 'assignment':
@@ -29,18 +29,44 @@ export default function TaskItem({ task, onOpen, completed = false, dueDate, pri
 
   const formatDueDate = (date) => {
     if (!date) return "No due date";
-    
+
     const now = new Date();
     const due = new Date(date);
     const diffDays = Math.ceil((due - now) / (1000 * 60 * 60 * 24));
-    
+
     if (diffDays === 0) return "Today";
     if (diffDays === 1) return "Tomorrow";
     if (diffDays > 1 && diffDays <= 7) return `In ${diffDays} days`;
     if (diffDays < 0) return `${Math.abs(diffDays)} days ago`;
-    
+
     return due.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
   };
+
+  const getSubmissionStatus = () => {
+    if (!submission) return { status: 'not_submitted', label: 'Not Submitted', color: 'text-gray-500', bgColor: 'bg-gray-100' };
+
+    switch (submission.status) {
+      case 'reviewed':
+        return {
+          status: 'reviewed',
+          label: `Reviewed (${submission.pointsAwarded || 0} pts)`,
+          color: 'text-green-700',
+          bgColor: 'bg-green-100',
+          icon: <CheckCircle className="w-3 h-3" />
+        };
+      case 'pending_review':
+      default:
+        return {
+          status: 'pending_review',
+          label: 'Under Review',
+          color: 'text-yellow-700',
+          bgColor: 'bg-yellow-100',
+          icon: <Clock className="w-3 h-3" />
+        };
+    }
+  };
+
+  const submissionStatus = getSubmissionStatus();
 
   return (
     <li className="px-2 py-1.5">
@@ -128,10 +154,18 @@ export default function TaskItem({ task, onOpen, completed = false, dueDate, pri
                 )}
                 
                 {/* Points/Score */}
-                {task?.points && (
+                {task?.maxPoints && (
                   <span className="inline-flex items-center gap-1 text-xs font-medium text-gray-700">
                     <Target className="w-3 h-3" />
-                    {task.points} points
+                    {task.maxPoints} points
+                  </span>
+                )}
+
+                {/* Submission Status */}
+                {submission && (
+                  <span className={`inline-flex items-center gap-1 text-xs font-medium px-2 py-0.5 rounded-full ${submissionStatus.color} ${submissionStatus.bgColor}`}>
+                    {submissionStatus.icon}
+                    {submissionStatus.label}
                   </span>
                 )}
               </div>

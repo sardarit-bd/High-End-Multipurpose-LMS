@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { X, Save, Calendar, FileText, Clock, Award, FolderOpen } from "lucide-react";
+import { X, Save, Calendar, FileText, Clock, Award, FolderOpen, Eye, CheckCircle, XCircle } from "lucide-react";
 
 export default function TaskModal({
   isOpen,

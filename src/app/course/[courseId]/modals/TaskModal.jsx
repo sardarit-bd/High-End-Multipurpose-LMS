@@ -1,7 +1,7 @@
 "use client";
 import api from "@/lib/apiClient";
 import { motion } from "framer-motion";
-import { X, UploadCloud, Calendar, FileText, Award, Clock, AlertCircle, PlayCircle, File, CheckCircle, Eye } from "lucide-react";
+import { X, UploadCloud, Calendar, FileText, Award, Clock, AlertCircle, PlayCircle, File, CheckCircle, Eye, MessageSquare } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useQueryClient, useQuery } from "@tanstack/react-query";
@@ -217,18 +217,47 @@ export default function TaskModal({ task, onClose }) {
             {isAlreadySubmitted ? (
               /* Already Submitted - Show Results */
               <div className="space-y-6">
-                {/* Success Message */}
-                <div className="bg-gradient-to-r from-emerald-50 to-green-50 rounded-2xl p-6 border border-emerald-100">
-                  <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center">
-                      <CheckCircle className="w-6 h-6 text-emerald-600" />
-                    </div>
-                    <div>
-                      <h3 className="text-lg font-semibold text-emerald-800">Task Submitted Successfully!</h3>
-                      <p className="text-sm text-emerald-600">Your task has been reviewed and approved.</p>
+                {/* Status Message Based on Review Status */}
+                {existingSubmission?.status === 'pending_review' ? (
+                  /* Under Review */
+                  <div className="bg-gradient-to-r from-yellow-50 to-amber-50 rounded-2xl p-6 border border-yellow-100">
+                    <div className="flex items-center gap-4">
+                      <div className="w-12 h-12 bg-yellow-100 rounded-xl flex items-center justify-center">
+                        <Clock className="w-6 h-6 text-yellow-600" />
+                      </div>
+                      <div>
+                        <h3 className="text-lg font-semibold text-yellow-800">Task Under Review</h3>
+                        <p className="text-sm text-yellow-600">Your task has been submitted and is currently being reviewed by the instructor.</p>
+                      </div>
                     </div>
                   </div>
-                </div>
+                ) : existingSubmission?.status === 'reviewed' ? (
+                  /* Reviewed - Show Results */
+                  <div className="bg-gradient-to-r from-emerald-50 to-green-50 rounded-2xl p-6 border border-emerald-100">
+                    <div className="flex items-center gap-4">
+                      <div className="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center">
+                        <CheckCircle className="w-6 h-6 text-emerald-600" />
+                      </div>
+                      <div>
+                        <h3 className="text-lg font-semibold text-emerald-800">Task Reviewed!</h3>
+                        <p className="text-sm text-emerald-600">Your task has been reviewed by the instructor. Check your results below.</p>
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  /* Fallback */
+                  <div className="bg-gradient-to-r from-gray-50 to-slate-50 rounded-2xl p-6 border border-gray-100">
+                    <div className="flex items-center gap-4">
+                      <div className="w-12 h-12 bg-gray-100 rounded-xl flex items-center justify-center">
+                        <FileText className="w-6 h-6 text-gray-600" />
+                      </div>
+                      <div>
+                        <h3 className="text-lg font-semibold text-gray-800">Task Submitted</h3>
+                        <p className="text-sm text-gray-600">Your task has been submitted successfully.</p>
+                      </div>
+                    </div>
+                  </div>
+                )}
 
                 {/* Submission Details */}
                 <div className="bg-gradient-to-r from-blue-50 to-cyan-50 rounded-2xl p-6 border border-blue-100">
@@ -243,17 +272,33 @@ export default function TaskModal({ task, onClose }) {
                         <p className="text-sm text-gray-600">{formatDate(existingSubmission?.createdAt)}</p>
                       </div>
                     </div>
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 bg-green-100 rounded-xl flex items-center justify-center">
-                        <Award className="w-5 h-5 text-green-600" />
+                    {/* Show points if reviewed */}
+                    {existingSubmission?.status === 'reviewed' && existingSubmission?.pointsAwarded > 0 && (
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 bg-green-100 rounded-xl flex items-center justify-center">
+                          <Award className="w-5 h-5 text-green-600" />
+                        </div>
+                        <div>
+                          <p className="text-sm font-medium text-gray-900">Points Earned</p>
+                          <p className="text-sm text-gray-600">{existingSubmission.pointsAwarded} points</p>
+                        </div>
                       </div>
-                      <div>
-                        <p className="text-sm font-medium text-gray-900">Points Earned</p>
-                        <p className="text-sm text-gray-600">{existingSubmission?.pointsAwarded || task?.maxPoints || 0} points</p>
-                      </div>
-                    </div>
+                    )}
                   </div>
                 </div>
+
+                {/* Review Feedback */}
+                {existingSubmission?.reviewNote && (
+                  <div className="bg-gradient-to-r from-purple-50 to-violet-50 rounded-2xl p-6 border border-purple-100">
+                    <h4 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
+                      <MessageSquare className="w-5 h-5 text-purple-600" />
+                      Instructor Feedback
+                    </h4>
+                    <div className="bg-white rounded-xl p-4 border border-purple-200">
+                      <p className="text-gray-700">{existingSubmission.reviewNote}</p>
+                    </div>
+                  </div>
+                )}
 
                 {/* Submitted File */}
                 {existingSubmission?.artifactUrl && (
