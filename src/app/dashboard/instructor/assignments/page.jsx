@@ -11,6 +11,8 @@ import AssignmentsStats from "@/components/modules/dashboard/instructorr/assignm
 import CourseUnitSelector from "@/components/modules/dashboard/instructorr/assignments/CourseUnitSelector";
 import TasksTable from "@/components/modules/dashboard/instructorr/assignments/TasksTable";
 import TaskModal from "@/components/modules/dashboard/instructorr/assignments/TaskModal";
+import TaskReviewModal from "@/components/modules/dashboard/instructorr/assignments/TaskReviewModal";
+import SubmissionsReview from "@/components/modules/dashboard/instructorr/assignments/SubmissionsReview";
 
 export default function TaskManagerPage() {
   const { user } = useAuth();
@@ -20,8 +22,11 @@ export default function TaskManagerPage() {
   const [selectedCourse, setSelectedCourse] = useState("");
   const [selectedUnit, setSelectedUnit] = useState("");
   const [selectedTask, setSelectedTask] = useState(null);
+  const [selectedSubmission, setSelectedSubmission] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const [showReviewModal, setShowReviewModal] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [activeTab, setActiveTab] = useState('tasks'); // 'tasks' or 'submissions'
   const [stats, setStats] = useState({ totalTasks: 0, activeTasks: 0, upcomingDeadlines: 0 });
 
   // === Fetch all courses ===
@@ -107,6 +112,34 @@ export default function TaskManagerPage() {
     }
   };
 
+  // === Review submission ===
+  const reviewSubmission = async (reviewData) => {
+    setLoading(true);
+    try {
+      await api.patch(`/submissions/${selectedSubmission._id}/review`, reviewData);
+      toast.success("Submission reviewed successfully!");
+      setShowReviewModal(false);
+      setSelectedSubmission(null);
+      fetchTasks(selectedUnit); // Refresh to update stats
+    } catch (err) {
+      console.error(err);
+      const errorMessage = err.response?.data?.message || "Failed to review submission";
+
+      // Handle specific validation errors
+      if (errorMessage.includes("already been reviewed")) {
+        toast.error("This submission has already been reviewed and cannot be reviewed again.");
+        setShowReviewModal(false);
+        setSelectedSubmission(null);
+        // Refresh the list to update the UI
+        fetchTasks(selectedUnit);
+      } else {
+        toast.error(errorMessage);
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="min-h-screen p-4 md:p-6 lg:p-8">
       {/* Header */}
@@ -138,20 +171,69 @@ export default function TaskManagerPage() {
         }}
       />
 
-      {/* Tasks Table */}
-      <TasksTable
-        tasks={tasks}
-        onEdit={(task) => {
-          setSelectedTask(task);
-          setShowModal(true);
-        }}
-        onDelete={deleteTask}
-        onView={(task) => {
-          // Handle view task - could open a view modal or navigate to task details
-          console.log('View task:', task);
-        }}
-        loading={loading}
-      />
+      {/* Tabs */}
+      <div className="bg-white rounded-xl shadow-[var(--shadow-soft)] border border-gray-200">
+        <div className="border-b border-gray-200">
+          <div className="flex">
+            <button
+              onClick={() => setActiveTab('tasks')}
+              className={`px-6 py-3 font-medium text-sm border-b-2 transition-colors ${
+                activeTab === 'tasks'
+                  ? 'border-[var(--color-primary)] text-[var(--color-primary)]'
+                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+              }`}
+            >
+              Tasks Management
+            </button>
+            <button
+              onClick={() => setActiveTab('submissions')}
+              className={`px-6 py-3 font-medium text-sm border-b-2 transition-colors ${
+                activeTab === 'submissions'
+                  ? 'border-[var(--color-primary)] text-[var(--color-primary)]'
+                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+              }`}
+            >
+              Review Submissions
+            </button>
+          </div>
+        </div>
+
+        <div className="p-6">
+          {activeTab === 'tasks' ? (
+            <TasksTable
+              tasks={tasks}
+              onEdit={(task) => {
+                setSelectedTask(task);
+                setShowModal(true);
+              }}
+              onDelete={deleteTask}
+              onReview={(task) => {
+                setActiveTab('submissions');
+              }}
+              onView={(task) => {
+                // Handle view task - could open a view modal or navigate to task details
+                console.log('View task:', task);
+              }}
+              loading={loading}
+            />
+          ) : (
+            <SubmissionsReview
+              selectedUnit={selectedUnit}
+              onRefresh={() => fetchTasks(selectedUnit)}
+              onReviewComplete={(submission) => {
+                // Invalidate taskSubmission query for the reviewed submission
+                if (typeof window !== 'undefined') {
+                  import('@tanstack/react-query').then(({ queryClient }) => {
+                    queryClient.invalidateQueries({
+                      queryKey: ["taskSubmission", submission?.task?._id || submission?.task]
+                    });
+                  });
+                }
+              }}
+            />
+          )}
+        </div>
+      </div>
 
       {/* Task Modal */}
       <TaskModal
@@ -165,9 +247,8 @@ export default function TaskManagerPage() {
               description: formData.description,
               dueDate: formData.dueDate || null,
               maxPoints: parseInt(formData.maxPoints || 0),
-              perCorrectPoint: parseInt(formData.perCorrectPoint || 0),
               type: formData.type,
-              status: formData.status,
+              // status: formData.status,
               unitId: selectedUnit,
             };
 
@@ -189,6 +270,18 @@ export default function TaskManagerPage() {
           }
         }}
         task={selectedTask}
+        loading={loading}
+      />
+
+      {/* Task Review Modal */}
+      <TaskReviewModal
+        isOpen={showReviewModal}
+        onClose={() => {
+          setShowReviewModal(false);
+          setSelectedSubmission(null);
+        }}
+        submission={selectedSubmission}
+        onReview={reviewSubmission}
         loading={loading}
       />
     </div>

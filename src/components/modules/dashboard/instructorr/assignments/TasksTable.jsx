@@ -4,7 +4,6 @@ export default function TasksTable({
   tasks,
   onEdit,
   onDelete,
-  onView,
   loading
 }) {
   const getStatusIcon = (status) => {
@@ -101,9 +100,6 @@ export default function TasksTable({
                 Points
               </th>
               <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                Status
-              </th>
-              <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                 Due Date
               </th>
               <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
@@ -152,14 +148,7 @@ export default function TasksTable({
                     )}
                   </div>
                 </td>
-                <td className="px-6 py-4">
-                  <div className="flex items-center">
-                    {getStatusIcon(task.status)}
-                    <span className={`ml-2 px-2 py-1 text-xs font-medium rounded-full capitalize ${getStatusColor(task.status)}`}>
-                      {task.status}
-                    </span>
-                  </div>
-                </td>
+              
                 <td className="px-6 py-4 text-sm text-gray-900">
                   {formatDate(task.dueDate)}
                 </td>
@@ -171,13 +160,6 @@ export default function TasksTable({
                 </td>
                 <td className="px-6 py-4 text-sm font-medium">
                   <div className="flex items-center gap-2">
-                    <button
-                      onClick={() => onView(task)}
-                      className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
-                      title="View Task"
-                    >
-                      <Eye className="w-4 h-4" />
-                    </button>
                     <button
                       onClick={() => onEdit(task)}
                       className="p-2 text-emerald-600 hover:bg-emerald-50 rounded-lg transition-colors"

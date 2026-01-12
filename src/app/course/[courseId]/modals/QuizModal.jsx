@@ -392,7 +392,28 @@ export default function QuizModal({ quizzes, onClose }) {
                 <div className="bg-gradient-to-r from-emerald-50 to-green-50 rounded-2xl p-8 border border-emerald-200 mb-8">
                   <div className="text-center">
                     <div className="text-6xl font-bold text-emerald-700 mb-2">{existingSubmission?.pointsAwarded || 0}</div>
-                    <p className="text-lg text-emerald-600 font-medium">Points Earned</p>
+                    <p className="text-lg text-emerald-600 font-medium">Total Points Earned</p>
+                    {existingSubmission?.breakdown && (
+                      <div className="mt-4 grid grid-cols-2 gap-4 text-sm">
+                        <div className="bg-white/50 rounded-lg p-3">
+                          <div className="text-lg font-bold text-emerald-700">
+                            {existingSubmission.breakdown
+                              .filter(item => item.type === 'mcq')
+                              .reduce((sum, item) => sum + (item.autoPoints || 0), 0)}
+                          </div>
+                          <div className="text-emerald-600">MCQ Points</div>
+                        </div>
+                        <div className="bg-white/50 rounded-lg p-3">
+                          <div className="text-lg font-bold text-emerald-700">
+                            {console.log('Existing Submission Breakdown:', existingSubmission.breakdown)}
+                            {existingSubmission.breakdown
+                              .filter(item => item.type === 'short')
+                              .reduce((sum, item) => sum + (item.reviewPoints || 0), 0)}
+                          </div>
+                          <div className="text-emerald-600">Short Answer Points</div>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </div>
 
@@ -408,19 +429,62 @@ export default function QuizModal({ quizzes, onClose }) {
 
                 {/* Submission Details */}
                 <div className="bg-gradient-to-r from-blue-50 to-cyan-50 rounded-2xl p-6 border border-blue-200">
-                  <h4 className="text-lg font-semibold text-gray-900 mb-4">Submission Details</h4>
+                  <h4 className="text-lg font-semibold text-gray-900 mb-4">Quiz Breakdown</h4>
                   <div className="space-y-3 text-left">
                     <div className="flex justify-between items-center">
                       <span className="text-sm text-gray-600">Total Questions:</span>
                       <span className="font-semibold text-gray-900">{questions.length}</span>
                     </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm text-gray-600">Points Awarded:</span>
-                      <span className="font-semibold text-gray-900">{existingSubmission?.pointsAwarded || 0}</span>
+
+                    {existingSubmission?.breakdown && (
+                      <>
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm text-gray-600">MCQ Questions:</span>
+                          <span className="font-semibold text-gray-900">
+                            {existingSubmission.breakdown.filter(item => item.type === 'mcq').length}
+                          </span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm text-gray-600">Short Answer Questions:</span>
+                          <span className="font-semibold text-gray-900">
+                            {existingSubmission.breakdown.filter(item => item.type === 'short').length}
+                          </span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm text-gray-600">MCQ Points:</span>
+                          <span className="font-semibold text-green-700">
+                            {existingSubmission.breakdown
+                              .filter(item => item.type === 'mcq')
+                              .reduce((sum, item) => sum + (item.autoPoints || 0), 0)} pts
+                          </span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm text-gray-600">Short Answer Points:</span>
+                          <span className="font-semibold text-blue-700">
+                            {existingSubmission.breakdown
+                              .filter(item => item.type === 'short')
+                              .reduce((sum, item) => sum + (item.reviewPoints || 0), 0)} pts
+                          </span>
+                        </div>
+                      </>
+                    )}
+
+                    <div className="border-t border-blue-200 pt-3 mt-3">
+                      <div className="flex justify-between items-center">
+                        <span className="text-sm font-medium text-gray-700">Total Points Awarded:</span>
+                        <span className="font-bold text-lg text-[var(--color-primary)]">{existingSubmission?.pointsAwarded || 0}</span>
+                      </div>
                     </div>
+
                     <div className="flex justify-between items-center">
-                      <span className="text-sm text-gray-600">Status:</span>
-                      <span className="px-3 py-1 bg-emerald-100 text-emerald-700 text-sm font-medium rounded-full">Completed</span>
+                      <span className="text-sm text-gray-600">Review Status:</span>
+                      <span className={`px-3 py-1 text-sm font-medium rounded-full ${
+                        existingSubmission?.status === 'reviewed'
+                          ? 'bg-green-100 text-green-700'
+                          : 'bg-yellow-100 text-yellow-700'
+                      }`}>
+                        {existingSubmission?.status === 'reviewed' ? 'Reviewed' : 'Pending Review'}
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -445,7 +509,7 @@ export default function QuizModal({ quizzes, onClose }) {
                   onClick={onClose}
                   className="px-8 py-3.5 bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-primary)]/90 text-white font-bold rounded-xl hover:shadow-xl transition-all"
                 >
-                  Continue Learning
+                  Close
                 </button>
               </div>
             </div>
@@ -594,13 +658,13 @@ export default function QuizModal({ quizzes, onClose }) {
               </div>
             </div>
           ) : (
-            /* Just submitted - show continue button */
+            /* Just submitted - show close button */
             <div className="flex justify-center">
               <button
                 onClick={onClose}
                 className="px-8 py-3 bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-primary)]/90 text-white font-bold rounded-xl hover:shadow-xl transition-all"
               >
-                Continue Learning
+                Close
               </button>
             </div>
           )}

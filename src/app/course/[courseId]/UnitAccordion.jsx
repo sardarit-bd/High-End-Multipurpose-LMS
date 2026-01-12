@@ -34,6 +34,10 @@ export default function UnitAccordion({
     return submissions.some(submission => submission.taskId === taskId && submission.status === 'approved');
   };
 
+  const getTaskSubmission = (taskId) => {
+    return submissions.find(submission => submission.task === taskId);
+  };
+
   const getQuizSubmission = (quizId) => {
     return submissions.find(submission => submission.quizId === quizId);
   };
@@ -182,6 +186,7 @@ export default function UnitAccordion({
                         task={task}
                         onOpen={() => setActiveTask(task)}
                         completed={isTaskSubmitted(task._id)}
+                        submission={getTaskSubmission(task._id)}
                       />
                     ))}
                   </div>
