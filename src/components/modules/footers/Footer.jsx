@@ -89,7 +89,7 @@ const Footer = () => {
         <div className="border-t border-[var(--color-primary)] mt-8 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <div className="text-[var(--color-text)]/70 text-sm">
-              {t("footer.copyright") || "Copyright 2023 © Sardar IT. All rights reserved."}
+              {t("Copyright 2023 © Sardar IT. All rights reserved.") || "Copyright 2023 © Sardar IT. All rights reserved."}
             </div>
             <div className="flex space-x-6 text-[var(--color-text)]/70 text-sm">
               <a href="#" className="hover:text-[var(--color-primary)] transition-colors">{t("footer.terms") || "Terms & Conditions"}</a>

@@ -15,7 +15,7 @@ export default function TaskModal({
     maxPoints: '',
     perCorrectPoint: '',
     type: '',
-    status: 'draft'
+    // status: 'draft'
   });
 
   useEffect(() => {
@@ -27,7 +27,7 @@ export default function TaskModal({
         maxPoints: task.maxPoints || '',
         perCorrectPoint: task.perCorrectPoint || '',
         type: task.type || '',
-        status: task.status || 'draft'
+        // status: task.status || 'draft'
       });
     } else {
       setFormData({
@@ -37,7 +37,7 @@ export default function TaskModal({
         maxPoints: '',
         perCorrectPoint: '',
         type: '',
-        status: 'draft'
+        // status: 'draft'
       });
     }
   }, [task, isOpen]);
@@ -132,7 +132,7 @@ export default function TaskModal({
               </div>
             </div>
 
-            <div>
+            {/* <div>
               <label className="block text-sm font-semibold text-gray-700 mb-2">
                 Status
               </label>
@@ -149,28 +149,7 @@ export default function TaskModal({
                 </select>
                 <Clock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
               </div>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">
-                Maximum Points
-              </label>
-              <div className="relative">
-                <input
-                  type="number"
-                  name="maxPoints"
-                  value={formData.maxPoints}
-                  onChange={handleChange}
-                  min="0"
-                  className="w-full p-3 pl-10 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all"
-                  placeholder="e.g., 100"
-                />
-                <Award className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
-              </div>
-            </div>
-
+            </div> */}
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-2">
                 Task Type *
@@ -193,25 +172,28 @@ export default function TaskModal({
             </div>
           </div>
 
-          {formData.type === "quiz" && (
-            <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">
-                Points per Question
-              </label>
-              <div className="relative">
-                <input
-                  type="number"
-                  name="perCorrectPoint"
-                  value={formData.perCorrectPoint}
-                  onChange={handleChange}
-                  min="0"
-                  className="w-full p-3 pl-10 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all"
-                  placeholder="e.g., 5"
-                />
-                <Award className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {formData.type !== "quiz" && (
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  Maximum Points
+                </label>
+                <div className="relative">
+                  <input
+                    type="number"
+                    name="maxPoints"
+                    value={formData.maxPoints}
+                    onChange={handleChange}
+                    min="0"
+                    className="w-full p-3 pl-10 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all"
+                    placeholder="e.g., 100"
+                  />
+                  <Award className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
+                </div>
               </div>
-            </div>
-          )}
+            )}
+          </div>
+
 
           <div className="flex items-center justify-end gap-4 pt-6 border-t border-gray-200">
             <button

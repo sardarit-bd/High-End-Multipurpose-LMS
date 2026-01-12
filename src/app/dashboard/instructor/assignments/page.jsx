@@ -165,9 +165,8 @@ export default function TaskManagerPage() {
               description: formData.description,
               dueDate: formData.dueDate || null,
               maxPoints: parseInt(formData.maxPoints || 0),
-              perCorrectPoint: parseInt(formData.perCorrectPoint || 0),
               type: formData.type,
-              status: formData.status,
+              // status: formData.status,
               unitId: selectedUnit,
             };
 
