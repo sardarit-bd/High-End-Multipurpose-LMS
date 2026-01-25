@@ -17,6 +17,8 @@ import {
   FaUsers,
   FaChartLine
 } from 'react-icons/fa';
+import { useQuery } from '@tanstack/react-query';
+import api from '@/lib/apiClient';
 import LeaderboardHeroSection from '@/components/modules/leaderboard/LeaderboardHeroSection';
 import Filters from '@/components/modules/leaderboard/Filters';
 import RankCard from '@/components/modules/leaderboard/RankCard';
@@ -27,45 +29,104 @@ import LeaderboardSkeleton from '@/components/modules/leaderboard/LeaderboardSke
 const Leaderboard = () => {
   const [activeCategory, setActiveCategory] = useState('global');
   const [activeTimeframe, setActiveTimeframe] = useState('all-time');
-  const [leaderboardData, setLeaderboardData] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [userRank, setUserRank] = useState(null);
+  const [selectedFilter, setSelectedFilter] = useState('');
   const [pageLoading, setPageLoading] = useState(true);
 
-  // Mock data - Firebase theke replace korbe
-  const mockLeaderboardData = {
-    global: [
-      { id: 1, rank: 1, name: "EcoWarrior", points: 12500, school: "Green Valley High", region: "North District", badges: ['gold', 'speed', 'streak'], avatar: "/avatars/1.jpg", progress: 98 },
-      { id: 2, rank: 2, name: "ClimateChampion", points: 11800, school: "Sunrise Academy", region: "South District", badges: ['silver', 'knowledge'], avatar: "/avatars/2.jpg", progress: 92 },
-      { id: 3, rank: 3, name: "SustainableSam", points: 11200, school: "Eco Future School", region: "East District", badges: ['bronze', 'creative'], avatar: "/avatars/3.jpg", progress: 87 },
-      { id: 4, rank: 4, name: "GreenGenius", points: 10500, school: "Green Valley High", region: "North District", badges: ['speed'], avatar: "/avatars/4.jpg", progress: 82 },
-      { id: 5, rank: 5, name: "EarthGuardian", points: 9800, school: "Nature College", region: "West District", badges: ['streak'], avatar: "/avatars/5.jpg", progress: 76 },
-      { id: 6, rank: 6, name: "OceanProtector", points: 9200, school: "Marine Institute", region: "Coastal District", badges: ['knowledge'], avatar: "/avatars/6.jpg", progress: 72 },
-      { id: 7, rank: 7, name: "CleanEnergy", points: 8700, school: "Sunrise Academy", region: "South District", badges: [], avatar: "/avatars/7.jpg", progress: 68 },
-      { id: 8, rank: 8, name: "BioDiversity", points: 8100, school: "Eco Future School", region: "East District", badges: ['creative'], avatar: "/avatars/8.jpg", progress: 63 },
-      { id: 9, rank: 9, name: "ZeroWaste", points: 7600, school: "Green Valley High", region: "North District", badges: [], avatar: "/avatars/9.jpg", progress: 59 },
-      { id: 10, rank: 10, name: "FutureLeader", points: 7200, school: "Nature College", region: "West District", badges: ['speed'], avatar: "/avatars/10.jpg", progress: 56 }
-    ],
-    school: [
-      { id: 1, rank: 1, name: "Green Valley High", points: 35600, students: 45, region: "North District", badges: ['gold', 'active'], avatar: "/schools/1.jpg" },
-      { id: 2, rank: 2, name: "Sunrise Academy", points: 29800, students: 38, region: "South District", badges: ['silver'], avatar: "/schools/2.jpg" },
-      { id: 3, rank: 3, name: "Eco Future School", points: 26700, students: 32, region: "East District", badges: ['bronze'], avatar: "/schools/3.jpg" },
-      { id: 4, rank: 4, name: "Nature College", points: 23400, students: 28, region: "West District", badges: [], avatar: "/schools/4.jpg" },
-      { id: 5, rank: 5, name: "Marine Institute", points: 19800, students: 25, region: "Coastal District", badges: [], avatar: "/schools/5.jpg" }
-    ],
-    regional: [
-      { id: 1, rank: 1, name: "North District", points: 89200, schools: 12, participants: 156, badges: ['gold'] },
-      { id: 2, rank: 2, name: "South District", points: 76500, schools: 10, participants: 134, badges: ['silver'] },
-      { id: 3, rank: 3, name: "East District", points: 69800, schools: 8, participants: 121, badges: ['bronze'] },
-      { id: 4, rank: 4, name: "West District", points: 54300, schools: 7, participants: 98, badges: [] },
-      { id: 5, rank: 5, name: "Coastal District", points: 43200, schools: 6, participants: 76, badges: [] }
-    ]
-  };
+  // Fetch leaderboard data
+  const { data: leaderboardResponse, isLoading: loading, refetch: refetchLeaderboard } = useQuery({
+    queryKey: ['leaderboard', activeCategory, selectedFilter],
+    queryFn: async () => {
+      const params = new URLSearchParams({
+        scope: activeCategory,
+        limit: '50'
+      });
+
+      if (selectedFilter) {
+        params.append('value', selectedFilter);
+      }
+
+      const response = await api.get(`/gamification/leaderboard?${params}`);
+      return response.data?.data || [];
+    },
+    enabled: !pageLoading
+  });
+
+  // Transform API data to match component expectations
+  const leaderboardData = leaderboardResponse?.map((user, index) => ({
+    id: user.userId,
+    rank: index + 1,
+    name: user.name,
+    points: activeCategory === 'global' ? user.totalPoints :
+            user[activeCategory === 'school' ? 'coursePoints' : 'coursePoints'] || user.totalPoints,
+    school: user.organization,
+    region: user.region,
+    badges: [], // TODO: Add badge logic later
+    avatar: user.avatar || `/avatars/default.jpg`,
+    progress: Math.min((user.totalPoints / 10000) * 100, 100), // Example progress calculation
+    // For school/regional views
+    ...(activeCategory === 'school' && {
+      students: Math.floor(Math.random() * 50) + 20, // Mock data - replace with real data
+    }),
+    ...(activeCategory === 'region' && {
+      schools: Math.floor(Math.random() * 15) + 5,
+      participants: Math.floor(Math.random() * 200) + 50,
+    })
+  })) || [];
+
+  // Fetch current user's points and rank
+  const { data: userData, isLoading: userLoading } = useQuery({
+    queryKey: ['myPoints'],
+    queryFn: async () => {
+      try {
+        const response = await api.get('/gamification/me');
+        return response.data?.data;
+      } catch (error) {
+        return null;
+      }
+    },
+    enabled: !pageLoading
+  });
+
+  // Fetch available schools and regions for filtering
+  const { data: schoolsData } = useQuery({
+    queryKey: ['schools-list'],
+    queryFn: async () => {
+      try {
+        // Get unique schools from users
+        const response = await api.get('/users?role=STUDENT&limit=1000');
+        const users = response.data?.data || [];
+        const uniqueSchools = [...new Set(users.map(user => user.organization).filter(Boolean))];
+        return uniqueSchools;
+      } catch (error) {
+        return [];
+      }
+    },
+    enabled: !pageLoading
+  });
+
+  const { data: regionsData } = useQuery({
+    queryKey: ['regions-list'],
+    queryFn: async () => {
+      try {
+        // Get unique regions from users
+        const response = await api.get('/users?role=STUDENT&limit=1000');
+        const users = response.data?.data || [];
+        const uniqueRegions = [...new Set(users.map(user => user.region).filter(Boolean))];
+        return uniqueRegions;
+      } catch (error) {
+        return [];
+      }
+    },
+    enabled: !pageLoading
+  });
+
+  const schools = activeCategory === 'school' ? (schoolsData || []) : [];
+  const regions = activeCategory === 'region' ? (regionsData || []) : [];
 
   const categories = [
     { id: 'global', name: 'Global Ranking', icon: FaGlobe, description: 'Top performers worldwide' },
     { id: 'school', name: 'School Ranking', icon: FaUniversity, description: 'Leading educational institutions' },
-    { id: 'regional', name: 'Regional Ranking', icon: FaMapMarkerAlt, description: 'Performance by districts' }
+    { id: 'region', name: 'Regional Ranking', icon: FaMapMarkerAlt, description: 'Performance by regions' }
   ];
 
   const timeframes = [
@@ -85,21 +146,34 @@ const Leaderboard = () => {
     active: { name: 'Most Active', color: 'bg-green-500', icon: FaUsers }
   };
 
+  // Calculate user rank from leaderboard data
+  const userRank = userData && leaderboardData ? (() => {
+    const userIndex = leaderboardData.findIndex(user => user.userId === userData.wallet?.user?.toString());
+    if (userIndex >= 0) {
+      return {
+        rank: userIndex + 1,
+        name: userData.wallet?.user?.name || 'You',
+        points: activeCategory === 'global' ? userData.wallet?.totalPoints || 0 :
+                userData.wallet?.byCourse?.[selectedFilter] || 0,
+        progress: Math.min((userData.wallet?.totalPoints || 0) / 10000 * 100, 100) // Example progress calculation
+      };
+    }
+    return null;
+  })() : null;
+
+  // Initialize page loading
   useEffect(() => {
-    setTimeout(() => {
-      setLeaderboardData(mockLeaderboardData[activeCategory]);
-      setUserRank({ rank: 15, name: "YourProfile", points: 6500, progress: 50 });
-      setLoading(false);
-      setPageLoading(false);
-    });
-  }, [activeCategory]);
+    setPageLoading(false);
+  }, []);
 
   const handleRefresh = () => {
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-    }, 1000);
+    refetchLeaderboard();
   };
+
+  // Reset filter when category changes
+  useEffect(() => {
+    setSelectedFilter('');
+  }, [activeCategory]);
 
   const getRankColor = (rank) => {
     switch (rank) {
@@ -152,6 +226,10 @@ const Leaderboard = () => {
             setActiveTimeframe={setActiveTimeframe}
             handleRefresh={handleRefresh}
             loading={loading}
+            schools={schools || []}
+            regions={regions || []}
+            selectedFilter={selectedFilter}
+            setSelectedFilter={setSelectedFilter}
           />
           {/* Leaderboard Table */}
           <LeaderboardTable

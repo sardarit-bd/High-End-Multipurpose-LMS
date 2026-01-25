@@ -1,11 +1,21 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 
 export default function EditProfileModal({ profile, isOpen, onClose, onSave }) {
-  const [formData, setFormData] = useState(profile);
+  const [formData, setFormData] = useState(() => ({
+    ...profile,
+    dob: profile.dob ? new Date(profile.dob).toISOString().split('T')[0] : '',
+  }));
+
+  useEffect(() => {
+    setFormData({
+      ...profile,
+      dob: profile.dob ? new Date(profile.dob).toISOString().split('T')[0] : '',
+    });
+  }, [profile]);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -52,15 +62,7 @@ export default function EditProfileModal({ profile, isOpen, onClose, onSave }) {
                 className="border p-2 rounded-md"
               />
               <input
-                type="text"
-                name="userName"
-                value={formData.userName}
-                onChange={handleChange}
-                placeholder="User Name"
-                className="border p-2 rounded-md"
-              />
-              <input
-                type="text"
+                type="tel"
                 name="phone"
                 value={formData.phone}
                 onChange={handleChange}
@@ -68,37 +70,40 @@ export default function EditProfileModal({ profile, isOpen, onClose, onSave }) {
                 className="border p-2 rounded-md"
               />
               <input
-                type="email"
-                name="email"
-                value={formData.email}
+                type="text"
+                name="organization"
+                value={formData.organization}
                 onChange={handleChange}
-                placeholder="Email"
+                placeholder="School/Organization"
                 className="border p-2 rounded-md"
               />
               <input
                 type="text"
+                name="region"
+                value={formData.region}
+                onChange={handleChange}
+                placeholder="Region"
+                className="border p-2 rounded-md"
+              />
+              <input
+                type="date"
                 name="dob"
                 value={formData.dob}
                 onChange={handleChange}
-                placeholder="DOB"
+                placeholder="Date of Birth"
                 className="border p-2 rounded-md"
               />
-              <input
-                type="number"
-                name="age"
-                value={formData.age}
-                onChange={handleChange}
-                placeholder="Age"
-                className="border p-2 rounded-md"
-              />
-              <input
-                type="text"
+              <select
                 name="gender"
                 value={formData.gender}
                 onChange={handleChange}
-                placeholder="Gender"
                 className="border p-2 rounded-md"
-              />
+              >
+                <option value="">Select Gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+              </select>
             </div>
 
             {/* Bio */}
