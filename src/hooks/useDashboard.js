@@ -82,6 +82,16 @@ export const useLeaderboard = (limit = 20) => {
   });
 };
 
+export const useAdminStats = () => {
+  return useQuery({
+    queryKey: ['admin-stats'],
+    queryFn: async () => {
+      const res = await api.get('/dashboard/admin-stats');
+      return res.data;
+    },
+    refetchOnWindowFocus: false,
+  });
+};
 export const useMyRank = () => {
   const { data: leaderboard = [] } = useLeaderboard(100); // Get top 100 for rank calculation
   const { user } = useAuth();

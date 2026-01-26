@@ -36,3 +36,12 @@ export const useSaveLesson = (unitId) => {
       toast.error(err.response?.data?.message || "Failed to save lesson"),
   });
 };
+
+export const useAdminOverview = () =>
+  useQuery({
+    queryKey: [],
+    queryFn: async () => {
+      const res = await api.get(`/dashboard/overview`);
+      return res.data?.data || [];
+    }
+  });
