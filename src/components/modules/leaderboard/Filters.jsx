@@ -1,8 +1,21 @@
 import React from 'react'
 
-import {FaSyncAlt,FaChartLine} from 'react-icons/fa';
+import {FaSyncAlt,FaChartLine,FaFilter} from 'react-icons/fa';
 
-const Filters = ({ categories, activeCategory, setActiveCategory, timeframes, activeTimeframe, setActiveTimeframe, handleRefresh, loading }) => {
+const Filters = ({
+  categories,
+  activeCategory,
+  setActiveCategory,
+  timeframes,
+  activeTimeframe,
+  setActiveTimeframe,
+  handleRefresh,
+  loading,
+  schools = [],
+  regions = [],
+  selectedFilter,
+  setSelectedFilter
+}) => {
     return (
         <section className="bg-white rounded-3xl shadow-2xl p-8 border border-gray-100 mb-8">
             <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 mb-6">
@@ -52,6 +65,30 @@ const Filters = ({ categories, activeCategory, setActiveCategory, timeframes, ac
                     );
                 })}
             </div>
+
+            {/* Additional Filters for School/Region */}
+            {(activeCategory === 'school' && schools.length > 0) || (activeCategory === 'region' && regions.length > 0) ? (
+                <div className="mb-6">
+                    <div className="flex items-center gap-3 mb-3">
+                        <FaFilter className="w-4 h-4 text-gray-500" />
+                        <span className="text-sm font-medium text-gray-700">
+                            Filter by {activeCategory === 'school' ? 'School' : 'Region'}
+                        </span>
+                    </div>
+                    <select
+                        value={selectedFilter}
+                        onChange={(e) => setSelectedFilter(e.target.value)}
+                        className="px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white"
+                    >
+                        <option value="">All {activeCategory === 'school' ? 'Schools' : 'Regions'}</option>
+                        {(activeCategory === 'school' ? schools : regions).map((item, index) => (
+                            <option key={index} value={item}>
+                                {item}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+            ) : null}
 
             {/* Timeframe Filters */}
             <div className="flex flex-wrap gap-3">

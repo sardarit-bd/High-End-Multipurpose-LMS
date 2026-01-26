@@ -31,3 +31,25 @@ export const useUpdateProfile = (userId) => {
       toast.error(err.response?.data?.message || "Failed to Update Profile"),
   });
 };
+
+export const useStudents = (query = {}) => {
+  return useQuery({
+    queryKey: ['students', query],
+    queryFn: async () => {
+      const res = await api.get('/user/students', { params: query });
+      return res.data;
+    },
+    refetchOnWindowFocus: false,
+  });
+};
+
+export const useInstructorss = (query = {}) => {
+  return useQuery({
+    queryKey: ['instructors', query],
+    queryFn: async () => {
+      const res = await api.get('/user/instructor', { params: query });
+      return res.data;
+    },
+    refetchOnWindowFocus: false,
+  });
+};

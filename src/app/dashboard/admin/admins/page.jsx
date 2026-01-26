@@ -1,74 +1,57 @@
 "use client";
-import { Edit, Eye, Trash2 } from "lucide-react";
+import { useState } from "react";
+import { Plus, Search } from "lucide-react";
+import AdminsTable from "./AdminsTable";
 
 export default function ManageAdmins() {
-  const admins = [
-    { id: "#A-01", name: "Ahsan Alam", email: "john@academy.com", role: "Super Admin", status: "Active", joined: "2023-01-15" },
-    { id: "#A-02", name: "John Doe", email: "john@academy.com", role: "Super Admin", status: "Active", joined: "2023-01-15" },
-    { id: "#A-03", name: "Emily Clark", email: "emily@academy.com", role: "Admin", status: "Active", joined: "2023-04-20" },
-    { id: "#A-04", name: "Michael Smith", email: "michael@academy.com", role: "Moderator", status: "Suspended", joined: "2022-11-02" },
-    { id: "#A-05", name: "Sarah Johnson", email: "sarah@academy.com", role: "Admin", status: "Active", joined: "2024-02-10" },
-  ];
+  const [search, setSearch] = useState("");
+  const [page, setPage] = useState(1);
+  const [limit] = useState(10);
+  const [showCreateModal, setShowCreateModal] = useState(false);
+
+  const handleSearch = (e) => {
+    setSearch(e.target.value);
+    setPage(1);
+  };
 
   return (
     <div className="p-6 space-y-6 text-[var(--color-text)]">
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-        <h1 className="text-2xl font-bold text-[--color-text]">Manage Admins</h1>
-        <button className="px-4 py-2 bg-[--color-primary] hover:bg-[--color-primary-hover] text-[var(--color-text)] rounded-[--radius-default] shadow-sm text-sm">
-          + Add New Admin
+        <div>
+          <h1 className="text-2xl font-bold text-[--color-text]">Manage Admins</h1>
+          <p className="text-sm text-gray-500 mt-1">Manage administrator accounts and permissions</p>
+        </div>
+        <button 
+          onClick={() => setShowCreateModal(true)}
+          className="px-4 py-2 bg-[#189E75] hover:bg-[#147c5e] text-white rounded-[--radius-default] shadow-sm text-sm font-medium flex items-center gap-2 transition-all"
+        >
+          <Plus className="w-4 h-4" />
+          Add New Admin
         </button>
       </div>
 
-      {/* Responsive Table */}
-      <div className="rounded-[--radius-card] shadow-md bg-white p-4 overflow-x-auto">
-        <table className="w-full border-collapse">
-          <thead>
-            <tr className="text-left bg-[var(--color-background)] text-[var(--color-text)] text-sm">
-              <th className="p-3">ID</th>
-              <th className="p-3">Name</th>
-              <th className="p-3">Email</th>
-              <th className="p-3">Role</th>
-              <th className="p-3">Status</th>
-              <th className="p-3">Joined</th>
-              <th className="p-3 text-center">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {admins.map((admin) => (
-              <tr key={admin.id} className="border-b hover:bg-gray-50 text-sm">
-                <td className="p-3 font-medium">{admin.id}</td>
-                <td className="p-3">{admin.name}</td>
-                <td className="p-3 text-gray-500">{admin.email}</td>
-                <td className="p-3">{admin.role}</td>
-                <td className="p-3">
-                  <span
-                    className={`px-2 py-1 rounded-full text-xs font-medium ${
-                      admin.status === "Active"
-                        ? "bg-[var(--color-primary)] text-white"
-                        : "bg-red-100 text-red-700"
-                    }`}
-                  >
-                    {admin.status}
-                  </span>
-                </td>
-                <td className="p-3 text-gray-500">{admin.joined}</td>
-                <td className="p-3 flex gap-2 justify-center">
-                  <button className="p-2 rounded-full hover:bg-blue-100 text-blue-600">
-                    <Eye className="w-4 h-4" />
-                  </button>
-                  <button className="p-2 rounded-full hover:bg-yellow-100 text-yellow-600">
-                    <Edit className="w-4 h-4" />
-                  </button>
-                  <button className="p-2 rounded-full hover:bg-red-100 text-red-600">
-                    <Trash2 className="w-4 h-4" />
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+      {/* Search Bar */}
+      <div className="relative">
+        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+        <input
+          type="text"
+          placeholder="Search admins by name or email..."
+          value={search}
+          onChange={handleSearch}
+          className="w-full pl-10 pr-4 py-3 rounded-[--radius-card] border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#189E75] bg-white"
+        />
       </div>
+
+      {/* Admins Table Component */}
+      <AdminsTable
+        search={search}
+        page={page}
+        limit={limit}
+        onPageChange={setPage}
+        showCreateModal={showCreateModal}
+        onCloseCreateModal={() => setShowCreateModal(false)}
+      />
     </div>
   );
 }

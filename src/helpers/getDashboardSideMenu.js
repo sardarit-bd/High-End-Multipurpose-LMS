@@ -1,4 +1,6 @@
-import { Home, BookOpen, Users, Settings, ShoppingBag, ClipboardList, BarChart3, Award, User, HelpCircle, HomeIcon, UserCheck, Shield, Trophy, CreditCard } from "lucide-react";
+import { Home, BookOpen, Users, Settings, ShoppingBag, ClipboardList, BarChart3, Award, User, HelpCircle, HomeIcon, UserCheck, Shield, Trophy, CreditCard, Settings2 } from "lucide-react";
+import { MdCategory } from "react-icons/md";
+
 // ===== Menu Configs with Icons ===== //
 const studentMenu = [
     { title: "Dashboard", href: "/dashboard", icon: Home },
@@ -23,23 +25,24 @@ const instructorMenu = [
 const adminMenu = [
   { title: "Dashboard", href: "/dashboard", icon: Home },
   
-
+{ title: "Categories", href: "/dashboard/admin/categories", icon: MdCategory },
   { title: "Manage Students", href: "/dashboard/admin/students", icon: Users },
   { title: "Manage Instructors", href: "/dashboard/admin/instructors", icon: UserCheck },
   { title: "Manage Admins", href: "/dashboard/admin/admins", icon: Shield },
 
 
-  { title: "Courses", href: "/dashboard/admin/courses", icon: BookOpen },
+//   { title: "Courses", href: "/dashboard/admin/courses", icon: BookOpen },
 //   { title: "Assignments", href: "/dashboard/admin/assignments", icon: ClipboardList },
 //   { title: "Quizzes", href: "/dashboard/admin/quizzes", icon: HelpCircle },
 //   { title: "Certificates", href: "/dashboard/admin/certificates", icon: Award },
 
 
-  { title: "Reports", href: "/dashboard/admin/reports", icon: BarChart3 },
+//   { title: "Reports", href: "/dashboard/admin/reports", icon: BarChart3 },
 
 
   { title: "Transactions", href: "/dashboard/admin/transactions", icon: CreditCard },
-  { title: "Purchase History", href: "/dashboard/admin/purchase-history", icon: ShoppingBag },
+  {title: "Settings", href: "/dashboard/admin/settings", icon: Settings2}
+//   { title: "Purchase History", href: "/dashboard/admin/purchase-history", icon: ShoppingBag },
 
 //   { title: "Site Settings", href: "/dashboard/admin/settings", icon: Settings },
 //   { title: "Support Tickets", href: "/dashboard/admin/support", icon: LifeBuoy },
