@@ -7,13 +7,14 @@ import { FiBookOpen, FiClock } from "react-icons/fi";
 
 
 export default function InstructorCard({ instructor }) {
+  console.log(instructor)
   return (
     <div className="bg-white rounded-[var(--radius-card)] shadow-[var(--shadow-soft)] hover:shadow-[var(--shadow-medium)] transition-shadow duration-300 overflow-hidden border border-gray-100">
       {/* Image */}
       <div className="relative w-full h-40">
         <img
-          src={instructor.image}
-          alt={instructor.name}
+          src={instructor?.userId?.picture || './images/ins1.jpg'}
+          alt={instructor?.userId?.name}
           className="w-full h-full object-cover"
         />
       </div>
@@ -23,15 +24,15 @@ export default function InstructorCard({ instructor }) {
 
         {/* Name + Role */}
         <h3 className="text-[var(--color-text)] font-semibold text-base">
-          <Link href={`/instructors/${instructor.id}`}>{instructor.name}</Link>
+          <Link href={`/instructors/${instructor._id}`}>{instructor?.userId?.name}</Link>
         </h3>
-        <p className="text-gray-600 text-sm mb-3">{instructor.role}</p>
+        <p className="text-gray-600 text-sm mb-3">{instructor?.designation}</p>
 
         {/* Lessons + Duration */}
         <div className="flex items-center justify-between text-xs text-gray-500">
           <div className="flex items-center gap-1">
             <FiBookOpen className="text-[var(--color-secondary)]" />
-            <span>{instructor.lessons}+ Courses</span>
+            <span>{instructor?.noOfCourse}+ Courses</span>
           </div>
         </div>
       </div>

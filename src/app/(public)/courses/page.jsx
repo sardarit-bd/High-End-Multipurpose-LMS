@@ -1,125 +1,73 @@
 "use client";
 
-import { useState, useMemo, useEffect, useCallback } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useSearchParams } from "next/navigation";
-import { useTranslation } from "react-i18next";
 import Link from "next/link";
 import CourseCard from "@/components/modules/courses/CourseCard";
 import { usePublicCourses } from "@/hooks/useCourse";
-import { BookOpen, ChevronLeft, ChevronRight, DollarSign, Loader2, Search, Sparkles, Tag, X } from "lucide-react";
+import { BookOpen, ChevronLeft, ChevronRight, Loader2, Search, Sparkles, Tag, X } from "lucide-react";
 import { FiFilter } from "react-icons/fi";
+import CourseFilters from "./CourseFilters";
 
 export default function PublicCourseListing() {
-  const { t } = useTranslation();
   const searchParams = useSearchParams();
+  const initialLoadRef = useRef(true);
 
   // ---------- State ----------
-  const [selectedCategories, setSelectedCategories] = useState([]);
-  const [selectedPrice, setSelectedPrice] = useState("all");
+  const [filters, setFilters] = useState({
+    categories: [],
+    price: "all",
+    search: ""
+  });
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [searchDraft, setSearchDraft] = useState("");
-  const [searchQuery, setSearchQuery] = useState("");
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(9);
-
-  // ---------- Initialize from URL parameters ----------
-  useEffect(() => {
-    const urlSearch = searchParams.get('search');
-    const urlCategories = searchParams.get('categories');
-
-    if (urlSearch) {
-      setSearchDraft(urlSearch);
-      setSearchQuery(urlSearch);
-    }
-
-    if (urlCategories) {
-      // Split comma-separated categories and filter to only valid ones
-      const categoryList = urlCategories.split(',').map(cat => cat.trim());
-      const validCategories = categoryList.filter(cat =>
-        [
-          "Climate Action (SDG 13)",
-          "Clean Energy (SDG 7)",
-          "Gender Equality (SDG 5)",
-          "Zero Hunger (SDG 2)",
-          "Clean Water & Sanitation (SDG 6)",
-          "Sustainable Cities (SDG 11)",
-          "Circular Economy (SDG 12)",
-          "Marine Conservation (SDG 14)",
-          "Biodiversity (SDG 15)",
-          "Healthcare & Well-being (SDG 3)",
-          "Quality Education (SDG 4)",
-          "Economic Growth (SDG 8)",
-          "Industry & Innovation (SDG 9)",
-          "Social Equality (SDG 10)",
-          "Peace & Justice (SDG 16)",
-          "Global Partnerships (SDG 17)",
-          "Poverty Eradication (SDG 1)"
-        ].includes(cat)
-      );
-      setSelectedCategories(validCategories);
-    }
-  }, [searchParams]);
+  const limit = 9;
 
   // ---------- Debounce search ----------
   useEffect(() => {
     const id = setTimeout(() => {
-      setSearchQuery(searchDraft.trim());
+      setFilters(prev => ({
+        ...prev,
+        search: searchDraft.trim()
+      }));
       setPage(1);
     }, 400);
     return () => clearTimeout(id);
   }, [searchDraft]);
 
-  // ---------- Categories ----------
-  const categories = useMemo(
-    () => [
-      "Climate Action (SDG 13)",
-      "Clean Energy (SDG 7)",
-      "Gender Equality (SDG 5)",
-      "Zero Hunger (SDG 2)",
-      "Clean Water (SDG 6)",
-      "Sustainable Cities (SDG 11)",
-      "Circular Economy (SDG 12)",
-      "Marine Conservation (SDG 14)",
-      "Biodiversity (SDG 15)",
-      "Healthcare (SDG 3)",
-      "Quality Education (SDG 4)",
-      "Economic Growth (SDG 8)",
-      "Sustainable Industry (SDG 9)",
-      "Social Equality (SDG 10)",
-      "Peace & Justice (SDG 16)",
-      "Global Partnerships (SDG 17)",
-      "Poverty Eradication (SDG 1)"
-    ],
-    []
-  );
-
-  // ---------- Handlers ----------
-  const toggleCategory = useCallback((cat) => {
-    setPage(1);
-    setSelectedCategories((prev) =>
-      prev.includes(cat) ? prev.filter((c) => c !== cat) : [...prev, cat]
-    );
-  }, []);
-
-  const clearFilters = useCallback(() => {
-    setSelectedCategories([]);
-    setSelectedPrice("all");
-    setSearchDraft("");
-    setSearchQuery("");
-    setPage(1);
-  }, []);
-
   // ---------- API Integration ----------
   const { data, isLoading, isFetching } = usePublicCourses({
     page,
     limit,
-    search: searchQuery,
-    price: selectedPrice,
-    categories: selectedCategories,
+    search: filters.search,
+    price: filters.price,
+    categories: filters.categories,
   });
 
   const courses = data?.items || [];
   const totalPages = data?.totalPages || 1;
+
+  // ---------- Handlers ----------
+  const updateFilters = (newFilters) => {
+    setFilters(prev => ({ ...prev, ...newFilters }));
+    setPage(1);
+  };
+
+  const clearFilters = () => {
+    setFilters({
+      categories: [],
+      price: "all",
+      search: ""
+    });
+    setSearchDraft("");
+    setPage(1);
+  };
+
+  const getCategoryTitle = (categoryId) => {
+    // This will be handled inside CourseFilters component
+    return categoryId;
+  };
 
   // ---------- UI ----------
   return (
@@ -169,26 +117,25 @@ export default function PublicCourseListing() {
           </div>
 
           {/* Active Filters Bar */}
-          {(selectedCategories.length > 0 || selectedPrice !== "all" || searchQuery) && (
+          {(filters.categories.length > 0 || filters.price !== "all" || filters.search) && (
             <div className="pb-4">
               <div className="flex flex-wrap items-center gap-2">
                 <span className="text-sm text-[var(--color-text)]/70">Active filters:</span>
-                {selectedCategories.map(cat => (
-                  <span key={cat} className="inline-flex items-center gap-1 px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm">
+                {filters.categories.map(categoryId => (
+                  <span key={categoryId} className="inline-flex items-center gap-1 px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm">
                     <Tag className="w-3 h-3" />
-                    {cat}
+                    Category ID: {categoryId}
                   </span>
                 ))}
-                {selectedPrice !== "all" && (
+                {filters.price !== "all" && (
                   <span className="inline-flex items-center gap-1 px-3 py-1 bg-amber-100 text-amber-700 rounded-full text-sm">
-                    <DollarSign className="w-3 h-3" />
-                    {selectedPrice === "free" ? "Free Only" : "Paid Only"}
+                    {filters.price === "free" ? "Free Only" : "Paid Only"}
                   </span>
                 )}
-                {searchQuery && (
+                {filters.search && (
                   <span className="inline-flex items-center gap-1 px-3 py-1 bg-emerald-100 text-[var(--color-primary)] rounded-full text-sm">
                     <Search className="w-3 h-3" />
-                    "{searchQuery}"
+                    "{filters.search}"
                   </span>
                 )}
                 <button
@@ -207,32 +154,13 @@ export default function PublicCourseListing() {
       {/* ===== Main Layout ===== */}
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="flex flex-col lg:flex-row gap-8">
-          {/* Desktop Sidebar */}
+          {/* Desktop Sidebar - Filters */}
           <aside className="hidden lg:block w-72 shrink-0">
-            <div className="bg-white/95 backdrop-blur-sm rounded-2xl border border-emerald-100 shadow-[var(--shadow-medium)] p-6 sticky top-32">
-              <div className="flex items-center justify-between mb-6">
-                <div className="flex items-center gap-2">
-                  <div className="p-2 bg-gradient-to-r from-emerald-100 to-emerald-200 rounded-lg">
-                    <FiFilter className="w-4 h-4 text-[var(--color-primary)]" />
-                  </div>
-                  <h3 className="font-semibold text-[var(--color-text)]">Filters</h3>
-                </div>
-                <button
-                  onClick={clearFilters}
-                  className="text-sm text-[var(--color-primary)] hover:text-[var(--color-primary-hover)]"
-                >
-                  Clear all
-                </button>
-              </div>
-
-              <SidebarFilters
-                categories={categories}
-                selectedCategories={selectedCategories}
-                selectedPrice={selectedPrice}
-                toggleCategory={toggleCategory}
-                setSelectedPrice={setSelectedPrice}
-              />
-            </div>
+            <CourseFilters
+              filters={filters}
+              onFilterChange={updateFilters}
+              onClearFilters={clearFilters}
+            />
           </aside>
 
           {/* Main Content */}
@@ -290,9 +218,6 @@ export default function PublicCourseListing() {
                 {/* Modern Pagination */}
                 {totalPages > 1 && (
                   <div className="mt-12 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pt-6 border-t border-emerald-100">
-                    <div className="text-sm text-[var(--color-text)]/70">
-                      {/* Showing {((page - 1) * limit) + 1}-{Math.min(page * limit, data?.totalItems)} of {data?.totalItems} courses */}
-                    </div>
                     <div className="flex items-center gap-2">
                       <button
                         onClick={() => setPage((p) => Math.max(1, p - 1))}
@@ -328,10 +253,6 @@ export default function PublicCourseListing() {
                         );
                       })}
 
-                      {totalPages > 5 && (
-                        <span className="px-2 text-gray-400">...</span>
-                      )}
-
                       <button
                         onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
                         disabled={page === totalPages}
@@ -349,79 +270,61 @@ export default function PublicCourseListing() {
       </div>
 
       {/* ===== Mobile Filter Modal ===== */}
-      <AnimatedModal isOpen={isFilterOpen} onClose={() => setIsFilterOpen(false)}>
-        <div className="bg-white w-full max-h-[90vh] overflow-y-auto rounded-t-3xl">
-          {/* Drag Handle */}
-          <div className="sticky top-0 bg-white pt-4 pb-2 px-4 border-b border-gray-100">
-            <div className="w-12 h-1.5 bg-gray-300 rounded-full mx-auto mb-4" />
-            <div className="flex items-center justify-between mb-4">
-              <div className="flex items-center gap-2">
-                <div className="p-2 bg-emerald-100 rounded-lg">
-                  <FiFilter className="w-4 h-4 text-[var(--color-primary)]" />
+      {isFilterOpen && (
+        <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-end lg:hidden">
+          <div className="bg-white w-full max-h-[90vh] overflow-y-auto rounded-t-3xl animate-slideUp">
+            {/* Drag Handle */}
+            <div className="sticky top-0 bg-white pt-4 pb-2 px-4 border-b border-gray-100">
+              <div className="w-12 h-1.5 bg-gray-300 rounded-full mx-auto mb-4" />
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center gap-2">
+                  <div className="p-2 bg-emerald-100 rounded-lg">
+                    <FiFilter className="w-4 h-4 text-[var(--color-primary)]" />
+                  </div>
+                  <h3 className="text-lg font-semibold text-[var(--color-text)]">Filter Courses</h3>
                 </div>
-                <h3 className="text-lg font-semibold text-[var(--color-text)]">Filter Courses</h3>
+                <button
+                  onClick={() => setIsFilterOpen(false)}
+                  className="p-2 rounded-lg hover:bg-gray-100"
+                >
+                  <X className="w-5 h-5 text-gray-500" />
+                </button>
               </div>
-              <button
-                onClick={() => setIsFilterOpen(false)}
-                className="p-2 rounded-lg hover:bg-gray-100"
-              >
-                <X className="w-5 h-5 text-gray-500" />
-              </button>
             </div>
-          </div>
 
-          {/* Filter Content */}
-          <div className="p-6">
-            <SidebarFilters
-              categories={categories}
-              selectedCategories={selectedCategories}
-              selectedPrice={selectedPrice}
-              toggleCategory={toggleCategory}
-              setSelectedPrice={setSelectedPrice}
-            />
-          </div>
+            {/* Filter Content */}
+            <div className="p-6">
+              <CourseFilters
+                filters={filters}
+                onFilterChange={updateFilters}
+                onClearFilters={clearFilters}
+              />
+            </div>
 
-          {/* Action Buttons */}
-          <div className="sticky bottom-0 bg-white p-6 border-t border-gray-100">
-            <div className="grid grid-cols-2 gap-3">
-              <button
-                onClick={() => {
-                  clearFilters();
-                  setIsFilterOpen(false);
-                }}
-                className="py-3 px-4 border border-gray-300 text-gray-700 rounded-xl font-medium hover:bg-gray-50 transition-colors"
-              >
-                Clear All
-              </button>
-              <button
-                onClick={() => setIsFilterOpen(false)}
-                className="py-3 px-4 bg-gradient-to-r from-[var(--color-primary)] to-emerald-500 text-white rounded-xl font-medium hover:shadow-lg transition-all"
-              >
-                Apply Filters
-              </button>
+            {/* Action Buttons */}
+            <div className="sticky bottom-0 bg-white p-6 border-t border-gray-100">
+              <div className="grid grid-cols-2 gap-3">
+                <button
+                  onClick={() => {
+                    clearFilters();
+                    setIsFilterOpen(false);
+                  }}
+                  className="py-3 px-4 border border-gray-300 text-gray-700 rounded-xl font-medium hover:bg-gray-50 transition-colors"
+                >
+                  Clear All
+                </button>
+                <button
+                  onClick={() => setIsFilterOpen(false)}
+                  className="py-3 px-4 bg-gradient-to-r from-[var(--color-primary)] to-emerald-500 text-white rounded-xl font-medium hover:shadow-lg transition-all"
+                >
+                  Apply Filters
+                </button>
+              </div>
             </div>
           </div>
         </div>
-      </AnimatedModal>
-    </div>
-  );
-}
+      )}
 
-/* ---------- Modal Component ---------- */
-function AnimatedModal({ isOpen, onClose, children }) {
-  if (!isOpen) return null;
-
-  return (
-    <div
-      className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-end lg:hidden"
-      onClick={onClose}
-    >
-      <div
-        onClick={(e) => e.stopPropagation()}
-        className="animate-slideUp"
-      >
-        {children}
-      </div>
       <style jsx global>{`
         @keyframes slideUp {
           from {
@@ -441,85 +344,7 @@ function AnimatedModal({ isOpen, onClose, children }) {
   );
 }
 
-/* ---------- Subcomponents ---------- */
-function SidebarFilters({
-  categories,
-  selectedCategories,
-  selectedPrice,
-  toggleCategory,
-  setSelectedPrice,
-}) {
-  return (
-    <div className="space-y-8">
-      {/* Categories Section */}
-      <section>
-        <div className="flex items-center gap-2 mb-4">
-          <div className="p-1.5 bg-blue-100 rounded-lg">
-            <Tag className="w-4 h-4 text-blue-600" />
-          </div>
-          <h4 className="font-semibold text-[var(--color-text)]">Categories</h4>
-          <span className="text-sm text-gray-500 ml-auto">
-            {selectedCategories.length} selected
-          </span>
-        </div>
-        <div className="space-y-2">
-          {categories.map((cat) => (
-            <button
-              key={cat}
-              onClick={() => toggleCategory(cat)}
-              className={`w-full flex items-center justify-between p-3 rounded-xl border transition-all ${selectedCategories.includes(cat)
-                ? "bg-blue-50 border-blue-200 text-blue-700"
-                : "bg-gray-50/50 border-gray-200 text-gray-700 hover:bg-gray-100"
-                }`}
-            >
-              <span className="font-medium">{cat}</span>
-              <div className={`w-5 h-5 rounded border flex items-center justify-center ${selectedCategories.includes(cat)
-                ? "bg-blue-500 border-blue-500"
-                : "bg-white border-gray-300"
-                }`}>
-                {selectedCategories.includes(cat) && (
-                  <div className="w-2 h-2 bg-white rounded-full" />
-                )}
-              </div>
-            </button>
-          ))}
-        </div>
-      </section>
-
-      {/* Price Section */}
-      <section>
-        <div className="flex items-center gap-2 mb-4">
-          <div className="p-1.5 bg-amber-100 rounded-lg">
-            <DollarSign className="w-4 h-4 text-amber-600" />
-          </div>
-          <h4 className="font-semibold text-[var(--color-text)]">Price</h4>
-        </div>
-        <div className="grid grid-cols-3 gap-2">
-          {["all", "free", "paid"].map((p) => (
-            <button
-              key={p}
-              onClick={() => setSelectedPrice(p)}
-              className={`py-3 px-4 rounded-xl border transition-all ${selectedPrice === p
-                ? "bg-amber-50 border-amber-200 text-amber-700 font-medium"
-                : "bg-gray-50/50 border-gray-200 text-gray-700 hover:bg-gray-100"
-                }`}
-            >
-              <span className="capitalize">{p}</span>
-            </button>
-          ))}
-        </div>
-        <p className="text-xs text-gray-500 mt-3">
-          {selectedPrice === "free"
-            ? "Showing only free courses"
-            : selectedPrice === "paid"
-              ? "Showing only paid courses"
-              : "Showing all courses"}
-        </p>
-      </section>
-    </div>
-  );
-}
-
+/* ---------- EmptyState Component ---------- */
 function EmptyState({ onReset }) {
   return (
     <div className="bg-gradient-to-br from-white to-emerald-50/30 rounded-2xl border border-dashed border-emerald-200 p-12 text-center">

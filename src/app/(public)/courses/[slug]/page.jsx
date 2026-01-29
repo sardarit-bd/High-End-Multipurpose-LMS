@@ -5,7 +5,7 @@ import CourseContent from "@/components/modules/courses/CourseContent";
 import { FiHeart, FiShare2, FiPlay, FiDownload, FiSmartphone, FiTv, FiAward, FiClock, FiUsers, FiBarChart2 } from "react-icons/fi";
 import CourseSingleSkeleton from "@/components/modules/special/CourseSingleSkeleton";
 import { useParams } from "next/navigation";
-import { useSlugCourses, useUnitsByCourse, useCourseStats } from "@/hooks/useCourse";
+import { useSlugCourses, useUnitsByCourse, useCourseStats, useEnrollmentCourses } from "@/hooks/useCourse";
 import { useAuth, useInstructorById } from "@/hooks/useAuth";
 import api from "@/lib/apiClient";
 import Link from "next/link";
@@ -14,6 +14,7 @@ import Image from "next/image";
 export default function CourseSinglePage() {
     const { slug } = useParams()
     const { user } = useAuth()
+    const [enrolled, setEnrolled] = useState(false)
 
     const { data: course, isLoading: courseLoading } = useSlugCourses(slug);
     const { data: instructor, isLoading: instructorLoading } = useInstructorById(course?.instructor);
@@ -21,6 +22,16 @@ export default function CourseSinglePage() {
     const unitIds = useMemo(() => units.map(u => u._id), [units]);
     const { data: courseStats } = useCourseStats(course?._id, unitIds);
     const [allLessons, setAllLessons] = useState([]);
+    const { data: EnrolledCourse} = useEnrollmentCourses(user?._id);
+    
+     useEffect(() => {
+        if (EnrolledCourse && slug) {
+            const isEnrolled = EnrolledCourse.some((enrollment) => enrollment.course?.slug === slug);
+            setEnrolled(isEnrolled);
+        } else {
+            setEnrolled(false);
+        }
+    }, [EnrolledCourse, slug]);
 
     // Fetch all lessons for all units
     useEffect(() => {
@@ -276,9 +287,9 @@ export default function CourseSinglePage() {
                                     >
                                         Login to Enroll
                                     </Link>
-                                ) : user?.enrolledCourses?.includes(course?._id) ? (
+                                ) : enrolled ? (
                                     <Link 
-                                        href={`/courses/${course.slug}/learn`}
+                                        href={`/dashboard/student/courses`}
                                         className="block w-full bg-gradient-to-r from-emerald-500 to-green-600 hover:from-green-600 hover:to-emerald-500 text-white px-6 py-3.5 rounded-xl text-center font-semibold text-base shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-300"
                                     >
                                         Continue Learning

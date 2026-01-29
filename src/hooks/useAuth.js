@@ -25,7 +25,7 @@ export const useInstructors = (filters = {}) => {
     queryFn: async () => {
       const params = new URLSearchParams();
       if (filters?.search) params.append("q", filters.search);
-      if (filters?.categories?.length) params.append("categories", filters.categories.join(","));
+      if (filters?.expertise?.length) params.append("expertise", filters.expertise.join(","));
       if (filters?.page) params.append("page", filters.page);
       if (filters?.limit) params.append("limit", filters.limit);
 

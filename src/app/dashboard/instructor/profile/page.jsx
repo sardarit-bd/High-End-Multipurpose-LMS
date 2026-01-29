@@ -94,7 +94,7 @@ export default function InstructorProfilePage() {
         twitter: userData.socialLinks?.twitter || "",
         github: userData.socialLinks?.github || "",
         specialties: instructorInfo.expertise || [],
-        certifications: instructorInfo.certificates || instructorInfo.certifications || [], // Backend model uses 'certificates'
+        certifications: instructorInfo.certifications || instructorInfo.certifications || [], // Backend model uses 'certifications'
         joinDate: joinDate,
         isVerified: userData.isVerified || false,
         isActive: userData.isActive === "ACTIVE"
@@ -155,7 +155,7 @@ export default function InstructorProfilePage() {
   // Handle form submission
   const onSubmit = async (formData) => {
     try {
-      // Prepare payload matching backend structure
+      // Prepare payload matching backend structure\
       const payload = {
         // User fields
         name: formData.name,
@@ -171,7 +171,7 @@ export default function InstructorProfilePage() {
         // Instructor fields
         designation: formData.designation || "",
         expertise: formData.specialties || [],
-        certificates: formData.certifications || [] // Backend model uses 'certificates'
+        certifications: formData.certifications || [] // Backend model uses 'certifications'
       };
 
       updateProfile(payload, {

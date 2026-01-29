@@ -240,3 +240,17 @@ export const useCourseStats = (courseId, unitIds = []) => {
     refetchOnWindowFocus: false,
   });
 };
+
+
+
+export const useCategories = () => {
+  return useQuery({
+    queryKey: ['course-categories'],
+    queryFn: async () => {
+      const res = await api.get('/courses/categories', { params: { limit: 100 } });
+      return res.data;
+    },
+    refetchOnWindowFocus: false,
+  });
+};
+

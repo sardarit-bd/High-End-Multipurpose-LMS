@@ -11,18 +11,22 @@ import {
   ShieldCheck,
   Lock,
   BadgeCheck,
+  Icon,
 } from "lucide-react";
 import { useSlugCourses } from "@/hooks/useCourse";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import api from "@/lib/apiClient";
+import { FaFreeCodeCamp } from "react-icons/fa";
+import { toast } from "react-toastify";
 
 
 export default function CheckoutPage() {
+  const router = useRouter()
   const params = useSearchParams()
   const { t, i18n } = useTranslation();
   const [paymentMethod, setPaymentMethod] = useState("paypal");
   const [billingInfo, setBillingInfo] = useState({
-    firstName : "",
+    firstName: "",
     lastName: "",
     phone: "",
     lineOne: "",
@@ -38,7 +42,7 @@ export default function CheckoutPage() {
   }
 
   const onChange = (e) => {
-    setBillingInfo({...billingInfo, [e.target.name]: e.target.value})
+    setBillingInfo({ ...billingInfo, [e.target.name]: e.target.value })
   }
 
   const getConvertedPrice = (usd) =>
@@ -48,6 +52,7 @@ export default function CheckoutPage() {
   const subTotal = course.price
   const tax = 0;
   const total = subTotal + tax;
+
 
   const paymentOptions = [
     { id: "paypal", label: "PayPal", icon: Wallet },
@@ -62,17 +67,26 @@ export default function CheckoutPage() {
     "w-full px-3.5 py-2.5 rounded-lg bg-gray-50 border border-gray-200 text-gray-800 placeholder-gray-400 outline-none focus:border-[var(--color-primary,#0ea5e9)] focus:ring-2 focus:ring-[var(--color-primary,#0ea5e9)]/20 transition";
 
   const handleSubmit = async () => {
-    const data = {
+    try{
+      const data = {
       provider: paymentMethod,
       courseId: course._id,
       itemType: 'course',
       billingInfo
     }
-    console.log(data)
-    const res = await api.post('orders/checkout', data)
-    const {checkoutUrl} = res?.data?.data
 
-    window.location.href = checkoutUrl
+    const res = await api.post('orders/checkout', data)
+    const { checkoutUrl } = res?.data?.data
+
+    if (checkoutUrl) {
+      window.location.href = checkoutUrl
+    }
+
+    router.push('/dashboard/student/courses')
+    }catch(err){
+      console.log(err?.response?.data?.message)
+      toast.error(err?.response?.data?.message)
+    }
   }
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100">
@@ -102,7 +116,7 @@ export default function CheckoutPage() {
                   </div>
 
                   <div className="grid sm:grid-cols-3 gap-4">
-                    <input onChange={onChange} placeholder="Phone (optional)"  value={billingInfo.phone} name="phone" className={inputBase} />
+                    <input onChange={onChange} placeholder="Phone (optional)" value={billingInfo.phone} name="phone" className={inputBase} />
                     <input onChange={onChange} placeholder="Address Line 1 *" value={billingInfo.lineOne} name="lineOne" className={inputBase} />
                     <input onChange={onChange} placeholder="Address Line 2" value={billingInfo.lineTwo} name="lineTwo" className={inputBase} />
                   </div>
@@ -126,47 +140,50 @@ export default function CheckoutPage() {
                   Payment Method
                 </h2>
 
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
-                  {paymentOptions.map(({ id, label, icon: Icon }) => {
-                    const active = paymentMethod === id;
-                    return (
-                      <button
-                        key={id}
-                        onClick={() => setPaymentMethod(id)}
-                        type="button"
-                        className={`flex flex-col items-center justify-center gap-1 p-3 rounded-xl border text-sm font-medium transition-all duration-150 ${active
-                          ? "bg-[var(--color-primary,#0ea5e9)] text-white border-[var(--color-primary,#0ea5e9)] shadow-md scale-105"
-                          : "bg-gray-50 text-gray-800 border-gray-200 hover:bg-white hover:shadow-sm"
-                          }`}
-                      >
-                        <Icon className="h-5 w-5" />
-                        {label}
-                      </button>
-                    );
-                  })}
-                </div>
+                {total === 0 ? '' : <>
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
+                    {paymentOptions.map(({ id, label, icon: Icon }) => {
+                      const active = paymentMethod === id;
+                      return (
+                        <button
+                          key={id}
+                          onClick={() => setPaymentMethod(id)}
+                          type="button"
+                          className={`flex flex-col items-center justify-center gap-1 p-3 rounded-xl border text-sm font-medium transition-all duration-150 ${active
+                            ? "bg-[var(--color-primary,#0ea5e9)] text-white border-[var(--color-primary,#0ea5e9)] shadow-md scale-105"
+                            : "bg-gray-50 text-gray-800 border-gray-200 hover:bg-white hover:shadow-sm"
+                            }`}
+                        >
+                          <Icon className="h-5 w-5" />
+                          {label}
+                        </button>
+                      );
+                    })}
+                  </div>
 
-                <div className="space-y-4">
-                  {paymentMethod === "paypal" && (
-                    <Notice title="PayPal" message="You will be redirected to PayPal to complete your payment securely." />
-                  )}
-                  {paymentMethod === "stripe" && (
-                    <Notice title="Stripe" message="Stripe secure checkout will open to confirm your card payment." />
-                  )}
-                  {paymentMethod === "tayyibpay" && (
-                    <Notice title="TayyibPay" message="You’ll be redirected to TayyibPay Malaysia gateway to complete your transaction." />
-                  )}
-                  {paymentMethod === "billplz" && (
-                    <Notice title="Billplz" message="You’ll be redirected to Billplz Malaysia gateway to complete your transaction." />
-                  )}
-                </div>
+                  <div className="space-y-4">
+                    {paymentMethod === "paypal" && (
+                      <Notice title="PayPal" message="You will be redirected to PayPal to complete your payment securely." />
+                    )}
+                    {paymentMethod === "stripe" && (
+                      <Notice title="Stripe" message="Stripe secure checkout will open to confirm your card payment." />
+                    )}
+                    {paymentMethod === "tayyibpay" && (
+                      <Notice title="TayyibPay" message="You’ll be redirected to TayyibPay Malaysia gateway to complete your transaction." />
+                    )}
+                    {paymentMethod === "billplz" && (
+                      <Notice title="Billplz" message="You’ll be redirected to Billplz Malaysia gateway to complete your transaction." />
+                    )}
+                  </div>
+                </>}
+
 
                 <button
                   className="mt-8 w-full py-3.5 rounded-lg font-semibold text-white bg-gradient-to-r from-[var(--color-primary,#0ea5e9)] to-[var(--color-primary-hover,#0284c7)] hover:opacity-95 transition-all shadow"
                   type="button"
                   onClick={handleSubmit}
                 >
-                  Pay {getConvertedPrice(total)}
+                  {total ? `Pay ${getConvertedPrice(total)}`: 'Free Enroll'}
                 </button>
 
                 <div className="mt-4 flex items-center justify-center gap-2 text-xs text-gray-500">
