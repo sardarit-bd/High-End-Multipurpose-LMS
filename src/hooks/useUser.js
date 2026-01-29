@@ -53,3 +53,14 @@ export const useInstructorss = (query = {}) => {
     refetchOnWindowFocus: false,
   });
 };
+
+export const useEnrolledStudentsByInstructor = (query = {}) => {
+  return useQuery({
+    queryKey: ['enrolled-student', query],
+    queryFn: async () => {
+      const res = await api.get('enrollments/courses/students', { params: query });
+      return res.data;
+    },
+    refetchOnWindowFocus: false,
+  });
+};

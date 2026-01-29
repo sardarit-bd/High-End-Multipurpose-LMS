@@ -22,16 +22,14 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import { useQueryClient } from "@tanstack/react-query";
-import { useInstructorCourses } from "@/hooks/useCourse";
+import { useCategories, useInstructorCourses } from "@/hooks/useCourse";
 import { useCourseStats } from "@/hooks/useDashboard";
-import { StatBadge } from "@/components/modules/dashboard/instructorr/StatBadge";
 import StatusPill from "@/components/modules/dashboard/instructorr/StatusPill";
 import { useAuth } from "@/hooks/useAuth";
 
 const PAGE_SIZE = 6;
-const STATUS_OPTIONS = ["All", "Published", "Pending", "Draft"];
-const CATEGORY_OPTIONS = ["All", "Technology", "Business", "Design", "Marketing", "Science", "Arts", "Language", "Other"];
-const PRICE_OPTIONS = ["All", "Free", "Paid", "Under ₹1000", "₹1000-₹5000", "Over ₹5000"];
+const STATUS_OPTIONS = ["All", "Published", "Draft"];
+const PRICE_OPTIONS = ["All", "Free", "Paid", "Under $1000", "$1000-$5000", "Over 5000"];
 
 export default function InstructorCourses() {
     const { user } = useAuth();
@@ -43,6 +41,10 @@ export default function InstructorCourses() {
     const [page, setPage] = useState(1);
     const qc = useQueryClient();
 
+    // Fetch categories dynamically
+    const { data: categoryData, isLoading: categoriesLoading } = useCategories();
+    const categories = categoryData?.data?.categories || [];
+
     const { data: courses = [], isLoading, isFetching } = useInstructorCourses({
         search: query,
         status: statusFilter.toLowerCase() === "all" ? null : statusFilter.toLowerCase(),
@@ -51,10 +53,17 @@ export default function InstructorCourses() {
 
     const { data: courseStats, isLoading: statsLoading } = useCourseStats(user?._id);
 
+    // Prepare category options
+    const CATEGORY_OPTIONS = useMemo(() => {
+        const categoryList = ["All", ...categories.map(cat => cat.title)];
+        return categoryList;
+    }, [categories]);
+
     const filteredCourses = useMemo(() => {
         return courses.filter(course => {
-            // Category filter
-            if (categoryFilter !== "All" && course.category !== categoryFilter) {
+            // Category filter - check if course category matches selected
+            console.log(course.category, categoryFilter)
+            if (categoryFilter !== "All" && course.category !== categoryFilter?.replace(' ', '_').toLowerCase()) {
                 return false;
             }
 
@@ -128,7 +137,7 @@ export default function InstructorCourses() {
                 </div>
 
                 {/* Stats Grid */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
                     <div className="bg-white/90 backdrop-blur-sm rounded-xl p-4 border border-emerald-100 shadow-[var(--shadow-soft)]">
                         <div className="flex items-center justify-between">
                             <div>
@@ -142,19 +151,7 @@ export default function InstructorCourses() {
                             </div>
                         </div>
                     </div>
-                    <div className="bg-white/90 backdrop-blur-sm rounded-xl p-4 border border-rose-100 shadow-[var(--shadow-soft)]">
-                        <div className="flex items-center justify-between">
-                            <div>
-                                <p className="text-sm text-[var(--color-text)]/70">Pending Courses</p>
-                                <p className="text-2xl font-bold text-[var(--color-text)]">
-                                    {statsLoading ? "..." : (courseStats?.pendingCourses || 0)}
-                                </p>
-                            </div>
-                            <div className="p-2 bg-rose-100 rounded-lg">
-                                <FileText className="w-5 h-5 text-rose-500" />
-                            </div>
-                        </div>
-                    </div>
+                    
                     <div className="bg-white/90 backdrop-blur-sm rounded-xl p-4 border border-indigo-100 shadow-[var(--shadow-soft)]">
                         <div className="flex items-center justify-between">
                             <div>
@@ -248,7 +245,7 @@ export default function InstructorCourses() {
                             </select>
                         </div>
 
-                        {/* Category Filter */}
+                        {/* Category Filter - Now Dynamic */}
                         <div>
                             <div className="flex items-center gap-2 mb-2">
                                 <BookOpen className="w-4 h-4 text-[var(--color-primary)]" />
@@ -261,10 +258,20 @@ export default function InstructorCourses() {
                                     setPage(1);
                                 }}
                                 className="w-full px-3 py-2 bg-emerald-50/50 border border-emerald-200 rounded-lg text-[var(--color-text)] focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent"
+                                disabled={categoriesLoading}
                             >
-                                {CATEGORY_OPTIONS.map((category) => (
-                                    <option key={category} value={category}>{category}</option>
-                                ))}
+                                {categoriesLoading ? (
+                                    <option value="">Loading categories...</option>
+                                ) : (
+                                    <>
+                                        <option value="All">All Categories</option>
+                                        {categories.map((category) => (
+                                            <option key={category._id} value={category.title}>
+                                                {category.title}
+                                            </option>
+                                        ))}
+                                    </>
+                                )}
                             </select>
                         </div>
 
@@ -354,99 +361,111 @@ export default function InstructorCourses() {
                                             </tr>
                                         </thead>
                                         <tbody className="divide-y divide-emerald-50">
-                                            {paginated.map((c) => (
-                                                <tr key={c._id} className="hover:bg-emerald-50/30 transition-colors">
-                                                    <td className="py-4 px-6">
-                                                        <div className="flex items-start gap-4">
-                                                            <div className="relative w-20 h-12 rounded-lg overflow-hidden flex-shrink-0 border border-emerald-100">
-                                                                {c?.thumbnail ? (
-                                                                    <Image
-                                                                        src={c.thumbnail}
-                                                                        alt={c.title || "Course thumbnail"}
-                                                                        fill
-                                                                        className="object-cover"
-                                                                    />
-                                                                ) : (
-                                                                    <div className="w-full h-full flex items-center justify-center bg-emerald-50 text-emerald-400">
-                                                                        <BookOpen className="w-5 h-5" />
+                                            {paginated.map((c) => {
+                                                // Find category details for badge styling
+                                                const categoryDetails = categories.find(cat => cat.title === c.category);
+                                                
+                                                return (
+                                                    <tr key={c._id} className="hover:bg-emerald-50/30 transition-colors">
+                                                        <td className="py-4 px-6">
+                                                            <div className="flex items-start gap-4">
+                                                                <div className="relative w-20 h-12 rounded-lg overflow-hidden flex-shrink-0 border border-emerald-100">
+                                                                    {c?.thumbnail ? (
+                                                                        <Image
+                                                                            src={c.thumbnail}
+                                                                            alt={c.title || "Course thumbnail"}
+                                                                            fill
+                                                                            className="object-cover"
+                                                                        />
+                                                                    ) : (
+                                                                        <div className="w-full h-full flex items-center justify-center bg-emerald-50 text-emerald-400">
+                                                                            <BookOpen className="w-5 h-5" />
+                                                                        </div>
+                                                                    )}
+                                                                </div>
+                                                                <div>
+                                                                    <h3 className="font-semibold text-[var(--color-text)] line-clamp-1">{c.title}</h3>
+                                                                    <div className="flex flex-wrap items-center gap-3 mt-1 text-xs text-[var(--color-text)]/60">
+                                                                        <span className="inline-flex items-center gap-1">
+                                                                            <BookOpen className="w-3 h-3" />
+                                                                            {c.lessonCount || 0} lessons
+                                                                        </span>
+                                                                        <span className="inline-flex items-center gap-1">
+                                                                            <Activity className="w-3 h-3" />
+                                                                            {c.quizCount || 0} quizzes
+                                                                        </span>
+                                                                        <span className="inline-flex items-center gap-1">
+                                                                            <Calendar className="w-3 h-3" />
+                                                                            {c.duration || "N/A"}
+                                                                        </span>
                                                                     </div>
-                                                                )}
-                                                            </div>
-                                                            <div>
-                                                                <h3 className="font-semibold text-[var(--color-text)] line-clamp-1">{c.title}</h3>
-                                                                <div className="flex flex-wrap items-center gap-3 mt-1 text-xs text-[var(--color-text)]/60">
-                                                                    <span className="inline-flex items-center gap-1">
-                                                                        <BookOpen className="w-3 h-3" />
-                                                                        {c.lessonCount || 0} lessons
-                                                                    </span>
-                                                                    <span className="inline-flex items-center gap-1">
-                                                                        <Activity className="w-3 h-3" />
-                                                                        {c.quizCount || 0} quizzes
-                                                                    </span>
-                                                                    <span className="inline-flex items-center gap-1">
-                                                                        <Calendar className="w-3 h-3" />
-                                                                        {c.duration || "N/A"}
-                                                                    </span>
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                    </td>
-                                                    <td className="py-4 px-6">
-                                                        <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                                                            {c.category || "Uncategorized"}
-                                                        </span>
-                                                    </td>
-                                                    <td className="py-4 px-6">
-                                                        <div className="flex items-center gap-2">
-                                                            <Users className="w-4 h-4 text-[var(--color-secondary)]" />
-                                                            <span className="font-medium">{c.noOfStudents || 0}</span>
-                                                        </div>
-                                                    </td>
-                                                    <td className="py-4 px-6">
-                                                        <div className={`flex items-center gap-1 ${c.price === 0 ? 'text-emerald-600' : 'text-[var(--color-text)]'}`}>
-                                                            <DollarSign className="w-4 h-4" />
-                                                            <span className="font-medium">{c.price}</span>
-                                                            {c.price === 0 && (
-                                                                <span className="text-xs bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded-full ml-2">Free</span>
+                                                        </td>
+                                                        <td className="py-4 px-6">
+                                                            {c.category ? (
+                                                                <span 
+                                                                    className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800"
+                                                                    title={categoryDetails?.description || c.category}
+                                                                >
+                                                                    {c.category}
+                                                                </span>
+                                                            ) : (
+                                                                <span className="text-gray-400 text-sm">No category</span>
                                                             )}
-                                                        </div>
-                                                    </td>
-                                                    <td className="py-4 px-6">
-                                                        <div className="flex items-center gap-1">
-                                                            <Star className="w-4 h-4 text-amber-500 fill-amber-500" />
-                                                            <span className="font-medium">{c.rating || "—"}</span>
-                                                        </div>
-                                                    </td>
-                                                    <td className="py-4 px-6">
-                                                        <StatusPill status={c.status} />
-                                                    </td>
-                                                    <td className="py-4 px-6">
-                                                        <div className="flex items-center gap-2">
-                                                            <Link
-                                                                href={`/dashboard/instructor/courses/edit/${c.slug}`}
-                                                                className="p-2 rounded-lg bg-blue-50 text-blue-600 hover:bg-blue-100 transition-colors"
-                                                                title="Edit Course"
-                                                            >
-                                                                <Edit className="w-4 h-4" />
-                                                            </Link>
-                                                            <Link
-                                                                href={`/dashboard/instructor/courses/${c._id}/units`}
-                                                                className="p-2 rounded-lg bg-emerald-50 text-[var(--color-primary)] hover:bg-emerald-100 transition-colors"
-                                                                title="Manage Units"
-                                                            >
-                                                                <Plus className="w-4 h-4" />
-                                                            </Link>
-                                                            <button
-                                                                onClick={() => alert("Delete course soon")}
-                                                                className="p-2 rounded-lg bg-rose-50 text-rose-600 hover:bg-rose-100 transition-colors"
-                                                                title="Delete Course"
-                                                            >
-                                                                <Trash className="w-4 h-4" />
-                                                            </button>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            ))}
+                                                        </td>
+                                                        <td className="py-4 px-6">
+                                                            <div className="flex items-center gap-2">
+                                                                <Users className="w-4 h-4 text-[var(--color-secondary)]" />
+                                                                <span className="font-medium">{c.noOfStudents || 0}</span>
+                                                            </div>
+                                                        </td>
+                                                        <td className="py-4 px-6">
+                                                            <div className={`flex items-center gap-1 ${c.price === 0 ? 'text-emerald-600' : 'text-[var(--color-text)]'}`}>
+                                                                <DollarSign className="w-4 h-4" />
+                                                                <span className="font-medium">{c.price}</span>
+                                                                {c.price === 0 && (
+                                                                    <span className="text-xs bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded-full ml-2">Free</span>
+                                                                )}
+                                                            </div>
+                                                        </td>
+                                                        <td className="py-4 px-6">
+                                                            <div className="flex items-center gap-1">
+                                                                <Star className="w-4 h-4 text-amber-500 fill-amber-500" />
+                                                                <span className="font-medium">{c.rating || "—"}</span>
+                                                            </div>
+                                                        </td>
+                                                        <td className="py-4 px-6">
+                                                            <StatusPill status={c.status} />
+                                                        </td>
+                                                        <td className="py-4 px-6">
+                                                            <div className="flex items-center gap-2">
+                                                                <Link
+                                                                    href={`/dashboard/instructor/courses/edit/${c.slug}`}
+                                                                    className="p-2 rounded-lg bg-blue-50 text-blue-600 hover:bg-blue-100 transition-colors"
+                                                                    title="Edit Course"
+                                                                >
+                                                                    <Edit className="w-4 h-4" />
+                                                                </Link>
+                                                                <Link
+                                                                    href={`/dashboard/instructor/courses/${c._id}/units`}
+                                                                    className="p-2 rounded-lg bg-emerald-50 text-[var(--color-primary)] hover:bg-emerald-100 transition-colors"
+                                                                    title="Manage Units"
+                                                                >
+                                                                    <Plus className="w-4 h-4" />
+                                                                </Link>
+                                                                <button
+                                                                    onClick={() => alert("Delete course soon")}
+                                                                    className="p-2 rounded-lg bg-rose-50 text-rose-600 hover:bg-rose-100 transition-colors"
+                                                                    title="Delete Course"
+                                                                >
+                                                                    <Trash className="w-4 h-4" />
+                                                                </button>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                );
+                                            })}
                                         </tbody>
                                     </table>
                                 </div>

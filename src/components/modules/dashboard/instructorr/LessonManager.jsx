@@ -40,7 +40,7 @@ export default function LessonManager({ courseUnits }) {
 
   const getLessonIcon = (contentType) => {
     switch (contentType) {
-      case "video": return <PlayCircle className="w-4 h-4 text-blue-500" />;
+      case "video": return <PlayCircle className="w-4 h-4 text-[var(--color-text)]" />;
       case "pdf": return <FileText className="w-4 h-4 text-rose-500" />;
       case "quiz": return <BarChart className="w-4 h-4 text-amber-500" />;
       default: return <FileText className="w-4 h-4 text-gray-500" />;
@@ -278,7 +278,7 @@ export default function LessonManager({ courseUnits }) {
                         setEditingLesson(selectedLesson);
                         setShowModal(true);
                       }}
-                      className="group px-4 py-2 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-lg font-medium shadow-md hover:shadow-lg transition-all flex items-center gap-2 hover:scale-105"
+                      className="group px-4 py-2 bg-gradient-to-r from-[var(--color-primary)] to-emerald-500 hover:from-[var(--color-primary-hover)] hover:to-emerald-600 text-white rounded-lg font-medium shadow-md hover:shadow-lg transition-all flex items-center gap-2 hover:scale-105"
                     >
                       <Edit className="w-4 h-4" />
                       Edit Lesson
@@ -308,7 +308,7 @@ export default function LessonManager({ courseUnits }) {
                     <div className="bg-blue-50 rounded-xl p-4 border border-blue-100">
                       <p className="text-xs text-[var(--color-text)]/70 mb-1">Duration</p>
                       <p className="font-medium text-[var(--color-text)] flex items-center gap-2">
-                        <Clock className="w-4 h-4 text-blue-500" />
+                        <Clock className="w-4 h-4 text-[var(--color-primary)]" />
                         {selectedLesson.durationSec ? `${selectedLesson.durationSec} min` : "N/A"}
                       </p>
                     </div>
