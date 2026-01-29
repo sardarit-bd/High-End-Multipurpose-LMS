@@ -19,7 +19,7 @@ const instructorMenu = [
     { title: "Task", href: "/dashboard/instructor/assignments", icon: ClipboardList },
     { title: "Quizzes", href: "/dashboard/instructor/quize", icon: HelpCircle },
     { title: "Profile", href: "/dashboard/instructor/profile", icon: User },
-    { title: "Certificate", href: "/dashboard/instructor/certificate", icon: Award },
+    // { title: "Certificate", href: "/dashboard/instructor/certificate", icon: Award },
 ];
 
 const adminMenu = [

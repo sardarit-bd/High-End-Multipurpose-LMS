@@ -74,7 +74,7 @@ export default function InstructorCourses() {
                     case "$1000-$5000":
                         if (price < 1000 || price > 5000) return false;
                         break;
-                    case "Over $5000":
+                    case "Over 5000":
                         if (price <= 5000) return false;
                         break;
                 }
@@ -217,7 +217,7 @@ export default function InstructorCourses() {
                             </div>
                             <div className="text-right">
                                 <p className="text-2xl font-bold text-blue-600">
-                                    ₹{filteredCourses.reduce((sum, course) => sum + (course.price || 0), 0).toLocaleString()}
+                                    ${filteredCourses.reduce((sum, course) => sum + (course.price || 0), 0).toLocaleString()}
                                 </p>
                                 <p className="text-xs text-[var(--color-text)]/70">Total Value</p>
                             </div>
@@ -399,7 +399,7 @@ export default function InstructorCourses() {
                                                     <td className="py-4 px-6">
                                                         <div className="flex items-center gap-2">
                                                             <Users className="w-4 h-4 text-[var(--color-secondary)]" />
-                                                            <span className="font-medium">{c.studentCount || 0}</span>
+                                                            <span className="font-medium">{c.noOfStudents || 0}</span>
                                                         </div>
                                                     </td>
                                                     <td className="py-4 px-6">

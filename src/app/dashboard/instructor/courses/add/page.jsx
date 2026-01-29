@@ -24,6 +24,7 @@ import {
   FileVideo,
   Loader2
 } from "lucide-react";
+import { useCategories } from "@/hooks/useCourse";
 
 export default function AddCoursePage() {
   const { register, handleSubmit, setValue, watch } = useForm();
@@ -36,6 +37,8 @@ export default function AddCoursePage() {
   const [isPaid, setIsPaid] = useState(false);
   const videoRef = useRef(null);
   const router = useRouter();
+
+  const { data: categories } = useCategories()
 
   // ==== Upload thumbnail ====
   const handleThumbnailUpload = async (e) => {
@@ -421,25 +424,17 @@ export default function AddCoursePage() {
                         className="w-full p-4 border border-blue-200 rounded-[var(--radius-default)] focus:outline-none focus:ring-2 focus:ring-[var(--color-secondary)] focus:border-transparent transition-all bg-blue-50/30 hover:bg-blue-50/50 text-[var(--color-text)]"
                       >
                         <option value="">Select a category</option>
-                        <option value="sdg-fundamentals">SDG Fundamentals</option>
-                        <option value="climate-action">Climate Action (SDG 13)</option>
-                        <option value="clean-energy">Clean Energy (SDG 7)</option>
-                        <option value="gender-equality">Gender Equality (SDG 5)</option>
-                        <option value="zero-hunger">Zero Hunger (SDG 2)</option>
-                        <option value="clean-water">Clean Water & Sanitation (SDG 6)</option>
-                        <option value="sustainable-cities">Sustainable Cities (SDG 11)</option>
-                        <option value="circular-economy">Circular Economy (SDG 12)</option>
-                        <option value="marine-conservation">Marine Conservation (SDG 14)</option>
-                        <option value="biodiversity">Biodiversity (SDG 15)</option>
-                        <option value="healthcare">Healthcare & Well-being (SDG 3)</option>
-                        <option value="quality-education">Quality Education (SDG 4)</option>
-                        <option value="economic-growth">Economic Growth (SDG 8)</option>
-                        <option value="industry-innovation">Industry & Innovation (SDG 9)</option>
-                        <option value="social-equality">Social Equality (SDG 10)</option>
-                        <option value="peace-justice">Peace & Justice (SDG 16)</option>
-                        <option value="global-partnerships">Global Partnerships (SDG 17)</option>
-                        <option value="poverty-eradication">Poverty Eradication (SDG 1)</option>
-                        <option value="other">Other</option>
+                        {categories?.data?.categories && categories.data.categories.length > 0 ? (
+                          categories.data.categories
+                            .filter(cat => !cat.isDeleted)
+                            .map((category) => (
+                              <option key={category._id} value={category.title.toLowerCase().replace(/\s+/g, '_')}>
+                                {category.title}
+                              </option>
+                            ))
+                        ) : (
+                          <option value="" disabled>No categories available</option>
+                        )}
                       </select>
                     </div>
 

@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { Upload, XCircle, Sparkles, BookOpen, Tag, TrendingUp, DollarSign, Globe, FileText, Plus } from "lucide-react";
+import { useCategories } from "@/hooks/useCourse";
 
 export default function EditCoursePage() {
   const { register, handleSubmit, setValue, reset } = useForm();
@@ -17,6 +18,9 @@ export default function EditCoursePage() {
   const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
   const { courseId } = useParams();
+
+  // Fetch categories
+  const { data: categories } = useCategories();
 
   // Fetch course data
   useEffect(() => {
@@ -193,24 +197,27 @@ export default function EditCoursePage() {
                 Category
               </label>
               <select
-                {...register("category")}
+                {...register("category", { required: true })}
                 className="w-full p-4 border border-blue-200 rounded-[var(--radius-default)] focus:outline-none focus:ring-2 focus:ring-[var(--color-secondary)] focus:border-transparent transition-all bg-blue-50/30 hover:bg-blue-50/50 text-[var(--color-text)]"
+                disabled={!categories || categories.data?.categories.length === 0}
               >
-                <option value="">Select a category</option>
-                <option value="web-development">Web Development</option>
-                <option value="data-science">Data Science</option>
-                <option value="design">Design</option>
-                <option value="business">Business</option>
-                <option value="marketing">Marketing</option>
-                <option value="programming">Programming</option>
-                <option value="mobile-development">Mobile Development</option>
-                <option value="artificial-intelligence">Artificial Intelligence</option>
-                <option value="cybersecurity">Cybersecurity</option>
-                <option value="cloud-computing">Cloud Computing</option>
-                <option value="devops">DevOps</option>
-                <option value="blockchain">Blockchain</option>
-                <option value="game-development">Game Development</option>
-                <option value="other">Other</option>
+                <option value="">
+                  {!categories ? "Loading categories..." : "Select a category"}
+                </option>
+                {categories?.data?.categories && categories.data.categories.length > 0 ? (
+                  categories.data.categories
+                    .filter(cat => !cat.isDeleted)
+                    .map((category) => (
+                      <option 
+                        key={category._id} 
+                        value={category.title.toLowerCase().replace(/\s+/g, '_')}
+                      >
+                        {category.title}
+                      </option>
+                    ))
+                ) : (
+                  categories && <option value="" disabled>No categories available</option>
+                )}
               </select>
             </div>
 
