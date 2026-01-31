@@ -34,6 +34,7 @@ import {
 } from "lucide-react";
 import { useProfileInstructor, useUpdateProfile } from "@/hooks/useUser";
 import { useAuth } from "@/hooks/useAuth";
+import ChangePassword from "../../admin/settings/ChangePassword";
 
 export default function InstructorProfilePage() {
   const { user } = useAuth();
@@ -566,6 +567,7 @@ export default function InstructorProfilePage() {
                     </div>
                   )}
                 </div>
+                <ChangePassword />
               </div>
             </motion.div>
           </div>
