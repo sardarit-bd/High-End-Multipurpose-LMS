@@ -652,7 +652,8 @@ export default function CourseLearningPage() {
                         // Complete the course
                         await completeCourse.mutateAsync({
                           courseId: course._id,
-                          enrollmentId: enrollmentData._id
+                          enrollmentId: enrollmentData._id,
+                          totalPoints: totalPoints
                         });
 
                         // Update enrollment status locally to show certificate button immediately

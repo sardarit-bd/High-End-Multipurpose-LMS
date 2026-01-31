@@ -133,9 +133,12 @@ export const useUpdateProgress = () => {
 export const useCompleteCourse = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: async ({ courseId, enrollmentId }) => {
-      const res = await api.patch(`/enrollments/courses/${courseId}/enrollments/${enrollmentId}/status`, {
-        status: "completed"
+    mutationFn: async ({ courseId, enrollmentId, totalPoints }) => {
+      const res = await api.patch(`/enrollments/courses/enrollments/status`, {
+        status: "completed",
+        courseId,
+        enrollmentId,
+        totalPoints
       });
       return res.data?.data;
     },
