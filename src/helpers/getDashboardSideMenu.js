@@ -1,4 +1,4 @@
-import { Home, BookOpen, Users, Settings, ShoppingBag, ClipboardList, BarChart3, Award, User, HelpCircle, HomeIcon, UserCheck, Shield, Trophy, CreditCard, Settings2, Badge } from "lucide-react";
+import { Home, BookOpen, Users, Settings, ShoppingBag, ClipboardList, BarChart3, Award, User, HelpCircle, HomeIcon, UserCheck, Shield, Trophy, CreditCard, Settings2, Badge, BadgeCent, LocateIcon } from "lucide-react";
 import { MdCategory } from "react-icons/md";
 
 // ===== Menu Configs with Icons ===== //
@@ -26,7 +26,8 @@ const adminMenu = [
   { title: "Dashboard", href: "/dashboard", icon: Home },
   
 { title: "Categories", href: "/dashboard/admin/categories", icon: MdCategory },
- { title: "Badges", href: "/dashboard/admin/badges", icon: Users },
+ { title: "Badges", href: "/dashboard/admin/badges", icon: BadgeCent },
+ { title: "Location", href: "/dashboard/admin/location", icon: LocateIcon},
   { title: "Manage Students", href: "/dashboard/admin/students", icon: Users },
   { title: "Manage Instructors", href: "/dashboard/admin/instructors", icon: UserCheck },
   { title: "Manage Admins", href: "/dashboard/admin/admins", icon: Shield },
