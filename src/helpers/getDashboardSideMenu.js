@@ -1,4 +1,4 @@
-import { Home, BookOpen, Users, Settings, ShoppingBag, ClipboardList, BarChart3, Award, User, HelpCircle, HomeIcon, UserCheck, Shield, Trophy, CreditCard, Settings2 } from "lucide-react";
+import { Home, BookOpen, Users, Settings, ShoppingBag, ClipboardList, BarChart3, Award, User, HelpCircle, HomeIcon, UserCheck, Shield, Trophy, CreditCard, Settings2, Badge } from "lucide-react";
 import { MdCategory } from "react-icons/md";
 
 // ===== Menu Configs with Icons ===== //
@@ -6,7 +6,7 @@ const studentMenu = [
     { title: "Dashboard", href: "/dashboard", icon: Home },
     { title: "Courses", href: "/dashboard/student/courses", icon: BookOpen },
     { title: "Assignments", href: "/dashboard/student/assignments", icon: ShoppingBag },
-    { title: "Certificates", href: "/dashboard/student/certificates", icon: Settings },
+    { title: "My Badges", href: "/dashboard/student/my-badges", icon: Badge },
     // { title: "Leader Board", href: "/dashboard/student/leader-board", icon: Settings },
     {title: "Purchase History", href: "/dashboard/student/purchase-history", icon: BarChart3},
     { title: "Profile", href: "/dashboard/student/profile", icon: Settings },
@@ -26,6 +26,7 @@ const adminMenu = [
   { title: "Dashboard", href: "/dashboard", icon: Home },
   
 { title: "Categories", href: "/dashboard/admin/categories", icon: MdCategory },
+ { title: "Badges", href: "/dashboard/admin/badges", icon: Users },
   { title: "Manage Students", href: "/dashboard/admin/students", icon: Users },
   { title: "Manage Instructors", href: "/dashboard/admin/instructors", icon: UserCheck },
   { title: "Manage Admins", href: "/dashboard/admin/admins", icon: Shield },
