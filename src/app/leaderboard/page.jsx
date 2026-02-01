@@ -15,7 +15,8 @@ import {
   FaFire,
   FaAward,
   FaUsers,
-  FaChartLine
+  FaChartLine,
+  FaCity
 } from 'react-icons/fa';
 import { useQuery } from '@tanstack/react-query';
 import api from '@/lib/apiClient';
@@ -25,53 +26,103 @@ import RankCard from '@/components/modules/leaderboard/RankCard';
 import LeaderboardTable from '@/components/modules/leaderboard/LeaderboardTable';
 import InfoCard from '@/components/modules/leaderboard/InfoCard';
 import LeaderboardSkeleton from '@/components/modules/leaderboard/LeaderboardSkeleton';
+import { useRouter } from 'next/navigation';
 
 const Leaderboard = () => {
+  const router = useRouter();
   const [activeCategory, setActiveCategory] = useState('global');
-  const [activeTimeframe, setActiveTimeframe] = useState('all-time');
   const [selectedFilter, setSelectedFilter] = useState('');
   const [pageLoading, setPageLoading] = useState(true);
+  const [courseId, setCourseId] = useState('');
 
-  // Fetch leaderboard data
+  // Fetch leaderboard data based on category
   const { data: leaderboardResponse, isLoading: loading, refetch: refetchLeaderboard } = useQuery({
-    queryKey: ['leaderboard', activeCategory, selectedFilter],
+    queryKey: ['leaderboard', activeCategory, selectedFilter, courseId],
     queryFn: async () => {
-      const params = new URLSearchParams({
+      let endpoint = '/gamification/leaderboard';
+      const params = {
         scope: activeCategory,
         limit: '50'
-      });
+      };
 
       if (selectedFilter) {
-        params.append('value', selectedFilter);
+        if (activeCategory === 'school' || activeCategory === 'region') {
+          params.value = selectedFilter;
+        } else if (activeCategory === 'city') {
+          params.city = selectedFilter;
+        }
       }
 
-      const response = await api.get(`/gamification/leaderboard?${params}`);
+      if (courseId) {
+        params.courseId = courseId;
+      }
+
+      // For school/city aggregated leaderboards, use different endpoints
+      if (activeCategory === 'school' && !selectedFilter) {
+        endpoint = '/gamification/leaderboard/schools';
+      } else if (activeCategory === 'city' && !selectedFilter) {
+        endpoint = '/gamification/leaderboard/cities';
+      }
+
+      const queryString = new URLSearchParams(params).toString();
+      const url = endpoint.includes('?') ? `${endpoint}&${queryString}` : `${endpoint}?${queryString}`;
+      
+      const response = await api.get(url);
       return response.data?.data || [];
     },
     enabled: !pageLoading
   });
 
-  // Transform API data to match component expectations
-  const leaderboardData = leaderboardResponse?.map((user, index) => ({
-    id: user.userId,
-    rank: index + 1,
-    name: user.name,
-    points: activeCategory === 'global' ? user.totalPoints :
-            user[activeCategory === 'school' ? 'coursePoints' : 'coursePoints'] || user.totalPoints,
-    school: user.organization,
-    region: user.region,
-    badges: [], // TODO: Add badge logic later
-    avatar: user.avatar || `/avatars/default.jpg`,
-    progress: Math.min((user.totalPoints / 10000) * 100, 100), // Example progress calculation
-    // For school/regional views
-    ...(activeCategory === 'school' && {
-      students: Math.floor(Math.random() * 50) + 20, // Mock data - replace with real data
-    }),
-    ...(activeCategory === 'region' && {
-      schools: Math.floor(Math.random() * 15) + 5,
-      participants: Math.floor(Math.random() * 200) + 50,
-    })
-  })) || [];
+  // Transform API data based on category
+  const transformLeaderboardData = () => {
+    if (!leaderboardResponse) return [];
+
+    if (activeCategory === 'school' && !selectedFilter) {
+      // School aggregated data
+      return leaderboardResponse.map((school, index) => ({
+        id: school.schoolId || school._id,
+        rank: index + 1,
+        name: school.schoolName || 'Unknown School',
+        points: school.totalPoints,
+        averagePoints: school.averagePoints,
+        studentCount: school.studentCount,
+        progress: Math.min((school.totalPoints / 10000) * 100, 100),
+        type: 'school'
+      }));
+    } else if (activeCategory === 'city' && !selectedFilter) {
+      // City aggregated data
+      return leaderboardResponse.map((city, index) => ({
+        id: city.cityId || city._id,
+        rank: index + 1,
+        name: city.cityName || 'Unknown City',
+        points: city.totalPoints,
+        averagePoints: city.averagePoints,
+        studentCount: city.studentCount,
+        progress: Math.min((city.totalPoints / 10000) * 100, 100),
+        type: 'city'
+      }));
+    } else {
+      // Individual student data
+      console.log(leaderboardResponse)
+      return leaderboardResponse.map((user, index) => ({
+        id: user.userId,
+        rank: user.rank || index + 1,
+        name: user.name,
+        email: user.email,
+        points: activeCategory === 'global' ? user.totalPoints : user.coursePoints || user.totalPoints,
+        school: user.school || user.organization,
+        city: user.city,
+        region: user.region,
+        avatar: user.avatar || `/avatars/default.jpg`,
+        progress: Math.min((user.totalPoints / 10000) * 100, 100),
+        badges: user.badges || [],
+        studentCount: user.studentCount,
+        type: 'student'
+      }));
+    }
+  };
+
+  const leaderboardData = transformLeaderboardData();
 
   // Fetch current user's points and rank
   const { data: userData, isLoading: userLoading } = useQuery({
@@ -87,16 +138,13 @@ const Leaderboard = () => {
     enabled: !pageLoading
   });
 
-  // Fetch available schools and regions for filtering
+  // Fetch available schools for filtering
   const { data: schoolsData } = useQuery({
     queryKey: ['schools-list'],
     queryFn: async () => {
       try {
-        // Get unique schools from users
-        const response = await api.get('/users?role=STUDENT&limit=1000');
-        const users = response.data?.data || [];
-        const uniqueSchools = [...new Set(users.map(user => user.organization).filter(Boolean))];
-        return uniqueSchools;
+        const response = await api.get('/gamification/leaderboard/schools?limit=100');
+        return response.data?.data || [];
       } catch (error) {
         return [];
       }
@@ -104,62 +152,110 @@ const Leaderboard = () => {
     enabled: !pageLoading
   });
 
+  // Fetch available cities for filtering
+  const { data: citiesData } = useQuery({
+    queryKey: ['cities-list'],
+    queryFn: async () => {
+      try {
+        const response = await api.get('/gamification/leaderboard/cities?limit=100');
+        return response.data?.data || [];
+      } catch (error) {
+        return [];
+      }
+    },
+    enabled: !pageLoading
+  });
+
+  // Fetch available regions for filtering
   const { data: regionsData } = useQuery({
     queryKey: ['regions-list'],
     queryFn: async () => {
       try {
-        // Get unique regions from users
-        const response = await api.get('/users?role=STUDENT&limit=1000');
+        // Get unique regions from leaderboard
+        const response = await api.get('/gamification/leaderboard?scope=region&limit=100');
         const users = response.data?.data || [];
-        const uniqueRegions = [...new Set(users.map(user => user.region).filter(Boolean))];
+        const uniqueRegions = [...new Set(users.map((user) => user.region).filter(Boolean))];
         return uniqueRegions;
       } catch (error) {
         return [];
       }
     },
-    enabled: !pageLoading
+    enabled: !pageLoading && activeCategory === 'region'
   });
 
-  const schools = activeCategory === 'school' ? (schoolsData || []) : [];
-  const regions = activeCategory === 'region' ? (regionsData || []) : [];
-
   const categories = [
-    { id: 'global', name: 'Global Ranking', icon: FaGlobe, description: 'Top performers worldwide' },
-    { id: 'school', name: 'School Ranking', icon: FaUniversity, description: 'Leading educational institutions' },
-    { id: 'region', name: 'Regional Ranking', icon: FaMapMarkerAlt, description: 'Performance by regions' }
-  ];
-
-  const timeframes = [
-    { id: 'all-time', name: 'All Time', icon: FaTrophy },
-    { id: 'monthly', name: 'This Month', icon: FaCalendarAlt },
-    { id: 'weekly', name: 'This Week', icon: FaFire }
+    { 
+      id: 'global', 
+      name: 'Global Ranking', 
+      icon: FaGlobe, 
+      description: 'Top performers worldwide' 
+    },
+    { 
+      id: 'school', 
+      name: 'School Ranking', 
+      icon: FaUniversity, 
+      description: 'Leading educational institutions' 
+    },
+    { 
+      id: 'city', 
+      name: 'City Ranking', 
+      icon: FaCity, 
+      description: 'Performance by cities' 
+    },
+    // { 
+    //   id: 'region', 
+    //   name: 'Regional Ranking', 
+    //   icon: FaMapMarkerAlt, 
+    //   description: 'Performance by regions' 
+    // }
   ];
 
   const badges = {
-    gold: { name: 'Gold Medal', color: 'bg-yellow-500', icon: FaMedal },
+    gold: { name: 'Gold Medal', color: 'bg-[#FBBF24]', icon: FaMedal },
     silver: { name: 'Silver Medal', color: 'bg-gray-400', icon: FaMedal },
     bronze: { name: 'Bronze Medal', color: 'bg-amber-700', icon: FaMedal },
-    speed: { name: 'Speed Star', color: 'bg-blue-500', icon: FaStar },
+    speed: { name: 'Speed Star', color: 'bg-[#2563EB]', icon: FaStar },
     streak: { name: 'Streak Master', color: 'bg-orange-500', icon: FaFire },
     knowledge: { name: 'Knowledge King', color: 'bg-purple-500', icon: FaAward },
     creative: { name: 'Creative Mind', color: 'bg-pink-500', icon: FaStar },
-    active: { name: 'Most Active', color: 'bg-green-500', icon: FaUsers }
+    active: { name: 'Most Active', color: 'bg-[#059669]', icon: FaUsers }
   };
 
   // Calculate user rank from leaderboard data
-  const userRank = userData && leaderboardData ? (() => {
-    const userIndex = leaderboardData.findIndex(user => user.userId === userData.wallet?.user?.toString());
-    if (userIndex >= 0) {
-      return {
-        rank: userIndex + 1,
-        name: userData.wallet?.user?.name || 'You',
-        points: activeCategory === 'global' ? userData.wallet?.totalPoints || 0 :
-                userData.wallet?.byCourse?.[selectedFilter] || 0,
-        progress: Math.min((userData.wallet?.totalPoints || 0) / 10000 * 100, 100) // Example progress calculation
-      };
+  const userRank = userData ? {
+    rank: 0, // Will be fetched from API
+    name: userData.wallet?.user?.name || 'You',
+    points: userData.wallet?.totalPoints || 0,
+    progress: Math.min((userData.wallet?.totalPoints || 0) / 10000 * 100, 100)
+  } : null;
+
+  // Fetch user's actual rank
+  const { data: userRankData } = useQuery({
+    queryKey: ['userRank', activeCategory, selectedFilter, courseId],
+    queryFn: async () => {
+      try {
+        const response = await api.get('/gamification/rank', {
+          params: {
+            scope: activeCategory,
+            scopeId: selectedFilter,
+            courseId: courseId
+          }
+        });
+        return response.data?.data;
+      } catch (error) {
+        return null;
+      }
+    },
+    enabled: !!userData && !pageLoading
+  });
+
+  // Update user rank with actual data
+  useEffect(() => {
+    if (userRankData && userRank) {
+      userRank.rank = userRankData.rank;
+      userRank.points = userRankData.totalPoints;
     }
-    return null;
-  })() : null;
+  }, [userRankData, userRank]);
 
   // Initialize page loading
   useEffect(() => {
@@ -173,14 +269,15 @@ const Leaderboard = () => {
   // Reset filter when category changes
   useEffect(() => {
     setSelectedFilter('');
+    setCourseId('');
   }, [activeCategory]);
 
   const getRankColor = (rank) => {
     switch (rank) {
-      case 1: return 'from-yellow-400 to-amber-500';
+      case 1: return 'from-[#FBBF24] to-amber-500';
       case 2: return 'from-gray-400 to-gray-600';
       case 3: return 'from-amber-700 to-amber-800';
-      default: return 'from-blue-400 to-purple-500';
+      default: return 'from-[#2563EB] to-[#059669]';
     }
   };
 
@@ -197,6 +294,16 @@ const Leaderboard = () => {
     return points.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   };
 
+  const handleRowClick = (item) => {
+    if (activeCategory === 'school' && item.type === 'school') {
+      // Navigate to school-specific leaderboard
+      router.push(`/leaderboard/school/${item.id}`);
+    } else if (activeCategory === 'city' && item.type === 'city') {
+      // Navigate to city-specific leaderboard
+      router.push(`/leaderboard/city/${item.id}`);
+    }
+  };
+
   if (pageLoading) {
     return <LeaderboardSkeleton />;
   }
@@ -204,33 +311,36 @@ const Leaderboard = () => {
   return (
     <>
       <Navbar />
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-green-50">
+      <div className="min-h-screen bg-[#ECFDF5]">
         <Head>
           <title>Leaderboard - SDG Oasis Rankings</title>
           <meta name="description" content="Track your progress and compete with others in SDG Oasis leaderboard" />
         </Head>
 
-        {/* Hero Section - Updated Gradient */}
+        {/* Hero Section */}
         <LeaderboardHeroSection />
+        
         {/* Main Content */}
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 -mt-8">
           {/* User Rank Card */}
-          <RankCard userRank={userRank} formatPoints={formatPoints} />
+          {userRank && <RankCard userRank={userRank} formatPoints={formatPoints} />}
+          
           {/* Filters Section */}
           <Filters
             categories={categories}
             activeCategory={activeCategory}
             setActiveCategory={setActiveCategory}
-            timeframes={timeframes}
-            activeTimeframe={activeTimeframe}
-            setActiveTimeframe={setActiveTimeframe}
             handleRefresh={handleRefresh}
             loading={loading}
-            schools={schools || []}
-            regions={regions || []}
+            schools={schoolsData || []}
+            cities={citiesData || []}
+            regions={regionsData || []}
             selectedFilter={selectedFilter}
             setSelectedFilter={setSelectedFilter}
+            courseId={courseId}
+            setCourseId={setCourseId}
           />
+          
           {/* Leaderboard Table */}
           <LeaderboardTable
             activeCategory={activeCategory}
@@ -240,22 +350,13 @@ const Leaderboard = () => {
             formatPoints={formatPoints}
             badges={badges}
             loading={loading}
+            onRowClick={handleRowClick}
           />
+          
           {/* Info Section */}
-          <InfoCard/>
+          <InfoCard />
         </div>
       </div>
-
-      {/* Custom Animations */}
-      <style jsx global>{`
-        @keyframes float {
-          0%, 100% { transform: translateY(0px) rotate(12deg); }
-          50% { transform: translateY(-10px) rotate(12deg); }
-        }
-        .animate-float {
-          animation: float 3s ease-in-out infinite;
-        }
-      `}</style>
     </>
   );
 };
