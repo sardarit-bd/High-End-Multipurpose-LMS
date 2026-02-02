@@ -1,20 +1,74 @@
 "use client";
 
-import React from "react";
-import { FaCheck, FaCrown, FaHandHoldingUsd, FaHeart, FaLock, FaRocket } from "react-icons/fa";
+import { useAuth } from "@/hooks/useAuth";
+import api from "@/lib/apiClient";
+import React, { useState } from "react";
+import { FaCheck, FaCrown, FaHandHoldingUsd, FaHeart, FaLock, FaRocket, FaCreditCard, FaBuilding, FaGlobe, FaMoneyBillWave } from "react-icons/fa";
+import { toast } from "react-toastify";
 
 const DonationForm = ({
-    donationOptions, 
-    donationAmount, 
-    customAmount, 
-    handleAmountSelect, 
-    handleCustomAmount, 
-    handleDonation, 
-    isLoading,
-    selectedFundData,
-    loading = false
+  donationOptions,
+  donationAmount,
+  customAmount,
+  handleAmountSelect,
+  handleCustomAmount,
+  handleDonation,
+  isLoading,
+  selectedFundData,
+  loading = false
 }) => {
-  
+  const { user } = useAuth();
+  const [selectedProvider, setSelectedProvider] = useState("stripe");
+
+  // Payment providers
+  const paymentProviders = [
+    { id: "stripe", name: "Stripe", icon: FaCreditCard, description: "Credit/Debit Cards" },
+    { id: "toyyibpay", name: "ToyyibPay", icon: FaBuilding, description: "Malaysian Payments" },
+    { id: "paypal", name: "PayPal", icon: FaGlobe, description: "International" }
+  ];
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    // Check if user is logged in
+    console.log(user)
+    if (!user) {
+      toast.error("Please login to make a donation");
+      return;
+    }
+
+    // Validate amount
+    if (!donationAmount || donationAmount === "0" || parseInt(donationAmount) < 1) {
+      toast.error("Please select or enter a valid donation amount");
+      return;
+    }
+
+    try {
+      // Prepare donation data
+      const donationData = {
+        fund: selectedFundData.id,
+        amount: parseFloat(donationAmount),
+        provider: selectedProvider,
+        currency: "USD"
+      };
+
+      console.log("Processing donation:", donationData);
+
+
+      const res = await api.post('orders/donation-checkout', donationData)
+      const { checkoutUrl } = res?.data?.data
+
+      if (checkoutUrl) {
+        window.location.href = checkoutUrl
+      }
+
+
+    } catch (error) {
+      console.error("Donation error:", error);
+      toast.error("Error processing donation. Please try again.");
+    }
+  };
+
   if (loading) {
     return (
       <div className="p-8 animate-pulse">
@@ -80,8 +134,7 @@ const DonationForm = ({
   }
 
   return (
-    <form onSubmit={handleDonation} className="p-8">
-      {/* Your existing DonationForm content */}
+    <form onSubmit={handleSubmit} className="p-8">
       {/* Amount Selection */}
       <div className="mb-8">
         <label className="text-2xl font-bold text-gray-900 mb-6 flex items-center">
@@ -96,11 +149,10 @@ const DonationForm = ({
               key={option.value}
               type="button"
               onClick={() => handleAmountSelect(option.value)}
-              className={`relative p-4 rounded-2xl border-2 text-center transition-all duration-300 transform hover:scale-105 ${
-                donationAmount === option.value && !customAmount
+              className={`relative p-4 rounded-2xl border-2 text-center transition-all duration-300 transform hover:scale-105 ${donationAmount === option.value && !customAmount
                   ? "border-emerald-500 bg-gradient-to-r from-emerald-50 to-teal-50 text-emerald-700 font-bold shadow-lg"
                   : "border-gray-200 text-gray-700 hover:border-emerald-300 hover:shadow-md"
-              }`}
+                }`}
             >
               {option.popular && (
                 <div className="absolute -top-2 left-1/2 transform -translate-x-1/2">
@@ -138,6 +190,40 @@ const DonationForm = ({
         </div>
       </div>
 
+      {/* Payment Provider Selection */}
+      <div className="mb-8">
+        <label className="text-xl font-bold text-gray-900 mb-4 flex items-center">
+          <FaCreditCard className="w-5 h-5 text-blue-500 mr-2" />
+          Select Payment Method
+        </label>
+
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
+          {paymentProviders.map((provider) => {
+            const ProviderIcon = provider.icon;
+            return (
+              <button
+                key={provider.id}
+                type="button"
+                onClick={() => setSelectedProvider(provider.id)}
+                className={`relative p-3 rounded-xl border-2 text-center transition-all duration-200 ${selectedProvider === provider.id
+                    ? "border-emerald-500 bg-emerald-50 text-emerald-700"
+                    : "border-gray-200 text-gray-700 hover:border-gray-300"
+                  }`}
+              >
+                <ProviderIcon className="w-6 h-6 mx-auto mb-2" />
+                <div className="text-sm font-medium">{provider.name}</div>
+                <div className="text-xs text-gray-500 mt-1">{provider.description}</div>
+                {selectedProvider === provider.id && (
+                  <div className="absolute top-2 right-2 w-4 h-4 bg-emerald-500 rounded-full flex items-center justify-center">
+                    <FaCheck className="w-2 h-2 text-white" />
+                  </div>
+                )}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
       {/* Fund Impact Examples */}
       <div className="mb-8 p-6 bg-gradient-to-r from-slate-50 to-blue-50 rounded-2xl border border-blue-100">
         <h3 className="font-bold text-xl text-gray-900 mb-4 flex items-center">
@@ -168,18 +254,21 @@ const DonationForm = ({
           with trusted payment processors to ensure your financial information
           remains completely secure.
         </p>
+        <div className="mt-3 text-sm text-emerald-600 font-medium">
+          Selected: {paymentProviders.find(p => p.id === selectedProvider)?.name}
+        </div>
       </div>
 
       {/* Donate Button */}
       <button
         type="submit"
-        disabled={isLoading || !donationAmount || donationAmount === "0"}
+        disabled={!user || !donationAmount || donationAmount === "0"}
         className="w-full bg-gradient-to-r from-emerald-500 to-blue-500 hover:from-emerald-600 hover:to-blue-600 text-white py-5 px-8 rounded-2xl font-bold text-xl transition-all duration-300 transform hover:scale-105 hover:shadow-2xl disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none flex items-center justify-center space-x-3 shadow-lg"
       >
-        {isLoading ? (
+        {!user ? (
           <>
-            <div className="w-6 h-6 border-3 border-white border-t-transparent rounded-full animate-spin"></div>
-            <span className="text-lg">Processing Your Generosity...</span>
+            <FaLock className="w-6 h-6" />
+            <span>Please Login to Donate</span>
           </>
         ) : (
           <>

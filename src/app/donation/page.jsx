@@ -150,10 +150,7 @@ const Donation = () => {
         </Head>
 
         {/* Header Section */}
-        <DonationHeaderSection
-          totalDonations={totalDonations}
-          donorsCount={donorsCount}
-        />
+        <DonationHeaderSection />
 
         {/* Main Content */}
         <div className="container mx-auto px-4 sm:px-6 py-16 -mt-10">
