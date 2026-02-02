@@ -2,6 +2,7 @@
 import "./globals.css";
 import Providers from "../providers/providers";
 import RootProvider from "@/providers/RootProvider";
+import { CartProvider } from "@/providers/CartProvider";
 
 // const geistSans = Geist({
 //   variable: "--font-geist-sans",
@@ -22,11 +23,13 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={`antialiased`}>
-        <Providers>
-          <RootProvider>
-            {children}
-          </RootProvider>
-        </Providers>
+        <CartProvider>
+          <Providers>
+            <RootProvider>
+              {children}
+            </RootProvider>
+          </Providers>
+        </CartProvider>
       </body>
     </html>
   );

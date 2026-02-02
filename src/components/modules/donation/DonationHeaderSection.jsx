@@ -29,7 +29,7 @@ const DonationHeaderSection = ({totalDonations,donorsCount}) => {
           </p>
 
           {/* Impact Stats */}
-          <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8 max-w-2xl mx-auto">
+          {/* <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8 max-w-2xl mx-auto">
             <div className="text-center p-6 bg-white bg-opacity-10 backdrop-blur-sm rounded-2xl border border-white border-opacity-20">
               <div className="text-3xl font-bold text-emerald-300">
                 ${(totalDonations / 1000).toFixed(0)}K+
@@ -46,7 +46,7 @@ const DonationHeaderSection = ({totalDonations,donorsCount}) => {
               <div className="text-3xl font-bold text-purple-300">17</div>
               <div className="text-sm text-blue-200">SDG Goals</div>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </section>

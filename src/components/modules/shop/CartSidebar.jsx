@@ -138,7 +138,7 @@ const CartSidebar = ({
             </div>
             <button
               onClick={onCheckout}
-              className="w-full rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 py-4 font-bold text-white transition-all hover:from-blue-700 hover:to-purple-700 hover:shadow-lg"
+              className="w-full rounded-xl bg-[#047857] py-4 font-bold text-white transition-all hover:from-blue-700 hover:to-purple-700 hover:shadow-lg"
             >
               {t("cart.checkout")}
             </button>

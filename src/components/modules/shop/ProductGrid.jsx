@@ -1,9 +1,10 @@
 "use client";
 
 import { useTranslation } from "react-i18next";
-import { FaCartPlus, FaFilter } from "react-icons/fa";
+import { FaCartPlus, FaFilter, FaSort } from "react-icons/fa";
 import ProductCard from "./ProductCard";
 import ProductCardSkeleton from "./ProductCardSkeleton";
+import { SearchCheck, SearchIcon } from "lucide-react";
 
 const ProductGrid = ({
   products,
@@ -13,9 +14,11 @@ const ProductGrid = ({
   onFiltersChange,
   onOpenFilters,
   getCartItemCount,
-  setIsCartOpen
+  setIsCartOpen,
+  categories
 }) => {
   const { t } = useTranslation();
+  console.log(categories)
 
   if (loading) {
     return (
@@ -39,6 +42,17 @@ const ProductGrid = ({
     );
   }
 
+  // Sort options
+  const sortOptions = [
+    { value: "featured", label: t("shop.sort.featured") },
+    { value: "newest", label: t("shop.sort.newest") },
+    { value: "oldest", label: t("shop.sort.oldest") },
+    { value: "price-low", label: t("shop.sort.lowToHigh") },
+    { value: "price-high", label: t("shop.sort.highToLow") },
+    { value: "rating", label: t("shop.sort.rating") },
+    { value: "name", label: t("shop.sort.nameAZ") },
+  ];
+
   return (
     <section>
       <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
@@ -50,7 +64,7 @@ const ProductGrid = ({
           {/* Mobile Filter Button */}
           <button
             onClick={onOpenFilters}
-            className="flex items-center gap-2 rounded-lg bg-gradient-to-br from-blue-600 to-purple-700 px-4 py-2 text-white transition-all hover:bg-green-700 lg:hidden"
+            className="flex items-center gap-2 rounded-lg bg-[#059669] px-4 py-2 text-white transition-all hover:bg-green-700 lg:hidden"
           >
             <FaFilter />
             <span>{t("shop.filters.title")}</span>
@@ -59,42 +73,118 @@ const ProductGrid = ({
           {/* Cart Button */}
           <button
             onClick={() => setIsCartOpen(true)}
-            className="flex items-center gap-2 rounded-md bg-blue-600 px-4 py-3 text-white shadow-lg transition-all hover:bg-blue-700 hover:shadow-xl"
+            className="relative flex items-center gap-2 rounded-md bg-[#059669] px-4 py-3 text-white shadow-lg transition-all hover:shadow-xl"
           >
-            <FaCartPlus />
+            <FaCartPlus className="text-lg" />
             <span className="font-semibold">{getCartItemCount()}</span>
+            {getCartItemCount() > 0 && (
+              <span className="absolute -top-2 -right-2 flex h-6 w-6 items-center justify-center rounded-full bg-red-500 text-xs font-bold text-white">
+                {getCartItemCount()}
+              </span>
+            )}
           </button>
         </div>
 
         {/* Sort Dropdown */}
-        <div className="flex items-center gap-4">
+        {/* <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2 text-gray-600">
+            <FaSort />
+            <span className="text-sm font-medium">Sort by:</span>
+          </div>
           <select
             value={filters.sortBy}
             onChange={(e) =>
-              onFiltersChange({ ...filters, sortBy: e.target.value })
+              onFiltersChange({ sortBy: e.target.value })
             }
-            className="text-black rounded-lg border border-gray-400 px-3 py-2 focus:border-green-500 focus:outline-none"
+            className="rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-gray-700 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200 transition-all"
           >
-            <option value="featured">{t("shop.sort.featured")}</option>
-            <option value="price-low">{t("shop.sort.lowToHigh")}</option>
-            <option value="price-high">{t("shop.sort.highToLow")}</option>
-            <option value="rating">{t("shop.sort.rating")}</option>
-            <option value="name">{t("shop.sort.nameAZ")}</option>
+            {sortOptions.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.label}
+              </option>
+            ))}
           </select>
-        </div>
+        </div> */}
+      </div>
+
+      {/* Active Filters */}
+      <div className="mb-6 flex flex-wrap gap-2">
+        {filters.category !== "all" && (
+          <span className="inline-flex items-center gap-1 rounded-full bg-blue-100 px-3 py-1.5 text-sm text-blue-700">
+            Category: {categories.find(c => c._id === filters.category)?.title || filters.category}
+            <button
+              onClick={() => onFiltersChange({ category: "all" })}
+              className="ml-1 text-[#059669]"
+            >
+              ×
+            </button>
+          </span>
+        )}
+        
+        {filters.type !== "all" && (
+          <span className="inline-flex items-center gap-1 rounded-full bg-purple-100 px-3 py-1.5 text-sm text-purple-700">
+            Type: {filters.type}
+            <button
+              onClick={() => onFiltersChange({ type: "all" })}
+              className="ml-1 text-purple-500 hover:text-purple-700"
+            >
+              ×
+            </button>
+          </span>
+        )}
+        
+        
+        {filters.priceRange[0] > 0 || filters.priceRange[1] < 1000 ? (
+          <span className="inline-flex items-center gap-1 rounded-full bg-green-100 px-3 py-1.5 text-sm text-green-700">
+            Price: ${filters.priceRange[0]} - ${filters.priceRange[1]}
+            <button
+              onClick={() => onFiltersChange({ priceRange: [0, 1000] })}
+              className="ml-1 text-green-500 hover:text-green-700"
+            >
+              ×
+            </button>
+          </span>
+        ) : null}
+        
+        {filters.search && (
+          <span className="inline-flex items-center gap-1 rounded-full bg-gray-100 px-3 py-1.5 text-sm text-gray-700">
+            Search: "{filters.search}"
+            <button
+              onClick={() => onFiltersChange({ search: "" })}
+              className="ml-1 text-gray-500 hover:text-gray-700"
+            >
+              ×
+            </button>
+          </span>
+        )}
       </div>
 
       {/* Products Grid */}
       {products.length === 0 ? (
         <div className="text-center py-20">
-          <div className="text-gray-400 text-6xl mb-4">🔍</div>
+          <div className="text-gray-400 mb-4 text-center text-9xl flex justify-between items-center"><SearchIcon width={400} className="text-center mx-auto" /></div>
           <h3 className="text-xl font-semibold text-gray-600 mb-2">
             {t("shop.noProducts.title")}
           </h3>
-          <p className="text-gray-500">{t("shop.noProducts.subtitle")}</p>
+          <p className="text-gray-500 mb-4">{t("shop.noProducts.subtitle")}</p>
+          <button
+            onClick={() => onFiltersChange({
+              category: "all",
+              priceRange: [0, 1000],
+              rating: 0,
+              sortBy: "featured",
+              search: "",
+              type: "all",
+              status: "all",
+            })}
+            className="rounded-lg bg-[#059669] px-6 py-3 font-semibold text-white transition-colors"
+          >
+            Clear All Filters
+          </button>
         </div>
       ) : (
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          {console.log(products)}
           {products.map((product) => (
             <ProductCard
               key={product.id}

@@ -8,169 +8,131 @@ import FilterSidebar from "@/components/modules/shop/FilterSidebar";
 import ProductGrid from "@/components/modules/shop/ProductGrid";
 import ShopHero from "@/components/modules/shop/ShopHero";
 import ShopSkeleton from "@/components/modules/shop/ShopSkeleton";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
 import { useTranslation } from "react-i18next";
-import { FaCartPlus, FaFilter } from "react-icons/fa";
+import { useRouter } from "next/navigation";
+import api from "@/lib/apiClient";
+import { useQuery } from "@tanstack/react-query";
+import { useCart } from "@/providers/CartProvider";
+
 
 const Shop = () => {
   const { t } = useTranslation();
-  const [products, setProducts] = useState([]);
-  const [filteredProducts, setFilteredProducts] = useState([]);
-  const [cart, setCart] = useState([]);
+  const router = useRouter();
+  
+  // ✅ Use cart context instead of local state
+  const {
+    cart,
+    isCartOpen,
+    setIsCartOpen,
+    isCheckoutOpen,
+    setIsCheckoutOpen,
+    addToCart,
+    removeFromCart,
+    updateQuantity,
+    clearCart,
+    getCartTotal,
+    getCartItemCount,
+  } = useCart();
+
   const [isFilterOpen, setIsFilterOpen] = useState(false);
-  const [isCartOpen, setIsCartOpen] = useState(false);
-  const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
   const [filters, setFilters] = useState({
     category: "all",
-    priceRange: [0, 1000],
-    rating: 0,
+    priceRange: [0, 5000],
     sortBy: "featured",
     search: "",
+    type: "all",
+    status: "all",
   });
-  const [loading, setLoading] = useState(true);
 
-  const clearCart = () => {
-    setCart([]);
-  };
+  // Fetch products from API
+  const { data: productsData, isLoading: productsLoading } = useQuery({
+    queryKey: ["products", "shop"],
+    queryFn: async () => {
+      const res = await api.get("/ecom/products");
+      return res.data.data || [];
+    },
+    refetchOnWindowFocus: false,
+  });
 
-  // Sample products data
-  useEffect(() => {
-    const sampleProducts = [
-      {
-        id: 1,
-        name: "Wireless Bluetooth Headphones",
-        price: 99.99,
-        originalPrice: 129.99,
-        image:
-          "https://res.cloudinary.com/dfq6dppjb/image/upload/v1760857947/1_rss07c.png",
-        images: [
-          "https://res.cloudinary.com/dfq6dppjb/image/upload/v1760857947/1_rss07c.png",
-          "https://res.cloudinary.com/dfq6dppjb/image/upload/v1760857948/1b_alt.png",
-          "https://res.cloudinary.com/dfq6dppjb/image/upload/v1760857948/1c_alt.png",
-        ],
-        category: "electronics",
-        rating: 4.5,
-        reviewCount: 128,
-        featured: true,
-        discount: 23,
-        inStock: true,
-      },
-      {
-        id: 2,
-        name: "Smart Fitness Watch",
-        price: 199.99,
-        originalPrice: 249.99,
-        image:
-          "https://res.cloudinary.com/dfq6dppjb/image/upload/v1760857947/6_ndcsu7.png",
-        category: "electronics",
-        rating: 4.8,
-        reviewCount: 89,
-        featured: true,
-        discount: 20,
-        inStock: true,
-      },
-      {
-        id: 3,
-        name: "Organic Cotton T-Shirt",
-        price: 29.99,
-        originalPrice: 39.99,
-        image:
-          "https://res.cloudinary.com/dfq6dppjb/image/upload/v1760857948/8_fbys3e.png",
-        category: "clothing",
-        rating: 4.3,
-        reviewCount: 256,
-        featured: false,
-        discount: 25,
-        inStock: true,
-      },
-      {
-        id: 4,
-        name: "Professional Camera Lens",
-        price: 599.99,
-        originalPrice: 799.99,
-        image:
-          "https://res.cloudinary.com/dfq6dppjb/image/upload/v1760857948/5_idpboj.png",
-        category: "electronics",
-        rating: 4.9,
-        reviewCount: 67,
-        featured: true,
-        discount: 25,
-        inStock: false,
-      },
-      {
-        id: 5,
-        name: "Designer Backpack",
-        price: 79.99,
-        originalPrice: 99.99,
-        image:
-          "https://res.cloudinary.com/dfq6dppjb/image/upload/v1760857947/4_gi21el.png",
-        category: "accessories",
-        rating: 4.6,
-        reviewCount: 142,
-        featured: false,
-        discount: 20,
-        inStock: true,
-      },
-      {
-        id: 6,
-        name: "Gaming Keyboard RGB",
-        price: 89.99,
-        originalPrice: 119.99,
-        image:
-          "https://res.cloudinary.com/dfq6dppjb/image/upload/v1760857947/7_viojbg.png",
-        category: "electronics",
-        rating: 4.4,
-        reviewCount: 203,
-        featured: true,
-        discount: 25,
-        inStock: true,
-      },
-      {
-        id: 7,
-        name: "Yoga Mat Premium",
-        price: 49.99,
-        originalPrice: 69.99,
-        image:
-          "https://res.cloudinary.com/dfq6dppjb/image/upload/v1760857947/3_eqimrv.png",
-        category: "sports",
-        rating: 4.7,
-        reviewCount: 89,
-        featured: false,
-        discount: 29,
-        inStock: true,
-      },
-      {
-        id: 8,
-        name: "Wireless Charging Pad",
-        price: 39.99,
-        originalPrice: 49.99,
-        image:
-          "https://res.cloudinary.com/dfq6dppjb/image/upload/v1760857947/2_soficz.png",
-        category: "electronics",
-        rating: 4.2,
-        reviewCount: 178,
-        featured: false,
-        discount: 20,
-        inStock: true,
-      },
+  // Fetch categories from API
+  const { data: categoriesData, isLoading: categoriesLoading } = useQuery({
+    queryKey: ["categories"],
+    queryFn: async () => {
+      const res = await api.get("/courses/categories");
+      return res?.data?.data?.categories || [];
+    },
+    refetchOnWindowFocus: false,
+  });
+
+  // Memoize products and categories to prevent unnecessary re-renders
+  const products = useMemo(() => productsData || [], [productsData]);
+  const categories = useMemo(() => categoriesData || [], [categoriesData]);
+
+  // Memoize transformed products
+  const transformedProducts = useMemo(() => 
+    products.map(product => ({
+      id: product._id,
+      name: product.title,
+      price: product.price,
+      originalPrice: product.compareAtPrice || product.price * 1.2,
+      image: product.featuredImage || "https://res.cloudinary.com/dfq6dppjb/image/upload/v1760857947/1_rss07c.png",
+      images: product.images || [],
+      category: product.category?.title || product.category || "uncategorized",
+      categoryId: product.category?._id || null,
+      discount: product.compareAtPrice 
+        ? Math.round(((product.compareAtPrice - product.price) / product.compareAtPrice) * 100)
+        : 0,
+      inStock: product.stock > 0,
+      type: product.type || "physical",
+      isActive: product.isActive,
+      slug: product.slug,
+      description: product.description,
+      stock: product.stock || 0,
+      attributes: product.attributes || [],
+      shippingRequired: product.shippingRequired || false,
+      digitalUrl: product.digitalUrl,
+      createdAt: product.createdAt,
+    })),
+    [products]
+  );
+
+  // Memoize category options
+  const categoryOptions = useMemo(() => {
+    const baseOptions = [
+      { value: "all", label: t("shop.filters.allCategories") || "All Categories", count: products.length }
     ];
+    
+    const categoryCounts = {};
+    transformedProducts.forEach(product => {
+      const categoryId = product.categoryId;
+      if (categoryId) {
+        categoryCounts[categoryId] = (categoryCounts[categoryId] || 0) + 1;
+      }
+    });
 
-    // Simulate loading delay
-    setTimeout(() => {
-      setProducts(sampleProducts);
-      setFilteredProducts(sampleProducts);
-      setLoading(false);
-    }, 1500);
-  }, []);
+    const categoryOptions = categories.map(cat => ({
+      value: cat._id,
+      label: cat.title,
+      count: categoryCounts[cat._id] || 0
+    }));
+
+    return [...baseOptions, ...categoryOptions];
+  }, [categories, transformedProducts, products.length, t]);
 
   // Filter products
-  useEffect(() => {
-    let filtered = [...products];
+  const [filteredProducts, setFilteredProducts] = useState([]);
+
+  // Use useMemo for filtering instead of useEffect with setState
+  const filteredProductsMemo = useMemo(() => {
+    if (!transformedProducts.length) return [];
+
+    let filtered = [...transformedProducts];
 
     // Category filter
     if (filters.category !== "all") {
       filtered = filtered.filter(
-        (product) => product.category === filters.category
+        (product) => product.categoryId === filters.category
       );
     }
 
@@ -181,83 +143,47 @@ const Shop = () => {
         product.price <= filters.priceRange[1]
     );
 
-    // Rating filter
-    if (filters.rating > 0) {
-      filtered = filtered.filter((product) => product.rating >= filters.rating);
-    }
-
     // Search filter
     if (filters.search.trim()) {
       const q = filters.search.toLowerCase();
       filtered = filtered.filter(
         (p) =>
           p.name.toLowerCase().includes(q) ||
-          p.category.toLowerCase().includes(q)
+          (p.description || "").toLowerCase().includes(q)
       );
     }
 
-    // Sort products
-    switch (filters.sortBy) {
-      case "price-low":
-        filtered.sort((a, b) => a.price - b.price);
-        break;
-      case "price-high":
-        filtered.sort((a, b) => b.price - a.price);
-        break;
-      case "rating":
-        filtered.sort((a, b) => b.rating - a.rating);
-        break;
-      case "name":
-        filtered.sort((a, b) => a.name.localeCompare(b.name));
-        break;
-      default: // featured
-        filtered.sort((a, b) =>
-          b.featured === a.featured ? 0 : b.featured ? -1 : 1
-        );
+    // Type filter
+    if (filters.type !== "all") {
+      filtered = filtered.filter((product) => product.type === filters.type);
     }
 
-    setFilteredProducts(filtered);
-  }, [filters, products]);
-
-  // Cart functions
-  const addToCart = (product) => {
-    setCart((prevCart) => {
-      const existingItem = prevCart.find((item) => item.id === product.id);
-      if (existingItem) {
-        return prevCart.map((item) =>
-          item.id === product.id
-            ? { ...item, quantity: item.quantity + 1 }
-            : item
-        );
-      } else {
-        return [...prevCart, { ...product, quantity: 1 }];
-      }
-    });
-  };
-
-  const removeFromCart = (productId) => {
-    setCart((prevCart) => prevCart.filter((item) => item.id !== productId));
-  };
-
-  const updateQuantity = (productId, quantity) => {
-    if (quantity === 0) {
-      removeFromCart(productId);
-    } else {
-      setCart((prevCart) =>
-        prevCart.map((item) =>
-          item.id === productId ? { ...item, quantity } : item
-        )
+    // Status filter
+    if (filters.status !== "all") {
+      filtered = filtered.filter((product) => 
+        filters.status === "active" ? product.isActive : !product.isActive
       );
     }
-  };
+    return filtered;
+  }, [filters, transformedProducts]);
 
-  const getCartTotal = () => {
-    return cart.reduce((total, item) => total + item.price * item.quantity, 0);
-  };
+  // Update filteredProducts state only when it actually changes
+  useEffect(() => {
+    setFilteredProducts(filteredProductsMemo);
+  }, [filteredProductsMemo]);
 
-  const getCartItemCount = () => {
-    return cart.reduce((count, item) => count + item.quantity, 0);
-  };
+  // Memoize filter change handler
+  const handleFilterChange = useCallback((newFilters) => {
+    setFilters(prev => ({ ...prev, ...newFilters }));
+  }, []);
+
+  // ✅ Handle checkout - navigate to checkout page
+  const handleCheckout = useCallback(() => {
+    setIsCartOpen(false);
+    router.push('/product-checkout');
+  }, [router, setIsCartOpen]);
+
+  const loading = productsLoading || categoriesLoading;
 
   if (loading) {
     return <ShopSkeleton />;
@@ -270,12 +196,10 @@ const Shop = () => {
       <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
         {/* Hero Section */}
         <ShopHero
-          onShowFilters={() => setIsFilterOpen(true)}
-          cartItemCount={getCartItemCount()}
           search={filters.search}
-          onSearchChange={(val) =>
-            setFilters((prev) => ({ ...prev, search: val }))
-          }
+          onSearchChange={(val) => handleFilterChange({ search: val })}
+          productCount={filteredProducts.length}
+          categoryCount={categories.length}
         />
 
         {/* Main Content */}
@@ -287,8 +211,10 @@ const Shop = () => {
                 isOpen={isFilterOpen}
                 onClose={() => setIsFilterOpen(false)}
                 filters={filters}
-                onFiltersChange={setFilters}
+                onFiltersChange={handleFilterChange}
                 productCount={filteredProducts.length}
+                categoryOptions={categoryOptions}
+                priceRange={[0, Math.max(...products.map(p => p.price || 0), 1000)]}
               />
 
               {/* Product Grid */}
@@ -298,10 +224,11 @@ const Shop = () => {
                   loading={loading}
                   onAddToCart={addToCart}
                   filters={filters}
-                  onFiltersChange={setFilters}
+                  onFiltersChange={handleFilterChange}
                   onOpenFilters={() => setIsFilterOpen(true)}
                   getCartItemCount={getCartItemCount}
                   setIsCartOpen={setIsCartOpen}
+                  categories={categories}
                 />
               </div>
             </div>
@@ -315,14 +242,11 @@ const Shop = () => {
           cart={cart}
           onUpdateQuantity={updateQuantity}
           onRemoveFromCart={removeFromCart}
-          onCheckout={() => {
-            setIsCartOpen(false);
-            setIsCheckoutOpen(true);
-          }}
+          onCheckout={handleCheckout}
           total={getCartTotal()}
         />
 
-        {/* Checkout Modal */}
+        {/* Checkout Modal - Optional: You can remove this if using /checkout page */}
         <CheckoutModal
           isOpen={isCheckoutOpen}
           onClose={() => setIsCheckoutOpen(false)}
