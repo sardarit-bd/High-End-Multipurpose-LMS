@@ -103,7 +103,6 @@ const Leaderboard = () => {
       }));
     } else {
       // Individual student data
-      console.log(leaderboardResponse)
       return leaderboardResponse.map((user, index) => ({
         id: user.userId,
         rank: user.rank || index + 1,
@@ -323,7 +322,7 @@ const Leaderboard = () => {
         {/* Main Content */}
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 -mt-8">
           {/* User Rank Card */}
-          {userRank && <RankCard userRank={userRank} formatPoints={formatPoints} />}
+          {/* {userRank && <RankCard userRank={userRank} formatPoints={formatPoints} />} */}
           
           {/* Filters Section */}
           <Filters
