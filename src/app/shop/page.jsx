@@ -10,16 +10,32 @@ import ShopHero from "@/components/modules/shop/ShopHero";
 import ShopSkeleton from "@/components/modules/shop/ShopSkeleton";
 import { useState, useEffect, useMemo, useCallback } from "react";
 import { useTranslation } from "react-i18next";
+import { useRouter } from "next/navigation";
 import api from "@/lib/apiClient";
 import { useQuery } from "@tanstack/react-query";
+import { useCart } from "@/providers/CartProvider";
+
 
 const Shop = () => {
-  console.log("shop");
   const { t } = useTranslation();
-  const [cart, setCart] = useState([]);
+  const router = useRouter();
+  
+  // ✅ Use cart context instead of local state
+  const {
+    cart,
+    isCartOpen,
+    setIsCartOpen,
+    isCheckoutOpen,
+    setIsCheckoutOpen,
+    addToCart,
+    removeFromCart,
+    updateQuantity,
+    clearCart,
+    getCartTotal,
+    getCartItemCount,
+  } = useCart();
+
   const [isFilterOpen, setIsFilterOpen] = useState(false);
-  const [isCartOpen, setIsCartOpen] = useState(false);
-  const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
   const [filters, setFilters] = useState({
     category: "all",
     priceRange: [0, 5000],
@@ -102,8 +118,7 @@ const Shop = () => {
     }));
 
     return [...baseOptions, ...categoryOptions];
-  }, [categories, transformedProducts, t]);
-
+  }, [categories, transformedProducts, products.length, t]);
 
   // Filter products
   const [filteredProducts, setFilteredProducts] = useState([]);
@@ -157,55 +172,16 @@ const Shop = () => {
     setFilteredProducts(filteredProductsMemo);
   }, [filteredProductsMemo]);
 
-  // Cart functions with useCallback
-  const clearCart = useCallback(() => {
-    setCart([]);
-  }, []);
-
-  const addToCart = useCallback((product) => {
-    setCart((prevCart) => {
-      const existingItem = prevCart.find((item) => item.id === product.id);
-      if (existingItem) {
-        return prevCart.map((item) =>
-          item.id === product.id
-            ? { ...item, quantity: item.quantity + 1 }
-            : item
-        );
-      } else {
-        return [...prevCart, { ...product, quantity: 1 }];
-      }
-    });
-  }, []);
-
-  const removeFromCart = useCallback((productId) => {
-    setCart((prevCart) => prevCart.filter((item) => item.id !== productId));
-  }, []);
-
-  const updateQuantity = useCallback((productId, quantity) => {
-    if (quantity === 0) {
-      removeFromCart(productId);
-    } else {
-      setCart((prevCart) =>
-        prevCart.map((item) =>
-          item.id === productId ? { ...item, quantity } : item
-        )
-      );
-    }
-  }, [removeFromCart]);
-
-  // Memoize cart calculations
-  const getCartTotal = useCallback(() => {
-    return cart.reduce((total, item) => total + item.price * item.quantity, 0);
-  }, [cart]);
-
-  const getCartItemCount = useCallback(() => {
-    return cart.reduce((count, item) => count + item.quantity, 0);
-  }, [cart]);
-
   // Memoize filter change handler
   const handleFilterChange = useCallback((newFilters) => {
     setFilters(prev => ({ ...prev, ...newFilters }));
   }, []);
+
+  // ✅ Handle checkout - navigate to checkout page
+  const handleCheckout = useCallback(() => {
+    setIsCartOpen(false);
+    router.push('/product-checkout');
+  }, [router, setIsCartOpen]);
 
   const loading = productsLoading || categoriesLoading;
 
@@ -260,21 +236,17 @@ const Shop = () => {
         </section>
 
         {/* Cart Sidebar */}
-        {console.log("card", cart)}
         <CartSidebar
           isOpen={isCartOpen}
           onClose={() => setIsCartOpen(false)}
           cart={cart}
           onUpdateQuantity={updateQuantity}
           onRemoveFromCart={removeFromCart}
-          onCheckout={() => {
-            setIsCartOpen(false);
-            setIsCheckoutOpen(true);
-          }}
+          onCheckout={handleCheckout}
           total={getCartTotal()}
         />
 
-        {/* Checkout Modal */}
+        {/* Checkout Modal - Optional: You can remove this if using /checkout page */}
         <CheckoutModal
           isOpen={isCheckoutOpen}
           onClose={() => setIsCheckoutOpen(false)}

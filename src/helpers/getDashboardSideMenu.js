@@ -1,4 +1,4 @@
-import { Home, BookOpen, Users, Settings, ShoppingBag, ClipboardList, BarChart3, Award, User, HelpCircle, HomeIcon, UserCheck, Shield, Trophy, CreditCard, Settings2, Badge, BadgeCent, LocateIcon } from "lucide-react";
+import { Home, BookOpen, Users, Settings, ShoppingBag, ClipboardList, BarChart3, Award, User, HelpCircle, HomeIcon, UserCheck, Shield, Trophy, CreditCard, Settings2, Badge, BadgeCent, LocateIcon, ShoppingBasket } from "lucide-react";
 import { FaProductHunt } from "react-icons/fa";
 import { MdCategory } from "react-icons/md";
 
@@ -6,6 +6,7 @@ import { MdCategory } from "react-icons/md";
 const studentMenu = [
     { title: "Dashboard", href: "/dashboard", icon: Home },
     { title: "Courses", href: "/dashboard/student/courses", icon: BookOpen },
+     { title: "My Shop", href: "/dashboard/student/purchased-products", icon: ShoppingBasket },
     { title: "Assignments", href: "/dashboard/student/assignments", icon: ShoppingBag },
     { title: "My Badges", href: "/dashboard/student/my-badges", icon: Badge },
     // { title: "Leader Board", href: "/dashboard/student/leader-board", icon: Settings },
@@ -19,6 +20,7 @@ const instructorMenu = [
     { title: "Students", href: "/dashboard/instructor/students", icon: Users },
     { title: "Task", href: "/dashboard/instructor/assignments", icon: ClipboardList },
     { title: "Quizzes", href: "/dashboard/instructor/quize", icon: HelpCircle },
+    { title: "My Shop", href: "/dashboard/instructor/purchased-products", icon: ShoppingBasket },
     { title: "Profile", href: "/dashboard/instructor/profile", icon: User },
     // { title: "Certificate", href: "/dashboard/instructor/certificate", icon: Award },
 ];
@@ -32,6 +34,7 @@ const adminMenu = [
  { title: "Location", href: "/dashboard/admin/location", icon: LocateIcon},
   { title: "Manage Students", href: "/dashboard/admin/students", icon: Users },
   { title: "Manage Instructors", href: "/dashboard/admin/instructors", icon: UserCheck },
+  { title: "My Shop", href: "/dashboard/admin/purchased-products", icon: ShoppingBasket },
   { title: "Manage Admins", href: "/dashboard/admin/admins", icon: Shield },
 
 
