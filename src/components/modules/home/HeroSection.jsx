@@ -6,6 +6,19 @@ import { FaGraduationCap } from "react-icons/fa";
 import { MdVerified, MdPerson } from "react-icons/md";
 import SearchBar from "@/components/modules/special/Searchbar";
 import { useTranslation } from "react-i18next";
+import { useQuery } from "@tanstack/react-query";
+import api from "@/lib/apiClient";
+
+const useCategories = () => {
+  return useQuery({
+    queryKey: ['course-categories'],
+    queryFn: async () => {
+      const res = await api.get('/courses/categories', { params: { limit: 100 } });
+      return res.data;
+    },
+    refetchOnWindowFocus: false,
+  });
+};
 
 // 🎯 Main Hero Section (Default Export)
 export default function HeroSection() {
@@ -13,6 +26,9 @@ export default function HeroSection() {
   const router = useRouter();
   const [category, setCategory] = useState("");
   const [query, setQuery] = useState("");
+  const { data: categoriesData } = useCategories()
+  const categories = categoriesData?.data?.categories || [];
+  console.log(categories)
 
   const handleSubmit = (e) => {
     e?.preventDefault();
@@ -23,33 +39,9 @@ export default function HeroSection() {
     if (query.trim()) {
       params.set('search', query.trim());
     }
-
     if (category) {
-      // Map categories to course page categories
-      const categoryMap = {
-        'climate-action': 'Climate Action (SDG 13)',
-        'clean-energy': 'Clean Energy (SDG 7)',
-        'gender-equality': 'Gender Equality (SDG 5)',
-        'zero-hunger': 'Zero Hunger (SDG 2)',
-        'clean-water': 'Clean Water & Sanitation (SDG 6)',
-        'sustainable-cities': 'Sustainable Cities (SDG 11)',
-        'circular-economy': 'Circular Economy (SDG 12)',
-        'marine-conservation': 'Marine Conservation (SDG 14)',
-        'biodiversity': 'Biodiversity (SDG 15)',
-        'healthcare': 'Healthcare & Well-being (SDG 3)',
-        'quality-education': 'Quality Education (SDG 4)',
-        'economic-growth': 'Economic Growth (SDG 8)',
-        'industry-innovation': 'Industry & Innovation (SDG 9)',
-        'social-equality': 'Social Equality (SDG 10)',
-        'peace-justice': 'Peace & Justice (SDG 16)',
-        'global-partnerships': 'Global Partnerships (SDG 17)',
-        'poverty-eradication': 'Poverty Eradication (SDG 1)',
-        'sdg-fundamentals': 'SDG Fundamentals',
-        'other': 'Other'
-      };
-      const mappedCategory = categoryMap[category] || category;
-      // Since categories are expected as a comma-separated string for URL params
-      params.set('categories', mappedCategory);
+      const selected = categories.find(c => c._id === category)
+      params.set('categories', selected?.title?.toLowerCase().replace(/\s+/g, '_'));
     }
 
     // Redirect to courses page with search parameters
@@ -122,6 +114,7 @@ export default function HeroSection() {
                   onCategoryChange={setCategory}
                   onQueryChange={setQuery}
                   onSubmit={handleSubmit}
+                  categories={categories}
                 />
               </div>
             </div>

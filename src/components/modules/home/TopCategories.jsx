@@ -3,19 +3,24 @@
 import { useEffect, useRef, useState } from "react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { useQuery } from "@tanstack/react-query";
+import Link from "next/link";
 
+const useCategories = () => {
+  return useQuery({
+    queryKey: ['course-categories'],
+    queryFn: async () => {
+      const res = await api.get('/courses/categories', { params: { limit: 100 } });
+      return res.data;
+    },
+    refetchOnWindowFocus: false,
+  });
+};
 export default function TopCategories() {
   const { t } = useTranslation();
 
-  const categories = [
-    { name: t("categories.frontend") || "Frontend Developer", logo: "/icons/frontend.svg" },
-    { name: t("categories.jira") || "Jira Management", logo: "/icons/jira.svg" },
-    { name: t("categories.figma") || "Figma Developer", logo: "/icons/figma.svg" },
-    { name: t("categories.webflow") || "Webflow Developer", logo: "/icons/shopify.svg" },
-    { name: t("categories.framer") || "Framer Developer", logo: "/icons/framer.svg" },
-    { name: t("categories.vue") || "Vue js Developer", logo: "/icons/vue.svg" },
-    { name: t("categories.shopify") || "Shopify Developer", logo: "/icons/shopify.svg" },
-  ];
+  const { data: categoriesData } = useCategories()
+  const categories = categoriesData?.data?.categories || [];
 
   const scrollerRef = useRef(null);
   const [canPrev, setCanPrev] = useState(false);
@@ -122,17 +127,18 @@ export default function TopCategories() {
             className="flex gap-5 overflow-x-auto md:overflow-x-hidden scrollbar-hide snap-x snap-mandatory scroll-smooth pb-4"
           >
             {categories.map((item, i) => (
-              <button
+              <Link
+              href={`courses?categories=${item?.title?.toLowerCase().replace(/\s+/g, '_')}`}
                 key={i}
                 data-card
                 className="cursor-pointer snap-start bg-white rounded-[var(--radius-card)] shadow-sm hover:shadow-md p-6 flex flex-col items-center justify-center transition-all min-w-[200px] md:min-w-[220px]"
-                aria-label={item.name}
+                aria-label={item.title}
               >
-                <img src={item.logo} alt="" className="h-10 w-10 mb-4 object-contain" />
+                <img src={item.image} alt="" className="h-10 w-10 mb-4 object-contain" />
                 <h3 className="text-[var(--color-text)] font-semibold text-sm md:text-base">
-                  {item.name}
+                  {item.title}
                 </h3>
-              </button>
+              </Link>
             ))}
           </div>
 
@@ -161,11 +167,11 @@ export default function TopCategories() {
         </div>
 
         {/* View All Button */}
-        <div className="mt-10">
+        {/* <div className="mt-10">
           <button className="px-6 py-2 rounded-full bg-[var(--color-secondary)] text-white font-semibold hover:bg-[var(--color-secondary-hover)] transition">
             {t("categories.viewAll") || "View All Categories"}
           </button>
-        </div>
+        </div> */}
       </div>
     </section>
   );
