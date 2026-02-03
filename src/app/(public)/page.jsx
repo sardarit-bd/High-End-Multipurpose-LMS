@@ -17,11 +17,11 @@ export default function HomePage() {
             <TopCategories />
             <FeaturedCourses />
             <OurBenefits />
-            <MembershipSection />
-            <TrustedPartners />
+            {/* <MembershipSection /> */}
+            {/* <TrustedPartners /> */}
             <AdvancedLearning />
             <LearningJourney />
-            <PartnerBrands />
+            {/* <PartnerBrands /> */}
             <StudentSuccess />
         </div>
     );

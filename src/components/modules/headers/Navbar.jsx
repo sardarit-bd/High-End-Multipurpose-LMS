@@ -100,7 +100,8 @@ const Navbar = () => {
       name: t("pages"),
       key: "pages",
       dropdown: [
-        { name: t("pricing"), href: "/pricing" },
+        // { name: t("pricing"), href: "/pricing" },
+        {name: t("packages"), href:'/packages'},
         // { name: t("dashboard"), href: "/dashboard" },
         // { name: t("checkout"), href: "/checkout" },
         { name: t("event"), href: "/event" },
