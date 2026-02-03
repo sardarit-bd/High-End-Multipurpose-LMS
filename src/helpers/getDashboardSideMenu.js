@@ -1,4 +1,4 @@
-import { Home, BookOpen, Users, Settings, ShoppingBag, ClipboardList, BarChart3, Award, User, HelpCircle, HomeIcon, UserCheck, Shield, Trophy, CreditCard, Settings2, Badge, BadgeCent, LocateIcon, ShoppingBasket } from "lucide-react";
+import { Home, BookOpen, Users, Settings, ShoppingBag, ClipboardList, BarChart3, Award, User, HelpCircle, HomeIcon, UserCheck, Shield, Trophy, CreditCard, Settings2, Badge, BadgeCent, LocateIcon, ShoppingBasket, Package } from "lucide-react";
 import { FaProductHunt } from "react-icons/fa";
 import { MdCategory, MdOutlineBorderStyle } from "react-icons/md";
 
@@ -29,6 +29,7 @@ const adminMenu = [
   { title: "Dashboard", href: "/dashboard", icon: Home },
   
 { title: "Categories", href: "/dashboard/admin/categories", icon: MdCategory },
+{ title: "Packages", href: "/dashboard/admin/packages", icon: Package },
  { title: "Badges", href: "/dashboard/admin/badges", icon: BadgeCent },
   { title: "Products", href: "/dashboard/admin/products", icon: FaProductHunt },
   { title: "Orders", href: "/dashboard/admin/orders", icon: MdOutlineBorderStyle },
