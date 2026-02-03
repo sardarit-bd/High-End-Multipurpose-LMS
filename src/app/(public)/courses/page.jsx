@@ -12,12 +12,16 @@ import CourseFilters from "./CourseFilters";
 export default function PublicCourseListing() {
   const searchParams = useSearchParams();
   const initialLoadRef = useRef(true);
+ 
+  const search = searchParams.get("search")
+  const category = searchParams.get("categories")
 
+  console.log(search, category)
   // ---------- State ----------
   const [filters, setFilters] = useState({
-    categories: [],
+    categories: [category],
     price: "all",
-    search: ""
+    search: search
   });
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [searchDraft, setSearchDraft] = useState("");

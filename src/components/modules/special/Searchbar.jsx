@@ -37,7 +37,7 @@ function MenuPortal({ anchorRef, open, containerRef, children }) {
                 width: box.width,
                 zIndex: 9999,
             }}
-            className="bg-white rounded-lg border border-gray-100 overflow-hidden shadow-[var(--shadow-soft)]"
+            className="bg-white rounded-lg border border-gray-100 overflow-hidden shadow-[var(--shadow-soft)] max-h-96 overflow-y-auto"
         >
             {children}
         </div>,
@@ -46,21 +46,38 @@ function MenuPortal({ anchorRef, open, containerRef, children }) {
 }
 
 /** ---------- Custom Select ---------- */
-function CustomSelect({ value, onChange, placeholder = "Select Category" }) {
+function CustomSelect({ 
+    value, 
+    onChange, 
+    placeholder = "Select Category",
+    categories = [],
+    loading = false 
+}) {
     const [open, setOpen] = useState(false);
     const [hi, setHi] = useState(-1);
     const rootRef = useRef(null);
     const btnRef = useRef(null);
     const menuRef = useRef(null);
 
-    const options = [
-        { label: "Technology", value: "tech" },
-        { label: "Design", value: "design" },
-        { label: "Business", value: "business" },
-    ];
+    // Convert categories array to options format if needed
+    const options = categories.map(cat => {
+        // Handle different category object structures
+        if (typeof cat === 'object') {
+            return {
+                label: cat.label || cat.name || cat.title || 'Unnamed Category',
+                value: cat.value || cat._id || cat.slug || 'uncategorized'
+            };
+        }
+        // Handle string categories
+        return {
+            label: cat,
+            value: cat.toLowerCase().replace(/[^a-z0-9]+/g, '-')
+        };
+    });
 
-    const selectedLabel =
-        options.find((o) => o.value === value)?.label || placeholder;
+    const selectedLabel = value
+        ? options.find((o) => o.value === value)?.label || placeholder
+        : placeholder;
 
     // click-outside (ignore clicks inside menu portal)
     useEffect(() => {
@@ -75,6 +92,7 @@ function CustomSelect({ value, onChange, placeholder = "Select Category" }) {
     }, []);
 
     const openMenu = () => {
+        if (loading) return;
         setOpen(true);
         const idx = Math.max(0, options.findIndex((o) => o.value === value));
         setHi(idx);
@@ -110,50 +128,78 @@ function CustomSelect({ value, onChange, placeholder = "Select Category" }) {
             <button
                 ref={btnRef}
                 type="button"
-                onClick={() => (open ? setOpen(false) : openMenu())}
+                onClick={openMenu}
                 onKeyDown={onKey}
-                className="w-full h-12 md:h-[48px] inline-flex items-center justify-between px-4 bg-white text-[var(--color-text)] text-left focus:outline-none"
+                disabled={loading}
+                className="w-full h-12 md:h-[48px] inline-flex items-center justify-between px-4 bg-white text-[var(--color-text)] text-left focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed"
                 aria-haspopup="listbox"
                 aria-expanded={open}
+                aria-busy={loading}
             >
                 <span className={value ? "" : "text-[var(--color-text)]/60"}>
-                    {selectedLabel}
+                    {loading ? "Loading categories..." : selectedLabel}
                 </span>
                 <MdKeyboardArrowDown
                     size={20}
-                    className={`shrink-0 transition-transform ${open ? "rotate-180" : ""}`}
+                    className={`shrink-0 transition-transform ${open ? "rotate-180" : ""} ${loading ? "opacity-50" : ""}`}
                 />
             </button>
 
             {/* Menu in portal; pass containerRef so outside-click ignores it */}
-            <MenuPortal anchorRef={btnRef} open={open} containerRef={menuRef}>
-                <ul role="listbox" tabIndex={-1} onKeyDown={onKey}>
-                    {options.map((opt, i) => {
-                        const active = opt.value === value;
-                        const highlighted = i === hi;
-                        return (
-                            <li
-                                key={opt.value}
-                                role="option"
-                                aria-selected={active}
-                                onMouseEnter={() => setHi(i)}
-                                onClick={() => {
-                                    onChange?.(opt.value);
-                                    setOpen(false);
-                                    btnRef.current?.focus();
-                                }}
-                                className={`
-                  px-4 py-2 cursor-pointer flex items-center justify-between text-[var(--color-text)]
-                  ${highlighted ? "bg-[var(--color-primary)]/10" : "hover:bg-[var(--color-primary)]/10"}
-                  ${active ? "font-medium" : ""}
-                `}
-                            >
-                                {opt.label}
-                                {active && <MdCheck size={18} />}
-                            </li>
-                        );
-                    })}
-                </ul>
+            <MenuPortal anchorRef={btnRef} open={open && !loading} containerRef={menuRef}>
+                {options.length === 0 ? (
+                    <div className="px-4 py-3 text-center text-gray-500">
+                        {loading ? "Loading categories..." : "No categories available"}
+                    </div>
+                ) : (
+                    <ul role="listbox" tabIndex={-1} onKeyDown={onKey}>
+                        {/* "All Categories" option */}
+                        <li
+                            role="option"
+                            aria-selected={!value}
+                            onMouseEnter={() => setHi(-1)}
+                            onClick={() => {
+                                onChange?.("");
+                                setOpen(false);
+                                btnRef.current?.focus();
+                            }}
+                            className={`
+                                px-4 py-2 cursor-pointer flex items-center justify-between text-[var(--color-text)]
+                                ${hi === -1 ? "bg-[var(--color-primary)]/10" : "hover:bg-[var(--color-primary)]/10"}
+                                ${!value ? "font-medium" : ""}
+                            `}
+                        >
+                            All Categories
+                            {!value && <MdCheck size={18} />}
+                        </li>
+                        
+                        {options.map((opt, i) => {
+                            const active = opt.value === value;
+                            const highlighted = i === hi;
+                            return (
+                                <li
+                                    key={opt.value}
+                                    role="option"
+                                    aria-selected={active}
+                                    onMouseEnter={() => setHi(i)}
+                                    onClick={() => {
+                                        onChange?.(opt.value);
+                                        setOpen(false);
+                                        btnRef.current?.focus();
+                                    }}
+                                    className={`
+                                        px-4 py-2 cursor-pointer flex items-center justify-between text-[var(--color-text)]
+                                        ${highlighted ? "bg-[var(--color-primary)]/10" : "hover:bg-[var(--color-primary)]/10"}
+                                        ${active ? "font-medium" : ""}
+                                    `}
+                                >
+                                    {opt.label}
+                                    {active && <MdCheck size={18} />}
+                                </li>
+                            );
+                        })}
+                    </ul>
+                )}
             </MenuPortal>
         </div>
     );
@@ -169,17 +215,10 @@ export default function SearchBar({
     // Submit
     onSubmit,
     submitLabel = "Search",
+    // Dynamic categories
+    categories = [],
+    loading = false
 }) {
-    // --- Uncontrolled fallbacks (if no props passed) ---
-    const [localCategory, setLocalCategory] = useState("");
-    const [localQuery, setLocalQuery] = useState("");
-
-    const cat = category !== undefined ? category : localCategory;
-    const setCat = onCategoryChange ?? setLocalCategory;
-
-    const q = query !== undefined ? query : localQuery;
-    const setQ = onQueryChange ?? setLocalQuery;
-
     const handleSubmit = (e) => {
         e?.preventDefault();
         onSubmit?.(e);
@@ -199,16 +238,22 @@ export default function SearchBar({
             >
                 {/* Category */}
                 <div className="md:w-[240px]">
-                    <CustomSelect value={cat} onChange={setCat} />
+                    <CustomSelect 
+                        value={category} 
+                        onChange={onCategoryChange} 
+                        categories={categories}
+                        loading={loading}
+                        placeholder="All Categories"
+                    />
                 </div>
 
                 {/* Query */}
                 <input
                     type="text"
-                    value={q}
-                    onChange={(e) => setQ(e.target.value)}
+                    value={query}
+                    onChange={(e) => onQueryChange(e.target.value)}
                     placeholder="Search for Courses, Instructors"
-                    className="flex-1 h-20 py-3 md:h-[48px] bg-white px-4 text-[var(--color-text)] placeholder-[var(--color-text)]/60 focus:outline-none"
+                    className="flex-1 h-12 md:h-[48px] bg-white px-4 text-[var(--color-text)] placeholder-[var(--color-text)]/60 focus:outline-none"
                 />
 
                 {/* Submit */}
@@ -216,7 +261,7 @@ export default function SearchBar({
                     type="submit"
                     aria-label="Search"
                     title="Search"
-                    className="md:w-[140px] h-10 md:h-[48px] inline-flex items-center justify-center gap-2 text-white transition"
+                    className="md:w-[140px] h-12 md:h-[48px] inline-flex items-center justify-center gap-2 text-white transition"
                     style={{ background: "var(--color-primary)" }}
                     onMouseEnter={(e) => (e.currentTarget.style.background = "var(--color-primary-hover)")}
                     onMouseLeave={(e) => (e.currentTarget.style.background = "var(--color-primary)")}
