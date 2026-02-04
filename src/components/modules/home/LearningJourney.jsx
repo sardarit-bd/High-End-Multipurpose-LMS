@@ -47,7 +47,7 @@ export default function LearningJourney() {
 
         {/* Right Text Content */}
         <div>
-          <p className="text-[var(--color-accent)] font-semibold mb-2">
+          <p className="text-[var(--color-primary)] font-semibold mb-2">
             {t("learningJourney.subtitle") || "How it Works"}
           </p>
           <h2 className="text-2xl md:text-3xl font-bold text-[var(--color-text)] mb-4">
@@ -60,7 +60,7 @@ export default function LearningJourney() {
           <div className="space-y-6">
             {steps.map((step) => (
               <div key={step.id} className="flex items-start gap-4">
-                <div className="text-[var(--color-secondary)] text-2xl font-bold min-w-[40px]">
+                <div className="text-[var(--color-primary)] text-2xl font-bold min-w-[40px]">
                   {step.id}
                 </div>
                 <div>

@@ -67,14 +67,14 @@ export default function AdvancedLearning() {
             </li>
           </ul>
 
-          <div className="mt-10 flex flex-wrap gap-4">
+          {/* <div className="mt-10 flex flex-wrap gap-4">
             <button className="bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] cursor-pointer text-white px-6 py-3 rounded-lg font-semibold shadow transition-all duration-300">
               {t("advancedLearning.enrollButton") || "Enroll as Student"}
             </button>
             <button className="border border-[var(--color-primary)] text-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] cursor-pointer hover:text-white px-6 py-3 rounded-lg font-semibold transition-all duration-300">
               {t("advancedLearning.applyTutorButton") || "Apply as Tutor"}
             </button>
-          </div>
+          </div> */}
         </div>
 
         {/* Right Image Section */}

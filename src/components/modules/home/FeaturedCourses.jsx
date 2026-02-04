@@ -377,11 +377,11 @@ export default function FeaturedCourses() {
   //     ? courses
   //     : courses.filter((c) => c.category === selectedCategory);
 
-  console.log("Featured Courses:", courses);
+
   return (
     <section className="w-full bg-white py-16 px-4">
       <div className="container px-4 mx-auto text-center">
-        <p className="text-[var(--color-secondary)] font-medium text-sm mb-2">
+        <p className="text-[var(--color-primary)] font-medium text-sm mb-2">
           {t("courses.featuredSubtitle") || "Featured Courses"}
         </p>
         <h2 className="text-3xl md:text-4xl font-bold text-[var(--color-text)] mb-3">
@@ -425,7 +425,7 @@ export default function FeaturedCourses() {
           </div>
         )}
         
-        <button className="px-6 py-2 rounded-full bg-[var(--color-secondary)] text-white font-semibold hover:bg-[var(--color-secondary-hover)] transition mt-12">
+        <button className="px-6 py-2 rounded-full bg-[var(--color-primary)] text-white font-semibold hover:bg-[var(--color-primary-hover)] transition mt-12">
           <Link href="/courses">
             {t("courses.viewMore") || "View More"}
           </Link>

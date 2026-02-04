@@ -103,7 +103,7 @@ export default function TopCategories() {
   return (
     <section className="w-full bg-[var(--color-background)] py-16 relative overflow-hidden">
       <div className="container mx-auto px-4 text-center">
-        <p className="text-[var(--color-secondary)] font-medium text-sm mb-2">
+        <p className="text-[var(--color-primary)] font-medium text-sm mb-2">
           {t("categories.subtitle") || "Our Categories"}
         </p>
         <h2 className="text-3xl md:text-4xl font-bold text-[var(--color-text)] mb-3">

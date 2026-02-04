@@ -252,8 +252,8 @@ export default function SearchBar({
                     type="text"
                     value={query}
                     onChange={(e) => onQueryChange(e.target.value)}
-                    placeholder="Search for Courses, Instructors"
-                    className="flex-1 h-12 md:h-[48px] bg-white px-4 text-[var(--color-text)] placeholder-[var(--color-text)]/60 focus:outline-none"
+                    placeholder="Search for Courses"
+                    className="flex-1 h-[48px] py-4 bg-white px-4 text-[var(--color-text)] placeholder-[var(--color-text)]/60 focus:outline-none"
                 />
 
                 {/* Submit */}
@@ -267,7 +267,7 @@ export default function SearchBar({
                     onMouseLeave={(e) => (e.currentTarget.style.background = "var(--color-primary)")}
                 >
                     <MdSearch size={20} />
-                    <span className="hidden md:inline">{submitLabel}</span>
+                    <span className="inline">{submitLabel}</span>
                 </button>
             </div>
         </form>
