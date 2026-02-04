@@ -17,7 +17,7 @@ export default function StudentSuccess() {
           />
 
           {/* Stats Box */}
-          <div className="absolute left-0 right-0 -bottom-10 mx-auto w-[90%] md:w-[85%] bg-[var(--color-secondary)] text-white rounded-[var(--radius-card)] shadow-[var(--shadow-medium)] p-6 md:p-10">
+          <div className="absolute left-0 right-0 -bottom-10 mx-auto w-[90%] md:w-[85%] bg-[var(--color-primary)] text-white rounded-[var(--radius-card)] shadow-[var(--shadow-medium)] p-6 md:p-10">
             <div className="grid md:grid-cols-3 gap-8 mb-6 text-left">
               <div>
                 <h3 className="font-bold text-lg md:text-xl">
@@ -46,14 +46,14 @@ export default function StudentSuccess() {
             </div>
 
             {/* CTA Buttons */}
-            <div className="flex flex-wrap items-center gap-4">
+            {/* <div className="flex flex-wrap items-center gap-4">
               <button className="px-6 py-2 rounded-full bg-[var(--color-accent)] text-[var(--color-text)] font-semibold hover:bg-[var(--color-accent-hover)] transition">
                 {t("studentSuccess.enrollButton") || "Enroll as Student"}
               </button>
               <button className="px-6 py-2 rounded-full bg-white text-[var(--color-secondary)] font-semibold hover:bg-gray-100 transition">
                 {t("studentSuccess.applyTutorButton") || "Apply as Tutor"}
               </button>
-            </div>
+            </div> */}
 
             {/* Quote */}
             <div className="mt-6 text-sm italic bg-white/10 p-3 rounded-lg">

@@ -29,7 +29,7 @@ export default function OurBenefits() {
   return (
     <section className="w-full bg-white z-100 py-16">
       <div className="container mx-auto text-center px-4">
-        <h3 className="text-sm font-semibold text-[var(--color-secondary)] mb-2">
+        <h3 className="text-sm font-semibold text-[var(--color-primary)] mb-2">
           {t("benefits.subtitle") || "Our Benefits"}
         </h3>
         <h2 className="text-3xl md:text-4xl font-bold text-[var(--color-text)] mb-3">
