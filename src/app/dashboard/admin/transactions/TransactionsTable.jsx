@@ -25,6 +25,7 @@ export default function TransactionsTable({ search, page, limit, onPageChange })
   });
 
   const orders = ordersData?.data?.orders || [];
+  console.log(ordersData);
   const total = ordersData?.data?.total || 0;
   const totalPages = ordersData?.data?.totalPages || 1;
 
@@ -149,6 +150,7 @@ export default function TransactionsTable({ search, page, limit, onPageChange })
                     </span>
                   </div>
                   {order.itemType === 'Donation' && <div className="text-xs text-gray-500">{order?.fund || 'NA'}</div>}
+                  {order.itemType === 'event' && <div className="text-xs text-gray-500">{order?.event || 'NA'}</div>}
                 </td>
                 <td className="p-4">
                   <div className="font-bold text-gray-900">{order.amountFormatted}</div>
