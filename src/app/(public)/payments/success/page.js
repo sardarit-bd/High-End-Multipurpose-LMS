@@ -66,7 +66,7 @@ export default function Page() {
                 {/* Buttons */}
                 <div className="flex flex-col sm:flex-row justify-center gap-3">
                     <Link
-                        href="/orders"
+                        href="/dashboard"
                         className="flex-1 bg-[var(--color-primary)] text-white font-medium py-3 rounded-full hover:opacity-90 transition"
                     >
                         View Order History

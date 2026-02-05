@@ -54,12 +54,12 @@ export default function CourseCard({ course }) {
         </div>
 
         <div className="flex items-center justify-between text-sm text-gray-600 mt-2">
-          <div className="flex items-center">
+          {/* <div className="flex items-center">
             <span className="text-yellow-500">⭐</span>
             <span className="ml-1">
               {course?.course?.rating || 0} ({course?.course?.reviews || 0} Reviews)
             </span>
-          </div>
+          </div> */}
           <div>
             <span className="text-[var(--color-primary)] font-bold">
               {course?.course?.price ? `$${course.course.price}` : 'Free'}
@@ -77,9 +77,9 @@ export default function CourseCard({ course }) {
               {course?.status === 'completed' ? 'Review Course' : 'Continue Learning'}
             </Link>
           </button>
-          <button className="bg-gray-100 text-gray-700 px-4 py-2 rounded-full text-sm font-medium hover:bg-gray-200">
+          {/* <button className="bg-gray-100 text-gray-700 px-4 py-2 rounded-full text-sm font-medium hover:bg-gray-200">
             <Link href='/dashboard/student/leader-board'>Leaderboard</Link>
-          </button>
+          </button> */}
         </div>
       </div>
     </div>

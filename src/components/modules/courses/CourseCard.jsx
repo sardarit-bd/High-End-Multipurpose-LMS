@@ -62,7 +62,15 @@ export default function CourseCard({ course }) {
 
                 {/* Instructor */}
                 <div className="flex items-center">
+                   {course?.instructorImage ? (
+                    <img
+                        src={course?.instructorImage}
+                        alt={course?.author || "Instructor"}
+                        className="w-8 h-8 rounded-full object-cover mr-2"
+                    />
+                    ) : (
                     <FaUserCircle className="w-8 h-8 text-gray-400 mr-2" />
+                    )}
                     <span className="text-sm text-[var(--color-text)]">{course?.author || course?.instructor?.name || "Unknown Instructor"}</span>
                 </div>
             </div>

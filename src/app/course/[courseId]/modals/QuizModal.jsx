@@ -326,7 +326,7 @@ export default function QuizModal({ quizzes, onClose }) {
                   </span>
                 </div>
               )}
-              <button
+              {/* <button
                 onClick={() => {
                   if (!submitted) handleSubmit(true);
                   onClose();
@@ -334,7 +334,7 @@ export default function QuizModal({ quizzes, onClose }) {
                 className="p-2 hover:bg-gray-100 rounded-xl transition-colors"
               >
                 <X size={20} className="text-gray-500" />
-              </button>
+              </button> */}
             </div>
           </div>
 

@@ -419,12 +419,6 @@ export default function CourseLearningPage() {
     console.log("nextLesson", nextLesson);  
     if (!nextLesson) return;
 
-    // Check if all tasks are submitted before allowing navigation to next lesson
-    if (!checkAllTasksSubmitted()) {
-      toast.error("Please complete all tasks and quizzes in this unit before proceeding to the next lesson.");
-      return;
-    }
-
     // Also check if current lesson is completed
     if (!completedLessons.has(currentLesson?._id)) {
       toast.error("Please complete the current lesson before proceeding to the next one.");
@@ -566,12 +560,14 @@ export default function CourseLearningPage() {
                     )}
 
                     {/* Next Lesson Button - Only enabled after completion and all tasks submitted */}
+                    {console.log(completedLessons, currentLesson?._id)}
                     {nextLesson && (
+                      
                       <button
                         onClick={goToNextLesson}
-                        disabled={!completedLessons.has(currentLesson?._id) || !checkAllTasksSubmitted()}
+                        disabled={!completedLessons.has(currentLesson?._id)}
                         className={`px-4 py-2.5 rounded-xl transition-all duration-300 flex items-center gap-2 text-sm font-semibold ${
-                          completedLessons.has(currentLesson?._id) && checkAllTasksSubmitted()
+                          completedLessons.has(currentLesson?._id)
                             ? 'bg-gradient-to-r from-blue-500 to-blue-600 text-white hover:shadow-lg hover:-translate-y-0.5'
                             : 'bg-gray-300 text-gray-500 cursor-not-allowed'
                         }`}
@@ -596,7 +592,7 @@ export default function CourseLearningPage() {
           {/* Course Sidebar */}
           <aside className="lg:w-96 flex-shrink-0">
             {/* Course Modules Card */}
-            <div className="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
+            <div className="bg-white h-full rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
               <div className="p-6 bg-gray-50 border-b border-gray-200">
                 <div className="flex items-center justify-between mb-4">
                   <h3 className="text-lg font-bold text-gray-900 flex items-center gap-2">
@@ -611,7 +607,7 @@ export default function CourseLearningPage() {
               </div>
 
               {/* Modules List */}
-              <div className="h-[calc(100vh-350px)] overflow-y-auto p-2">
+              <div className="h-[calc(100vh-300px)] overflow-y-auto p-2">
                 {units?.map((module, moduleIndex) => (
                   <UnitAccordion
                     key={moduleIndex}

@@ -120,32 +120,6 @@ const FilterSidebar = ({
           </div>
 
           {/* Status */}
-          <div className="mb-6">
-            <h4 className="mb-3 font-semibold text-gray-800">Status</h4>
-            <div className="flex flex-wrap gap-2">
-              {[
-                { value: "all", label: "All Status" },
-                { value: "active", label: "Active" },
-                { value: "inactive", label: "Inactive" }
-              ].map((status) => (
-                <button
-                  key={status.value}
-                  onClick={() => handleStatusChange(status.value)}
-                  className={`px-3 py-2 rounded-lg text-sm transition-all ${
-                    filters.status === status.value
-                      ? filters.status === "active"
-                        ? "bg-green-100 text-green-600 font-medium"
-                        : filters.status === "inactive"
-                        ? "bg-red-100 text-red-600 font-medium"
-                        : "bg-blue-100 text-blue-600 font-medium"
-                      : "bg-gray-100 text-gray-600 hover:bg-gray-200"
-                  }`}
-                >
-                  {status.label}
-                </button>
-              ))}
-            </div>
-          </div>
 
           {/* Categories */}
           <div className="mb-8">
