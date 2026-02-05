@@ -107,3 +107,9 @@ body {
     scrollbar-color: var(--color-primary) transparent;
   }
 }
+body.antialiased {
+    top: 0px !important;
+}
+.skiptranslate {
+    display: none;
+}

@@ -8,6 +8,7 @@ import { useTranslation } from "react-i18next";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import Image from "next/image";
 import { useAuth } from "@/hooks/useAuth";
+import { LanguageSwitcher } from "@/components/shared/LanguageSwitcher";
 
 
 const Navbar = () => {
@@ -192,7 +193,7 @@ const Navbar = () => {
 
         {/* Desktop Language Selector & Auth Buttons */}
         <div className="hidden lg:flex items-center gap-4">
-          <div className="relative" ref={languageDropdownRef}>
+          {/* <div className="relative" ref={languageDropdownRef}>
             <button
               onClick={() => toggleDropdown("language")}
               className="flex items-center gap-2 px-3 py-2 rounded-lg border border-[var(--color-primary)] text-[var(--color-text)] hover:bg-[var(--color-primary)] hover:text-white transition-all duration-200 group"
@@ -212,6 +213,7 @@ const Navbar = () => {
               />
             </button>
 
+                 
             <div
               className={`absolute right-0 mt-2 bg-white border border-[var(--color-primary)] rounded-lg shadow-lg z-50 min-w-[140px] overflow-hidden transition-all duration-200 transform origin-top ${openDropdown === "language"
                   ? "opacity-100 scale-100 translate-y-0"
@@ -232,7 +234,8 @@ const Navbar = () => {
                 </button>
               ))}
             </div>
-          </div>
+          </div> */}
+<LanguageSwitcher />
           {!user ? (<>
             <Link
             href="/login"
@@ -315,6 +318,7 @@ const Navbar = () => {
           </>)}
         </div>
 
+ 
         {/* Enhanced Mobile Menu Button */}
         <button
           onClick={toggleMenu}
@@ -360,6 +364,7 @@ const Navbar = () => {
                   className="md:w-36"
                 />
               </Link>
+              <LanguageSwitcher />
               <button
                 onClick={closeMenu}
                 className="p-2 text-[var(--color-text)] hover:text-[var(--color-primary)] transition-colors duration-200"
@@ -454,7 +459,8 @@ const Navbar = () => {
                 </div>
 
                 {/* Language Selector */}
-                <div className="mb-6 p-4 bg-gray-50 rounded-lg">
+                
+                {/* <div className="mb-6 p-4 bg-gray-50 rounded-lg">
                   <p className="text-sm font-semibold text-[var(--color-text)] mb-3 flex items-center gap-2">
                     <FaGlobe className="text-[var(--color-primary)]" />
                     {t("language") || "Select Language"}
@@ -475,7 +481,7 @@ const Navbar = () => {
                       </button>
                     ))}
                   </div>
-                </div>
+                </div> */}
 
                 {/* Auth Buttons */}
                 <div className="flex flex-col gap-3">

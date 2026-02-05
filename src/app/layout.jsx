@@ -22,6 +22,15 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+      <script src="/assets/lang-config.js" strategy="beforeInteractive" />
+      <script src="/assets/translation.js" strategy="beforeInteractive" />
+      <script src="//translate.google.com/translate_a/element.js?cb=TranslateInit" strategy="afterInteractive" />
+      <style dangerouslySetInnerHTML={{
+        __html: `
+          body.antialiased {
+    top: 0px !important;
+}
+        `}} />
       <body className={`antialiased`}>
         <CartProvider>
           <Providers>
