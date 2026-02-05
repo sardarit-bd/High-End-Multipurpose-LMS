@@ -105,7 +105,7 @@ export default function InstructorDashboard() {
         </div>
 
         {/* Stats Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -160,7 +160,7 @@ export default function InstructorDashboard() {
             </div>
           </motion.div>
 
-          <motion.div
+          {/* <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4 }}
@@ -176,7 +176,7 @@ export default function InstructorDashboard() {
               </h3>
               <p className="text-gray-600 text-sm">Avg. Course Rating</p>
             </div>
-          </motion.div>
+          </motion.div> */}
         </div>
       </div>
 
@@ -272,7 +272,7 @@ export default function InstructorDashboard() {
                     No courses found. Create your first course!
                   </p>
                   <Link
-                    href="/instructor/courses/create"
+                    href="/dashboard/instructor/courses/add"
                     className="inline-block px-6 py-2 bg-[var(--color-primary)] text-white rounded-lg hover:bg-[var(--color-primary-hover)] transition-colors"
                   >
                     Create Course
