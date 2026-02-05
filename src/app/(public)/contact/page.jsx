@@ -28,7 +28,7 @@ export default function ContactPage() {
     setSubmitStatus({ type: "", message: "" });
 
     try {
-      const response = await fetch("http://localhost:5000/api/user/send-mail", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/user/send-mail`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
