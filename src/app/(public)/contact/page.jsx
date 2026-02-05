@@ -1,7 +1,73 @@
 "use client";
+import { useState } from "react";
 import { FaMapMarkerAlt, FaPhoneAlt, FaEnvelope } from "react-icons/fa";
 
 export default function ContactPage() {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    subject: "",
+    message: ""
+  });
+  
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState({ type: "", message: "" });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitStatus({ type: "", message: "" });
+
+    try {
+      const response = await fetch("http://localhost:5000/api/user/send-mail", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setSubmitStatus({
+          type: "success",
+          message: "Your message has been sent successfully!"
+        });
+        // Reset form
+        setFormData({
+          name: "",
+          email: "",
+          phone: "",
+          subject: "",
+          message: ""
+        });
+      } else {
+        setSubmitStatus({
+          type: "error",
+          message: data.message || "Failed to send message. Please try again."
+        });
+      }
+    } catch (error) {
+      setSubmitStatus({
+        type: "error",
+        message: "Network error. Please check your connection and try again."
+      });
+      console.error("Error sending email:", error);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <section className="bg-white pt-[80px] lg:pt-[120px]">
       <div className="container mx-auto px-4 space-y-10">
@@ -64,21 +130,40 @@ export default function ContactPage() {
               </h2>
               <p className="text-gray-200 text-base leading-relaxed">
                 Get in touch with us to explore how our LMS solution can enhance your e-learning
-                experience. We’re here to help you build a seamless and engaging learning platform!
+                experience. We're here to help you build a seamless and engaging learning platform!
               </p>
             </div>
 
             {/* Right Form */}
-            <form className="bg-white/90 backdrop-blur-md rounded-[var(--radius-card)] p-6 space-y-4 shadow-[var(--shadow-soft)]">
+            <form onSubmit={handleSubmit} className="bg-white/90 backdrop-blur-md rounded-[var(--radius-card)] p-6 space-y-4 shadow-[var(--shadow-soft)]">
+              {/* Status Message */}
+              {submitStatus.message && (
+                <div className={`p-4 rounded-lg ${
+                  submitStatus.type === "success" 
+                    ? "bg-green-100 text-green-800 border border-green-200" 
+                    : "bg-red-100 text-red-800 border border-red-200"
+                }`}>
+                  {submitStatus.message}
+                </div>
+              )}
+
               <div className="grid sm:grid-cols-2 gap-4">
                 <input
                   type="text"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
                   placeholder="Name *"
+                  required
                   className="w-full px-4 py-2 border bg-white/70 border-[var(--color-primary)] rounded-lg text-[var(--color-text)] placeholder-gray-500 focus:outline-none focus:border-[var(--color-primary)]"
                 />
                 <input
                   type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
                   placeholder="Email Address *"
+                  required
                   className="w-full px-4 py-2 border bg-white/70 border-[var(--color-primary)] rounded-lg text-[var(--color-text)] placeholder-gray-500 focus:outline-none focus:border-[var(--color-primary)]"
                 />
               </div>
@@ -86,17 +171,26 @@ export default function ContactPage() {
               <div className="grid sm:grid-cols-2 gap-4">
                 <input
                   type="text"
+                  name="phone"
+                  value={formData.phone}
+                  onChange={handleChange}
                   placeholder="Phone Number"
                   className="w-full px-4 py-2 border bg-white/70 border-[var(--color-primary)] rounded-lg text-[var(--color-text)] placeholder-gray-500 focus:outline-none focus:border-[var(--color-primary)]"
                 />
                 <input
                   type="text"
+                  name="subject"
+                  value={formData.subject}
+                  onChange={handleChange}
                   placeholder="Subject"
                   className="w-full px-4 py-2 border bg-white/70 border-[var(--color-primary)] rounded-lg text-[var(--color-text)] placeholder-gray-500 focus:outline-none focus:border-[var(--color-primary)]"
                 />
               </div>
 
               <textarea
+                name="message"
+                value={formData.message}
+                onChange={handleChange}
                 placeholder="Your Message"
                 rows={4}
                 className="w-full px-4 py-2 border bg-white/70 border-[var(--color-primary)] rounded-lg text-[var(--color-text)] placeholder-gray-500 focus:outline-none focus:border-[var(--color-primary)]"
@@ -104,9 +198,10 @@ export default function ContactPage() {
 
               <button
                 type="submit"
-                className="w-full bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white font-semibold py-3 rounded-[var(--radius-default)] transition"
+                disabled={isSubmitting}
+                className="w-full bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white font-semibold py-3 rounded-[var(--radius-default)] transition disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                Send Enquiry
+                {isSubmitting ? "Sending..." : "Send Enquiry"}
               </button>
             </form>
           </div>
