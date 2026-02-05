@@ -16,7 +16,6 @@ export default function PublicCourseListing() {
   const search = searchParams.get("search")
   const category = searchParams.get("categories")
 
-  console.log(search, category)
   // ---------- State ----------
   const [filters, setFilters] = useState({
     categories: [category],
@@ -198,12 +197,14 @@ export default function PublicCourseListing() {
                   {courses.map((course) => (
                     <Link key={course._id} href={`/courses/${course.slug}`} className="block group">
                       <div className="transform transition-all duration-300 group-hover:scale-[1.02] group-hover:shadow-xl">
+                        {console.log("course", course.instructor)}
                         <CourseCard
                           course={{
                             title: course.title,
                             thumbnail:
                               course.thumbnail ||
                               "https://via.placeholder.com/400x250?text=No+Image",
+                            instructorImage: course.instructor?.picture || null,
                             category: course.category || "Uncategorized",
                             author: course.instructor?.name || course.instructor?.email || "Unknown Instructor",
                             price: course.price || 0,

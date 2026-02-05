@@ -335,7 +335,7 @@ export default function InstructorDashboard() {
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: index * 0.1 }}
                     >
-                      <Link href={`/instructor/tasks/${task._id}/submissions`}>
+                      <Link href={`dashboard/instructor/assignments`}>
                         <div className="p-4 bg-gradient-to-r from-amber-50 to-amber-50/50 rounded-xl border border-amber-200 hover:border-amber-300 transition-colors cursor-pointer group">
                           <div className="flex items-center justify-between">
                             <div className="flex-1">

@@ -263,12 +263,12 @@ export default function CourseSinglePage() {
                                         FREE
                                     </h3>
                                 )}
-                                <span className="bg-gradient-to-r from-red-500 to-pink-500 text-white text-xs font-semibold px-3 py-1.5 rounded-full">
+                                {/* <span className="bg-gradient-to-r from-red-500 to-pink-500 text-white text-xs font-semibold px-3 py-1.5 rounded-full">
                                     50% OFF
-                                </span>
+                                </span> */}
                             </div>
 
-                            <div className="flex gap-3 mb-6">
+                            {/* <div className="flex gap-3 mb-6">
                                 <button className="flex-1 py-3 border border-gray-300 text-gray-700 rounded-xl flex items-center justify-center gap-2 text-sm font-medium hover:bg-gray-50 hover:border-gray-400 transition-all duration-200 group">
                                     <FiHeart className="group-hover:text-red-500 transition-colors" /> 
                                     <span>Wishlist</span>
@@ -277,7 +277,7 @@ export default function CourseSinglePage() {
                                     <FiShare2 className="group-hover:text-blue-500 transition-colors" /> 
                                     <span>Share</span>
                                 </button>
-                            </div>
+                            </div> */}
 
                             <div className="space-y-3">
                                 {!user ? (

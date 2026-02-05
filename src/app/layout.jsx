@@ -25,12 +25,12 @@ export default function RootLayout({ children }) {
       <script src="/assets/lang-config.js" strategy="beforeInteractive" />
       <script src="/assets/translation.js" strategy="beforeInteractive" />
       <script src="//translate.google.com/translate_a/element.js?cb=TranslateInit" strategy="afterInteractive" />
-      <style dangerouslySetInnerHTML={{
+      {/* <style dangerouslySetInnerHTML={{
         __html: `
           body.antialiased {
     top: 0px !important;
 }
-        `}} />
+        `}} /> */}
       <body className={`antialiased`}>
         <CartProvider>
           <Providers>

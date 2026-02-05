@@ -26,6 +26,7 @@ import { useCategories, useInstructorCourses } from "@/hooks/useCourse";
 import { useCourseStats } from "@/hooks/useDashboard";
 import StatusPill from "@/components/modules/dashboard/instructorr/StatusPill";
 import { useAuth } from "@/hooks/useAuth";
+import { TbLabel } from "react-icons/tb";
 
 const PAGE_SIZE = 6;
 const STATUS_OPTIONS = ["All", "Published", "Draft"];
@@ -355,7 +356,7 @@ export default function InstructorCourses() {
                                                 <th className="py-4 px-6 text-left text-sm font-semibold text-[var(--color-text)]">Category</th>
                                                 <th className="py-4 px-6 text-left text-sm font-semibold text-[var(--color-text)]">Students</th>
                                                 <th className="py-4 px-6 text-left text-sm font-semibold text-[var(--color-text)]">Price</th>
-                                                <th className="py-4 px-6 text-left text-sm font-semibold text-[var(--color-text)]">Rating</th>
+                                                <th className="py-4 px-6 text-left text-sm font-semibold text-[var(--color-text)]">Label</th>
                                                 <th className="py-4 px-6 text-left text-sm font-semibold text-[var(--color-text)]">Status</th>
                                                 <th className="py-4 px-6 text-left text-sm font-semibold text-[var(--color-text)]">Actions</th>
                                             </tr>
@@ -390,14 +391,7 @@ export default function InstructorCourses() {
                                                                             <BookOpen className="w-3 h-3" />
                                                                             {c.lessonCount || 0} lessons
                                                                         </span>
-                                                                        <span className="inline-flex items-center gap-1">
-                                                                            <Activity className="w-3 h-3" />
-                                                                            {c.quizCount || 0} quizzes
-                                                                        </span>
-                                                                        <span className="inline-flex items-center gap-1">
-                                                                            <Calendar className="w-3 h-3" />
-                                                                            {c.duration || "N/A"}
-                                                                        </span>
+
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -431,8 +425,8 @@ export default function InstructorCourses() {
                                                         </td>
                                                         <td className="py-4 px-6">
                                                             <div className="flex items-center gap-1">
-                                                                <Star className="w-4 h-4 text-amber-500 fill-amber-500" />
-                                                                <span className="font-medium">{c.rating || "—"}</span>
+                                                                <TbLabel className="w-4 h-4" />
+                                                                <span className="font-medium">{c.level || "—"}</span>
                                                             </div>
                                                         </td>
                                                         <td className="py-4 px-6">

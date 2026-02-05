@@ -204,7 +204,7 @@ export default function CreatePackagePage() {
   };
 
   return (
-    <div className="min-h-screen p-4 md:p-6 bg-[var(--color-background)]">
+    <div className="min-h-screen p-4">
       <div className="container mx-auto">
         {/* Header */}
         <div className="mb-8">
@@ -324,43 +324,6 @@ export default function CreatePackagePage() {
                     />
                   </div>
 
-                  <div className="flex flex-wrap gap-2">
-                    <button
-                      onClick={handleSelectAllFiltered}
-                      className="flex items-center gap-2 px-3 py-1.5 text-sm border border-gray-300 rounded-lg hover:bg-gray-50 transition"
-                    >
-                      {filteredCourses.length > 0 && 
-                      filteredCourses.every(c => selectedCourses.find(sc => sc._id === c._id)) ? (
-                        <CheckSquare className="h-4 w-4" />
-                      ) : (
-                        <Square className="h-4 w-4" />
-                      )}
-                      Select All
-                    </button>
-                    
-                    <button
-                      onClick={handleClearSelection}
-                      className="flex items-center gap-2 px-3 py-1.5 text-sm border border-gray-300 rounded-lg hover:bg-gray-50 transition"
-                    >
-                      <X className="h-4 w-4" />
-                      Clear All
-                    </button>
-
-                    {/* Category Filter */}
-                    <select
-                      value={selectedCategory}
-                      onChange={(e) => setSelectedCategory(e.target.value)}
-                      className="px-3 py-1.5 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent transition"
-                    >
-                      <option value="all">All Categories</option>
-                      {categories
-                        .filter(cat => cat !== "all")
-                        .map(cat => (
-                          <option key={cat} value={cat}>{cat}</option>
-                        ))
-                      }
-                    </select>
-                  </div>
                 </div>
               </div>
 
