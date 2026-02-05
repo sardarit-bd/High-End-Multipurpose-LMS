@@ -97,7 +97,6 @@ export default function CourseContent({ units = [] }) {
 /* ------------------------------ Sub Component ------------------------------ */
 function UnitAccordion({ unit, index, isOpen, onToggle, setPreviewVideo }) {
   const { data: lessons = [], isLoading } = useLessonsByUnit(unit._id);
-
   return (
     <motion.div
       initial={{ opacity: 0, y: 10 }}
@@ -157,6 +156,7 @@ function UnitAccordion({ unit, index, isOpen, onToggle, setPreviewVideo }) {
               ) : lessons.length ? (
                 <div className="space-y-3">
                   {lessons.map((lesson, lessonIdx) => (
+                    
                     <motion.div
                       key={lesson._id}
                       initial={{ opacity: 0, x: -10 }}
@@ -164,6 +164,7 @@ function UnitAccordion({ unit, index, isOpen, onToggle, setPreviewVideo }) {
                       transition={{ delay: lessonIdx * 0.05 }}
                       className="flex justify-between items-center p-3 rounded-lg bg-gradient-to-r from-gray-50/50 to-gray-50/30 hover:bg-gray-100/50 border border-gray-100 transition-all group"
                     >
+                     
                       <div className="flex items-center gap-3">
                         <div className="p-2 rounded-md bg-gradient-to-r from-blue-50 to-blue-50/50 border border-blue-100">
                           <FiPlayCircle className="w-4 h-4 text-blue-500" />
@@ -173,7 +174,7 @@ function UnitAccordion({ unit, index, isOpen, onToggle, setPreviewVideo }) {
                             {lesson.title}
                           </h4>
                           <div className="flex items-center gap-3 mt-1">
-                            {lesson.contentType === "video" && (
+                            {lesson.contentType === "video" && index === 0 && (
                               <button
                                 onClick={() => setPreviewVideo(lesson.contentUrl)}
                                 className="text-sm text-blue-600 hover:text-blue-700 font-medium"
