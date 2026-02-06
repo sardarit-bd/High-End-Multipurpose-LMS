@@ -1,20 +1,19 @@
 import { NextResponse } from "next/server";
 
 
-export async function proxy(request) {
+export async function middleware(request) {
 
-    const token = request.cookies.get('accessToken')?.value;
-console.log('Proxy middleware - Access Token:', token);
-console.log(process.env.NEXT_PUBLIC_API_BASE_URL)
+    const token = request.cookies.get('accessToken')?.value || null;
+    console.log(token)
 
-    const response = await fetch(`https://high-end-multipurpose-lms-api-v2.vercel.app/api/user/me`, {
-        headers: { 'Authorization': `${token}` }  
+
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/user/me`, {
+        headers: { 'Authorization': `${token}` }
     });
 
-    console.log(response)
     const data = await response.json();
     const user = data?.data || null;
-    if(!user) {
+    if (!user) {
         return NextResponse.redirect(new URL('/login', request.url));
     }
 
@@ -48,5 +47,5 @@ console.log(process.env.NEXT_PUBLIC_API_BASE_URL)
 }
 
 export const config = {
-  matcher: ["/course/:path*", "/dashboard/:path*"],
+    matcher: ["/course/:path*", "/dashboard/:path*"],
 }
