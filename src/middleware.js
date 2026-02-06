@@ -3,6 +3,8 @@ import { NextResponse } from "next/server";
 
 export async function middleware(request) {
 
+    console.log(request)
+console.log(request.headers.get("cookie"))
     const token = request.cookies.get('accessToken')?.value || null;
     console.log(token)
 
@@ -13,35 +15,35 @@ export async function middleware(request) {
 
     const data = await response.json();
     const user = data?.data || null;
-    if (!user) {
-        return NextResponse.redirect(new URL('/login', request.url));
-    }
+    // if (!user) {
+    //     return NextResponse.redirect(new URL('/login', request.url));
+    // }
 
 
-    if (request.nextUrl.pathname.startsWith('/dashboard/admin')) {
-        if (user.role !== 'ADMIN' && user.role !== "SUPER_ADMIN") {
-            return NextResponse.redirect(new URL('/login', request.url))
-        }
-    }
+    // if (request.nextUrl.pathname.startsWith('/dashboard/admin')) {
+    //     if (user.role !== 'ADMIN' && user.role !== "SUPER_ADMIN") {
+    //         return NextResponse.redirect(new URL('/login', request.url))
+    //     }
+    // }
 
-    if (request.nextUrl.pathname.startsWith('/dashboard/instructor')) {
-        console.log('Checking instructor access for user role:', user.role);
-        if (user.role !== 'INSTRUCTOR') {
-            return NextResponse.redirect(new URL('/login', request.url))
-        }
-    }
+    // if (request.nextUrl.pathname.startsWith('/dashboard/instructor')) {
+    //     console.log('Checking instructor access for user role:', user.role);
+    //     if (user.role !== 'INSTRUCTOR') {
+    //         return NextResponse.redirect(new URL('/login', request.url))
+    //     }
+    // }
 
-    if (request.nextUrl.pathname.startsWith('/dashboard/student')) {
-        if (user.role !== 'STUDENT') {
-            return NextResponse.redirect(new URL('/login', request.url))
-        }
-    }
+    // if (request.nextUrl.pathname.startsWith('/dashboard/student')) {
+    //     if (user.role !== 'STUDENT') {
+    //         return NextResponse.redirect(new URL('/login', request.url))
+    //     }
+    // }
 
-    if (request.nextUrl.pathname.startsWith('/course')) {
-        if (user.role !== 'STUDENT') {
-            return NextResponse.redirect(new URL('/login', request.url))
-        }
-    }
+    // if (request.nextUrl.pathname.startsWith('/course')) {
+    //     if (user.role !== 'STUDENT') {
+    //         return NextResponse.redirect(new URL('/login', request.url))
+    //     }
+    // }
 
     return NextResponse.next();
 }
