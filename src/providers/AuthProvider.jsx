@@ -28,7 +28,7 @@ export function AuthProvider({ children }) {
 
   const login = async (payload) => {
     try {
-      await api.post("/auth/login", payload); // cookie set in response
+      const res =await api.post("/auth/login", payload); 
       const { data } = await api.get("/user/me");
       setUser(data.data);
       router.push("/dashboard");
