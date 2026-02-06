@@ -9,12 +9,12 @@ console.log(request.headers.get("cookie"))
     console.log(token)
 
 
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/user/me`, {
-        headers: { 'Authorization': `${token}` }
-    });
+    // const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/user/me`, {
+    //     headers: { 'Authorization': `${token}` }
+    // });
 
-    const data = await response.json();
-    const user = data?.data || null;
+    // const data = await response.json();
+    // const user = data?.data || null;
     // if (!user) {
     //     return NextResponse.redirect(new URL('/login', request.url));
     // }
