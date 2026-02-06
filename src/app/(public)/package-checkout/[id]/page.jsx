@@ -118,8 +118,6 @@ export default function PackageCheckoutPage() {
         amount: calculateTotal(),
         currency: pkg.currency || "USD"
       };
-
-      console.log(paymentData)
       // For card payments, we'd typically integrate with Stripe/PayPal
       if (selectedPayment === "stripe") {
         // Create Stripe checkout session

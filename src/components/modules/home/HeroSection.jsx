@@ -28,7 +28,7 @@ export default function HeroSection() {
   const [query, setQuery] = useState("");
   const { data: categoriesData } = useCategories()
   const categories = categoriesData?.data?.categories || [];
-  console.log(categories)
+ 
 
   const handleSubmit = (e) => {
     e?.preventDefault();

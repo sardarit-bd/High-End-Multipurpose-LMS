@@ -80,7 +80,7 @@ export default function About() {
             </div>
 
             {/* === Instructors Section === */}
-            <section className="py-[var(--spacing-section)] bg-[var(--color-background)]">
+            {/* <section className="py-[var(--spacing-section)] bg-[var(--color-background)]">
                <div className='container mx-auto px-4'>
                  <h2 className="text-center text-2xl font-bold text-[var(--color-text)] mb-2">
                     {t("about.instructors.title") || "Top Class & Professional Instructors"}
@@ -112,7 +112,7 @@ export default function About() {
                     ))}
                 </div>
                </div>
-            </section>
+            </section> */}
 
             {/* === FAQ Section === */}
             <section className="py-[var(--spacing-section)] container mx-auto px-4 grid lg:grid-cols-2 gap-8 items-center">

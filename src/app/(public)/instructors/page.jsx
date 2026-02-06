@@ -38,7 +38,7 @@ export default function InstructorListing() {
   });
 
   const instructors = data?.items || [];
-  const totalItems = data?.totalItems || 0;
+  const totalItems = data?.total || 0;
   const totalPages = data?.totalPages || 1;
 
   // Handlers - defined before useMemo

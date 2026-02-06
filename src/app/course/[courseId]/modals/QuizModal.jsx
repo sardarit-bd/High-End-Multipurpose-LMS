@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { X, RotateCcw, Clock, AlertCircle, CheckCircle, ChevronRight, Trophy, Target } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 import { useQueryClient, useQuery } from "@tanstack/react-query";
+import { toast } from "react-toastify";
 
 export default function QuizModal({ quizzes, onClose }) {
   const quiz = quizzes[0];
@@ -72,6 +73,7 @@ export default function QuizModal({ quizzes, onClose }) {
     enabled: !!taskId,
   });
 
+  console.log("Existing submission for this quiz's task:", existingSubmission);
   const isAlreadySubmitted = !!existingSubmission;
 
   const [answers, setAnswers] = useState({});
@@ -179,11 +181,7 @@ export default function QuizModal({ quizzes, onClose }) {
 
   // ✅ Submit quiz (manual or auto)
   const handleSubmit = async (auto = false) => {
-    if (questions.length === 0) {
-      alert("Quiz questions are still loading. Please wait.");
-      return;
-    }
-
+   
     clearInterval(timerRef.current);
     let total = 0;
 
@@ -223,15 +221,14 @@ export default function QuizModal({ quizzes, onClose }) {
     queryClient.invalidateQueries({ queryKey: ["myPoints"] });
     queryClient.invalidateQueries({ queryKey: ["leaderboard"] });
 
-    // Calculate score percentage from correct answers
-    const correctCount = quizeSubmitRes.data?.data?.correctCount || 0;
-    const totalQuestions = questions.length;
-    const scorePercentage = totalQuestions > 0 ? Math.round((correctCount / totalQuestions) * 100) : 0;
+    const correctCount = quizeSubmitRes.data?.data?.autoPoints || 0;
 
-    setScore(scorePercentage);
+
+    setScore(correctCount);
     setSubmitted(true);
-    if (auto)
-      alert("⏰ Quiz auto-submitted — you left or minimized the tab!");
+    if (auto){
+      toast.info("Quiz auto-submitted due to inactivity or tab change. Please review your results.");
+    }
   };
 
   const handleRetry = () => {
@@ -345,9 +342,6 @@ export default function QuizModal({ quizzes, onClose }) {
                 <span className="text-sm font-medium text-gray-700">
                   Question {currentQuestion + 1} of {questions.length}
                 </span>
-                <span className="text-xs text-[var(--color-primary)] font-medium">
-                  {Math.round(((questions.length * 60 - timeLeft) / (questions.length * 60)) * 100)}% complete
-                </span>
               </div>
               <div className="w-full bg-gray-200 rounded-full h-2 overflow-hidden">
                 <motion.div
@@ -391,7 +385,7 @@ export default function QuizModal({ quizzes, onClose }) {
                 {/* Points Display */}
                 <div className="bg-gradient-to-r from-emerald-50 to-green-50 rounded-2xl p-8 border border-emerald-200 mb-8">
                   <div className="text-center">
-                    <div className="text-6xl font-bold text-emerald-700 mb-2">{existingSubmission?.pointsAwarded || 0}</div>
+                    <div className="text-6xl font-bold text-emerald-700 mb-2">{existingSubmission?.breakdown ? existingSubmission.breakdown.filter(item => item.type === 'mcq').reduce((sum, item) => sum + (item.autoPoints || 0), 0) : 0}</div>
                     <p className="text-lg text-emerald-600 font-medium">Total Points Earned</p>
                     {existingSubmission?.breakdown && (
                       <div className="mt-4 grid grid-cols-2 gap-4 text-sm">
@@ -503,14 +497,6 @@ export default function QuizModal({ quizzes, onClose }) {
               <div className="inline-flex items-center gap-3 bg-gradient-to-r from-emerald-50 to-green-50 px-8 py-4 rounded-2xl border border-emerald-200 mb-8">
                 <span className="text-4xl font-bold text-emerald-700">{score}</span>
                 <span className="text-lg text-emerald-600 font-medium">points earned</span>
-              </div>
-              <div className="flex items-center justify-center gap-4">
-                <button
-                  onClick={onClose}
-                  className="px-8 py-3.5 bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-primary)]/90 text-white font-bold rounded-xl hover:shadow-xl transition-all"
-                >
-                  Close
-                </button>
               </div>
             </div>
           ) : (
