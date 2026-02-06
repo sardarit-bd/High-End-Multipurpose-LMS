@@ -1,13 +1,10 @@
-// components/modules/instructors/InstructorCard.tsx
-
 import Link from "next/link";
-import { FaStar } from "react-icons/fa";
 import { FiBookOpen, FiClock } from "react-icons/fi";
 
 
 
 export default function InstructorCard({ instructor }) {
-  console.log(instructor)
+
   return (
     <div className="bg-white rounded-[var(--radius-card)] shadow-[var(--shadow-soft)] hover:shadow-[var(--shadow-medium)] transition-shadow duration-300 overflow-hidden border border-gray-100">
       {/* Image */}
@@ -31,8 +28,9 @@ export default function InstructorCard({ instructor }) {
         {/* Lessons + Duration */}
         <div className="flex items-center justify-between text-xs text-gray-500">
           <div className="flex items-center gap-1">
-            <FiBookOpen className="text-[var(--color-secondary)]" />
-            <span>{instructor?.noOfCourse}+ Courses</span>
+            {instructor?.noOfCourse ? (
+              <FiBookOpen className="w-4 h-4" />) : ''}
+            <span>{instructor?.noOfCourse ? instructor?.noOfCourse + "+ Courses" : ""}</span>
           </div>
         </div>
       </div>

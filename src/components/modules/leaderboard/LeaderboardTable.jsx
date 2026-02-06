@@ -316,7 +316,6 @@ const LeaderboardTable = ({
 
                 {/* Badges or Count */}
                 <div className="col-span-2 flex justify-center space-x-1">
-                  {console.log(item)}
                   {item.type === 'student' ? (
                     item.badges.slice(0, 3).map((badge, index) => {
                         const badgeConfig = badge;

@@ -47,7 +47,6 @@ export default function PublicPackagesPage() {
         try {
             setLoading(true);
             const res = await api.get("/packages");
-            console.log(res.data?.data)
             setPackages(res.data.data || []);
         } catch (error) {
             console.error("Error fetching packages:", error);

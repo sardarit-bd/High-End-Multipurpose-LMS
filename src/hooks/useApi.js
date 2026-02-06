@@ -4,7 +4,6 @@ import api from "@/lib/apiClient";
 export function useApi(baseUrl, queryKey) {
   const queryClient = useQueryClient();
 
-  // ✅ React Hook Compliant Internal Hooks
   function useGetAll() {
     return useQuery({
       queryKey: [queryKey],

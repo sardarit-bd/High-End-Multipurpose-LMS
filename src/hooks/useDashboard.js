@@ -103,3 +103,4 @@ export const useMyRank = () => {
     return myEntryIndex !== -1 ? myEntryIndex + 1 : null;
   }, [leaderboard, user]);
 };
+

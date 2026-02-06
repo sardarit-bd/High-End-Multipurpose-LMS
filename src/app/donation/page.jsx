@@ -133,8 +133,6 @@ const Donation = () => {
     }
   };
 
-  const totalDonations = 287500;
-  const donorsCount = 456;
 
   if (pageLoading) {
     return <DonationSkeleton />;

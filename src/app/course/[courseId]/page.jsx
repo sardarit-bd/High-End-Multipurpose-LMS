@@ -560,7 +560,7 @@ export default function CourseLearningPage() {
                     )}
 
                     {/* Next Lesson Button - Only enabled after completion and all tasks submitted */}
-                    {console.log(completedLessons, currentLesson?._id)}
+            
                     {nextLesson && (
                       
                       <button

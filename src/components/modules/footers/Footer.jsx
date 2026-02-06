@@ -1,5 +1,6 @@
 "use client"
 import Image from "next/image";
+import Link from "next/link";
 import { useTranslation } from "react-i18next";
 
 const Footer = () => {
@@ -8,7 +9,7 @@ const Footer = () => {
   return (
     <footer className="bg-[var(--color-background)] text-[var(--color-text)]">
       <div className="container mx-auto px-4 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
 
           {/* Company Info */}
           <div className="lg:col-span-1">
@@ -28,16 +29,15 @@ const Footer = () => {
               {t("footer.support.title") || "Support"}
             </h3>
             <ul className="space-y-2 text-[var(--color-text)]">
-              <li><a href="#" className="hover:text-[var(--color-primary)] transition-colors">{t("footer.support.education") || "Education"}</a></li>
-              <li><a href="#" className="hover:text-[var(--color-primary)] transition-colors">{t("footer.support.enrollCourse") || "Enroll Course"}</a></li>
-              <li><a href="#" className="hover:text-[var(--color-primary)] transition-colors">{t("footer.support.orders") || "Orders"}</a></li>
-              <li><a href="#" className="hover:text-[var(--color-primary)] transition-colors">{t("footer.support.payments") || "Payments"}</a></li>
-              <li><a href="#" className="hover:text-[var(--color-primary)] transition-colors">{t("footer.support.blogs") || "Blogs"}</a></li>
+              <li><Link href="/about" className="hover:text-[var(--color-primary)] transition-colors">{"About Us"}</Link></li>
+              <li><Link href="/contact" className="hover:text-[var(--color-primary)] transition-colors">{"Contact Us"}</Link></li>
+              <li><Link href="/faq" className="hover:text-[var(--color-primary)] transition-colors">{"FAQ"}</Link></li>
+              
             </ul>
           </div>
 
           {/* About */}
-          <div>
+          {/* <div>
             <h3 className="text-lg font-semibold mb-4 text-[var(--color-secondary)]">
               {t("footer.about.title") || "About"}
             </h3>
@@ -48,7 +48,7 @@ const Footer = () => {
               <li><a href="#" className="hover:text-[var(--color-primary)] transition-colors">{t("footer.about.fax") || "Fax"}</a></li>
               <li><a href="#" className="hover:text-[var(--color-primary)] transition-colors">{t("footer.about.contacts") || "Contacts"}</a></li>
             </ul>
-          </div>
+          </div> */}
 
           {/* Useful Links */}
           <div>
@@ -56,11 +56,10 @@ const Footer = () => {
               {t("footer.usefulLinks.title") || "Useful Links"}
             </h3>
             <ul className="space-y-2 text-[var(--color-text)]">
-              <li><a href="#" className="hover:text-[var(--color-primary)] transition-colors">{t("footer.usefulLinks.ourValues") || "Our values"}</a></li>
-              <li><a href="#" className="hover:text-[var(--color-primary)] transition-colors">{t("footer.usefulLinks.advisoryBoard") || "Our advisory board"}</a></li>
-              <li><a href="#" className="hover:text-[var(--color-primary)] transition-colors">{t("footer.usefulLinks.partners") || "Our partners"}</a></li>
-              <li><a href="#" className="hover:text-[var(--color-primary)] transition-colors">{t("footer.usefulLinks.becomePartner") || "Become a partner"}</a></li>
-              <li><a href="#" className="hover:text-[var(--color-primary)] transition-colors">{t("footer.usefulLinks.workWithUs") || "Work at Future Learn"}</a></li>
+              <li><Link href="/shop" className="hover:text-[var(--color-primary)] transition-colors">Shop</Link></li>
+              <li><Link href="/events" className="hover:text-[var(--color-primary)] transition-colors">Events</Link></li>
+              <li><Link href="/packages" className="hover:text-[var(--color-primary)] transition-colors">Packages</Link></li>
+             
             </ul>
           </div>
 
@@ -92,8 +91,8 @@ const Footer = () => {
               {t("Copyright 2023 © Sardar IT. All rights reserved.") || "Copyright 2023 © Sardar IT. All rights reserved."}
             </div>
             <div className="flex space-x-6 text-[var(--color-text)]/70 text-sm">
-              <a href="#" className="hover:text-[var(--color-primary)] transition-colors">{t("footer.terms") || "Terms & Conditions"}</a>
-              <a href="#" className="hover:text-[var(--color-primary)] transition-colors">{t("footer.privacy") || "Privacy Policy"}</a>
+              <Link href="/terms" className="hover:text-[var(--color-primary)] transition-colors">{t("footer.terms") || "Terms & Conditions"}</Link>
+              <Link href="/privacy" className="hover:text-[var(--color-primary)] transition-colors">{t("footer.privacy") || "Privacy Policy"}</Link>
             </div>
           </div>
         </div>

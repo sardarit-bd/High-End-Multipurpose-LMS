@@ -67,11 +67,6 @@ export default function PublicCourseListing() {
     setPage(1);
   };
 
-  const getCategoryTitle = (categoryId) => {
-    // This will be handled inside CourseFilters component
-    return categoryId;
-  };
-
   // ---------- UI ----------
   return (
     <div className="min-h-screen bg-gradient-to-br from-[var(--color-background)] to-emerald-50/30">
@@ -87,7 +82,7 @@ export default function PublicCourseListing() {
               <div>
                 <h1 className="text-2xl font-bold text-[var(--color-text)]">Browse Courses</h1>
                 <p className="text-sm text-[var(--color-text)]/70">
-                  Discover {data?.totalItems || 0}+ courses to boost your skills
+                  Discover {data?.total || 0}+ courses to boost your skills
                 </p>
               </div>
             </div>
@@ -184,7 +179,7 @@ export default function PublicCourseListing() {
                 <div className="flex items-center justify-between mb-6">
                   <div>
                     <h2 className="text-xl font-bold text-[var(--color-text)]">
-                      {data?.totalItems} Course{data?.totalItems !== 1 ? 's' : ''} Found
+                      {data?.total} Course{data?.total !== 1 ? 's' : ''} Found
                     </h2>
                     <p className="text-sm text-[var(--color-text)]/70">
                       Page {page} of {totalPages}
@@ -197,7 +192,6 @@ export default function PublicCourseListing() {
                   {courses.map((course) => (
                     <Link key={course._id} href={`/courses/${course.slug}`} className="block group">
                       <div className="transform transition-all duration-300 group-hover:scale-[1.02] group-hover:shadow-xl">
-                        {console.log("course", course.instructor)}
                         <CourseCard
                           course={{
                             title: course.title,

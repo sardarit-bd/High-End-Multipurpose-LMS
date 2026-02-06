@@ -118,7 +118,7 @@ export default function AssignmentsPage() {
           </label>
 
           {/* Status filter */}
-          <div className="flex flex-wrap items-center gap-2">
+          {/* <div className="flex flex-wrap items-center gap-2">
             {STATUSES.map((s) => (
               <button
                 key={s}
@@ -133,7 +133,7 @@ export default function AssignmentsPage() {
                 {s}
               </button>
             ))}
-          </div>
+          </div> */}
         </div>
       </div>
 
