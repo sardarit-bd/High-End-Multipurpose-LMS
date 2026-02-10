@@ -3,13 +3,10 @@
 import { useForm } from "react-hook-form";
 import { FcGoogle } from "react-icons/fc";
 import Link from "next/link";
-import { useMutation } from "@tanstack/react-query";
-import { toast } from "react-toastify";
-import api from "@/lib/apiClient";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { useAuth } from "@/hooks/useAuth";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { useAuth } from "@/hooks/useAuth";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -29,6 +26,15 @@ export default function LoginPage() {
   const onSubmit = async (data) => {
     setIsLoading(true);
     await login(data);
+    //  const res = await fetch("/api/auth/login", {
+    //   method: "POST",
+    //   headers: { "Content-Type": "application/json" },
+    //   body: JSON.stringify(data),
+    // });
+
+    // console.log("Login API Response:", res);
+   
+    // router.push("/dashboard");
     setIsLoading(false);
   };
 
