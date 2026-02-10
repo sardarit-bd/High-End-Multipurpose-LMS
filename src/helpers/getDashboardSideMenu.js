@@ -60,10 +60,15 @@ const adminMenu = [
 
 
 
-export function getDashboardSideMenu(role) {
+export function getDashboardSideMenu(role, instructorStatus = "none") {
+    console.log("User Role:", role);
+    console.log("Instructor Status:", instructorStatus);
     if (role === "ADMIN" || role === "SUPER_ADMIN") {
         return adminMenu;
-    } else if (role === "INSTRUCTOR") {
+    } else if (role === "INSTRUCTOR" ) {
+        if (instructorStatus === "pending") {
+            return [];
+        }
         return instructorMenu;
     } else {
         return studentMenu;
