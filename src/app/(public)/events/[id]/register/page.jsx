@@ -13,12 +13,12 @@ export default function EventRegisterPage() {
   const { id } = useParams();
   const router = useRouter();
   const { data: eventData, isLoading } = usePublicEvent(id);
-  const {user} = useAuth()
+  const { user } = useAuth()
   const event = eventData?.data;
   const registerForEvent = useRegisterForEvent();
 
   const [processing, setProcessing] = useState(false);
-  
+
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('card');
   const [isProcessing, setIsProcessing] = useState(false);
 
@@ -27,7 +27,7 @@ export default function EventRegisterPage() {
     try {
       await registerForEvent.mutateAsync(id);
       toast.success('Successfully registered for the event!');
-      router.push(`/events/${id}?registered=true`);
+      router.push(`/dashboard`);
     } catch (error) {
       toast.error(error.response?.data?.message || 'Failed to register');
     } finally {
@@ -36,7 +36,7 @@ export default function EventRegisterPage() {
   };
 
   const handlePayment = async () => {
-     if (!user) {
+    if (!user) {
       toast.error("Please login to continue");
       router.push(`/login?redirect=/events/${id}/register`);
       return;
@@ -54,7 +54,7 @@ export default function EventRegisterPage() {
       if (selectedPaymentMethod === "stripe") {
         // Create Stripe checkout session
         const res = await api.post("/events/checkout", paymentData);
-        
+
         // Redirect to Stripe checkout
         console.log(res.data?.data)
         if (res.data?.data?.checkoutUrl) {
@@ -63,9 +63,11 @@ export default function EventRegisterPage() {
           toast.error("Payment initialization failed");
         }
       } else if (selectedPaymentMethod === "paypal") {
+        alert("Paypal is not configured yet. Please select another payment method.");
+        return
         // Handle PayPal payment
         const res = await api.post("/payments/create-paypal", paymentData);
-        
+
         // Redirect to PayPal
         if (res.data.approvalUrl) {
           window.location.href = res.data.approvalUrl;
@@ -75,7 +77,7 @@ export default function EventRegisterPage() {
       } else if (selectedPaymentMethod === "wallet") {
         // Handle wallet payment
         const res = await api.post("/payments/wallet-purchase", paymentData);
-        
+
         if (res.data.success) {
           toast.success("Purchase completed successfully!");
           router.push(`/dashboard/learning?success=true`);
@@ -124,6 +126,8 @@ export default function EventRegisterPage() {
     return format(new Date(dateString), 'EEEE, MMMM dd, yyyy');
   };
 
+  console.log("Event Data:", event); // Debug log
+  console.log("User Data:", user); // Debug log
   return (
     <div className="min-h-screen bg-white p-4 md:p-8">
       <div className="container mx-auto">
@@ -144,7 +148,7 @@ export default function EventRegisterPage() {
               <h2 className="text-xl font-bold text-[var(--color-text)] mb-4">
                 Event Summary
               </h2>
-              
+
               <div className="space-y-4">
                 <div className="flex gap-4">
                   <div className="w-24 h-24 flex-shrink-0">
@@ -307,7 +311,14 @@ export default function EventRegisterPage() {
               </div>
 
               {/* Registration Button */}
-              {event.price === 0 ? (
+              {event?.attendees?.includes(user?._id) ? (
+                <button
+                  disabled={isProcessing}
+                  className="w-full px-6 py-3 bg-[var(--color-primary)] text-white rounded-lg hover:bg-[var(--color-primary-hover)] transition-colors disabled:opacity-50 disabled:cursor-not-allowed font-medium opacity-40 cursor-not-allowed"
+                >
+                  You are already registered for this event
+                </button>
+              ) : event.price === 0 ? (
                 <button
                   onClick={handleFreeRegistration}
                   disabled={isProcessing}
@@ -316,8 +327,8 @@ export default function EventRegisterPage() {
                   {isProcessing ? (
                     <span className="flex items-center justify-center gap-2">
                       <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
-                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none"/>
-                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/>
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
                       </svg>
                       Processing...
                     </span>
@@ -334,8 +345,8 @@ export default function EventRegisterPage() {
                   {isProcessing ? (
                     <span className="flex items-center justify-center gap-2">
                       <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
-                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none"/>
-                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/>
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
                       </svg>
                       Processing Payment...
                     </span>
@@ -344,6 +355,8 @@ export default function EventRegisterPage() {
                   )}
                 </button>
               )}
+
+
 
               {/* Security Assurance */}
               <div className="mt-6 p-4 bg-gray-50 rounded-lg">

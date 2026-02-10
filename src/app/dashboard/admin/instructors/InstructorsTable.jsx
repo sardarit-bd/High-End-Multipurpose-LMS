@@ -167,6 +167,7 @@ export default function InstructorsTable({ search, page, limit, onPageChange }) 
                   </td>
                   <td className="p-4">
                     <div className="flex justify-center gap-2">
+                      {console.log(instructor.userId?.instructorRequest?.status)}
                       {instructor.userId?.instructorRequest?.status === "pending" ? (
                         <button
                           onClick={() => handleApprove(instructor.userId?._id)}
