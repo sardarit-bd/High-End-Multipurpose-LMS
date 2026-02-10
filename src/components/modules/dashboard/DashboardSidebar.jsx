@@ -11,7 +11,7 @@ export function DashboardSidebar() {
     const [isOpen, setIsOpen] = useState(false);
     const [collapsed, setCollapsed] = useState(false);
 
-    const sidebarNavItems = getDashboardSideMenu(user?.role);
+    const sidebarNavItems = getDashboardSideMenu(user?.role, user?.instructorRequest?.status || "none");
 
     return (
         <>

@@ -69,6 +69,33 @@ export default function InstructorDashboard() {
   }
 
   const { stats, topCourses, unevaluatedTasks } = dashboardData || {};
+  if (user?.instructorRequest?.status === "pending") {
+    return (
+      <section className=" flex min-h-[80vh] items-center justify-center p-4 md:p-6 lg:p-8">
+        <div className="text-center">
+          <div className="p-4 bg-yellow-100 rounded-full inline-block mb-4">
+            <AlertCircle className="w-12 h-12 text-yellow-500 mx-auto" />
+          </div>
+          <h2 className="text-xl font-bold text-gray-900 mb-2">Instructor Request Pending</h2>
+          <p className="text-gray-600 mb-6">
+            Your instructor request is currently under review. Please check back later.
+          </p>
+
+          <p className="text-sm text-gray-500 mt-4 text-center">
+            For more information, please contact <br />
+            <a
+              href="mailto:support@gmail.com"
+              className="text-indigo-600 font-medium hover:underline"
+            >
+              support@gmail.com
+            </a>.
+          </p>
+
+
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="min-h-screen p-4 md:p-6 lg:p-8">

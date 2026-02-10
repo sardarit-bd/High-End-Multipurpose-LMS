@@ -98,11 +98,7 @@ export const useRegisterForEvent = () => {
     mutationFn: async (eventId) => {
       const res = await eventApi.registerForEvent(eventId);
       return res.data;
-    },
-    onSuccess: (data) => {
-      queryClient.invalidateQueries(['public-event', data.event._id]);
-      queryClient.invalidateQueries(['registration-status', data.event._id]);
-    },
+    }
   });
 };
 
