@@ -6,9 +6,9 @@
     "node": ">=18.18 <=22"
   },
   "scripts": {
-    "dev": "next dev --turbopack",
-    "build": "next build --turbopack",
-    "start": "next start",
+    "dev": "node init && next dev --turbopack",
+    "build": "node init && next build --turbopack",
+    "start": "node init && next start",
     "lint": "eslint"
   },
   "dependencies": {
